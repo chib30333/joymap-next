@@ -1,0 +1,281 @@
+// Joymap — PostgreSQL schema (Prisma)
+// Ported from the prototype's localStorage "database" (backend.js).
+// Run: npx prisma db push  (or: npx prisma migrate dev)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  customer
+  provider
+  admin
+}
+
+enum ProviderStatus {
+  review
+  active
+  rejected
+}
+
+enum ServiceStatus {
+  review
+  active
+  rejected
+}
+
+enum BookingStatus {
+  pending
+  confirmed
+  completed
+  cancelled
+}
+
+enum PayoutStatus {
+  pending
+  paid
+}
+
+enum ChatRole {
+  c // customer
+  p // provider
+}
+
+model User {
+  id         String   @id @default(cuid())
+  name       String
+  email      String   @unique
+  pwHash     String
+  role       Role     @default(customer)
+  city       String   @default("Moscow")
+  phone      String?
+  joined     String   @default("Jun 2026")
+  plan       String?
+  wallet     Int      @default(0)
+  moods      String[] @default([])
+  onboarded  Boolean  @default(false)
+  joymap     Json? // generated weekly Joy Map (array of day objects)
+  createdAt  DateTime @default(now())
+
+  provider      Provider?
+  bookings      Booking[]
+  reviews       Review[]
+  notifications Notification[]
+  transactions  Transaction[]
+  favorites     Favorite[]
+  threads       Thread[]       @relation("CustomerThreads")
+}
+
+model Provider {
+  id           String         @id @default(cuid())
+  owner        User           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId      String         @unique
+  name         String
+  cat          String         @default("Wellness")
+  city         String         @default("Moscow")
+  area         String         @default("Center")
+  tagline      String         @default("")
+  about        String         @default("")
+  email        String         @default("")
+  phone        String         @default("")
+  site         String         @default("")
+  address      String         @default("")
+  status       ProviderStatus @default(review)
+  commission   Int            @default(15)
+  joined       String         @default("Jun 2026")
+  docs         Int            @default(3)
+  rejectReason String?
+  createdAt    DateTime       @default(now())
+
+  services Service[]
+  slots    Slot[]
+  bookings Booking[]
+  reviews  Review[]
+  payouts  Payout[]
+  threads  Thread[]
+}
+
+model Service {
+  id           String        @id @default(cuid())
+  provider     Provider      @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  providerId   String
+  name         String
+  cat          String
+  mood         String
+  price        Int
+  dur          String        @default("60 min")
+  cap          Int           @default(8)
+  city         String        @default("Moscow")
+  area         String        @default("Center")
+  img          String?
+  tags         String[]      @default([])
+  about        String        @default("")
+  status       ServiceStatus @default(review)
+  active       Boolean       @default(true)
+  seedRating   Float? // optional baseline rating for demo content
+  seedReviews  Int?
+  rejectReason String?
+  createdAt    DateTime      @default(now())
+
+  slots     Slot[]
+  bookings  Booking[]
+  reviews   Review[]
+  favorites Favorite[]
+}
+
+model Slot {
+  id         String   @id @default(cuid())
+  service    Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  serviceId  String
+  provider   Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  providerId String
+  day        Int // day-of-month in the demo "June 2026" calendar (1..30)
+  time       String // "HH:MM"
+  booked     Int      @default(0)
+
+  @@index([providerId])
+  @@index([serviceId])
+}
+
+model Booking {
+  id         String        @id @default(cuid())
+  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+  service    Service       @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  serviceId  String
+  provider   Provider      @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  providerId String
+  day        Int
+  date       String // friendly label e.g. "Wed 10 Jun"
+  time       String
+  people     Int           @default(1)
+  total      Int
+  pay        String         @default("card") // card | sber | wallet
+  status     BookingStatus  @default(pending)
+  code       String
+  rated      Int?
+  createdAt  DateTime       @default(now())
+
+  review Review?
+
+  @@index([userId])
+  @@index([providerId])
+  @@index([serviceId])
+}
+
+model Review {
+  id         String   @id @default(cuid())
+  booking    Booking? @relation(fields: [bookingId], references: [id], onDelete: SetNull)
+  bookingId  String?  @unique
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+  name       String
+  provider   Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  providerId String
+  service    Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  serviceId  String
+  serviceName String  @default("")
+  rating     Int
+  text       String   @default("")
+  date       String   @default("Just now")
+  replied    Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  @@index([providerId])
+  @@index([serviceId])
+}
+
+model Thread {
+  id         String    @id @default(cuid())
+  customer   User      @relation("CustomerThreads", fields: [customerId], references: [id], onDelete: Cascade)
+  customerId String
+  provider   Provider  @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  providerId String
+  service    String    @default("")
+  unreadC    Int       @default(0)
+  unreadP    Int       @default(0)
+  lastAt     DateTime  @default(now())
+  messages   Message[]
+
+  @@unique([customerId, providerId])
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  thread    Thread   @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  threadId  String
+  fromRole  ChatRole
+  text      String
+  at        String // friendly time label
+  createdAt DateTime @default(now())
+
+  @@index([threadId])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  icon      String   @default("bell")
+  accent    String   @default("#5563D6")
+  title     String
+  body      String
+  time      String   @default("Just now")
+  unread    Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Transaction {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  label     String
+  amount    Int // positive = credit, negative = debit
+  date      String
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Payout {
+  id         String       @id @default(cuid())
+  provider   Provider     @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  providerId String
+  providerName String
+  amount     Int
+  due        String
+  date       String
+  status     PayoutStatus @default(pending)
+  createdAt  DateTime     @default(now())
+
+  @@index([providerId])
+}
+
+model Favorite {
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  serviceId String
+
+  @@id([userId, serviceId])
+}
+
+// Flagged content for the admin "Content" moderation queue.
+model Flag {
+  id        String   @id @default(cuid())
+  type      String // review | photo | promo
+  author    String
+  target    String
+  text      String?
+  grad      String? // gradient placeholder for flagged photos
+  reason    String // why it was flagged
+  time      String   @default("Just now")
+  createdAt DateTime @default(now())
+}

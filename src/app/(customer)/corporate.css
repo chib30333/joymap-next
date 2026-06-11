@@ -1,0 +1,35 @@
+/* corporate.css — ported verbatim from corporate.jsx, scoped under .app-top. */
+.app-top .corp{--gold:#E6A23C;}
+.app-top .corp-eyebrow{font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);}
+.app-top .corp-hero{position:relative;overflow:hidden;border-radius:var(--r-xl);color:#F4E9D8;min-height:430px;
+  display:flex;align-items:flex-end;
+  background-image:linear-gradient(95deg, rgba(24,5,7,.98) 0%, rgba(40,8,11,.95) 40%, rgba(40,8,11,.72) 64%, rgba(40,8,11,.5) 100%), url('/images/corporate-hero.jpg');
+  background-size:cover;background-position:right 28%;padding:40px 44px;}
+.app-top .corp-hero h1,.app-top .corp-hero p{text-shadow:0 2px 18px rgba(20,4,6,.5);}
+.app-top .corp-hero:before{content:"";position:absolute;inset:0;opacity:.3;mix-blend-mode:overlay;
+  background-image:radial-gradient(rgba(255,255,255,.5) .6px,transparent .6px);background-size:10px 10px;pointer-events:none;}
+.app-top .corp-feature{position:relative;overflow:hidden;border-radius:var(--r-xl);min-height:340px;display:flex;align-items:flex-end;color:#fff;
+  background-image:linear-gradient(0deg, rgba(20,8,6,.82) 0%, rgba(20,8,6,.25) 55%, rgba(20,8,6,.45) 100%), url('/images/corporate-team-strategy.jpg');
+  background-size:cover;background-position:center 32%;padding:34px 38px;}
+.app-top .corp-lockup{display:inline-flex;align-items:center;gap:14px;}
+.app-top .corp-logo{width:46px;height:46px;border-radius:13px;background:linear-gradient(140deg,#fff,#F4E9D8);
+  color:#5E1014;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:24px;flex:none;}
+.app-top .corp-x{font-size:18px;opacity:.5;font-weight:300;}
+.app-top .ring{width:118px;height:118px;border-radius:99px;flex:none;
+  background:conic-gradient(var(--gold) calc(var(--p)*1%), rgba(255,255,255,.14) 0);display:grid;place-items:center;}
+.app-top .ring .hole{width:92px;height:92px;border-radius:99px;background:rgba(30,8,9,.72);backdrop-filter:blur(4px);display:grid;place-items:center;text-align:center;}
+.app-top .corp-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;transition:.18s;}
+.app-top .corp-perk:hover{transform:translateY(-3px);box-shadow:var(--sh);}
+.app-top .corp-gift{position:relative;overflow:hidden;border-radius:var(--r-lg);color:#F4E9D8;cursor:pointer;
+  background:linear-gradient(135deg,#5E1014,#2A0709);border:1px solid color-mix(in srgb,#E6A23C 40%,transparent);padding:20px;transition:.18s;}
+.app-top .corp-gift:hover{transform:translateY(-3px);box-shadow:var(--sh-lg);}
+.scrim .corp-gift{position:relative;overflow:hidden;border-radius:var(--r-lg);color:#F4E9D8;
+  background:linear-gradient(135deg,#5E1014,#2A0709);border:1px solid color-mix(in srgb,#E6A23C 40%,transparent);padding:20px;}
+.app-top .gift-denom,.scrim .gift-denom{border:1.5px solid var(--line-2);border-radius:var(--r);padding:16px 10px;text-align:center;cursor:pointer;transition:.15s;background:var(--surface);}
+.app-top .gift-denom:hover,.scrim .gift-denom:hover{border-color:#E6A23C;}
+.app-top .gift-denom.on,.scrim .gift-denom.on{border-color:#E6A23C;background:color-mix(in srgb,#E6A23C 12%,transparent);}
+.scrim .corp-eyebrow{font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;}
+.scrim .cal-sel{position:relative;}
+.app-top .av-stack{display:flex;}
+.app-top .av-stack >*{margin-left:-9px;border:2px solid var(--surface);}
+.app-top .av-stack >*:first-child{margin-left:0;}

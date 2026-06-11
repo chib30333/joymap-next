@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============ JOYMAP DESIGN TOKENS — verbatim from the prototype theme.css ============ */
+:root {
+  /* brand */
+  --coral: #e0212f;
+  --red: #e0212f;
+  --red-deep: #b30f1c;
+  --maroon: #4a0e12;
+  --orange: #f26a1b;
+  --orange-deep: #dc5710;
+  --coral-deep: #b30f1c;
+  --coral-soft: #fce2e5;
+
+  /* mood palette */
+  --m-calm: #3fa89b; --m-calm-soft: #dcf1ed;
+  --m-joy: #e89015; --m-joy-soft: #fbebcb;
+  --m-energy: #ff4d74; --m-energy-soft: #ffe0e7;
+  --m-focus: #5563d6; --m-focus-soft: #e1e4fa;
+  --m-adventure: #7b53f0; --m-adventure-soft: #ebe2fe;
+  --m-connect: #ff8a4c; --m-connect-soft: #ffe8d9;
+
+  /* neutrals — LIGHT (near-pink, default) */
+  --bg: #fdf0f2;
+  --bg-2: #f8e2e6;
+  --surface: #ffffff;
+  --surface-2: #fff6f8;
+  --ink: #2a1519;
+  --ink-2: #6f5157;
+  --ink-3: #a98d94;
+  --line: #f4dde2;
+  --line-2: #eccbd3;
+
+  /* type */
+  --display: var(--font-display), "Baloo 2", system-ui, sans-serif;
+  --body: var(--font-body), "Hanken Grotesk", system-ui, sans-serif;
+
+  /* radii */
+  --r-xs: 8px; --r-sm: 12px; --r: 18px; --r-lg: 26px; --r-xl: 34px; --r-pill: 999px;
+
+  --gap: 24px; --pad: 30px;
+
+  /* shadow (warm pink-tinted) */
+  --sh-sm: 0 1px 2px rgba(120,30,45,.06), 0 2px 6px rgba(120,30,45,.05);
+  --sh: 0 4px 12px rgba(120,30,45,.08), 0 12px 28px rgba(120,30,45,.07);
+  --sh-lg: 0 12px 30px rgba(120,30,45,.12), 0 30px 60px rgba(120,30,45,.1);
+  --sh-coral: 0 10px 26px rgba(224,33,47,.34);
+}
+
+[data-theme="dark"] {
+  --bg: #0c0a0b;
+  --bg-2: #141011;
+  --surface: #171213;
+  --surface-2: #1f1719;
+  --ink: #f3ebe0;
+  --ink-2: #b6aca3;
+  --ink-3: #857c75;
+  --line: #291f21;
+  --line-2: #392b2e;
+  --coral-soft: #3e1014;
+  --m-calm-soft: #16322e;
+  --m-joy-soft: #33280f;
+  --m-energy-soft: #341621;
+  --m-focus-soft: #1e2147;
+  --m-adventure-soft: #26193f;
+  --m-connect-soft: #331f12;
+  --sh-sm: 0 1px 2px rgba(0,0,0,.3);
+  --sh: 0 6px 18px rgba(0,0,0,.4);
+  --sh-lg: 0 16px 40px rgba(0,0,0,.5);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--body);
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-size: 15px;
+  line-height: 1.5;
+}
+h1, h2, h3, h4 { font-family: var(--display); margin: 0; font-weight: 800; letter-spacing: -0.01em; line-height: 1.04; color: var(--ink); }
+button { font-family: inherit; cursor: pointer; }
+::selection { background: var(--coral); color: #fff; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+/* skeleton shimmer (mirrors skeletons.jsx) */
+.skel { position: relative; overflow: hidden; background: color-mix(in srgb, var(--ink) 8%, transparent); border-radius: 10px; }
+.skel::after {
+  content: ""; position: absolute; inset: 0; transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--surface) 75%, transparent), transparent);
+  animation: skel-sweep 1.4s ease-in-out infinite;
+}
+@keyframes skel-sweep { to { transform: translateX(100%); } }
+@media (prefers-reduced-motion: reduce) { .skel::after { animation: none; } }
+
+.jm-spin {
+  width: 17px; height: 17px; border-radius: 999px; display: inline-block; flex: none;
+  border: 2.5px solid color-mix(in srgb, currentColor 35%, transparent); border-top-color: currentColor;
+  animation: jm-rot 0.7s linear infinite;
+}
+@keyframes jm-rot { to { transform: rotate(360deg); } }
+
+/* landing scroll-reveal (mirrors Landing.html) */
+[data-reveal] { opacity: 0; transform: translateY(22px); transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
+[data-reveal].in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { [data-reveal] { opacity: 1; transform: none; } }
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(242,106,27,.5); }
+  70% { box-shadow: 0 0 0 7px rgba(242,106,27,0); }
+  100% { box-shadow: 0 0 0 0 rgba(242,106,27,0); }
+}
