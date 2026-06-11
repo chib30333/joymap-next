@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import Link from "next/link";
 import { Icons, Logo } from "@/components/Icons";
 import { LangSwitcher, t } from "@/components/i18n";
 import { Avatar, CITIES } from "@/components/customer/primitives";
@@ -253,26 +252,6 @@ function AccountMenu({ user }: { user: { name: string; plan: string } }) {
             <Icons.settings size={18} />
             {t("Settings")}
           </button>
-          <div className="menu-div" />
-          <div className="menu-sec">{t("Switch portal")}</div>
-          <a className="menu-item on" style={{ cursor: "default" }}>
-            <span className="w-[7px] h-[7px] rounded-[99px] bg-coral" />
-            {t("Customer")}
-            <span
-              className="font-bold text-[11px]"
-              style={{ marginInlineStart: "auto" }}
-            >
-              {t("You")}
-            </span>
-          </a>
-          <Link className="menu-item" href="/provider">
-            <span className="w-[7px] h-[7px] rounded-[99px] bg-[var(--ink-3)]" />
-            {t("Provider")}
-          </Link>
-          <Link className="menu-item" href="/admin">
-            <span className="w-[7px] h-[7px] rounded-[99px] bg-[var(--ink-3)]" />
-            {t("Admin")}
-          </Link>
           <div className="menu-div" />
           <button
             className="menu-item"

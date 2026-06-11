@@ -59,11 +59,11 @@ async function main() {
   const hash = (pw: string) => bcrypt.hash(pw, 10);
 
   // --- platform team ---
-  await prisma.user.create({ data: { name: "Admin", email: "admin@joymap.ru", pwHash: await hash("admin123"), role: "admin", joined: "Jan 2026" } });
+  await prisma.user.create({ data: { name: "Admin", email: "admin@joymap.ru", pwHash: await hash("JoymapAdmin!2026"), role: "admin", joined: "Jan 2026" } });
 
   // --- customer ---
   const mira = await prisma.user.create({
-    data: { name: "Mira", email: "mira@joymap.ru", pwHash: await hash("joy123"), role: "customer", city: "Moscow", joined: "Jan 2026", plan: "Joy Map+", wallet: 3450, moods: ["calm", "joy", "focus"], onboarded: true },
+    data: { name: "Mira", email: "mira@joymap.ru", pwHash: await hash("JoymapDemo!2026"), role: "customer", city: "Moscow", joined: "Jan 2026", plan: "Joy Map+", wallet: 3450, moods: ["calm", "joy", "focus"], onboarded: true },
   });
 
   // --- providers + owners (one per unique provider name) ---
@@ -76,7 +76,7 @@ async function main() {
       data: {
         name: isAether ? "Alex (Aether Studio)" : `${e.provider} Owner`,
         email: isAether ? "aether@joymap.ru" : `${e.provider.toLowerCase().replace(/[^a-z]+/g, "")}@joymap.ru`,
-        pwHash: await hash("joy123"),
+        pwHash: await hash("JoymapDemo!2026"),
         role: "provider",
         city: e.city,
         joined: "Mar 2026",
@@ -155,7 +155,7 @@ async function main() {
     { type: "promo", author: "Coldwell", target: "Promo banner", text: "GUARANTEED weight loss in 3 sessions — medically proven!", reason: "Reported · false claim", time: "1d ago" },
   ] });
 
-  console.log(`Seeded: 1 admin, ${pi} providers, ${DEMO.length} services, demo customer Mira (mira@joymap.ru / joy123).`);
+  console.log(`Seeded: 1 admin, ${pi} providers, ${DEMO.length} services, demo customer Mira (mira@joymap.ru / JoymapDemo!2026).`);
 }
 
 main()

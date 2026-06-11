@@ -37,11 +37,11 @@ npm run dev           # http://localhost:3000
 
 ### Demo accounts (after `db:seed`)
 
-| Role        | Email              | Password   |
-| ----------- | ------------------ | ---------- |
-| Customer    | `mira@joymap.ru`   | `joy123`   |
-| Provider    | `aether@joymap.ru` | `joy123`   |
-| Platform    | `admin@joymap.ru`  | `admin123` |
+| Role        | Email              | Password           |
+| ----------- | ------------------ | ------------------ |
+| Customer    | `mira@joymap.ru`   | `JoymapDemo!2026`  |
+| Provider    | `aether@joymap.ru` | `JoymapDemo!2026`  |
+| Platform    | `admin@joymap.ru`  | `JoymapAdmin!2026` |
 
 Start fresh instead? Skip `db:seed` — the marketplace begins empty and you can
 sign up your own accounts (a provider's services need admin approval to appear).

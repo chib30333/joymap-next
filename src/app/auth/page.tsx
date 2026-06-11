@@ -869,10 +869,10 @@ export default function AuthPage() {
 
 function DemoHint({ admin }: { admin: boolean }) {
   const rows = admin
-    ? [["Platform team", "admin@joymap.ru", "admin123"]]
+    ? [["Platform team", "admin@joymap.ru", "JoymapAdmin!2026"]]
     : [
-        ["Customer", "mira@joymap.ru", "joy123"],
-        ["Provider", "aether@joymap.ru", "joy123"],
+        ["Customer", "mira@joymap.ru", "JoymapDemo!2026"],
+        ["Provider", "aether@joymap.ru", "JoymapDemo!2026"],
       ];
   return (
     <div

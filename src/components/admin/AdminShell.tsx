@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter, usePathname } from "next/navigation";
-import Link from "next/link";
 import { Icons, Logo } from "@/components/Icons";
 import { LangSwitcher, t } from "@/components/i18n";
 import { Avatar } from "@/components/dash/primitives";
@@ -105,41 +104,9 @@ export function AdminSidebar({
         })}
       </nav>
       <div className="side-foot">
-        <div
-          className="card"
-          style={{ padding: 6, background: "var(--surface-2)" }}
-        >
-          <div className="nav-sec" style={{ padding: "6px 10px 6px" }}>
-            {t("Switch portal")}
-          </div>
-          <div className="flex flex-col gap-[2px]">
-            <Link className="nav-item" href="/joymap">
-              <span className="w-[7px] h-[7px] rounded-[99px] bg-[var(--ink-3)]" />
-              {t("Customer")}
-            </Link>
-            <Link className="nav-item" href="/provider">
-              <span className="w-[7px] h-[7px] rounded-[99px] bg-[var(--ink-3)]" />
-              {t("Provider")}
-            </Link>
-            <span className="nav-item on" style={{ cursor: "default" }}>
-              <span className="w-[7px] h-[7px] rounded-[99px] bg-coral" />
-              {t("Admin")}
-              <span
-                style={{
-                  marginInlineStart: "auto",
-                  fontSize: 11,
-                  color: "var(--coral)",
-                  fontWeight: 700,
-                }}
-              >
-                {t("You")}
-              </span>
-            </span>
-          </div>
-        </div>
         <button
           className="nav-item"
-          style={{ color: "var(--ink-3)", marginTop: 6 }}
+          style={{ color: "var(--ink-3)" }}
           onClick={logout}
         >
           <Icons.logout size={19} />
