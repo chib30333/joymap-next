@@ -1,5 +1,3 @@
-// Session = signed JWT stored in an httpOnly cookie. Replaces the prototype's
-// localStorage "jm_session" with a real server-side auth check.
 import { cookies } from "next/headers";
 import { SignJWT, jwtVerify } from "jose";
 import { prisma } from "./db";

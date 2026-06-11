@@ -1,6 +1,3 @@
-// Booking lifecycle: create / cancel / reschedule / set-status / rate.
-// Mirrors api.createBooking & friends in backend.js. All multi-row writes are
-// wrapped in transactions so wallet + slot counts + notifications stay consistent.
 import { prisma } from "@/lib/db";
 import { requireUser, ApiError } from "@/lib/session";
 import { ledger, notify } from "./notify";

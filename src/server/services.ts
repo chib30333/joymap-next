@@ -1,5 +1,3 @@
-// Provider services + schedule slots.
-// Mirrors api.createService / updateService / toggleService / add|move|remove slot.
 import { prisma } from "@/lib/db";
 import { currentProvider, ApiError } from "@/lib/session";
 import { notifyAdmins } from "./notify";

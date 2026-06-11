@@ -1,12 +1,21 @@
 "use client";
-import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 import { Icons } from "@/components/Icons";
 
-// Language layer — same language list, pill switcher, localStorage key ('jm_lang')
-// and RTL handling as the prototype's i18n.jsx. Strings render from their English
-// source (the prototype's t() also falls back to English source), so the default
-// view is identical; switching language is wired and persisted.
-export type Lang = { code: string; name: string; native: string; flag: string; rtl?: boolean };
+export type Lang = {
+  code: string;
+  name: string;
+  native: string;
+  flag: string;
+  rtl?: boolean;
+};
 export const LANGS: readonly Lang[] = [
   { code: "en", name: "English", native: "English", flag: "🇬🇧" },
   { code: "ru", name: "Russian", native: "Русский", flag: "🇷🇺" },
@@ -61,7 +70,14 @@ export function LangSwitcher() {
       {open && (
         <div className="lang-menu" onMouseLeave={() => setOpen(false)}>
           {LANGS.map((l) => (
-            <button key={l.code} className={l.code === lang ? "on" : ""} onClick={() => { setLang(l.code); setOpen(false); }}>
+            <button
+              key={l.code}
+              className={l.code === lang ? "on" : ""}
+              onClick={() => {
+                setLang(l.code);
+                setOpen(false);
+              }}
+            >
               <span className="text-[16px]">{l.flag}</span>
               {l.native}
             </button>

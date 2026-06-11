@@ -1,8 +1,6 @@
-// Notification + wallet ledger helpers, shared by the server modules.
 import { Prisma, PrismaClient } from "@prisma/client";
 import { dateLabel, TODAY } from "@/lib/constants";
 
-// Accept either the base client or a transactional client.
 type Tx = Prisma.TransactionClient | PrismaClient;
 
 export async function notify(

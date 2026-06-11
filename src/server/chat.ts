@@ -1,5 +1,3 @@
-// Chat threads + messages, shared by customer and provider.
-// Mirrors api.sendMessage / openThread / startThread / ensureThread.
 import { prisma } from "@/lib/db";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { currentUser, currentProvider, ApiError } from "@/lib/session";

@@ -1,4 +1,3 @@
-// Money + small formatting helpers (mirrors fmt / money in the prototype).
 export function money(n: number) {
   return new Intl.NumberFormat("ru-RU").format(Math.round(n)) + "\u00A0₽";
 }

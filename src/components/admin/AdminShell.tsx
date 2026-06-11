@@ -1,6 +1,5 @@
 "use client";
-// AdminSidebar + Topbar — 1:1 port of dash.jsx Sidebar/Topbar/PortalSwitcher (admin).
-import { useState } from "react";
+
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { Icons, Logo } from "@/components/Icons";
@@ -8,55 +7,156 @@ import { LangSwitcher, t } from "@/components/i18n";
 import { Avatar } from "@/components/dash/primitives";
 import { rpc } from "@/lib/client";
 
-type NavItem = { sec?: string; key?: string; label?: string; icon?: keyof typeof Icons; href?: string; badge?: number | null };
+type NavItem = {
+  sec?: string;
+  key?: string;
+  label?: string;
+  icon?: keyof typeof Icons;
+  href?: string;
+  badge?: number | null;
+};
 const A_NAV: NavItem[] = [
   { sec: "Overview" },
   { key: "dashboard", label: "Dashboard", icon: "grid", href: "/admin" },
   { sec: "Operate" },
-  { key: "providers", label: "Providers", icon: "compass", href: "/admin/providers" },
-  { key: "moderation", label: "Moderation", icon: "checkCirc", href: "/admin/moderation" },
+  {
+    key: "providers",
+    label: "Providers",
+    icon: "compass",
+    href: "/admin/providers",
+  },
+  {
+    key: "moderation",
+    label: "Moderation",
+    icon: "checkCirc",
+    href: "/admin/moderation",
+  },
   { key: "content", label: "Content", icon: "image", href: "/admin/content" },
-  { key: "customers", label: "Customers", icon: "user", href: "/admin/customers" },
+  {
+    key: "customers",
+    label: "Customers",
+    icon: "user",
+    href: "/admin/customers",
+  },
   { sec: "Money & growth" },
-  { key: "financials", label: "Financials", icon: "wallet", href: "/admin/financials" },
-  { key: "marketing", label: "Marketing", icon: "flame", href: "/admin/marketing" },
+  {
+    key: "financials",
+    label: "Financials",
+    icon: "wallet",
+    href: "/admin/financials",
+  },
+  {
+    key: "marketing",
+    label: "Marketing",
+    icon: "flame",
+    href: "/admin/marketing",
+  },
 ];
 
-export function AdminSidebar({ badges }: { badges: { moderation: number | null; content: number | null } }) {
+export function AdminSidebar({
+  badges,
+}: {
+  badges: { moderation: number | null; content: number | null };
+}) {
   const router = useRouter();
   const pathname = usePathname();
-  const logout = async () => { await rpc("logout"); router.push("/auth"); };
+  const logout = async () => {
+    await rpc("logout");
+    router.push("/auth");
+  };
   return (
     <aside className="side">
-      <div className="side-brand" style={{ display: "flex", alignItems: "center", gap: 9, flexWrap: "wrap" }}>
+      <div
+        className="side-brand"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 9,
+          flexWrap: "wrap",
+        }}
+      >
         <Logo size={25} />
-        <span className="inline-flex items-center gap-[5px] whitespace-nowrap bg-[color-mix(in_srgb,var(--orange)_18%,transparent)] text-[var(--orange)] px-[9px] py-[3px] rounded-[99px] text-[10px] font-extrabold font-display">Admin</span>
+        <span className="inline-flex items-center gap-[5px] whitespace-nowrap bg-[color-mix(in_srgb,var(--orange)_18%,transparent)] text-[var(--orange)] px-[9px] py-[3px] rounded-[99px] text-[10px] font-extrabold font-display">
+          Admin
+        </span>
       </div>
       <nav className="flex flex-col gap-[3px]">
         {A_NAV.map((n, i) => {
-          if (n.sec) return <div key={`s${i}`} className="nav-sec">{t(n.sec)}</div>;
+          if (n.sec)
+            return (
+              <div key={`s${i}`} className="nav-sec">
+                {t(n.sec)}
+              </div>
+            );
           const I = Icons[n.icon!];
           const b = (badges as Record<string, number | null>)[n.key!];
           const on = pathname === n.href;
-          return <button key={n.key} className={`nav-item ${on ? "on" : ""}`} onClick={() => router.push(n.href!)}><I size={19} />{t(n.label!)}{b ? <span className="nav-badge">{b}</span> : null}</button>;
+          return (
+            <button
+              key={n.key}
+              className={`nav-item ${on ? "on" : ""}`}
+              onClick={() => router.push(n.href!)}
+            >
+              <I size={19} />
+              {t(n.label!)}
+              {b ? <span className="nav-badge">{b}</span> : null}
+            </button>
+          );
         })}
       </nav>
       <div className="side-foot">
-        <div className="card" style={{ padding: 6, background: "var(--surface-2)" }}>
-          <div className="nav-sec" style={{ padding: "6px 10px 6px" }}>{t("Switch portal")}</div>
+        <div
+          className="card"
+          style={{ padding: 6, background: "var(--surface-2)" }}
+        >
+          <div className="nav-sec" style={{ padding: "6px 10px 6px" }}>
+            {t("Switch portal")}
+          </div>
           <div className="flex flex-col gap-[2px]">
-            <Link className="nav-item" href="/joymap"><span className="w-[7px] h-[7px] rounded-[99px] bg-[var(--ink-3)]" />{t("Customer")}</Link>
-            <Link className="nav-item" href="/provider"><span className="w-[7px] h-[7px] rounded-[99px] bg-[var(--ink-3)]" />{t("Provider")}</Link>
-            <span className="nav-item on" style={{ cursor: "default" }}><span className="w-[7px] h-[7px] rounded-[99px] bg-coral" />{t("Admin")}<span style={{ marginInlineStart: "auto", fontSize: 11, color: "var(--coral)", fontWeight: 700 }}>{t("You")}</span></span>
+            <Link className="nav-item" href="/joymap">
+              <span className="w-[7px] h-[7px] rounded-[99px] bg-[var(--ink-3)]" />
+              {t("Customer")}
+            </Link>
+            <Link className="nav-item" href="/provider">
+              <span className="w-[7px] h-[7px] rounded-[99px] bg-[var(--ink-3)]" />
+              {t("Provider")}
+            </Link>
+            <span className="nav-item on" style={{ cursor: "default" }}>
+              <span className="w-[7px] h-[7px] rounded-[99px] bg-coral" />
+              {t("Admin")}
+              <span
+                style={{
+                  marginInlineStart: "auto",
+                  fontSize: 11,
+                  color: "var(--coral)",
+                  fontWeight: 700,
+                }}
+              >
+                {t("You")}
+              </span>
+            </span>
           </div>
         </div>
-        <button className="nav-item" style={{ color: "var(--ink-3)", marginTop: 6 }} onClick={logout}><Icons.logout size={19} />{t("Log out")}</button>
+        <button
+          className="nav-item"
+          style={{ color: "var(--ink-3)", marginTop: 6 }}
+          onClick={logout}
+        >
+          <Icons.logout size={19} />
+          {t("Log out")}
+        </button>
       </div>
     </aside>
   );
 }
 
-export function AdminTopbar({ name, unread }: { name: string; unread: number }) {
+export function AdminTopbar({
+  name,
+  unread,
+}: {
+  name: string;
+  unread: number;
+}) {
   const pathname = usePathname();
   const TITLES: Record<string, [string, string]> = {
     "/admin": ["Dashboard", "Platform health at a glance"],
@@ -67,16 +167,30 @@ export function AdminTopbar({ name, unread }: { name: string; unread: number }) 
     "/admin/financials": ["Financials", "Revenue, commission & payouts"],
     "/admin/marketing": ["Marketing", "Campaigns, promos & experiments"],
   };
-  const [title, sub] = TITLES[pathname] || ["Dashboard", "Platform health at a glance"];
+  const [title, sub] = TITLES[pathname] || [
+    "Dashboard",
+    "Platform health at a glance",
+  ];
   return (
     <div className="topbar">
       <div className="flex-1 min-w-0">
         <h1 className="text-[20px] leading-[1.1]">{t(title)}</h1>
-        {sub && <div className="text-[13px] text-ink-3 font-semibold mt-[2px]">{t(sub)}</div>}
+        {sub && (
+          <div className="text-[13px] text-ink-3 font-semibold mt-[2px]">
+            {t(sub)}
+          </div>
+        )}
       </div>
       <LangSwitcher />
-      <button className="icon-btn"><Icons.bell size={18} />{unread > 0 && <span className="dot-badge" />}</button>
-      <Avatar name={name} size={40} grad="linear-gradient(140deg,var(--ink),#3742A8)" />
+      <button className="icon-btn">
+        <Icons.bell size={18} />
+        {unread > 0 && <span className="dot-badge" />}
+      </button>
+      <Avatar
+        name={name}
+        size={40}
+        grad="linear-gradient(140deg,var(--ink),#3742A8)"
+      />
     </div>
   );
 }

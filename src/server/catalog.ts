@@ -1,5 +1,3 @@
-// Read-side projections: turn DB rows into the shapes the UI expects.
-// Mirrors expOf / ratingOf / providerFinance / platformStats in backend.js.
 import { prisma } from "@/lib/db";
 import { moodGradient, TODAY, COMMISSION } from "@/lib/constants";
 import type { Service } from "@prisma/client";

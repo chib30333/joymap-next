@@ -1,5 +1,3 @@
-// Auth service — signup / login / logout against PostgreSQL.
-// Mirrors api.signup / api.login / api.logout in backend.js.
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/db";
 import { ApiError, createSession, clearSession } from "@/lib/session";

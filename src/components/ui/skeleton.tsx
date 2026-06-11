@@ -1,8 +1,22 @@
-// Skeleton / SkeletonCard — read-loading shimmer primitives. See guideline 02 / 06.
 import { clsx } from "@/lib/cx";
 
-export function Skeleton({ w = "100%", h = 14, r = 8, className }: { w?: number | string; h?: number; r?: number; className?: string }) {
-  return <span className={clsx("skel block", className)} style={{ width: w, height: h, borderRadius: r }} />;
+export function Skeleton({
+  w = "100%",
+  h = 14,
+  r = 8,
+  className,
+}: {
+  w?: number | string;
+  h?: number;
+  r?: number;
+  className?: string;
+}) {
+  return (
+    <span
+      className={clsx("skel block", className)}
+      style={{ width: w, height: h, borderRadius: r }}
+    />
+  );
 }
 
 export function SkeletonCard() {

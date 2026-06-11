@@ -1,25 +1,60 @@
 "use client";
-// ServiceModal — 1:1 port of detail.jsx: service detail + 4-step booking flow + QR.
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { rpc, useBusy } from "@/lib/client";
-import { MOODS, fmt, bg, WD, dow, Modal, PhotoFrame, MoodDot, MoodChip, Rating, Btn, BusyBtn, QR, type Exp } from "./primitives";
+import {
+  MOODS,
+  fmt,
+  bg,
+  WD,
+  dow,
+  Modal,
+  PhotoFrame,
+  MoodDot,
+  MoodChip,
+  Rating,
+  Btn,
+  BusyBtn,
+  QR,
+  type Exp,
+} from "./primitives";
 
-const PAY_METHODS: [string, string, string | null][] = [["card", "Bank card", "•••• 4291"], ["sber", "Sber Pay", "Linked"], ["wallet", "Joymap balance", null]];
+const PAY_METHODS: [string, string, string | null][] = [
+  ["card", "Bank card", "•••• 4291"],
+  ["sber", "Sber Pay", "Linked"],
+  ["wallet", "Joymap balance", null],
+];
 const dateLabel = (d: number) => `${WD[dow(d)]} ${d} Jun`;
 
 export type Slot = { day: number; time: string };
 
-export function ServiceModal({ exp, slots, wallet, fav, onFav, onClose }: {
-  exp: Exp; slots: Slot[]; wallet: number; fav: boolean; onFav: (id: string) => void; onClose: () => void;
+export function ServiceModal({
+  exp,
+  slots,
+  wallet,
+  fav,
+  onFav,
+  onClose,
+}: {
+  exp: Exp;
+  slots: Slot[];
+  wallet: number;
+  fav: boolean;
+  onFav: (id: string) => void;
+  onClose: () => void;
 }) {
   const router = useRouter();
   const [step, setStep] = useState(0);
   const m = MOODS[exp.mood];
 
-  const slotDays = [...new Set(slots.map((s) => s.day))].sort((a, b) => a - b).slice(0, 7);
-  const days = slotDays.length ? slotDays : Array.from({ length: 7 }, (_, i) => 10 + i).filter((d) => d <= 30);
+  const slotDays = [...new Set(slots.map((s) => s.day))]
+    .sort((a, b) => a - b)
+    .slice(0, 7);
+  const days = slotDays.length
+    ? slotDays
+    : Array.from({ length: 7 }, (_, i) => 10 + i).filter((d) => d <= 30);
   const timesFor = (d: number) => {
     const ts = slots.filter((s) => s.day === d).map((s) => s.time);
     return ts.length ? ts : ["07:30", "11:00", "15:00", "18:30", "20:00"];
@@ -33,18 +68,78 @@ export function ServiceModal({ exp, slots, wallet, fav, onFav, onClose }: {
   const { busy, run, error, setError } = useBusy();
   const total = exp.price * spots;
 
-  const confirm = () => run(() => rpc<{ code: string }>("createBooking", { serviceId: exp.id, day, time, people: spots, pay }),
-    (b) => { setBooking(b); setStep(3); router.refresh(); });
+  const confirm = () =>
+    run(
+      () =>
+        rpc<{ code: string }>("createBooking", {
+          serviceId: exp.id,
+          day,
+          time,
+          people: spots,
+          pay,
+        }),
+      (b) => {
+        setBooking(b);
+        setStep(3);
+        router.refresh();
+      },
+    );
 
   const Header = ({ sub }: { sub?: string }) => (
     <div className="relative">
       <PhotoFrame exp={exp} ratio="16/8">
-        <button className="icon-btn" style={{ position: "absolute", top: 14, right: 14, background: "rgba(255,255,255,.92)", border: "none", color: "#241C2E" }} onClick={onClose}><Icons.close size={18} /></button>
-        <button className={`fav ${fav ? "on" : ""}`} style={{ position: "absolute", top: 14, right: 64, width: 42, height: 42, background: "rgba(255,255,255,.9)", color: fav ? "var(--m-energy)" : "#241C2E" }} onClick={() => onFav(exp.id)}><Icons.heart size={19} fill={fav} /></button>
+        <button
+          className="icon-btn"
+          style={{
+            position: "absolute",
+            top: 14,
+            right: 14,
+            background: "rgba(255,255,255,.92)",
+            border: "none",
+            color: "#241C2E",
+          }}
+          onClick={onClose}
+        >
+          <Icons.close size={18} />
+        </button>
+        <button
+          className={`fav ${fav ? "on" : ""}`}
+          style={{
+            position: "absolute",
+            top: 14,
+            right: 64,
+            width: 42,
+            height: 42,
+            background: "rgba(255,255,255,.9)",
+            color: fav ? "var(--m-energy)" : "#241C2E",
+          }}
+          onClick={() => onFav(exp.id)}
+        >
+          <Icons.heart size={19} fill={fav} />
+        </button>
         <div className="absolute left-[18px] bottom-[16px] right-[18px]">
-          <span className="mood-chip" style={{ background: "rgba(255,255,255,.92)", color: m.color, marginBottom: 10 }}><MoodDot mood={exp.mood} size={7} />{m.label}</span>
-          <h2 className="text-[#fff] text-[28px]" style={{ textShadow: "0 2px 16px rgba(0,0,0,.4)" }}>{exp.title}</h2>
-          {sub && <div className="text-[rgba(255,255,255,.9)] font-semibold mt-[4px]">{sub}</div>}
+          <span
+            className="mood-chip"
+            style={{
+              background: "rgba(255,255,255,.92)",
+              color: m.color,
+              marginBottom: 10,
+            }}
+          >
+            <MoodDot mood={exp.mood} size={7} />
+            {m.label}
+          </span>
+          <h2
+            className="text-[#fff] text-[28px]"
+            style={{ textShadow: "0 2px 16px rgba(0,0,0,.4)" }}
+          >
+            {exp.title}
+          </h2>
+          {sub && (
+            <div className="text-[rgba(255,255,255,.9)] font-semibold mt-[4px]">
+              {sub}
+            </div>
+          )}
         </div>
       </PhotoFrame>
     </div>
@@ -57,27 +152,94 @@ export function ServiceModal({ exp, slots, wallet, fav, onFav, onClose }: {
           <Header />
           <div className="pt-[22px] px-[24px] pb-0">
             <div className="flex items-center gap-[16px] flex-wrap mb-[18px]">
-              {exp.rating ? <Rating value={exp.rating} reviews={exp.reviews} />
-                : <span className="tag" style={{ background: "var(--coral-soft)", color: "var(--coral-deep)", border: "none", fontWeight: 700 }}>New on Joymap</span>}
+              {exp.rating ? (
+                <Rating value={exp.rating} reviews={exp.reviews} />
+              ) : (
+                <span
+                  className="tag"
+                  style={{
+                    background: "var(--coral-soft)",
+                    color: "var(--coral-deep)",
+                    border: "none",
+                    fontWeight: 700,
+                  }}
+                >
+                  New on Joymap
+                </span>
+              )}
               <span className="text-[var(--line-2)]">•</span>
-              <span className="inline-flex gap-[6px] items-center text-ink-2 font-semibold text-[14px]"><Icons.pin size={16} />{exp.area}, {exp.city}</span>
+              <span className="inline-flex gap-[6px] items-center text-ink-2 font-semibold text-[14px]">
+                <Icons.pin size={16} />
+                {exp.area}, {exp.city}
+              </span>
               <span className="text-[var(--line-2)]">•</span>
-              <span className="inline-flex gap-[6px] items-center text-ink-2 font-semibold text-[14px]"><Icons.clock size={16} />{exp.dur}</span>
+              <span className="inline-flex gap-[6px] items-center text-ink-2 font-semibold text-[14px]">
+                <Icons.clock size={16} />
+                {exp.dur}
+              </span>
             </div>
             <div className="flex items-center gap-[12px] py-[14px] border-t border-b border-line mb-[18px]">
-              <div className="avatar" style={{ background: "var(--bg-2)", color: "var(--ink-2)" }}>{exp.provider[0]}</div>
-              <div><div className="font-bold text-[14.5px]">{exp.provider}</div><div className="text-[12.5px] text-ink-3 font-semibold">Verified provider · responds in ~1h</div></div>
-              <span className="tag" style={{ marginLeft: "auto", background: "var(--m-calm-soft)", color: "var(--m-calm)", border: "none" }}><Icons.check size={13} style={{ marginRight: 4 }} />Verified</span>
+              <div
+                className="avatar"
+                style={{ background: "var(--bg-2)", color: "var(--ink-2)" }}
+              >
+                {exp.provider[0]}
+              </div>
+              <div>
+                <div className="font-bold text-[14.5px]">{exp.provider}</div>
+                <div className="text-[12.5px] text-ink-3 font-semibold">
+                  Verified provider · responds in ~1h
+                </div>
+              </div>
+              <span
+                className="tag"
+                style={{
+                  marginLeft: "auto",
+                  background: "var(--m-calm-soft)",
+                  color: "var(--m-calm)",
+                  border: "none",
+                }}
+              >
+                <Icons.check size={13} style={{ marginRight: 4 }} />
+                Verified
+              </span>
             </div>
-            <p className="text-ink-2 text-[15px] leading-[1.6] mb-[18px]">{exp.about}</p>
+            <p className="text-ink-2 text-[15px] leading-[1.6] mb-[18px]">
+              {exp.about}
+            </p>
             <div className="flex gap-[8px] flex-wrap mb-[6px]">
-              {exp.tags.map((tg) => <span key={tg} className="tag">{tg}</span>)}
-              <span className="tag" style={{ background: "var(--coral-soft)", color: "var(--coral-deep)", border: "none" }}><Icons.flame size={13} style={{ marginRight: 4 }} />{exp.spots} spots / session</span>
+              {exp.tags.map((tg) => (
+                <span key={tg} className="tag">
+                  {tg}
+                </span>
+              ))}
+              <span
+                className="tag"
+                style={{
+                  background: "var(--coral-soft)",
+                  color: "var(--coral-deep)",
+                  border: "none",
+                }}
+              >
+                <Icons.flame size={13} style={{ marginRight: 4 }} />
+                {exp.spots} spots / session
+              </span>
             </div>
           </div>
           <Footer>
-            <div><div className="text-[12.5px] text-ink-3 font-semibold">From</div><div className="price" style={{ fontSize: 22 }}>{fmt(exp.price)}</div></div>
-            <Btn size="lg" iconR={<Icons.arrowR size={19} />} onClick={() => setStep(1)}>Book a spot</Btn>
+            <div>
+              <div className="text-[12.5px] text-ink-3 font-semibold">From</div>
+              <div className="price" style={{ fontSize: 22 }}>
+                {fmt(exp.price)}
+              </div>
+            </div>
+            <Btn
+              size="lg"
+              iconR={<Icons.arrowR size={19} />}
+              onClick={() => setStep(1)}
+            >
+              Book a spot
+            </Btn>
           </Footer>
         </div>
       )}
@@ -87,35 +249,109 @@ export function ServiceModal({ exp, slots, wallet, fav, onFav, onClose }: {
           <Header sub="Choose your day & time" />
           <div className="pt-[22px] px-[24px] pb-0">
             <Label n="1" t="Pick a day" />
-            <div className="no-scrollbar" style={{ display: "flex", gap: 9, overflowX: "auto", marginBottom: 22 }}>
+            <div
+              className="no-scrollbar"
+              style={{
+                display: "flex",
+                gap: 9,
+                overflowX: "auto",
+                marginBottom: 22,
+              }}
+            >
               {days.map((d) => (
-                <button key={d} onClick={() => { setDay(d); setTime(timesFor(d)[0]); }}
-                  style={{ flex: "none", width: 64, padding: "12px 0", borderRadius: "var(--r-sm)", border: `1.5px solid ${day === d ? "var(--coral)" : "var(--line-2)"}`, background: day === d ? "var(--coral-soft)" : "var(--surface)", cursor: "pointer", transition: ".15s" }}>
-                  <div style={{ fontSize: 12, fontWeight: 700, color: day === d ? "var(--coral-deep)" : "var(--ink-3)" }}>{WD[dow(d)]}</div>
-                  <div style={{ fontFamily: "var(--display)", fontWeight: 800, fontSize: 20, color: day === d ? "var(--coral-deep)" : "var(--ink)" }}>{d}</div>
+                <button
+                  key={d}
+                  onClick={() => {
+                    setDay(d);
+                    setTime(timesFor(d)[0]);
+                  }}
+                  style={{
+                    flex: "none",
+                    width: 64,
+                    padding: "12px 0",
+                    borderRadius: "var(--r-sm)",
+                    border: `1.5px solid ${day === d ? "var(--coral)" : "var(--line-2)"}`,
+                    background:
+                      day === d ? "var(--coral-soft)" : "var(--surface)",
+                    cursor: "pointer",
+                    transition: ".15s",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: 12,
+                      fontWeight: 700,
+                      color: day === d ? "var(--coral-deep)" : "var(--ink-3)",
+                    }}
+                  >
+                    {WD[dow(d)]}
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: "var(--display)",
+                      fontWeight: 800,
+                      fontSize: 20,
+                      color: day === d ? "var(--coral-deep)" : "var(--ink)",
+                    }}
+                  >
+                    {d}
+                  </div>
                 </button>
               ))}
             </div>
             <Label n="2" t="Pick a time" />
             <div className="flex gap-[9px] flex-wrap mb-[22px]">
-              {timesFor(day).map((tm) => <button key={tm} className={`chip ${time === tm ? "on" : ""}`} style={{ padding: "10px 16px" }} onClick={() => setTime(tm)}>{tm}</button>)}
+              {timesFor(day).map((tm) => (
+                <button
+                  key={tm}
+                  className={`chip ${time === tm ? "on" : ""}`}
+                  style={{ padding: "10px 16px" }}
+                  onClick={() => setTime(tm)}
+                >
+                  {tm}
+                </button>
+              ))}
             </div>
             {slotDays.length > 0 && (
               <div className="flex gap-[8px] items-center text-[12.5px] text-ink-3 font-semibold mb-[18px]">
-                <Icons.sparkle size={14} style={{ color: "var(--coral)" }} />Times come straight from the provider&apos;s live schedule.
+                <Icons.sparkle size={14} style={{ color: "var(--coral)" }} />
+                Times come straight from the provider&apos;s live schedule.
               </div>
             )}
             <Label n="3" t="How many spots?" />
             <div className="flex items-center gap-[16px] mb-[8px]">
-              <button className="icon-btn" onClick={() => setSpots((s) => Math.max(1, s - 1))}><Icons.minus size={18} /></button>
-              <span className="font-display font-extrabold text-[26px] min-w-[30px] text-center">{spots}</span>
-              <button className="icon-btn" onClick={() => setSpots((s) => Math.min(exp.spots, s + 1))}><Icons.plus size={18} /></button>
-              <span className="text-ink-3 text-[13.5px] font-semibold">{exp.spots} available</span>
+              <button
+                className="icon-btn"
+                onClick={() => setSpots((s) => Math.max(1, s - 1))}
+              >
+                <Icons.minus size={18} />
+              </button>
+              <span className="font-display font-extrabold text-[26px] min-w-[30px] text-center">
+                {spots}
+              </span>
+              <button
+                className="icon-btn"
+                onClick={() => setSpots((s) => Math.min(exp.spots, s + 1))}
+              >
+                <Icons.plus size={18} />
+              </button>
+              <span className="text-ink-3 text-[13.5px] font-semibold">
+                {exp.spots} available
+              </span>
             </div>
           </div>
           <Footer>
-            <button className="btn btn-ghost btn-md" onClick={() => setStep(0)}><Icons.arrowL size={18} />Back</button>
-            <Btn size="lg" onClick={() => setStep(2)} iconR={<Icons.arrowR size={19} />}>Continue · {fmt(total)}</Btn>
+            <button className="btn btn-ghost btn-md" onClick={() => setStep(0)}>
+              <Icons.arrowL size={18} />
+              Back
+            </button>
+            <Btn
+              size="lg"
+              onClick={() => setStep(2)}
+              iconR={<Icons.arrowR size={19} />}
+            >
+              Continue · {fmt(total)}
+            </Btn>
           </Footer>
         </div>
       )}
@@ -124,26 +360,84 @@ export function ServiceModal({ exp, slots, wallet, fav, onFav, onClose }: {
         <div>
           <div className="pt-[22px] px-[24px] pb-0">
             <div className="flex items-center gap-[10px] mb-[20px]">
-              <button className="icon-btn" onClick={() => setStep(1)}><Icons.arrowL size={18} /></button>
+              <button className="icon-btn" onClick={() => setStep(1)}>
+                <Icons.arrowL size={18} />
+              </button>
               <h2 className="text-[22px]">Confirm &amp; pay</h2>
             </div>
-            <div className="card" style={{ padding: 16, display: "flex", gap: 14, marginBottom: 20, background: "var(--surface-2)" }}>
-              <div className="w-[64px] h-[64px] rounded-sm flex-none" style={{ background: bg(exp) }} />
+            <div
+              className="card"
+              style={{
+                padding: 16,
+                display: "flex",
+                gap: 14,
+                marginBottom: 20,
+                background: "var(--surface-2)",
+              }}
+            >
+              <div
+                className="w-[64px] h-[64px] rounded-sm flex-none"
+                style={{ background: bg(exp) }}
+              />
               <div className="flex-1">
                 <div className="font-bold text-[15px]">{exp.title}</div>
-                <div className="text-[13px] text-ink-3 font-semibold mt-[4px]">{dateLabel(day)} · {time} · {spots} spot{spots > 1 ? "s" : ""}</div>
-                <div className="text-[13px] text-ink-3 font-semibold">{exp.area}, {exp.city}</div>
+                <div className="text-[13px] text-ink-3 font-semibold mt-[4px]">
+                  {dateLabel(day)} · {time} · {spots} spot{spots > 1 ? "s" : ""}
+                </div>
+                <div className="text-[13px] text-ink-3 font-semibold">
+                  {exp.area}, {exp.city}
+                </div>
               </div>
             </div>
             <Label n="" t="Payment method" />
             <div className="flex flex-col gap-[9px] mb-[20px]">
               {PAY_METHODS.map(([k, l, s]) => (
-                <button key={k} onClick={() => { setPay(k); setError(null); }}
-                  style={{ display: "flex", alignItems: "center", gap: 12, padding: "13px 16px", borderRadius: "var(--r-sm)", cursor: "pointer", transition: ".15s", border: `1.5px solid ${pay === k ? "var(--coral)" : "var(--line-2)"}`, background: pay === k ? "var(--coral-soft)" : "var(--surface)" }}>
-                  <span style={{ width: 20, height: 20, borderRadius: 99, border: `2px solid ${pay === k ? "var(--coral)" : "var(--line-2)"}`, display: "grid", placeItems: "center" }}>
-                    {pay === k && <span style={{ width: 10, height: 10, borderRadius: 99, background: "var(--coral)" }} />}</span>
-                  <div className="text-left"><div className="font-bold text-[14px]">{l}</div>
-                    <div className="text-[12.5px] text-ink-3 font-semibold">{k === "wallet" ? fmt(wallet) : s}</div></div>
+                <button
+                  key={k}
+                  onClick={() => {
+                    setPay(k);
+                    setError(null);
+                  }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 12,
+                    padding: "13px 16px",
+                    borderRadius: "var(--r-sm)",
+                    cursor: "pointer",
+                    transition: ".15s",
+                    border: `1.5px solid ${pay === k ? "var(--coral)" : "var(--line-2)"}`,
+                    background:
+                      pay === k ? "var(--coral-soft)" : "var(--surface)",
+                  }}
+                >
+                  <span
+                    style={{
+                      width: 20,
+                      height: 20,
+                      borderRadius: 99,
+                      border: `2px solid ${pay === k ? "var(--coral)" : "var(--line-2)"}`,
+                      display: "grid",
+                      placeItems: "center",
+                    }}
+                  >
+                    {pay === k && (
+                      <span
+                        style={{
+                          width: 10,
+                          height: 10,
+                          borderRadius: 99,
+                          background: "var(--coral)",
+                        }}
+                      />
+                    )}
+                  </span>
+                  <div className="text-left">
+                    <div className="font-bold text-[14px]">{l}</div>
+                    <div className="text-[12.5px] text-ink-3 font-semibold">
+                      {k === "wallet" ? fmt(wallet) : s}
+                    </div>
+                  </div>
                 </button>
               ))}
             </div>
@@ -154,30 +448,69 @@ export function ServiceModal({ exp, slots, wallet, fav, onFav, onClose }: {
             </div>
             {(error || (pay === "wallet" && wallet < total)) && (
               <div className="flex gap-[9px] items-center py-[11px] px-[14px] rounded-sm bg-coral-soft text-coral-deep font-bold text-[13.5px] mt-[10px]">
-                <Icons.flame size={16} />{error || "Not enough Joymap balance — top up in Wallet or pick another method."}
+                <Icons.flame size={16} />
+                {error ||
+                  "Not enough Joymap balance — top up in Wallet or pick another method."}
               </div>
             )}
           </div>
           <Footer>
-            <div><div className="text-[12.5px] text-ink-3 font-semibold">Total</div><div className="price" style={{ fontSize: 22 }}>{fmt(total)}</div></div>
-            <BusyBtn busy={busy} className="btn btn-primary btn-lg" icon={<Icons.check size={19} />} disabled={pay === "wallet" && wallet < total} onClick={confirm}>Pay {fmt(total)}</BusyBtn>
+            <div>
+              <div className="text-[12.5px] text-ink-3 font-semibold">
+                Total
+              </div>
+              <div className="price" style={{ fontSize: 22 }}>
+                {fmt(total)}
+              </div>
+            </div>
+            <BusyBtn
+              busy={busy}
+              className="btn btn-primary btn-lg"
+              icon={<Icons.check size={19} />}
+              disabled={pay === "wallet" && wallet < total}
+              onClick={confirm}
+            >
+              Pay {fmt(total)}
+            </BusyBtn>
           </Footer>
         </div>
       )}
 
       {step === 3 && (
         <div className="py-[30px] px-[28px] text-center">
-          <div className="anim-pop w-[72px] h-[72px] rounded-[99px] bg-[var(--m-calm)] grid place-items-center mt-0 mx-auto mb-[18px] text-[#fff]" style={{ boxShadow: "0 12px 30px rgba(63,168,155,.4)" }}><Icons.check size={38} /></div>
+          <div
+            className="anim-pop w-[72px] h-[72px] rounded-[99px] bg-[var(--m-calm)] grid place-items-center mt-0 mx-auto mb-[18px] text-[#fff]"
+            style={{ boxShadow: "0 12px 30px rgba(63,168,155,.4)" }}
+          >
+            <Icons.check size={38} />
+          </div>
           <h2 className="text-[26px] mb-[8px]">Request sent!</h2>
           <p className="text-ink-2 text-[15px] mb-[22px] max-w-[340px] mx-auto">
-            <b>{exp.title}</b> · {dateLabel(day)} at {time}. {exp.provider} will confirm shortly — watch your notifications.
+            <b>{exp.title}</b> · {dateLabel(day)} at {time}. {exp.provider} will
+            confirm shortly — watch your notifications.
           </p>
-          <div className="card" style={{ padding: 22, maxWidth: 300, margin: "0 auto 22px", background: "var(--surface-2)" }}>
+          <div
+            className="card"
+            style={{
+              padding: 22,
+              maxWidth: 300,
+              margin: "0 auto 22px",
+              background: "var(--surface-2)",
+            }}
+          >
             <QR />
-            <div className="mt-[14px] font-display font-extrabold tracking-[.12em] text-[18px]">{booking?.code ?? ""}</div>
-            <div className="text-[12.5px] text-ink-3 font-semibold mt-[3px]">Show this at the door</div>
+            <div className="mt-[14px] font-display font-extrabold tracking-[.12em] text-[18px]">
+              {booking?.code ?? ""}
+            </div>
+            <div className="text-[12.5px] text-ink-3 font-semibold mt-[3px]">
+              Show this at the door
+            </div>
           </div>
-          <div className="flex gap-[10px] justify-center"><Btn size="md" onClick={onClose}>Done</Btn></div>
+          <div className="flex gap-[10px] justify-center">
+            <Btn size="md" onClick={onClose}>
+              Done
+            </Btn>
+          </div>
         </div>
       )}
     </Modal>
@@ -187,7 +520,11 @@ export function ServiceModal({ exp, slots, wallet, fav, onFav, onClose }: {
 function Label({ n, t }: { n: string; t: string }) {
   return (
     <div className="flex items-center gap-[9px] mb-[12px]">
-      {n && <span className="w-[22px] h-[22px] flex-none rounded-[99px] bg-[var(--ink)] text-[var(--bg)] text-[12px] font-extrabold grid place-items-center">{n}</span>}
+      {n && (
+        <span className="w-[22px] h-[22px] flex-none rounded-[99px] bg-[var(--ink)] text-[var(--bg)] text-[12px] font-extrabold grid place-items-center">
+          {n}
+        </span>
+      )}
       <span className="font-bold text-[15px] whitespace-nowrap">{t}</span>
     </div>
   );
@@ -195,11 +532,27 @@ function Label({ n, t }: { n: string; t: string }) {
 function Row({ l, r, muted }: { l: string; r: string; muted?: boolean }) {
   return (
     <div className="flex justify-between py-[6px] text-[14px]">
-      <span className="font-semibold" style={{ color: muted ? "var(--ink-3)" : "var(--ink-2)" }}>{l}</span>
-      <span style={{ fontWeight: muted ? 600 : 700, color: muted ? "var(--ink-3)" : "var(--ink)" }}>{r}</span>
+      <span
+        className="font-semibold"
+        style={{ color: muted ? "var(--ink-3)" : "var(--ink-2)" }}
+      >
+        {l}
+      </span>
+      <span
+        style={{
+          fontWeight: muted ? 600 : 700,
+          color: muted ? "var(--ink-3)" : "var(--ink)",
+        }}
+      >
+        {r}
+      </span>
     </div>
   );
 }
 function Footer({ children }: { children: React.ReactNode }) {
-  return <div className="sticky bottom-0 flex items-center justify-between gap-[14px] py-[18px] px-[24px] border-t border-line bg-bg mt-[22px]">{children}</div>;
+  return (
+    <div className="sticky bottom-0 flex items-center justify-between gap-[14px] py-[18px] px-[24px] border-t border-line bg-bg mt-[22px]">
+      {children}
+    </div>
+  );
 }

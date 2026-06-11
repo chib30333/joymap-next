@@ -1,6 +1,5 @@
 "use client";
-// Thin client wrapper for the RPC gateway. Throws on error with the server
-// message so components can surface it (like the prototype's useBusy()).
+
 export async function rpc<T = any>(action: string, args?: any): Promise<T> {
   const res = await fetch("/api/rpc", {
     method: "POST",
@@ -14,7 +13,6 @@ export async function rpc<T = any>(action: string, args?: any): Promise<T> {
 
 import { useState, useCallback } from "react";
 
-// Mirrors the prototype's useBusy(): [busy, run, error, setError].
 export function useBusy() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);

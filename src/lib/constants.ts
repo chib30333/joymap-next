@@ -1,9 +1,3 @@
-// Shared domain constants — the mood vocabulary, demo calendar, fixed "today".
-// Mirrors data.jsx (MOODS, MOOD_ORDER) and backend.js (TODAY, WD, dow).
-
-// The one canonical mood vocabulary (guideline 02 / 08). `hex`/`deep` drive server
-// gradients (moodGradient); `color`/`soft` are the CSS-var tokens the client UI uses
-// for chip text/background. One source — the client primitives re-export this.
 export type Mood = { key: string; label: string; hex: string; deep: string; blurb: string; color: string; soft: string };
 export const MOODS: Record<string, Mood> = {
   calm: { key: "calm", label: "Calm", hex: "#3FA89B", deep: "#2E8C80", blurb: "Slow down & restore", color: "var(--m-calm)", soft: "var(--m-calm-soft)" },
@@ -18,10 +12,9 @@ export const MOOD_ORDER = ["calm", "joy", "energy", "focus", "adventure", "conne
 export const CITIES = ["Moscow", "Saint Petersburg", "Kazan"];
 export const CATS = ["Wellness", "Movement", "Creative", "Thrill", "Mind", "Adventure"];
 
-// The prototype pins "today" to Wed 10 June 2026 so the demo data lines up.
 export const TODAY = 10;
 export const MONTH_DAYS = 30;
-export const WD = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]; // 1 Jun 2026 is a Monday
+export const WD = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 export const COMMISSION = 15;
 
 export const REJECT_REASONS = [

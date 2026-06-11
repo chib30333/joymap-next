@@ -1,6 +1,3 @@
-// Read selectors — the queries each portal renders from.
-// Server Components call these directly; the client refetches them via /api/state.
-// Mirrors the JM.* read methods in backend.js.
 import { prisma } from "@/lib/db";
 import { currentUser, currentProvider } from "@/lib/session";
 import { expById, providerRating, providerFinance, ratingOf } from "./catalog";

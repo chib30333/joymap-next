@@ -1,5 +1,3 @@
-// Customer account actions: favorites, wallet top-up, profile, Joy Map generation.
-// Mirrors api.toggleFav / api.topUp / api.updateUser / api.generateJoyMap.
 import { prisma } from "@/lib/db";
 import { requireUser } from "@/lib/session";
 import { ledger, notify } from "./notify";
