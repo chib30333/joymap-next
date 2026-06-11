@@ -44,28 +44,28 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
   return (
     <div className="anim-fade">
       <div className="shead">
-        <div><div className="eyebrow" style={{ marginBottom: 6 }}>Week of {TODAY}–{Math.min(TODAY + 6, 30)} Jun · {total} sessions</div><h2 style={{ fontSize: 22 }}>Schedule</h2></div>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, color: "var(--ink-3)", fontSize: 13, fontWeight: 700 }}><Icons.briefcase size={16} />Drag a service onto a day — saved instantly</div>
+        <div><div className="eyebrow" style={{ marginBottom: 6 }}>Week of {TODAY}–{Math.min(TODAY + 6, 30)} Jun · {total} sessions</div><h2 className="text-[22px]">Schedule</h2></div>
+        <div className="flex items-center gap-[10px] text-ink-3 text-[13px] font-bold"><Icons.briefcase size={16} />Drag a service onto a day — saved instantly</div>
       </div>
       <div className="pcal-wrap">
         <aside className="pcal-palette">
           <div className="pcal-pal-head">Your services</div>
-          {svcs.length === 0 && <div style={{ fontSize: 12.5, color: "var(--ink-3)", fontWeight: 600, lineHeight: 1.5 }}>No services yet — create one in <b>Services</b> first.</div>}
+          {svcs.length === 0 && <div className="text-[12.5px] text-ink-3 font-semibold leading-[1.5]">No services yet — create one in <b>Services</b> first.</div>}
           {svcs.map((svc) => { const m = MOODS[svc.mood]; return (
             <div key={svc.id} className={`pcal-svc ${dragId === "svc:" + svc.id ? "dragging" : ""}`} draggable style={{ borderLeftColor: m.color }} onDragStart={(e) => startSvc(svc.id, e)} onDragEnd={endDrag}>
               <span className="pcal-grip"><i /><i /><i /><i /><i /><i /></span>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontWeight: 700, fontSize: 13, lineHeight: 1.2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{svc.name}</div>
-                <div style={{ display: "flex", alignItems: "center", gap: 7, marginTop: 4 }}>
-                  <span style={{ width: 7, height: 7, borderRadius: 99, background: m.color }} />
-                  <span style={{ fontSize: 11, color: "var(--ink-3)", fontWeight: 600 }}>{svc.dur} · {svc.cap} cap</span>
-                  {svc.status === "review" && <span style={{ fontSize: 9.5, fontWeight: 800, color: "#E89015", background: "rgba(232,144,21,.12)", borderRadius: 99, padding: "1px 6px" }}>IN REVIEW</span>}
-                  {svc.active === false && <span style={{ fontSize: 9.5, fontWeight: 800, color: "var(--ink-3)", background: "var(--surface)", border: "1px solid var(--line)", borderRadius: 99, padding: "1px 6px" }}>PAUSED</span>}
+              <div className="flex-1 min-w-0">
+                <div className="font-bold text-[13px] leading-[1.2] whitespace-nowrap overflow-hidden" style={{ textOverflow: "ellipsis" }}>{svc.name}</div>
+                <div className="flex items-center gap-[7px] mt-[4px]">
+                  <span className="w-[7px] h-[7px] rounded-[99px]" style={{ background: m.color }} />
+                  <span className="text-[11px] text-ink-3 font-semibold">{svc.dur} · {svc.cap} cap</span>
+                  {svc.status === "review" && <span className="text-[9.5px] font-extrabold text-[#E89015] bg-[rgba(232,144,21,.12)] rounded-[99px] px-[6px] py-[1px]">IN REVIEW</span>}
+                  {svc.active === false && <span className="text-[9.5px] font-extrabold text-ink-3 bg-surface border border-line rounded-[99px] px-[6px] py-[1px]">PAUSED</span>}
                 </div>
               </div>
             </div>
           ); })}
-          <div style={{ display: "flex", gap: 8, alignItems: "flex-start", marginTop: 4, padding: 10, borderRadius: "var(--r-sm)", background: "var(--surface-2)", color: "var(--ink-2)", fontSize: 11.5, fontWeight: 600, lineHeight: 1.4 }}>
+          <div className="flex gap-[8px] items-start mt-[4px] p-[10px] rounded-sm bg-surface-2 text-ink-2 text-[11.5px] font-semibold leading-[1.4]">
             <Icons.sparkle size={15} style={{ color: "var(--coral)", flex: "none", marginTop: 1 }} />Slots feed the customer calendar and booking flow instantly.
           </div>
         </aside>
@@ -88,8 +88,8 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
                       <div key={slot.id} className={`pcal-slot ${dragId === "slot:" + slot.id ? "dragging" : ""}`} draggable style={{ background: m.soft, borderLeftColor: m.color }} onDragStart={(e) => startSlot(slot, e)} onDragEnd={endDrag}>
                         <button className="pcal-x" onClick={() => remove(slot.id)} title="Remove"><Icons.close size={12} /></button>
                         <button className="pcal-time-btn" style={{ color: m.color }} onClick={() => setEditing((e) => (e === slot.id ? null : slot.id))}><Icons.clock size={12} />{slot.time}</button>
-                        <div style={{ fontSize: 11.5, fontWeight: 700, lineHeight: 1.2, marginTop: 3, color: "var(--ink)", paddingRight: 14 }}>{svc.name}</div>
-                        <div style={{ fontSize: 10.5, color: "var(--ink-3)", fontWeight: 600, marginTop: 3 }}>{slot.booked || 0}/{svc.cap} booked</div>
+                        <div className="text-[11.5px] font-bold leading-[1.2] mt-[3px] text-ink pr-[14px]">{svc.name}</div>
+                        <div className="text-[10.5px] text-ink-3 font-semibold mt-[3px]">{slot.booked || 0}/{svc.cap} booked</div>
                         {editing === slot.id && <div className="pcal-times">{PCAL_TIMES.map((tm) => <button key={tm} className={slot.time === tm ? "on" : ""} onClick={() => setTime(slot.id, tm)}>{tm}</button>)}</div>}
                       </div>
                     ); })}

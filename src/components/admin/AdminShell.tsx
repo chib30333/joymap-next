@@ -30,9 +30,9 @@ export function AdminSidebar({ badges }: { badges: { moderation: number | null; 
     <aside className="side">
       <div className="side-brand" style={{ display: "flex", alignItems: "center", gap: 9, flexWrap: "wrap" }}>
         <Logo size={25} />
-        <span style={{ display: "inline-flex", alignItems: "center", gap: 5, whiteSpace: "nowrap", background: "color-mix(in srgb,var(--orange) 18%,transparent)", color: "var(--orange)", padding: "3px 9px", borderRadius: 99, fontSize: 10, fontWeight: 800, fontFamily: "var(--display)" }}>Admin</span>
+        <span className="inline-flex items-center gap-[5px] whitespace-nowrap bg-[color-mix(in_srgb,var(--orange)_18%,transparent)] text-[var(--orange)] px-[9px] py-[3px] rounded-[99px] text-[10px] font-extrabold font-display">Admin</span>
       </div>
-      <nav style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+      <nav className="flex flex-col gap-[3px]">
         {A_NAV.map((n, i) => {
           if (n.sec) return <div key={`s${i}`} className="nav-sec">{t(n.sec)}</div>;
           const I = Icons[n.icon!];
@@ -44,10 +44,10 @@ export function AdminSidebar({ badges }: { badges: { moderation: number | null; 
       <div className="side-foot">
         <div className="card" style={{ padding: 6, background: "var(--surface-2)" }}>
           <div className="nav-sec" style={{ padding: "6px 10px 6px" }}>{t("Switch portal")}</div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <Link className="nav-item" href="/joymap"><span style={{ width: 7, height: 7, borderRadius: 99, background: "var(--ink-3)" }} />{t("Customer")}</Link>
-            <Link className="nav-item" href="/provider"><span style={{ width: 7, height: 7, borderRadius: 99, background: "var(--ink-3)" }} />{t("Provider")}</Link>
-            <span className="nav-item on" style={{ cursor: "default" }}><span style={{ width: 7, height: 7, borderRadius: 99, background: "var(--coral)" }} />{t("Admin")}<span style={{ marginInlineStart: "auto", fontSize: 11, color: "var(--coral)", fontWeight: 700 }}>{t("You")}</span></span>
+          <div className="flex flex-col gap-[2px]">
+            <Link className="nav-item" href="/joymap"><span className="w-[7px] h-[7px] rounded-[99px] bg-[var(--ink-3)]" />{t("Customer")}</Link>
+            <Link className="nav-item" href="/provider"><span className="w-[7px] h-[7px] rounded-[99px] bg-[var(--ink-3)]" />{t("Provider")}</Link>
+            <span className="nav-item on" style={{ cursor: "default" }}><span className="w-[7px] h-[7px] rounded-[99px] bg-coral" />{t("Admin")}<span style={{ marginInlineStart: "auto", fontSize: 11, color: "var(--coral)", fontWeight: 700 }}>{t("You")}</span></span>
           </div>
         </div>
         <button className="nav-item" style={{ color: "var(--ink-3)", marginTop: 6 }} onClick={logout}><Icons.logout size={19} />{t("Log out")}</button>
@@ -70,9 +70,9 @@ export function AdminTopbar({ name, unread }: { name: string; unread: number }) 
   const [title, sub] = TITLES[pathname] || ["Dashboard", "Platform health at a glance"];
   return (
     <div className="topbar">
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <h1 style={{ fontSize: 20, lineHeight: 1.1 }}>{t(title)}</h1>
-        {sub && <div style={{ fontSize: 13, color: "var(--ink-3)", fontWeight: 600, marginTop: 2 }}>{t(sub)}</div>}
+      <div className="flex-1 min-w-0">
+        <h1 className="text-[20px] leading-[1.1]">{t(title)}</h1>
+        {sub && <div className="text-[13px] text-ink-3 font-semibold mt-[2px]">{t(sub)}</div>}
       </div>
       <LangSwitcher />
       <button className="icon-btn"><Icons.bell size={18} />{unread > 0 && <span className="dot-badge" />}</button>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import "./auth.css";
 import { Icons, Logo } from "@/components/Icons";
 import { LangSwitcher, t } from "@/components/i18n";
+import { Input } from "@/components/ui/input";
 import { rpc } from "@/lib/client";
 
 // 1:1 port of auth.jsx — login + signup (role-aware), forgot-password reset flow,
@@ -47,7 +48,7 @@ function Field({ label, icon, type = "text", value, onChange, right, autoComplet
       <span className="afield-label">{label}</span>
       <span className="afield-wrap">
         {I && <span className="afield-icon"><I size={18} /></span>}
-        <input className="field" type={type} value={value} name={name} autoComplete={autoComplete}
+        <Input type={type} value={value} name={name} autoComplete={autoComplete}
           onChange={(e) => onChange(e.target.value)} style={{ paddingLeft: I ? 44 : 16, paddingRight: right ? 46 : 16 }} />
         {right}
       </span>
@@ -67,7 +68,7 @@ function PwField({ label, value, onChange, name, autoComplete, meter }: {
       {meter && value.length > 0 && (
         <div className="pwmeter">
           <div className="pwbar"><span style={{ width: `${score.pct}%`, background: score.color }} /></div>
-          <span style={{ color: score.color, fontWeight: 700, fontSize: 12 }}>{score.label}</span>
+          <span className="font-bold text-[12px]" style={{ color: score.color }}>{score.label}</span>
         </div>
       )}
     </div>
@@ -120,7 +121,7 @@ function ResetFlow({ initialEmail, onBackToLogin }: { initialEmail: string; onBa
 
   const titles: Record<string, [string, React.ReactNode]> = {
     forgot: ["Reset your password", "Enter the email tied to your account and we'll send a 6-digit code."],
-    sent: ["Check your inbox", <>We sent a code to <b style={{ color: "var(--ink)" }}>{email || "your email"}</b>. It expires in 10 minutes.</>],
+    sent: ["Check your inbox", <>We sent a code to <b className="text-ink">{email || "your email"}</b>. It expires in 10 minutes.</>],
     reset: ["Set a new password", "Choose something strong — at least 8 characters."],
     success: ["Password updated", "Your password has been changed. You can sign in now."],
   };
@@ -155,7 +156,7 @@ function ResetFlow({ initialEmail, onBackToLogin }: { initialEmail: string; onBa
             {busy ? <span className="spin" /> : <>Verify code<Icons.arrowR size={19} /></>}
           </button>
           <div className="auth-foot" style={{ marginTop: 4 }}>
-            {resend > 0 ? <span style={{ color: "var(--ink-3)" }}>Resend code in 0:{String(resend).padStart(2, "0")}</span>
+            {resend > 0 ? <span className="text-ink-3">Resend code in 0:{String(resend).padStart(2, "0")}</span>
               : <>Didn&apos;t get it? <a className="auth-link strong" onClick={() => setStep("sent")}>Resend code</a></>}
           </div>
         </form>
@@ -205,7 +206,7 @@ function Showcase() {
     <div className="auth-brand">
       <div className="auth-brand-inner">
         <div className="auth-brand-top" style={{ color: "#F6EAD9" }}>
-          <Link href="/" title="Back to the Joymap site" style={{ display: "inline-flex", textDecoration: "none" }}><Logo size={30} mono /></Link>
+          <Link href="/" title="Back to the Joymap site" className="inline-flex" style={{ textDecoration: "none" }}><Logo size={30} mono /></Link>
           <span className="live-badge"><span className="live-dot" />Live now!</span>
         </div>
         <div className="auth-tiles" aria-hidden="true">
@@ -218,7 +219,7 @@ function Showcase() {
         <div className="mood-row" aria-hidden="true">
           {A_MOODS.map(([n, c]) => (
             <span key={n} className="mood-pill" style={{ background: `color-mix(in srgb,${c} 16%,transparent)`, color: c, borderColor: `color-mix(in srgb,${c} 35%,transparent)` }}>
-              <span style={{ width: 7, height: 7, borderRadius: 99, background: c }} />{n}
+              <span className="w-[7px] h-[7px] rounded-[99px]" style={{ background: c }} />{n}
             </span>
           ))}
         </div>
@@ -276,10 +277,10 @@ export default function AuthPage() {
       <Showcase />
       <div className="auth-form-col">
         <div className="auth-mobilebrand">
-          <Link href="/" style={{ display: "inline-flex", textDecoration: "none" }}><Logo size={26} /></Link>
+          <Link href="/" className="inline-flex" style={{ textDecoration: "none" }}><Logo size={26} /></Link>
           <span className="live-badge"><span className="live-dot" />Live now!</span>
         </div>
-        <div style={{ position: "absolute", top: 18, insetInlineEnd: 24, zIndex: 5 }}><LangSwitcher /></div>
+        <div className="absolute top-[18px]" style={{ insetInlineEnd: 24, zIndex: 5 }}><LangSwitcher /></div>
 
         <div className={`auth-card ${busy ? "is-busy" : ""}`}>
           {mode === "reset" ? (
@@ -333,7 +334,7 @@ export default function AuthPage() {
                 )}
 
                 {err && (
-                  <div style={{ display: "flex", gap: 9, alignItems: "flex-start", padding: "11px 14px", borderRadius: "var(--r-sm)", background: "color-mix(in srgb,#E0212F 10%,transparent)", color: "var(--coral-deep)", fontWeight: 700, fontSize: 13.5, lineHeight: 1.4 }}>
+                  <div className="flex gap-[9px] items-start px-[14px] py-[11px] rounded-sm bg-[color-mix(in_srgb,#E0212F_10%,transparent)] text-coral-deep font-bold text-[13.5px] leading-[1.4]">
                     <Icons.flame size={16} style={{ flex: "none", marginTop: 1 }} />{err}
                   </div>
                 )}
@@ -375,11 +376,11 @@ function DemoHint({ admin }: { admin: boolean }) {
     ? [["Platform team", "admin@joymap.ru", "admin123"]]
     : [["Customer", "mira@joymap.ru", "joy123"], ["Provider", "aether@joymap.ru", "joy123"]];
   return (
-    <div style={{ width: "100%", maxWidth: 420, background: "var(--surface-2)", border: "1px dashed var(--line-2)", borderRadius: "var(--r)", padding: "12px 16px" }}>
-      <div style={{ fontSize: 11.5, fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", color: "var(--ink-3)", marginBottom: 8 }}>Demo accounts (after seeding)</div>
+    <div className="w-full max-w-[420px] bg-surface-2 rounded px-[16px] py-[12px]" style={{ border: "1px dashed var(--line-2)" }}>
+      <div className="text-[11.5px] font-extrabold tracking-[.06em] uppercase text-ink-3 mb-[8px]">Demo accounts (after seeding)</div>
       {rows.map(([l, e, p]) => (
-        <div key={e} style={{ display: "flex", gap: 10, fontSize: 12.5, fontWeight: 600, color: "var(--ink-2)", padding: "3px 0" }}>
-          <span style={{ width: 96, color: "var(--ink-3)" }}>{l}</span><b>{e}</b><span style={{ marginLeft: "auto", fontFamily: "var(--display)" }}>{p}</span>
+        <div key={e} className="flex gap-[10px] text-[12.5px] font-semibold text-ink-2 px-0 py-[3px]">
+          <span className="w-[96px] text-ink-3">{l}</span><b>{e}</b><span className="ml-auto font-display">{p}</span>
         </div>
       ))}
     </div>

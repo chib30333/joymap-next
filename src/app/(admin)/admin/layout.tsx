@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { currentUser } from "@/lib/session";
 import { applications, pendingServices, flags, unreadNotifications } from "@/server/selectors";
 import { AdminSidebar, AdminTopbar } from "@/components/admin/AdminShell";
-import "../dash.css";
+import "../../dash.css";
 
 // Server guard + shell for the Admin (Platform) panel — sidebar layout.
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {

@@ -2,6 +2,7 @@
 // Dashboard primitives — ported 1:1 from dash.jsx (shared by Provider + Admin):
 // Btn, Avatar, Pill, Stat, SectionHead, Seg, Toggle, Modal, Bars, LineChart, Donut, Spark.
 import { useEffect, useRef, useState, type ReactNode, type ButtonHTMLAttributes, type CSSProperties } from "react";
+import { statusColor } from "@/components/ui/pill";
 
 export const money = (n: number) => new Intl.NumberFormat("ru-RU").format(Math.round(n)) + "\u00A0₽";
 
@@ -12,14 +13,10 @@ export function Avatar({ name, size = 40, grad }: { name: string; size?: number;
   return <div className="avatar" style={{ width: size, height: size, fontSize: size * 0.4, ...(grad ? { background: grad } : {}) }}>{(name || "?")[0]}</div>;
 }
 
-const STATUS: Record<string, [string, string]> = {
-  confirmed: ["#1FA46E", "rgba(31,164,110,.13)"], pending: ["#E89015", "rgba(232,144,21,.14)"],
-  cancelled: ["#E0212F", "rgba(224,33,47,.12)"], completed: ["#5563D6", "rgba(85,99,214,.13)"],
-  active: ["#1FA46E", "rgba(31,164,110,.13)"], review: ["#E89015", "rgba(232,144,21,.14)"],
-  rejected: ["#E0212F", "rgba(224,33,47,.12)"], paid: ["#1FA46E", "rgba(31,164,110,.13)"], vip: ["#7B53F0", "rgba(123,83,240,.14)"],
-};
+// Status colors come from the one canonical STATUS map (guideline 02 / 07). This Pill
+// keeps the dashboard's `.pill` design-class markup; only the *data* is shared.
 export function Pill({ status, label }: { status: string; label?: string }) {
-  const [c, bg] = STATUS[status] || ["#6F5157", "rgba(120,80,90,.12)"];
+  const [c, bg] = statusColor(status);
   return <span className="pill" style={{ color: c, background: bg }}><span className="pdot" style={{ background: c }} />{label || status}</span>;
 }
 export function Stat({ label, value, icon, delta, deltaDir, sub, accent }: { label: string; value: string; icon?: ReactNode; delta?: string; deltaDir?: "up" | "down"; sub?: string; accent?: string }) {
@@ -27,15 +24,15 @@ export function Stat({ label, value, icon, delta, deltaDir, sub, accent }: { lab
     <div className="stat anim-pop">
       <div className="lbl">{icon && <span className="ricon" style={{ width: 28, height: 28, borderRadius: 9, background: accent ? `color-mix(in srgb,${accent} 14%,transparent)` : undefined, color: accent }}>{icon}</span>}{label}</div>
       <div className="val">{value}</div>
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+      <div className="flex items-center gap-[8px]">
         {delta != null && <span className={`delta ${deltaDir || "up"}`}>{deltaDir === "down" ? "▾" : "▴"} {delta}</span>}
-        {sub && <span style={{ fontSize: 12.5, color: "var(--ink-3)", fontWeight: 600 }}>{sub}</span>}
+        {sub && <span className="text-[12.5px] text-ink-3 font-semibold">{sub}</span>}
       </div>
     </div>
   );
 }
 export function SectionHead({ eyebrow, title, action }: { eyebrow?: string; title: string; action?: ReactNode }) {
-  return <div className="shead"><div>{eyebrow && <div className="eyebrow" style={{ marginBottom: 7 }}>{eyebrow}</div>}<h2 style={{ fontSize: 24 }}>{title}</h2></div>{action}</div>;
+  return <div className="shead"><div>{eyebrow && <div className="eyebrow" style={{ marginBottom: 7 }}>{eyebrow}</div>}<h2 className="text-[24px]">{title}</h2></div>{action}</div>;
 }
 export function Seg({ value, options, onChange }: { value: string; options: ({ v: string; l: string } | string)[]; onChange: (v: string) => void }) {
   return <div className="seg">{options.map((o) => { const v = typeof o === "string" ? o : o.v; const l = typeof o === "string" ? o : o.l; return <button key={v} className={value === v ? "on" : ""} onClick={() => onChange(v)}>{l}</button>; })}</div>;
@@ -147,6 +144,6 @@ export function Donut({ segments, size = 150, thick = 22, center, valFmt, unit =
   );
 }
 
-export function BusyBtn({ busy, children, icon, className = "btn btn-primary btn-md", disabled, ...p }: ButtonHTMLAttributes<HTMLButtonElement> & { busy?: boolean; icon?: ReactNode }) {
-  return <button className={className} disabled={busy || disabled} {...p}>{busy ? <span className="jm-spin" /> : icon}{children}</button>;
-}
+// BusyBtn is the single shared CSS-class busy button (guideline 02). Re-exported here
+// so existing `import { BusyBtn } from "@/components/dash/primitives"` keeps working.
+export { BusyBtn } from "@/components/ui/busy-btn";

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { rpc, useBusy } from "@/lib/client";
 import { MOODS, MOOD_ORDER, fmt, bg, Avatar, BusyBtn, MoodChip, type Exp } from "./primitives";
+import { Input } from "@/components/ui";
 
 type B = { id: string; date: string; total: number; status: string; rated?: number | null; exp: Exp | null };
 
@@ -26,26 +27,26 @@ export function CProfile({ user, bookings }: {
   };
 
   return (
-    <div className="anim-fade" style={{ maxWidth: 720 }}>
+    <div className="anim-fade max-w-[720px]">
       <div className="card" style={{ padding: 24, display: "flex", gap: 18, alignItems: "center", marginBottom: 18, flexWrap: "wrap" }}>
-        <div style={{ position: "relative" }}>
+        <div className="relative">
           <Avatar name={form.name || "?"} size={72} />
           <button className="icon-btn" style={{ position: "absolute", bottom: -4, right: -4, width: 30, height: 30, background: "var(--coral)", color: "#fff", border: "2px solid var(--surface)" }}><Icons.camera size={15} /></button>
         </div>
-        <div style={{ flex: 1, minWidth: 180 }}>
-          <h2 style={{ fontSize: 24 }}>{form.name}</h2>
-          <div style={{ color: "var(--ink-3)", fontWeight: 600, marginTop: 4, display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <span style={{ display: "inline-flex", gap: 5, alignItems: "center" }}><Icons.pin size={14} />{form.city}</span>
-            <span style={{ display: "inline-flex", gap: 5, alignItems: "center" }}><Icons.sparkle size={14} />{user.plan || "Joy Map"} member</span>
+        <div className="flex-1 min-w-[180px]">
+          <h2 className="text-[24px]">{form.name}</h2>
+          <div className="text-ink-3 font-semibold mt-[4px] flex gap-[12px] flex-wrap">
+            <span className="inline-flex gap-[5px] items-center"><Icons.pin size={14} />{form.city}</span>
+            <span className="inline-flex gap-[5px] items-center"><Icons.sparkle size={14} />{user.plan || "Joy Map"} member</span>
           </div>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 6, textAlign: "right" }}>
-          <span style={{ fontFamily: "var(--display)", fontWeight: 800, fontSize: 26 }}>{total}</span>
-          <span style={{ fontSize: 12.5, color: "var(--ink-3)", fontWeight: 600 }}>experiences booked</span>
+        <div className="flex flex-col gap-[6px] text-right">
+          <span className="font-display font-extrabold text-[26px]">{total}</span>
+          <span className="text-[12.5px] text-ink-3 font-semibold">experiences booked</span>
         </div>
       </div>
 
-      <div style={{ display: "flex", gap: 6, marginBottom: 20, background: "var(--surface-2)", padding: 5, borderRadius: "var(--r-pill)", width: "fit-content", border: "1px solid var(--line)" }}>
+      <div className="flex gap-[6px] mb-[20px] bg-surface-2 p-[5px] rounded-pill w-fit border border-line">
         {([["account", "Personal data"], ["history", "Activity history"], ["moods", "Moods"]] as const).map(([k, l]) => (
           <button key={k} className="btn btn-sm" onClick={() => setTab(k as any)} style={tab === k ? { background: "var(--surface)", color: "var(--ink)", boxShadow: "var(--sh-sm)" } : { color: "var(--ink-3)" }}>{l}</button>
         ))}
@@ -53,27 +54,27 @@ export function CProfile({ user, bookings }: {
 
       {tab === "account" && (
         <div className="card" style={{ padding: 24 }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 18 }}>
-            <h3 style={{ fontSize: 17 }}>Personal data</h3>
+          <div className="flex items-center justify-between mb-[18px]">
+            <h3 className="text-[17px]">Personal data</h3>
             <BusyBtn busy={busy} className="btn btn-ghost btn-sm" icon={edit ? <Icons.check size={15} /> : <Icons.edit size={15} />} onClick={saveOrEdit}>{edit ? "Save" : "Edit"}</BusyBtn>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+          <div className="grid grid-cols-2 gap-[16px]">
             {([["name", "Full name", "user"], ["email", "Email", "mail"], ["phone", "Phone", "phone"], ["city", "City", "pin"]] as const).map(([k, l, ic]) => {
               const I = Icons[ic];
               return (
                 <div key={k} style={{ gridColumn: k === "name" ? "1 / -1" : "auto" }}>
-                  <div style={{ fontSize: 12.5, fontWeight: 700, color: "var(--ink-3)", marginBottom: 7 }}>{l}</div>
+                  <div className="text-[12.5px] font-bold text-ink-3 mb-[7px]">{l}</div>
                   {edit
-                    ? <input className="field" value={(form as any)[k]} onChange={(e) => setForm((f) => ({ ...f, [k]: e.target.value }))} />
-                    : <div style={{ display: "flex", alignItems: "center", gap: 9, padding: "12px 14px", borderRadius: "var(--r-sm)", background: "var(--surface-2)", fontWeight: 600, fontSize: 14.5 }}><span style={{ color: "var(--ink-3)" }}><I size={17} /></span>{(form as any)[k]}</div>}
+                    ? <Input value={(form as any)[k]} onChange={(e) => setForm((f) => ({ ...f, [k]: e.target.value }))} />
+                    : <div className="flex items-center gap-[9px] py-[12px] px-[14px] rounded-sm bg-surface-2 font-semibold text-[14.5px]"><span className="text-ink-3"><I size={17} /></span>{(form as any)[k]}</div>}
                 </div>
               );
             })}
           </div>
           <hr className="divider" style={{ margin: "22px 0" }} />
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div className="flex items-center gap-[12px]">
             <span style={{ width: 38, height: 38, borderRadius: 11, display: "grid", placeItems: "center", background: "color-mix(in srgb,#1FA46E 14%,transparent)", color: "#1FA46E", flex: "none" }}><Icons.shield size={19} /></span>
-            <div style={{ flex: 1 }}><div style={{ fontWeight: 700, fontSize: 14 }}>Account secured</div><div style={{ fontSize: 12.5, color: "var(--ink-3)", fontWeight: 600 }}>Signed in as {user.email}</div></div>
+            <div className="flex-1"><div className="font-bold text-[14px]">Account secured</div><div className="text-[12.5px] text-ink-3 font-semibold">Signed in as {user.email}</div></div>
             <button className="btn btn-ghost btn-sm" onClick={() => rpc("logout").then(() => router.push("/auth"))}>Log out</button>
           </div>
         </div>
@@ -81,8 +82,8 @@ export function CProfile({ user, bookings }: {
 
       {tab === "history" && (
         <div>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
-            <span style={{ fontWeight: 700, fontSize: 14, color: "var(--ink-2)" }}>{past.length} past experiences · {fmt(spent)} spent</span>
+          <div className="flex items-center justify-between mb-[14px]">
+            <span className="font-bold text-[14px] text-ink-2">{past.length} past experiences · {fmt(spent)} spent</span>
           </div>
           {past.length === 0
             ? <div className="card" style={{ padding: "40px 20px", textAlign: "center", color: "var(--ink-3)", fontWeight: 600, fontSize: 14 }}>Your completed experiences will appear here.</div>
@@ -94,13 +95,13 @@ export function CProfile({ user, bookings }: {
                   return (
                     <div key={h.id} style={{ display: "flex", alignItems: "center", gap: 14, padding: "15px 18px", borderTop: i ? "1px solid var(--line)" : "none" }}>
                       <div style={{ width: 44, height: 44, borderRadius: 12, background: e ? bg(e) : m.color, backgroundSize: "cover", flex: "none", opacity: 0.95 }} />
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ fontWeight: 700, fontSize: 14.5 }}>{e ? e.title : "Experience"}</div>
-                        <div style={{ fontSize: 12.5, color: "var(--ink-3)", fontWeight: 600 }}>{e ? e.provider : ""} · {h.date}</div>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-bold text-[14.5px]">{e ? e.title : "Experience"}</div>
+                        <div className="text-[12.5px] text-ink-3 font-semibold">{e ? e.provider : ""} · {h.date}</div>
                       </div>
-                      <div style={{ textAlign: "right" }}>
-                        <div style={{ fontFamily: "var(--display)", fontWeight: 700, fontSize: 14 }}>{fmt(h.total)}</div>
-                        {h.rated ? <div style={{ color: "var(--m-joy)", fontSize: 12 }}>{"★".repeat(h.rated)}</div> : h.status === "completed" ? <span style={{ fontSize: 12, color: "var(--ink-3)", fontWeight: 600 }}>Not rated</span> : null}
+                      <div className="text-right">
+                        <div className="font-display font-bold text-[14px]">{fmt(h.total)}</div>
+                        {h.rated ? <div className="text-[var(--m-joy)] text-[12px]">{"★".repeat(h.rated)}</div> : h.status === "completed" ? <span className="text-[12px] text-ink-3 font-semibold">Not rated</span> : null}
                       </div>
                     </div>
                   );
@@ -112,8 +113,8 @@ export function CProfile({ user, bookings }: {
 
       {tab === "moods" && (
         <div className="card" style={{ padding: 24 }}>
-          <h3 style={{ fontSize: 17, marginBottom: 8 }}>Your moods</h3>
-          <p style={{ color: "var(--ink-2)", fontSize: 14, marginBottom: 16 }}>Joy tunes your weekly map around these. Tap to toggle — your next Joy Map uses them.</p>
+          <h3 className="text-[17px] mb-[8px]">Your moods</h3>
+          <p className="text-ink-2 text-[14px] mb-[16px]">Joy tunes your weekly map around these. Tap to toggle — your next Joy Map uses them.</p>
           <MoodPicker initial={user.moods || []} />
         </div>
       )}
@@ -128,5 +129,5 @@ function MoodPicker({ initial }: { initial: string[] }) {
     setSel(next);
     rpc("updateUser", { moods: next });
   };
-  return <div style={{ display: "flex", flexWrap: "wrap", gap: 9 }}>{MOOD_ORDER.map((k) => <MoodChip key={k} mood={k} active={sel.includes(k)} onClick={() => toggle(k)} />)}</div>;
+  return <div className="flex flex-wrap gap-[9px]">{MOOD_ORDER.map((k) => <MoodChip key={k} mood={k} active={sel.includes(k)} onClick={() => toggle(k)} />)}</div>;
 }

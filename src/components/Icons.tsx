@@ -75,8 +75,8 @@ export const Icons: Record<string, (p?: IcProps) => JSX.Element> = {
 
 export function Logo({ size = 26, mono = false }: { size?: number; mono?: boolean }) {
   return (
-    <span style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
-      <span style={{ position: "relative", display: "inline-flex" }}>
+    <span className="inline-flex items-center gap-[10px]">
+      <span className="relative inline-flex">
         <svg width={size} height={size} viewBox="0 0 32 32" fill="none">
           <path d="M16 30s10-7.2 10-16A10 10 0 1 0 6 14c0 8.8 10 16 10 16Z" fill={mono ? "currentColor" : "var(--coral)"} />
           <circle cx="16" cy="13.5" r="5.6" fill="#fff" fillOpacity={mono ? 0.2 : 0.95} />
@@ -85,7 +85,7 @@ export function Logo({ size = 26, mono = false }: { size?: number; mono?: boolea
           <circle cx="18.2" cy="11.4" r="1" fill="var(--coral-deep)" />
         </svg>
       </span>
-      <span style={{ fontFamily: "var(--display)", fontWeight: 800, fontSize: size * 0.78, letterSpacing: "-.03em", color: mono ? "currentColor" : "var(--ink)" }}>
+      <span className="font-display font-extrabold tracking-[-.03em]" style={{ fontSize: size * 0.78, color: mono ? "currentColor" : "var(--ink)" }}>
         joymap
       </span>
     </span>

@@ -3,16 +3,11 @@
 // Rating, Avatar, PhotoFrame, ExperienceCard, SectionHead, Modal) + data.jsx helpers.
 import { useEffect, type ReactNode, type CSSProperties, type ButtonHTMLAttributes } from "react";
 import { Icons } from "@/components/Icons";
+import { MOODS, type Mood } from "@/lib/constants";
 
-export type Mood = { key: string; label: string; color: string; soft: string; hex: string; blurb: string };
-export const MOODS: Record<string, Mood> = {
-  calm: { key: "calm", label: "Calm", color: "var(--m-calm)", soft: "var(--m-calm-soft)", hex: "#3FA89B", blurb: "Slow down & restore" },
-  joy: { key: "joy", label: "Joy", color: "var(--m-joy)", soft: "var(--m-joy-soft)", hex: "#F4A52B", blurb: "Light, playful fun" },
-  energy: { key: "energy", label: "Energy", color: "var(--m-energy)", soft: "var(--m-energy-soft)", hex: "#FF4D74", blurb: "Move & feel alive" },
-  focus: { key: "focus", label: "Focus", color: "var(--m-focus)", soft: "var(--m-focus-soft)", hex: "#5563D6", blurb: "Learn & sharpen" },
-  adventure: { key: "adventure", label: "Adventure", color: "var(--m-adventure)", soft: "var(--m-adventure-soft)", hex: "#7B53F0", blurb: "Thrill & the new" },
-  connect: { key: "connect", label: "Connection", color: "var(--m-connect)", soft: "var(--m-connect-soft)", hex: "#FF8A4C", blurb: "Together with others" },
-};
+// MOODS is the one canonical vocabulary (guideline 02 / 08), defined in lib/constants
+// and re-exported here so existing `import { MOODS } from "./primitives"` keeps working.
+export { MOODS, type Mood };
 export const MOOD_ORDER = ["calm", "joy", "energy", "focus", "adventure", "connect"];
 export const CITIES = ["Moscow", "Saint Petersburg", "Kazan"];
 export const CATS = ["Wellness", "Movement", "Creative", "Thrill", "Mind", "Adventure"];
@@ -51,7 +46,7 @@ export function MoodChip({ mood, active, onClick }: { mood: string; active?: boo
 }
 
 export function Rating({ value, reviews }: { value: number; reviews?: number | null }) {
-  return <span className="rating"><Icons.star size={15} />{value}{reviews != null && <span style={{ color: "var(--ink-3)", fontWeight: 600 }}>({reviews})</span>}</span>;
+  return <span className="rating"><Icons.star size={15} />{value}{reviews != null && <span className="text-ink-3 font-semibold">({reviews})</span>}</span>;
 }
 
 export function Avatar({ name, size = 40 }: { name: string; size?: number }) {
@@ -76,7 +71,7 @@ export function ExperienceCard({ exp, onOpen, fav, onFav }: { exp: Exp; onOpen: 
         <div className="ttl">{exp.title}</div>
       </PhotoFrame>
       <div className="xbody">
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+        <div className="flex items-center justify-between gap-[8px]">
           <span className="mood-chip" style={{ background: m.soft, color: m.color, padding: "5px 11px 5px 9px", fontSize: 12 }}>
             <MoodDot mood={exp.mood} size={7} />{m.label}
           </span>
@@ -84,12 +79,12 @@ export function ExperienceCard({ exp, onOpen, fav, onFav }: { exp: Exp; onOpen: 
             : <span className="tag" style={{ background: "var(--coral-soft)", color: "var(--coral-deep)", border: "none", fontWeight: 700 }}>New</span>}
         </div>
         <div className="xmeta">
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icons.pin size={14} />{exp.area}</span>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><Icons.clock size={14} />{exp.dur}</span>
+          <span className="inline-flex items-center gap-[5px]"><Icons.pin size={14} />{exp.area}</span>
+          <span className="inline-flex items-center gap-[5px]"><Icons.clock size={14} />{exp.dur}</span>
         </div>
         <div className="xrow">
           <span className="price">{fmt(exp.price)} <small>/ person</small></span>
-          <span style={{ color: "var(--coral-deep)", display: "inline-flex" }}><Icons.arrowR size={20} /></span>
+          <span className="text-coral-deep inline-flex"><Icons.arrowR size={20} /></span>
         </div>
       </div>
     </article>
@@ -99,7 +94,7 @@ export function ExperienceCard({ exp, onOpen, fav, onFav }: { exp: Exp; onOpen: 
 export function SectionHead({ eyebrow, title, action }: { eyebrow?: string; title: string; action?: ReactNode }) {
   return (
     <div className="shead">
-      <div>{eyebrow && <div className="eyebrow" style={{ marginBottom: 7 }}>{eyebrow}</div>}<h2 style={{ fontSize: 26 }}>{title}</h2></div>
+      <div>{eyebrow && <div className="eyebrow" style={{ marginBottom: 7 }}>{eyebrow}</div>}<h2 className="text-[26px]">{title}</h2></div>
       {action}
     </div>
   );
@@ -130,9 +125,9 @@ export function QR() {
     const on = finder ? (x === 0 || x === 2 || x === N - 1 || x === N - 3 || y === 0 || y === 2 || y === N - 1 || y === N - 3 || (x < 3 && y < 3)) : rnd() > 0.5;
     if (finder || on) cells.push(<rect key={`${x}-${y}`} x={x * 9 + 2} y={y * 9 + 2} width={8} height={8} rx={2} fill="#161214" />);
   }
-  return <svg viewBox="0 0 103 103" width="150" height="150" style={{ background: "#fff", borderRadius: 12, padding: 6 }}>{cells}</svg>;
+  return <svg viewBox="0 0 103 103" width="150" height="150" className="bg-[#fff] rounded-sm p-[6px]">{cells}</svg>;
 }
 
-export function BusyBtn({ busy, children, icon, className = "btn btn-primary btn-md", disabled, ...p }: ButtonHTMLAttributes<HTMLButtonElement> & { busy?: boolean; icon?: ReactNode }) {
-  return <button className={className} disabled={busy || disabled} {...p}>{busy ? <span className="jm-spin" /> : icon}{children}</button>;
-}
+// BusyBtn is the single shared CSS-class busy button (guideline 02). Re-exported here
+// so existing `import { BusyBtn } from "./primitives"` call sites keep working.
+export { BusyBtn } from "@/components/ui/busy-btn";

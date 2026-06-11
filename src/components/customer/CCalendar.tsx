@@ -58,7 +58,7 @@ export function CCalendar({ sessions: allSessions, catalog, favs, slotsByService
           <b>{view === "month" ? CAL_MONTH.label : `Week of ${calDateLabel(weekStart < 1 ? 1 : weekStart)}`}</b>
           <button className="icon-btn" style={{ width: 38, height: 38 }} onClick={() => setCursor((c) => Math.min(CAL_MONTH.days, c + 7))} disabled={view === "month"}><Icons.arrowR size={18} /></button>
         </div>
-        <div style={{ flex: 1 }} />
+        <div className="flex-1" />
         <button className="btn btn-soft btn-sm" onClick={() => { setCursor(CAL_MONTH.today); setSel(CAL_MONTH.today); }}>Today</button>
       </div>
 
@@ -73,7 +73,7 @@ export function CCalendar({ sessions: allSessions, catalog, favs, slotsByService
           <Seg value={f.tod} onChange={(v) => setFilter("tod", v)} options={[{ v: "any", l: "Any time" }, { v: "morning", l: "AM", icon: <Icons.sun size={14} /> }, { v: "afternoon", l: "Noon", icon: <Icons.sunset size={14} /> }, { v: "evening", l: "PM", icon: <Icons.moon size={14} /> }]} />
           <Sel value={f.price} onChange={(v) => setFilter("price", v)}>{PRICE_BANDS.map((b) => <option key={b.v} value={b.v}>{b.l}</option>)}</Sel>
           {activeFilters > 0 && <button className="btn btn-ghost btn-sm" onClick={clear}><Icons.close size={14} />Clear{` (${activeFilters})`}</button>}
-          <span style={{ marginLeft: "auto", color: "var(--ink-3)", fontSize: 13, fontWeight: 700 }}>{sessions.length} sessions</span>
+          <span className="ml-auto text-ink-3 text-[13px] font-bold">{sessions.length} sessions</span>
         </div>
       </div>
 
@@ -105,7 +105,7 @@ function MonthGrid({ byDay, sel, setSel, byId, onOpen }: { byDay: Record<number,
     cells.push(
       <button key={d} className={`cal-day ${past ? "past" : ""} ${sel === d ? "sel" : ""}`} onClick={() => setSel(d)}>
         <span className="cal-dnum">{today ? <span className="cal-today">{d}</span> : d}</span>
-        <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+        <div className="flex flex-col gap-[4px]">
           {list.slice(0, 3).map((s) => { const e = byId(s.expId); if (!e) return null; const m = MOODS[e.mood]; return <span key={s.id} className="cal-chip" style={{ background: m.soft, color: m.color }} onClick={(ev) => { ev.stopPropagation(); onOpen(e); }}><b>{s.time}</b><span>{e.title}</span></span>; })}
           {list.length > 3 && <span className="cal-more">+{list.length - 3} more</span>}
           {list.length === 0 && !past && <span className="cal-empty-dot" />}
@@ -121,35 +121,35 @@ function DayPanel({ day, list, byId, onOpen }: { day: number; list: Session[]; b
   return (
     <div className="cal-day-panel">
       <div className="cal-day-head">
-        <div style={{ width: 46, height: 46, borderRadius: 13, background: "var(--surface)", display: "grid", placeItems: "center", boxShadow: "var(--sh-sm)", flex: "none" }}>
-          <span style={{ fontFamily: "var(--display)", fontWeight: 800, fontSize: 20, color: "var(--coral-deep)" }}>{day}</span></div>
-        <div style={{ flex: 1 }}>
-          <h3 style={{ fontSize: 18 }}>{wd}, {day} June</h3>
-          <div style={{ fontSize: 13, color: "var(--ink-2)", fontWeight: 600 }}>{list.length} session{list.length !== 1 ? "s" : ""} available</div>
+        <div className="w-[46px] h-[46px] rounded-[13px] bg-surface grid place-items-center flex-none" style={{ boxShadow: "var(--sh-sm)" }}>
+          <span className="font-display font-extrabold text-[20px] text-coral-deep">{day}</span></div>
+        <div className="flex-1">
+          <h3 className="text-[18px]">{wd}, {day} June</h3>
+          <div className="text-[13px] text-ink-2 font-semibold">{list.length} session{list.length !== 1 ? "s" : ""} available</div>
         </div>
         {day === CAL_MONTH.today && <span className="tag" style={{ background: "var(--coral)", color: "#fff", border: "none" }}>Today</span>}
       </div>
       {list.length === 0
-        ? <div style={{ padding: 34, textAlign: "center", color: "var(--ink-3)" }}><Icons.schedule size={30} /><p style={{ marginTop: 8, fontWeight: 600 }}>No sessions match your filters on this day.</p></div>
+        ? <div className="p-[34px] text-center text-ink-3"><Icons.schedule size={30} /><p className="mt-[8px] font-semibold">No sessions match your filters on this day.</p></div>
         : list.map((s) => {
           const e = byId(s.expId); if (!e) return null; const m = MOODS[e.mood];
           return (
             <div key={s.id} className="cal-srow" onClick={() => onOpen(e)}>
               <span className="cal-time">{s.time}</span>
-              <div style={{ width: 54, height: 54, borderRadius: 12, background: bg(e), flex: "none" }} />
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+              <div className="w-[54px] h-[54px] rounded-sm flex-none" style={{ background: bg(e) }} />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-[8px] mb-[4px]">
                   <span className="mood-chip" style={{ background: m.soft, color: m.color, padding: "3px 9px 3px 8px", fontSize: 11 }}><MoodDot mood={e.mood} size={6} />{m.label}</span>
                   {e.rating && <Rating value={e.rating} />}
                 </div>
-                <div style={{ fontWeight: 700, fontSize: 15.5 }}>{e.title}</div>
-                <div style={{ fontSize: 12.5, color: "var(--ink-3)", fontWeight: 600, display: "flex", gap: 12, marginTop: 2, flexWrap: "wrap" }}>
-                  <span style={{ display: "inline-flex", gap: 4, alignItems: "center" }}><Icons.pin size={13} />{e.area}</span>
-                  <span style={{ display: "inline-flex", gap: 4, alignItems: "center" }}><Icons.clock size={13} />{e.dur}</span>
-                  <span style={{ display: "inline-flex", gap: 4, alignItems: "center" }}><Icons.user size={13} />{s.spots} spots left</span>
+                <div className="font-bold text-[15.5px]">{e.title}</div>
+                <div className="text-[12.5px] text-ink-3 font-semibold flex gap-[12px] mt-[2px] flex-wrap">
+                  <span className="inline-flex gap-[4px] items-center"><Icons.pin size={13} />{e.area}</span>
+                  <span className="inline-flex gap-[4px] items-center"><Icons.clock size={13} />{e.dur}</span>
+                  <span className="inline-flex gap-[4px] items-center"><Icons.user size={13} />{s.spots} spots left</span>
                 </div>
               </div>
-              <div style={{ textAlign: "right", flex: "none" }}>
+              <div className="text-right flex-none">
                 <div className="price" style={{ fontSize: 17, marginBottom: 7 }}>{fmt(e.price)}</div>
                 <Btn size="sm" onClick={(ev) => { ev.stopPropagation(); onOpen(e); }}>Book</Btn>
               </div>
@@ -169,20 +169,20 @@ function WeekView({ days, byDay, byId, onOpen }: { days: number[]; byDay: Record
         return (
           <div key={d} className="cal-col">
             <div className={`cal-col-h ${today ? "today" : ""}`}>
-              <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: ".05em", textTransform: "uppercase", opacity: today ? 0.9 : 0.6 }}>{CAL_WD[calDow(d)]}</div>
-              <div style={{ fontFamily: "var(--display)", fontWeight: 800, fontSize: 22 }}>{d}</div>
+              <div className="text-[11px] font-extrabold tracking-[.05em] uppercase" style={{ opacity: today ? 0.9 : 0.6 }}>{CAL_WD[calDow(d)]}</div>
+              <div className="font-display font-extrabold text-[22px]">{d}</div>
             </div>
             <div className="cal-col-b no-scrollbar">
               {list.length === 0
                 ? <div className="wk-empty">No sessions</div>
                 : list.map((s) => { const e = byId(s.expId); if (!e) return null; const m = MOODS[e.mood]; return (
                   <div key={s.id} className="wk-card" style={{ background: bg(e) }} onClick={() => onOpen(e)}>
-                    <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,.18)" }} />
-                    <div style={{ position: "relative" }}>
-                      <div style={{ fontWeight: 800, fontSize: 14, fontFamily: "var(--display)" }}>{s.time}</div>
-                      <div style={{ fontSize: 12.5, fontWeight: 700, lineHeight: 1.25, marginTop: 2, textShadow: "0 1px 6px rgba(0,0,0,.3)" }}>{e.title}</div>
-                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 7, fontSize: 11.5, fontWeight: 700 }}>
-                        <span style={{ background: "rgba(255,255,255,.25)", padding: "2px 7px", borderRadius: 99, backdropFilter: "blur(4px)" }}>{m.label}</span>
+                    <div className="absolute inset-0 bg-[rgba(0,0,0,.18)]" />
+                    <div className="relative">
+                      <div className="font-extrabold text-[14px] font-display">{s.time}</div>
+                      <div className="text-[12.5px] font-bold leading-[1.25] mt-[2px]" style={{ textShadow: "0 1px 6px rgba(0,0,0,.3)" }}>{e.title}</div>
+                      <div className="flex items-center justify-between mt-[7px] text-[11.5px] font-bold">
+                        <span className="bg-[rgba(255,255,255,.25)] py-[2px] px-[7px] rounded-[99px]" style={{ backdropFilter: "blur(4px)" }}>{m.label}</span>
                         <span>{fmt(e.price)}</span>
                       </div>
                     </div>

@@ -20,7 +20,7 @@ export default function Landing() {
             <a href="#partners">For partners</a>
             <a href="#corporate">Corporate</a>
           </nav>
-          <div style={{ flex: 1 }} />
+          <div className="flex-1" />
           <Link className="btn btn-ghost" href="/auth" style={{ padding: "11px 20px", fontSize: 14 }}>Sign in</Link>
           <Link className="btn btn-primary" href="/auth" style={{ padding: "12px 22px", fontSize: 14 }}>Get started</Link>
         </div>
@@ -103,7 +103,7 @@ export default function Landing() {
               <div className="eyebrow">For service providers</div>
               <h2>Fill every session. Grow your studio.</h2>
               <p>List your experiences, manage your calendar with drag-and-drop scheduling, and get matched to customers by mood. Real-time bookings, analytics and fast payouts — all in one partner dashboard.</p>
-              <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              <div className="flex gap-[12px] flex-wrap">
                 <Link className="btn btn-light" href="/auth">Become a partner</Link>
                 <Link className="btn btn-glass" href="/provider">Preview the dashboard</Link>
               </div>
@@ -135,7 +135,7 @@ export default function Landing() {
             <div className="eyebrow" style={{ marginBottom: 14 }}>Live now in Moscow</div>
             <h2>Turn this week into a week worth remembering.</h2>
             <p>Join thousands discovering real-life joy, one perfectly-timed experience at a time.</p>
-            <div style={{ display: "flex", gap: 13, justifyContent: "center", flexWrap: "wrap" }}>
+            <div className="flex gap-[13px] justify-center flex-wrap">
               <Link className="btn btn-primary" href="/auth">Get started — 499 ₽/mo</Link>
               <a className="btn btn-ghost" href="#partners">I&apos;m a provider</a>
             </div>
@@ -144,7 +144,7 @@ export default function Landing() {
       </section>
 
       <footer className="foot wrap">
-        <div className="brand"><b style={{ fontFamily: "var(--display)", fontWeight: 800, fontSize: 18 }}>joymap</b><span className="live"><i />Live now!</span></div>
+        <div className="brand"><b className="font-display font-extrabold text-[18px]">joymap</b><span className="live"><i />Live now!</span></div>
         <div>© 2026 Joymap · Moscow · Made for real-life joy</div>
       </footer>
     </div>

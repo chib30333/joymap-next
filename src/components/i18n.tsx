@@ -6,7 +6,8 @@ import { Icons } from "@/components/Icons";
 // and RTL handling as the prototype's i18n.jsx. Strings render from their English
 // source (the prototype's t() also falls back to English source), so the default
 // view is identical; switching language is wired and persisted.
-export const LANGS = [
+export type Lang = { code: string; name: string; native: string; flag: string; rtl?: boolean };
+export const LANGS: readonly Lang[] = [
   { code: "en", name: "English", native: "English", flag: "🇬🇧" },
   { code: "ru", name: "Russian", native: "Русский", flag: "🇷🇺" },
   { code: "es", name: "Spanish", native: "Español", flag: "🇪🇸" },
@@ -14,7 +15,7 @@ export const LANGS = [
   { code: "fr", name: "French", native: "Français", flag: "🇫🇷" },
   { code: "zh", name: "Chinese", native: "中文", flag: "🇨🇳" },
   { code: "ar", name: "Arabic", native: "العربية", flag: "🇸🇦", rtl: true },
-] as const;
+];
 
 type LangCtx = { lang: string; setLang: (c: string) => void };
 const Ctx = createContext<LangCtx>({ lang: "en", setLang: () => {} });
@@ -52,7 +53,7 @@ export function LangSwitcher() {
   const [open, setOpen] = useState(false);
   const cur = LANGS.find((l) => l.code === lang) ?? LANGS[0];
   return (
-    <div style={{ position: "relative" }}>
+    <div className="relative">
       <button className="lang-switch" onClick={() => setOpen((o) => !o)}>
         <Icons.globe size={16} />
         {cur.flag} {cur.code.toUpperCase()}
@@ -61,7 +62,7 @@ export function LangSwitcher() {
         <div className="lang-menu" onMouseLeave={() => setOpen(false)}>
           {LANGS.map((l) => (
             <button key={l.code} className={l.code === lang ? "on" : ""} onClick={() => { setLang(l.code); setOpen(false); }}>
-              <span style={{ fontSize: 16 }}>{l.flag}</span>
+              <span className="text-[16px]">{l.flag}</span>
               {l.native}
             </button>
           ))}

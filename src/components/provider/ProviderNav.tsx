@@ -53,18 +53,18 @@ export function ProviderNav({ name, providerName, badges }: { name: string; prov
           <Logo size={25} />
           <span className="tn-badge"><span className="ld" />Partner</span>
         </div>
-        <div style={{ marginInlineStart: 6, minWidth: 0 }}>
-          <h1 style={{ fontSize: 18, lineHeight: 1.1 }}>{t(title)}</h1>
-          {sub && <div style={{ fontSize: 12.5, color: "var(--ink-3)", fontWeight: 600, marginTop: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{t(sub)}</div>}
+        <div className="min-w-0" style={{ marginInlineStart: 6 }}>
+          <h1 className="text-[18px] leading-[1.1]">{t(title)}</h1>
+          {sub && <div className="text-[12.5px] text-ink-3 font-semibold mt-[1px] whitespace-nowrap overflow-hidden" style={{ textOverflow: "ellipsis" }}>{t(sub)}</div>}
         </div>
-        <div style={{ flex: 1 }} />
+        <div className="flex-1" />
         <button className="icon-btn"><Icons.bell size={18} /><span className="dot-badge" /></button>
         <LangSwitcher />
         <AccountMenu name={name} />
       </div>
       <div className="tn-row2 no-scrollbar">
         {P_NAV.map((n, i) => {
-          if (n.sec) return <span key={`s${i}`} style={{ display: "inline-flex", alignItems: "center" }}>{i > 0 && <span className="tn-sep" />}<span className="tn-grouplbl">{t(n.sec)}</span></span>;
+          if (n.sec) return <span key={`s${i}`} className="inline-flex items-center">{i > 0 && <span className="tn-sep" />}<span className="tn-grouplbl">{t(n.sec)}</span></span>;
           const I = Icons[n.icon!];
           const b = (badges as Record<string, number | null>)[n.key!];
           const on = pathname === n.href;
@@ -87,22 +87,22 @@ function AccountMenu({ name }: { name: string }) {
   const grad = "linear-gradient(140deg,var(--m-calm),#2E8C80)";
   const logout = async () => { await rpc("logout"); router.push("/auth"); };
   return (
-    <div ref={ref} style={{ position: "relative" }}>
+    <div ref={ref} className="relative">
       <div className="tn-avatar-btn" onClick={() => setOpen((o) => !o)}>
         <Avatar name={name} size={38} grad={grad} />
         <Icons.chevR size={15} style={{ transform: "rotate(90deg)", color: "var(--ink-3)" }} />
       </div>
       {open && (
         <div className="menu-pop anim-pop">
-          <div style={{ display: "flex", alignItems: "center", gap: 11, padding: "8px 10px 12px" }}>
+          <div className="flex items-center gap-[11px] pt-[8px] px-[10px] pb-[12px]">
             <Avatar name={name} size={42} grad={grad} />
-            <div style={{ minWidth: 0 }}><div style={{ fontWeight: 800, fontFamily: "var(--display)", fontSize: 15 }}>{name}</div><div style={{ fontSize: 12, color: "var(--ink-3)", fontWeight: 600 }}>Partner</div></div>
+            <div className="min-w-0"><div className="font-extrabold font-display text-[15px]">{name}</div><div className="text-[12px] text-ink-3 font-semibold">Partner</div></div>
           </div>
           <div className="menu-div" />
           <div className="menu-sec">{t("Switch portal")}</div>
-          <Link className="menu-item" href="/joymap"><span style={{ width: 7, height: 7, borderRadius: 99, background: "var(--ink-3)" }} />{t("Customer")}</Link>
-          <a className="menu-item on" style={{ cursor: "default" }}><span style={{ width: 7, height: 7, borderRadius: 99, background: "var(--coral)" }} />{t("Provider")}<span style={{ marginInlineStart: "auto", fontSize: 11, fontWeight: 700 }}>{t("You")}</span></a>
-          <Link className="menu-item" href="/admin"><span style={{ width: 7, height: 7, borderRadius: 99, background: "var(--ink-3)" }} />{t("Admin")}</Link>
+          <Link className="menu-item" href="/joymap"><span className="w-[7px] h-[7px] rounded-[99px] bg-[var(--ink-3)]" />{t("Customer")}</Link>
+          <a className="menu-item on" style={{ cursor: "default" }}><span className="w-[7px] h-[7px] rounded-[99px] bg-coral" />{t("Provider")}<span style={{ marginInlineStart: "auto", fontSize: 11, fontWeight: 700 }}>{t("You")}</span></a>
+          <Link className="menu-item" href="/admin"><span className="w-[7px] h-[7px] rounded-[99px] bg-[var(--ink-3)]" />{t("Admin")}</Link>
           <div className="menu-div" />
           <button className="menu-item" style={{ color: "var(--ink-3)" }} onClick={logout}><Icons.logout size={18} />{t("Log out")}</button>
         </div>
