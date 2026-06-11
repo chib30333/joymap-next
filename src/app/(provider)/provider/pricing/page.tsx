@@ -1,6 +1,6 @@
 import { currentProvider } from "@/lib/session";
 import { providerServices } from "@/server/selectors";
-import { PPricing } from "@/components/provider/Extra";
+import { PPricing } from "@/components/provider/PPricing";
 
 export default async function ProviderPricingPage() {
   const p = (await currentProvider())!;

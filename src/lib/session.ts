@@ -67,8 +67,6 @@ export async function currentProvider() {
   if (!u || u.role !== "provider") return null;
   return prisma.provider.findUnique({ where: { ownerId: u.id } });
 }
-
-// Tiny typed error so route handlers can map to HTTP status codes.
 export class ApiError extends Error {
   status: number;
   constructor(status: number, message: string) {

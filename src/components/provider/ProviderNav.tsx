@@ -122,7 +122,20 @@ export function ProviderNav({
   return (
     <header className="topnav">
       <div className="tn-row1">
-        <div className="tn-brand">
+        <div
+          className="tn-brand"
+          role="button"
+          tabIndex={0}
+          style={{ cursor: "pointer" }}
+          onClick={() => router.push("/provider/overview")}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              router.push("/provider/overview");
+            }
+          }}
+          title={t("Go to Overview")}
+        >
           <Logo size={25} />
           <span className="tn-badge">
             <span className="ld" />
