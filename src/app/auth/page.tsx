@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Icons, Logo } from "@/components/Icons";
-import { LangSwitcher, t } from "@/components/i18n";
+import { LangSwitcher, useT } from "@/components/i18n";
 import { Input } from "@/components/ui/input";
 import { rpc } from "@/lib/client";
 
@@ -560,6 +560,7 @@ function Showcase() {
 
 export default function AuthPage() {
   const router = useRouter();
+  const t = useT();
   const [mode, setMode] = useState<"login" | "signup" | "reset">("login");
   const [role, setRole] = useState<"customer" | "provider">("customer");
   const [busy, setBusy] = useState(false);
@@ -673,8 +674,8 @@ export default function AuthPage() {
                 </h2>
                 <p>
                   {mode === "login"
-                    ? "Pick up your week of joy where you left off."
-                    : "A minute to set up — then your first Joy Map is on us."}
+                    ? t("Pick up your week of joy where you left off.")
+                    : t("A minute to set up — then your first Joy Map is on us.")}
                 </p>
               </div>
 
@@ -695,10 +696,10 @@ export default function AuthPage() {
                           </span>
                           <span className="role-t">
                             {k === "customer"
-                              ? "I want to explore"
-                              : "I host experiences"}
+                              ? t("I want to explore")
+                              : t("I host experiences")}
                           </span>
-                          <span className="role-s">{r.sub}</span>
+                          <span className="role-s">{t(r.sub)}</span>
                           <span className="role-check">
                             <Icons.check size={13} />
                           </span>
@@ -710,7 +711,7 @@ export default function AuthPage() {
 
                 {mode === "signup" && !admin && (
                   <Field
-                    label="Full name"
+                    label={t("Full name")}
                     icon="user"
                     value={name}
                     onChange={setName}
@@ -719,7 +720,7 @@ export default function AuthPage() {
                 )}
                 {mode === "signup" && role === "provider" && !admin && (
                   <Field
-                    label="Business name"
+                    label={t("Business name")}
                     icon="grid"
                     value={biz}
                     onChange={setBiz}
@@ -804,9 +805,9 @@ export default function AuthPage() {
                     <>
                       {mode === "login"
                         ? admin
-                          ? "Enter admin panel"
-                          : "Log in"
-                        : "Create account"}
+                          ? t("Enter admin panel")
+                          : t("Log in")
+                        : t("Create account")}
                       <Icons.arrowR size={19} />
                     </>
                   )}
@@ -815,7 +816,7 @@ export default function AuthPage() {
                 {!admin && (
                   <>
                     <div className="auth-or">
-                      <span>or continue with</span>
+                      <span>{t("or continue with")}</span>
                     </div>
                     <Social />
                   </>
@@ -825,22 +826,22 @@ export default function AuthPage() {
               <div className="auth-foot">
                 {mode === "login" ? (
                   <>
-                    New to Joymap?{" "}
+                    {t("New to Joymap?")}{" "}
                     <a
                       className="auth-link strong"
                       onClick={() => setMode("signup")}
                     >
-                      Create an account
+                      {t("Create an account")}
                     </a>
                   </>
                 ) : (
                   <>
-                    Already have an account?{" "}
+                    {t("Already have an account?")}{" "}
                     <a
                       className="auth-link strong"
                       onClick={() => setMode("login")}
                     >
-                      Log in
+                      {t("Log in")}
                     </a>
                   </>
                 )}

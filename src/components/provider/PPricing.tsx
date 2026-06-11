@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Icons } from "@/components/Icons";
 import { money, Toggle, Btn } from "@/components/dash/primitives";
+import { useT } from "@/components/i18n";
 
 const P_RULES = [
   {
@@ -40,6 +41,7 @@ const P_RULES = [
 ];
 
 export function PPricing({ svcs }: { svcs: any[] }) {
+  const t = useT();
   const [rules, setRules] = useState(P_RULES);
   const toggle = (id: string) =>
     setRules((r) =>
@@ -50,24 +52,24 @@ export function PPricing({ svcs }: { svcs: any[] }) {
       <div className="card" style={{ padding: 22, marginBottom: "var(--gap)" }}>
         <div className="shead" style={{ marginBottom: 14 }}>
           <div>
-            <h3 className="text-[17px]">Base prices</h3>
+            <h3 className="text-[17px]">{t("Base prices")}</h3>
             <div className="text-[13px] text-ink-3 font-semibold">
-              Per person, before dynamic rules
+              {t("Per person, before dynamic rules")}
             </div>
           </div>
         </div>
         {svcs.length === 0 ? (
           <div className="py-[20px] px-0 text-ink-3 font-semibold text-[13.5px]">
-            No services yet — create one in Services.
+            {t("No services yet — create one in Services.")}
           </div>
         ) : (
           <table className="tbl">
             <thead>
               <tr>
-                <th>Service</th>
-                <th>Duration</th>
-                <th>Capacity</th>
-                <th>Base price</th>
+                <th>{t("Service")}</th>
+                <th>{t("Duration")}</th>
+                <th>{t("Capacity")}</th>
+                <th>{t("Base price")}</th>
               </tr>
             </thead>
             <tbody>
@@ -92,13 +94,13 @@ export function PPricing({ svcs }: { svcs: any[] }) {
       </div>
       <div className="shead">
         <div>
-          <h3 className="text-[17px]">Dynamic pricing rules</h3>
+          <h3 className="text-[17px]">{t("Dynamic pricing rules")}</h3>
           <div className="text-[13px] text-ink-3 font-semibold">
-            Automatically adjust prices to fill capacity
+            {t("Automatically adjust prices to fill capacity")}
           </div>
         </div>
         <Btn size="md" icon={<Icons.plus size={16} />}>
-          New rule
+          {t("New rule")}
         </Btn>
       </div>
       <div className="flex flex-col gap-[12px]">
@@ -128,9 +130,9 @@ export function PPricing({ svcs }: { svcs: any[] }) {
               <Icons.percent size={20} />
             </span>
             <div className="flex-1 min-w-0">
-              <div className="font-bold text-[15px]">{r.name}</div>
+              <div className="font-bold text-[15px]">{t(r.name)}</div>
               <div className="text-[13px] text-ink-3 font-semibold">
-                {r.cond}
+                {t(r.cond)}
               </div>
             </div>
             <span

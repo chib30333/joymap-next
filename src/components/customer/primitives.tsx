@@ -7,6 +7,7 @@ import {
   type ButtonHTMLAttributes,
 } from "react";
 import { Icons } from "@/components/Icons";
+import { useT } from "@/components/i18n";
 import { MOODS, type Mood } from "@/lib/constants";
 
 export { MOODS, type Mood };
@@ -102,6 +103,7 @@ export function MoodChip({
   active?: boolean;
   onClick?: () => void;
 }) {
+  const t = useT();
   const m = MOODS[mood];
   return (
     <button
@@ -117,7 +119,7 @@ export function MoodChip({
         className="mood-dot"
         style={{ background: active ? "#fff" : m.color }}
       />
-      {m.label}
+      {t(m.label)}
     </button>
   );
 }
@@ -183,11 +185,12 @@ export function ExperienceCard({
   fav?: boolean;
   onFav?: (id: string) => void;
 }) {
+  const t = useT();
   const m = MOODS[exp.mood];
   return (
     <article className="xcard" onClick={() => onOpen(exp)}>
       <PhotoFrame exp={exp}>
-        <span className="cat">{exp.cat}</span>
+        <span className="cat">{t(exp.cat)}</span>
         <button
           className={`fav ${fav ? "on" : ""}`}
           onClick={(e) => {
@@ -211,7 +214,7 @@ export function ExperienceCard({
             }}
           >
             <MoodDot mood={exp.mood} size={7} />
-            {m.label}
+            {t(m.label)}
           </span>
           {exp.rating ? (
             <Rating value={exp.rating} reviews={exp.reviews} />
@@ -225,7 +228,7 @@ export function ExperienceCard({
                 fontWeight: 700,
               }}
             >
-              New
+              {t("New")}
             </span>
           )}
         </div>
@@ -241,7 +244,7 @@ export function ExperienceCard({
         </div>
         <div className="xrow">
           <span className="price">
-            {fmt(exp.price)} <small>/ person</small>
+            {fmt(exp.price)} <small>/ {t("person")}</small>
           </span>
           <span className="text-coral-deep inline-flex">
             <Icons.arrowR size={20} />

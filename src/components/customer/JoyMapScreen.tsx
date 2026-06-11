@@ -14,6 +14,7 @@ import {
 } from "./primitives";
 import { ServiceModal, type Slot } from "./ServiceModal";
 import { useFav } from "./useFav";
+import { useT } from "@/components/i18n";
 
 type Day = {
   day: number;
@@ -45,6 +46,7 @@ export function JoyMapScreen({
   slotsByService: Record<string, Slot[]>;
   wallet: number;
 }) {
+  const t = useT();
   const router = useRouter();
   const { busy, run } = useBusy();
   const [open, setOpen] = useState<Exp | null>(null);
@@ -52,8 +54,12 @@ export function JoyMapScreen({
   const byId = (id: string | null) => catalog.find((e) => e.id === id) || null;
   const hour = new Date().getHours();
   const greet =
-    hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
-  const weekLabel = `${TODAY}–${Math.min(TODAY + 6, 30)} Jun`;
+    hour < 12
+      ? t("Good morning")
+      : hour < 18
+        ? t("Good afternoon")
+        : t("Good evening");
+  const weekLabel = `${TODAY}–${Math.min(TODAY + 6, 30)} ${t("Jun")}`;
   const days = map.filter((d) => !d.rest && d.expId && byId(d.expId));
   const regen = () =>
     run(
@@ -66,7 +72,7 @@ export function JoyMapScreen({
       <div className="flex items-end justify-between gap-[20px] flex-wrap mt-[6px] mb-[22px]">
         <div>
           <div className="eyebrow" style={{ marginBottom: 9 }}>
-            This week · {weekLabel}
+            {t("This week")} · {weekLabel}
           </div>
           <h1
             className="max-w-[560px] leading-[1.02]"
@@ -74,12 +80,13 @@ export function JoyMapScreen({
           >
             {greet}, {userName}.{" "}
             <span className="text-[var(--orange)]">
-              Here&apos;s your week of joy.
+              {t("Here's your week of joy.")}
             </span>
           </h1>
           <p className="text-ink-2 text-[16px] mt-[12px] max-w-[520px]">
-            Seven days, tuned to how you want to feel. Booked days are locked in
-            — swap anything that doesn&apos;t fit.
+            {t(
+              "Seven days, tuned to how you want to feel. Booked days are locked in — swap anything that doesn't fit.",
+            )}
           </p>
         </div>
         <BusyBtn
@@ -88,7 +95,7 @@ export function JoyMapScreen({
           icon={<Icons.refresh size={18} />}
           onClick={regen}
         >
-          Regenerate
+          {t("Regenerate")}
         </BusyBtn>
       </div>
 
@@ -105,9 +112,9 @@ export function JoyMapScreen({
           >
             <Icons.sparkle size={26} />
           </div>
-          <h3 className="text-[20px]">No Joy Map yet</h3>
+          <h3 className="text-[20px]">{t("No Joy Map yet")}</h3>
           <p className="text-ink-2 text-[14.5px] mt-[8px] mb-[18px] mx-auto max-w-[380px]">
-            Let Joy compose a week of experiences around your moods.
+            {t("Let Joy compose a week of experiences around your moods.")}
           </p>
           <BusyBtn
             busy={busy}
@@ -115,7 +122,7 @@ export function JoyMapScreen({
             icon={<Icons.sparkle size={17} />}
             onClick={regen}
           >
-            Build my week
+            {t("Build my week")}
           </BusyBtn>
         </div>
       ) : (
@@ -163,17 +170,21 @@ export function JoyMapScreen({
               </div>
               <div>
                 <h3 className="text-[17px] mb-[6px]">
-                  Why Joy built this week
+                  {t("Why Joy built this week")}
                 </h3>
                 <p className="text-[rgba(243,235,224,.85)] text-[14.5px] leading-[1.55] max-w-[760px]">
-                  You asked for more{" "}
+                  {t("You asked for more")}{" "}
                   <b className="text-[#FFF3E8]">
                     {(userMoods || [])
-                      .map((k) => (MOODS[k] ? MOODS[k].label.toLowerCase() : k))
-                      .join(", ") || "joy"}
+                      .map((k) =>
+                        MOODS[k] ? t(MOODS[k].label).toLowerCase() : k,
+                      )
+                      .join(", ") || t("joy")}
                   </b>
-                  . The week balances restorative mornings with playful evenings
-                  — and keeps a true rest day so the week breathes.
+                  .{" "}
+                  {t(
+                    "The week balances restorative mornings with playful evenings — and keeps a true rest day so the week breathes.",
+                  )}
                 </p>
               </div>
             </div>
@@ -196,6 +207,7 @@ export function JoyMapScreen({
 }
 
 export function EmptyMarketplace() {
+  const t = useT();
   return (
     <div className="card" style={{ padding: "60px 24px", textAlign: "center" }}>
       <div
@@ -204,11 +216,12 @@ export function EmptyMarketplace() {
       >
         <Icons.compass size={30} />
       </div>
-      <h3 className="text-[20px] text-ink">The marketplace is empty</h3>
+      <h3 className="text-[20px] text-ink">{t("The marketplace is empty")}</h3>
       <p className="text-ink-2 text-[14.5px] mt-[8px] mb-0 mx-auto max-w-[420px] leading-[1.55]">
-        No experiences have been published yet. Sign up as a <b>provider</b> to
-        list one (an admin approves it), or run <code>npm run db:seed</code> to
-        fill the platform.
+        {t("No experiences have been published yet. Sign up as a")}{" "}
+        <b>{t("provider")}</b>{" "}
+        {t("to list one (an admin approves it), or run")}{" "}
+        <code>npm run db:seed</code> {t("to fill the platform.")}
       </p>
     </div>
   );
@@ -221,6 +234,7 @@ function MoodArc({
   map: Day[];
   byId: (id: string | null) => Exp | null;
 }) {
+  const t = useT();
   return (
     <div
       className="card"
@@ -233,7 +247,7 @@ function MoodArc({
       }}
     >
       <span className="text-[12.5px] font-bold text-ink-3 tracking-[.04em] uppercase flex-none">
-        Your emotional arc
+        {t("Your emotional arc")}
       </span>
       <div className="flex items-center gap-0 flex-1 min-w-[420px]">
         {map.map((d) => {
@@ -270,6 +284,7 @@ function DayCard({
   onOpen: (e: Exp) => void;
   bookings: any[];
 }) {
+  const t = useT();
   const today = d.day === TODAY;
   const e = d.rest ? null : byId(d.expId);
   if (d.rest || !e) {
@@ -294,7 +309,7 @@ function DayCard({
           </span>
           {today && (
             <span className="bg-coral text-[#fff] pt-[3px] pb-[3px] pl-[9px] pr-[9px] rounded-[99px] text-[10.5px] font-extrabold">
-              TODAY
+              {t("TODAY")}
             </span>
           )}
         </div>
@@ -306,7 +321,7 @@ function DayCard({
             <Icons.heart size={24} />
           </div>
           <div className="font-display font-bold text-[17px] whitespace-nowrap">
-            Rest day
+            {t("Rest day")}
           </div>
           <p className="text-[13px] text-ink-3 m-0">{d.note}</p>
         </div>
@@ -338,7 +353,7 @@ function DayCard({
           </span>
           {today && (
             <span className="bg-coral text-[#fff] pt-[5px] pb-[5px] pl-[10px] pr-[10px] rounded-[99px] text-[11px] font-extrabold">
-              TODAY
+              {t("TODAY")}
             </span>
           )}
         </div>
@@ -358,7 +373,7 @@ function DayCard({
             }}
           >
             <MoodDot mood={e.mood} size={7} />
-            {m.label}
+            {t(m.label)}
           </span>
           <span className="inline-flex items-center gap-[5px] text-[13px] font-bold text-ink-2">
             <Icons.clock size={14} />
@@ -377,7 +392,7 @@ function DayCard({
             }}
           >
             <Icons.check size={16} />
-            {booked.status === "pending" ? "Requested" : "Booked"} ·{" "}
+            {booked.status === "pending" ? t("Requested") : t("Booked")} ·{" "}
             {booked.time}
           </div>
         ) : (
@@ -388,7 +403,7 @@ function DayCard({
               onOpen(e);
             }}
           >
-            Book this day
+            {t("Book this day")}
           </button>
         )}
       </div>

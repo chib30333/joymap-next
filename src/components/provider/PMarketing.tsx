@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Icons } from "@/components/Icons";
 import { Pill, Seg, Modal, Btn } from "@/components/dash/primitives";
 import { Input } from "@/components/ui";
+import { useT } from "@/components/i18n";
 
 const P_PROMOS = [
   {
@@ -33,6 +34,7 @@ const P_PROMOS = [
 ];
 
 export function PMarketing() {
+  const t = useT();
   const [promos, setPromos] = useState(P_PROMOS);
   const [modal, setModal] = useState(false);
   const add = (p: any) => {
@@ -43,9 +45,9 @@ export function PMarketing() {
     <div className="anim-fade">
       <div className="shead">
         <div>
-          <h3 className="text-[17px]">Promo codes</h3>
+          <h3 className="text-[17px]">{t("Promo codes")}</h3>
           <div className="text-[13px] text-ink-3 font-semibold">
-            Drive bookings with limited-time offers
+            {t("Drive bookings with limited-time offers")}
           </div>
         </div>
         <Btn
@@ -53,7 +55,7 @@ export function PMarketing() {
           icon={<Icons.plus size={16} />}
           onClick={() => setModal(true)}
         >
-          Create code
+          {t("Create code")}
         </Btn>
       </div>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-[var(--gap)]">
@@ -74,9 +76,9 @@ export function PMarketing() {
                 status={p.status}
                 label={
                   p.status === "active"
-                    ? "Active"
+                    ? t("Active")
                     : p.status === "rejected"
-                      ? "Expired"
+                      ? t("Expired")
                       : p.status
                 }
               />
@@ -95,9 +97,11 @@ export function PMarketing() {
             </div>
             <div className="flex justify-between text-[12.5px] text-ink-3 font-semibold">
               <span>
-                {p.uses}/{p.cap} redeemed
+                {p.uses}/{p.cap} {t("redeemed")}
               </span>
-              <span>Expires {p.expires}</span>
+              <span>
+                {t("Expires")} {p.expires}
+              </span>
             </div>
           </div>
         ))}
@@ -114,6 +118,7 @@ function PromoModal({
   onClose: () => void;
   onAdd: (p: any) => void;
 }) {
+  const t = useT();
   const [code, setCode] = useState("");
   const [desc, setDesc] = useState("");
   const [amt, setAmt] = useState("15");
@@ -122,11 +127,11 @@ function PromoModal({
   return (
     <Modal onClose={onClose} maxWidth={460}>
       <div className="py-[24px] px-[26px]">
-        <h3 className="text-[20px] mb-[18px]">Create promo code</h3>
+        <h3 className="text-[20px] mb-[18px]">{t("Create promo code")}</h3>
         <div className="flex flex-col gap-[14px]">
           <div>
             <div className="text-[12.5px] font-bold text-ink-2 mb-[7px]">
-              Code
+              {t("Code")}
             </div>
             <Input
               placeholder="SUMMER20"
@@ -141,10 +146,10 @@ function PromoModal({
           </div>
           <div>
             <div className="text-[12.5px] font-bold text-ink-2 mb-[7px]">
-              Description
+              {t("Description")}
             </div>
             <Input
-              placeholder="15% off any wellness session"
+              placeholder={t("15% off any wellness session")}
               value={desc}
               onChange={(e) => setDesc(e.target.value)}
             />
@@ -152,7 +157,7 @@ function PromoModal({
           <div className="flex gap-[12px]">
             <div className="flex-1">
               <div className="text-[12.5px] font-bold text-ink-2 mb-[7px]">
-                Discount
+                {t("Discount")}
               </div>
               <div className="flex gap-[8px]">
                 <Input
@@ -172,7 +177,7 @@ function PromoModal({
             </div>
             <div className="w-[110px]">
               <div className="text-[12.5px] font-bold text-ink-2 mb-[7px]">
-                Max uses
+                {t("Max uses")}
               </div>
               <Input value={cap} onChange={(e) => setCap(e.target.value)} />
             </div>
@@ -180,7 +185,7 @@ function PromoModal({
         </div>
         <div className="flex gap-[10px] mt-[22px]">
           <button className="btn btn-ghost btn-md btn-block" onClick={onClose}>
-            Cancel
+            {t("Cancel")}
           </button>
           <Btn
             size="md"
@@ -188,14 +193,14 @@ function PromoModal({
             onClick={() =>
               onAdd({
                 code: code || "NEWCODE",
-                desc: desc || `${amt}${unit} off`,
+                desc: desc || `${amt}${unit} ${t("off")}`,
                 cap: +cap || 100,
                 expires: "31 Jul",
               })
             }
           >
             <Icons.check size={16} />
-            Create code
+            {t("Create code")}
           </Btn>
         </div>
       </div>

@@ -6,6 +6,7 @@ import { Icons } from "@/components/Icons";
 import { rpc } from "@/lib/client";
 import { Avatar } from "./primitives";
 import { Input } from "@/components/ui";
+import { useT } from "@/components/i18n";
 
 type Thread = {
   id: string;
@@ -24,6 +25,7 @@ export function ChatPanel({
   threads: Thread[];
   role?: "c" | "p";
 }) {
+  const t = useT();
   const router = useRouter();
   const [active, setActive] = useState<string | null>(null);
   const [draft, setDraft] = useState("");
@@ -68,12 +70,16 @@ export function ChatPanel({
           <div className="text-center max-w-[340px] p-[20px]">
             <Icons.chat size={40} />
             <h3 className="text-ink mt-[12px] text-[18px]">
-              No conversations yet
+              {t("No conversations yet")}
             </h3>
             <p className="mt-[8px] font-semibold text-[13.5px] leading-[1.5]">
               {role === "c"
-                ? "Book an experience and a chat with the provider opens automatically."
-                : "When customers book your experiences, their chats appear here."}
+                ? t(
+                    "Book an experience and a chat with the provider opens automatically.",
+                  )
+                : t(
+                    "When customers book your experiences, their chats appear here.",
+                  )}
             </p>
           </div>
         </div>
@@ -84,15 +90,15 @@ export function ChatPanel({
   return (
     <div className={`chat-wrap anim-fade ${cur ? "has-active" : ""}`}>
       <div className="chat-list no-scrollbar">
-        {threads.map((t) => (
+        {threads.map((th) => (
           <div
-            key={t.id}
-            className={`chat-li ${cur === t.id ? "on" : ""}`}
+            key={th.id}
+            className={`chat-li ${cur === th.id ? "on" : ""}`}
             style={{ position: "relative" }}
-            onClick={() => open(t.id)}
+            onClick={() => open(th.id)}
           >
             <div className="relative">
-              <Avatar name={t.who} size={42} />
+              <Avatar name={th.who} size={42} />
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-[6px]">
@@ -100,29 +106,29 @@ export function ChatPanel({
                   className="font-bold text-[14px] whitespace-nowrap overflow-hidden flex-1"
                   style={{ textOverflow: "ellipsis" }}
                 >
-                  {t.who}
+                  {th.who}
                 </span>
                 <span className="text-[11px] text-ink-3 font-semibold flex-none">
-                  {t.time}
+                  {th.time}
                 </span>
               </div>
               <div className="text-[12px] text-ink-3 font-semibold mb-[3px]">
-                {t.service}
+                {th.service}
               </div>
               <div className="flex items-center gap-[6px]">
                 <span
                   className="text-[12.5px] whitespace-nowrap overflow-hidden flex-1"
                   style={{
-                    color: t.unread ? "var(--ink)" : "var(--ink-3)",
-                    fontWeight: t.unread ? 700 : 500,
+                    color: th.unread ? "var(--ink)" : "var(--ink-3)",
+                    fontWeight: th.unread ? 700 : 500,
                     textOverflow: "ellipsis",
                   }}
                 >
-                  {t.last}
+                  {th.last}
                 </span>
-                {t.unread > 0 && (
+                {th.unread > 0 && (
                   <span className="flex-none min-w-[18px] h-[18px] rounded-[99px] bg-coral text-[#fff] text-[11px] font-extrabold grid place-items-center py-0 px-[5px]">
-                    {t.unread}
+                    {th.unread}
                   </span>
                 )}
               </div>
@@ -138,7 +144,7 @@ export function ChatPanel({
             <div className="flex-1 min-w-0">
               <div className="font-extrabold text-[15px]">{thread.who}</div>
               <div className="text-[12.5px] text-ink-3 font-semibold">
-                {thread.service || "Joymap chat"}
+                {thread.service || t("Joymap chat")}
               </div>
             </div>
             <button className="icon-btn">
@@ -148,7 +154,7 @@ export function ChatPanel({
           <div className="chat-body no-scrollbar" ref={bodyRef}>
             {thread.msgs.length === 0 && (
               <div className="self-center text-ink-3 text-[13px] font-semibold py-[30px] px-0">
-                Say hello — messages are delivered instantly.
+                {t("Say hello — messages are delivered instantly.")}
               </div>
             )}
             {thread.msgs.map((m, i) => (
@@ -160,7 +166,7 @@ export function ChatPanel({
           </div>
           <div className="chat-input">
             <Input
-              placeholder="Write a message…"
+              placeholder={t("Write a message…")}
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
               onKeyDown={(e) => {
@@ -197,7 +203,7 @@ export function ChatPanel({
         >
           <div className="text-center">
             <Icons.chat size={40} />
-            <p className="mt-[10px] font-semibold">Select a conversation</p>
+            <p className="mt-[10px] font-semibold">{t("Select a conversation")}</p>
           </div>
         </div>
       )}

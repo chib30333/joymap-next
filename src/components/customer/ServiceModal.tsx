@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useT } from "@/components/i18n";
 import { Icons } from "@/components/Icons";
 import { rpc, useBusy } from "@/lib/client";
 import {
@@ -45,6 +46,7 @@ export function ServiceModal({
   onFav: (id: string) => void;
   onClose: () => void;
 }) {
+  const t = useT();
   const router = useRouter();
   const [step, setStep] = useState(0);
   const m = MOODS[exp.mood];
@@ -127,7 +129,7 @@ export function ServiceModal({
             }}
           >
             <MoodDot mood={exp.mood} size={7} />
-            {m.label}
+            {t(m.label)}
           </span>
           <h2
             className="text-[#fff] text-[28px]"
@@ -164,7 +166,7 @@ export function ServiceModal({
                     fontWeight: 700,
                   }}
                 >
-                  New on Joymap
+                  {t("New on Joymap")}
                 </span>
               )}
               <span className="text-[var(--line-2)]">•</span>
@@ -188,7 +190,7 @@ export function ServiceModal({
               <div>
                 <div className="font-bold text-[14.5px]">{exp.provider}</div>
                 <div className="text-[12.5px] text-ink-3 font-semibold">
-                  Verified provider · responds in ~1h
+                  {t("Verified provider · responds in ~1h")}
                 </div>
               </div>
               <span
@@ -201,7 +203,7 @@ export function ServiceModal({
                 }}
               >
                 <Icons.check size={13} style={{ marginRight: 4 }} />
-                Verified
+                {t("Verified")}
               </span>
             </div>
             <p className="text-ink-2 text-[15px] leading-[1.6] mb-[18px]">
@@ -222,13 +224,13 @@ export function ServiceModal({
                 }}
               >
                 <Icons.flame size={13} style={{ marginRight: 4 }} />
-                {exp.spots} spots / session
+                {exp.spots} {t("spots / session")}
               </span>
             </div>
           </div>
           <Footer>
             <div>
-              <div className="text-[12.5px] text-ink-3 font-semibold">From</div>
+              <div className="text-[12.5px] text-ink-3 font-semibold">{t("From")}</div>
               <div className="price" style={{ fontSize: 22 }}>
                 {fmt(exp.price)}
               </div>
@@ -238,7 +240,7 @@ export function ServiceModal({
               iconR={<Icons.arrowR size={19} />}
               onClick={() => setStep(1)}
             >
-              Book a spot
+              {t("Book a spot")}
             </Btn>
           </Footer>
         </div>
@@ -246,9 +248,9 @@ export function ServiceModal({
 
       {step === 1 && (
         <div>
-          <Header sub="Choose your day & time" />
+          <Header sub={t("Choose your day & time")} />
           <div className="pt-[22px] px-[24px] pb-0">
-            <Label n="1" t="Pick a day" />
+            <Label n="1" t={t("Pick a day")} />
             <div
               className="no-scrollbar"
               style={{
@@ -299,7 +301,7 @@ export function ServiceModal({
                 </button>
               ))}
             </div>
-            <Label n="2" t="Pick a time" />
+            <Label n="2" t={t("Pick a time")} />
             <div className="flex gap-[9px] flex-wrap mb-[22px]">
               {timesFor(day).map((tm) => (
                 <button
@@ -315,10 +317,10 @@ export function ServiceModal({
             {slotDays.length > 0 && (
               <div className="flex gap-[8px] items-center text-[12.5px] text-ink-3 font-semibold mb-[18px]">
                 <Icons.sparkle size={14} style={{ color: "var(--coral)" }} />
-                Times come straight from the provider&apos;s live schedule.
+                {t("Times come straight from the provider's live schedule.")}
               </div>
             )}
-            <Label n="3" t="How many spots?" />
+            <Label n="3" t={t("How many spots?")} />
             <div className="flex items-center gap-[16px] mb-[8px]">
               <button
                 className="icon-btn"
@@ -336,21 +338,21 @@ export function ServiceModal({
                 <Icons.plus size={18} />
               </button>
               <span className="text-ink-3 text-[13.5px] font-semibold">
-                {exp.spots} available
+                {exp.spots} {t("available")}
               </span>
             </div>
           </div>
           <Footer>
             <button className="btn btn-ghost btn-md" onClick={() => setStep(0)}>
               <Icons.arrowL size={18} />
-              Back
+              {t("Back")}
             </button>
             <Btn
               size="lg"
               onClick={() => setStep(2)}
               iconR={<Icons.arrowR size={19} />}
             >
-              Continue · {fmt(total)}
+              {t("Continue")} · {fmt(total)}
             </Btn>
           </Footer>
         </div>
@@ -363,7 +365,7 @@ export function ServiceModal({
               <button className="icon-btn" onClick={() => setStep(1)}>
                 <Icons.arrowL size={18} />
               </button>
-              <h2 className="text-[22px]">Confirm &amp; pay</h2>
+              <h2 className="text-[22px]">{t("Confirm & pay")}</h2>
             </div>
             <div
               className="card"
@@ -382,14 +384,15 @@ export function ServiceModal({
               <div className="flex-1">
                 <div className="font-bold text-[15px]">{exp.title}</div>
                 <div className="text-[13px] text-ink-3 font-semibold mt-[4px]">
-                  {dateLabel(day)} · {time} · {spots} spot{spots > 1 ? "s" : ""}
+                  {dateLabel(day)} · {time} · {spots}{" "}
+                  {t(spots > 1 ? "spots" : "spot")}
                 </div>
                 <div className="text-[13px] text-ink-3 font-semibold">
                   {exp.area}, {exp.city}
                 </div>
               </div>
             </div>
-            <Label n="" t="Payment method" />
+            <Label n="" t={t("Payment method")} />
             <div className="flex flex-col gap-[9px] mb-[20px]">
               {PAY_METHODS.map(([k, l, s]) => (
                 <button
@@ -433,9 +436,13 @@ export function ServiceModal({
                     )}
                   </span>
                   <div className="text-left">
-                    <div className="font-bold text-[14px]">{l}</div>
+                    <div className="font-bold text-[14px]">{t(l)}</div>
                     <div className="text-[12.5px] text-ink-3 font-semibold">
-                      {k === "wallet" ? fmt(wallet) : s}
+                      {k === "wallet"
+                        ? fmt(wallet)
+                        : s === "Linked"
+                          ? t("Linked")
+                          : s}
                     </div>
                   </div>
                 </button>
@@ -443,21 +450,23 @@ export function ServiceModal({
             </div>
             <div className="border-t border-line pt-[14px] mb-[4px]">
               <Row l={`${fmt(exp.price)} × ${spots}`} r={fmt(total)} />
-              <Row l="Service fee" r="Included" muted />
-              <Row l="Free cancellation" r="up to 12h before" muted />
+              <Row l={t("Service fee")} r={t("Included")} muted />
+              <Row l={t("Free cancellation")} r={t("up to 12h before")} muted />
             </div>
             {(error || (pay === "wallet" && wallet < total)) && (
               <div className="flex gap-[9px] items-center py-[11px] px-[14px] rounded-sm bg-coral-soft text-coral-deep font-bold text-[13.5px] mt-[10px]">
                 <Icons.flame size={16} />
                 {error ||
-                  "Not enough Joymap balance — top up in Wallet or pick another method."}
+                  t(
+                    "Not enough Joymap balance — top up in Wallet or pick another method.",
+                  )}
               </div>
             )}
           </div>
           <Footer>
             <div>
               <div className="text-[12.5px] text-ink-3 font-semibold">
-                Total
+                {t("Total")}
               </div>
               <div className="price" style={{ fontSize: 22 }}>
                 {fmt(total)}
@@ -470,7 +479,7 @@ export function ServiceModal({
               disabled={pay === "wallet" && wallet < total}
               onClick={confirm}
             >
-              Pay {fmt(total)}
+              {t("Pay")} {fmt(total)}
             </BusyBtn>
           </Footer>
         </div>
@@ -484,10 +493,11 @@ export function ServiceModal({
           >
             <Icons.check size={38} />
           </div>
-          <h2 className="text-[26px] mb-[8px]">Request sent!</h2>
+          <h2 className="text-[26px] mb-[8px]">{t("Request sent!")}</h2>
           <p className="text-ink-2 text-[15px] mb-[22px] max-w-[340px] mx-auto">
-            <b>{exp.title}</b> · {dateLabel(day)} at {time}. {exp.provider} will
-            confirm shortly — watch your notifications.
+            <b>{exp.title}</b> · {dateLabel(day)} {t("at")} {time}.{" "}
+            {exp.provider}{" "}
+            {t("will confirm shortly — watch your notifications.")}
           </p>
           <div
             className="card"
@@ -503,12 +513,12 @@ export function ServiceModal({
               {booking?.code ?? ""}
             </div>
             <div className="text-[12.5px] text-ink-3 font-semibold mt-[3px]">
-              Show this at the door
+              {t("Show this at the door")}
             </div>
           </div>
           <div className="flex gap-[10px] justify-center">
             <Btn size="md" onClick={onClose}>
-              Done
+              {t("Done")}
             </Btn>
           </div>
         </div>

@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Icons } from "@/components/Icons";
+import { useT } from "@/components/i18n";
 import {
   MOODS,
   MOOD_ORDER,
@@ -29,7 +30,6 @@ const CAL_WD_FULL = [
   "Sunday",
 ];
 const calDow = (day: number) => (day - 1) % 7;
-const calDateLabel = (day: number) => `${day} Jun`;
 const PRICE_BANDS = [
   { v: "any", l: "Any price" },
   { v: "low", l: "Under 2 000 ₽" },
@@ -79,6 +79,7 @@ export function CCalendar({
   slotsByService: Record<string, Slot[]>;
   wallet: number;
 }) {
+  const t = useT();
   const byId = (id: string) => catalog.find((e) => e.id === id) || null;
   const calAreas = useMemo(
     () => Array.from(new Set(catalog.map((e) => e.area))).sort(),
@@ -131,8 +132,8 @@ export function CCalendar({
           value={view}
           onChange={(v) => setView(v as any)}
           options={[
-            { v: "month", l: "Month", icon: <Icons.grid size={15} /> },
-            { v: "week", l: "Week", icon: <Icons.list size={15} /> },
+            { v: "month", l: t("Month"), icon: <Icons.grid size={15} /> },
+            { v: "week", l: t("Week"), icon: <Icons.list size={15} /> },
           ]}
         />
         <div className="cal-nav">
@@ -145,9 +146,15 @@ export function CCalendar({
             <Icons.arrowL size={18} />
           </button>
           <b>
-            {view === "month"
-              ? CAL_MONTH.label
-              : `Week of ${calDateLabel(weekStart < 1 ? 1 : weekStart)}`}
+            {view === "month" ? (
+              <>
+                {t("June")} 2026
+              </>
+            ) : (
+              <>
+                {t("Week of")} {weekStart < 1 ? 1 : weekStart} {t("Jun")}
+              </>
+            )}
           </b>
           <button
             className="icon-btn"
@@ -166,7 +173,7 @@ export function CCalendar({
             setSel(CAL_MONTH.today);
           }}
         >
-          Today
+          {t("Today")}
         </button>
       </div>
 
@@ -177,7 +184,7 @@ export function CCalendar({
             style={{ padding: "9px 16px" }}
             onClick={() => setFilter("mood", null)}
           >
-            All moods
+            {t("All moods")}
           </button>
           {MOOD_ORDER.map((k) => (
             <MoodChip
@@ -190,13 +197,13 @@ export function CCalendar({
         </div>
         <div className="cal-selects">
           <Sel value={f.cat} onChange={(v) => setFilter("cat", v)}>
-            <option value="All">All categories</option>
+            <option value="All">{t("All categories")}</option>
             {CATS.map((c) => (
               <option key={c}>{c}</option>
             ))}
           </Sel>
           <Sel value={f.area} onChange={(v) => setFilter("area", v)}>
-            <option value="All">All areas</option>
+            <option value="All">{t("All areas")}</option>
             {calAreas.map((a) => (
               <option key={a}>{a}</option>
             ))}
@@ -205,27 +212,28 @@ export function CCalendar({
             value={f.tod}
             onChange={(v) => setFilter("tod", v)}
             options={[
-              { v: "any", l: "Any time" },
-              { v: "morning", l: "AM", icon: <Icons.sun size={14} /> },
-              { v: "afternoon", l: "Noon", icon: <Icons.sunset size={14} /> },
-              { v: "evening", l: "PM", icon: <Icons.moon size={14} /> },
+              { v: "any", l: t("Any time") },
+              { v: "morning", l: t("AM"), icon: <Icons.sun size={14} /> },
+              { v: "afternoon", l: t("Noon"), icon: <Icons.sunset size={14} /> },
+              { v: "evening", l: t("PM"), icon: <Icons.moon size={14} /> },
             ]}
           />
           <Sel value={f.price} onChange={(v) => setFilter("price", v)}>
             {PRICE_BANDS.map((b) => (
               <option key={b.v} value={b.v}>
-                {b.l}
+                {t(b.l)}
               </option>
             ))}
           </Sel>
           {activeFilters > 0 && (
             <button className="btn btn-ghost btn-sm" onClick={clear}>
               <Icons.close size={14} />
-              Clear{` (${activeFilters})`}
+              {t("Clear")}
+              {` (${activeFilters})`}
             </button>
           )}
           <span className="ml-auto text-ink-3 text-[13px] font-bold">
-            {sessions.length} sessions
+            {sessions.length} {t("sessions")}
           </span>
         </div>
       </div>
@@ -330,6 +338,7 @@ function MonthGrid({
   byId: (id: string) => Exp | null;
   onOpen: (e: Exp) => void;
 }) {
+  const t = useT();
   const cells: JSX.Element[] = [];
   for (let i = 0; i < CAL_MONTH.firstDow; i++)
     cells.push(<div key={`e${i}`} className="cal-day empty" />);
@@ -369,7 +378,9 @@ function MonthGrid({
             );
           })}
           {list.length > 3 && (
-            <span className="cal-more">+{list.length - 3} more</span>
+            <span className="cal-more">
+              +{list.length - 3} {t("more")}
+            </span>
           )}
           {list.length === 0 && !past && <span className="cal-empty-dot" />}
         </div>
@@ -380,7 +391,7 @@ function MonthGrid({
     <div className="cal-grid">
       {CAL_WD.map((w) => (
         <div key={w} className="cal-wd">
-          {w}
+          {t(w)}
         </div>
       ))}
       {cells}
@@ -399,6 +410,7 @@ function DayPanel({
   byId: (id: string) => Exp | null;
   onOpen: (e: Exp) => void;
 }) {
+  const t = useT();
   const wd = CAL_WD_FULL[calDow(day)];
   return (
     <div className="cal-day-panel">
@@ -413,10 +425,11 @@ function DayPanel({
         </div>
         <div className="flex-1">
           <h3 className="text-[18px]">
-            {wd}, {day} June
+            {t(wd)}, {day} {t("June")}
           </h3>
           <div className="text-[13px] text-ink-2 font-semibold">
-            {list.length} session{list.length !== 1 ? "s" : ""} available
+            {list.length} {list.length !== 1 ? t("sessions") : t("session")}{" "}
+            {t("available")}
           </div>
         </div>
         {day === CAL_MONTH.today && (
@@ -428,7 +441,7 @@ function DayPanel({
               border: "none",
             }}
           >
-            Today
+            {t("Today")}
           </span>
         )}
       </div>
@@ -436,7 +449,7 @@ function DayPanel({
         <div className="p-[34px] text-center text-ink-3">
           <Icons.schedule size={30} />
           <p className="mt-[8px] font-semibold">
-            No sessions match your filters on this day.
+            {t("No sessions match your filters on this day.")}
           </p>
         </div>
       ) : (
@@ -463,7 +476,7 @@ function DayPanel({
                     }}
                   >
                     <MoodDot mood={e.mood} size={6} />
-                    {m.label}
+                    {t(m.label)}
                   </span>
                   {e.rating && <Rating value={e.rating} />}
                 </div>
@@ -479,7 +492,7 @@ function DayPanel({
                   </span>
                   <span className="inline-flex gap-[4px] items-center">
                     <Icons.user size={13} />
-                    {s.spots} spots left
+                    {s.spots} {t("spots left")}
                   </span>
                 </div>
               </div>
@@ -497,7 +510,7 @@ function DayPanel({
                     onOpen(e);
                   }}
                 >
-                  Book
+                  {t("Book")}
                 </Btn>
               </div>
             </div>
@@ -519,6 +532,7 @@ function WeekView({
   byId: (id: string) => Exp | null;
   onOpen: (e: Exp) => void;
 }) {
+  const t = useT();
   return (
     <div className="cal-week">
       {days.map((d) => {
@@ -533,13 +547,13 @@ function WeekView({
                 className="text-[11px] font-extrabold tracking-[.05em] uppercase"
                 style={{ opacity: today ? 0.9 : 0.6 }}
               >
-                {CAL_WD[calDow(d)]}
+                {t(CAL_WD[calDow(d)])}
               </div>
               <div className="font-display font-extrabold text-[22px]">{d}</div>
             </div>
             <div className="cal-col-b no-scrollbar">
               {list.length === 0 ? (
-                <div className="wk-empty">No sessions</div>
+                <div className="wk-empty">{t("No sessions")}</div>
               ) : (
                 list.map((s) => {
                   const e = byId(s.expId);
@@ -568,7 +582,7 @@ function WeekView({
                             className="bg-[rgba(255,255,255,.25)] py-[2px] px-[7px] rounded-[99px]"
                             style={{ backdropFilter: "blur(4px)" }}
                           >
-                            {m.label}
+                            {t(m.label)}
                           </span>
                           <span>{fmt(e.price)}</span>
                         </div>

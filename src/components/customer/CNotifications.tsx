@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { rpc } from "@/lib/client";
+import { useT } from "@/components/i18n";
 
 type N = {
   id: string;
@@ -16,6 +17,7 @@ type N = {
 };
 
 export function CNotifications({ items }: { items: N[] }) {
+  const t = useT();
   const router = useRouter();
   const [filter, setFilter] = useState<"all" | "unread">("all");
   const unread = items.filter((n) => n.unread).length;
@@ -30,8 +32,8 @@ export function CNotifications({ items }: { items: N[] }) {
         <div className="flex gap-1.5 bg-surface-2 p-[5px] rounded-pill border border-line">
           {(
             [
-              ["all", "All"],
-              ["unread", `Unread${unread ? ` · ${unread}` : ""}`],
+              ["all", t("All")],
+              ["unread", `${t("Unread")}${unread ? ` · ${unread}` : ""}`],
             ] as const
           ).map(([k, l]) => (
             <button
@@ -55,7 +57,7 @@ export function CNotifications({ items }: { items: N[] }) {
         <div className="flex-1" />
         <button className="btn btn-ghost btn-sm" onClick={markAll}>
           <Icons.checkCirc size={15} />
-          Mark all read
+          {t("Mark all read")}
         </button>
       </div>
       <div className="flex flex-col gap-2.5">
@@ -105,7 +107,7 @@ export function CNotifications({ items }: { items: N[] }) {
         {list.length === 0 && (
           <div className="text-center p-[50px] text-ink-3">
             <Icons.checkCirc size={36} />
-            <p className="mt-2.5 font-semibold">You&apos;re all caught up.</p>
+            <p className="mt-2.5 font-semibold">{t("You're all caught up.")}</p>
           </div>
         )}
       </div>

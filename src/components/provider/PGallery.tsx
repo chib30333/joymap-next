@@ -4,8 +4,10 @@ import { useState } from "react";
 import { Icons } from "@/components/Icons";
 import { Btn } from "@/components/dash/primitives";
 import { P_GALLERY } from "@/components/provider/data";
+import { useT } from "@/components/i18n";
 
 export function PGalleryView() {
+  const t = useT();
   const [items, setItems] = useState(P_GALLERY);
   const del = (id: string) => setItems((it) => it.filter((g) => g.id !== id));
   const setCover = (id: string) =>
@@ -15,12 +17,12 @@ export function PGalleryView() {
       <div className="shead">
         <div>
           <div className="eyebrow" style={{ marginBottom: 6 }}>
-            {items.length} items
+            {items.length} {t("items")}
           </div>
-          <h2 className="text-[22px]">Photos & videos</h2>
+          <h2 className="text-[22px]">{t("Photos & videos")}</h2>
         </div>
         <Btn size="md" icon={<Icons.plus size={16} />}>
-          Upload
+          {t("Upload")}
         </Btn>
       </div>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-[var(--gap)]">
@@ -29,7 +31,7 @@ export function PGalleryView() {
           style={{ aspectRatio: "4/3", border: "2px dashed var(--line-2)" }}
         >
           <Icons.image size={28} />
-          <span className="font-bold text-[13.5px]">Add photo or video</span>
+          <span className="font-bold text-[13.5px]">{t("Add photo or video")}</span>
         </label>
         {items.map((g) => (
           <div
@@ -53,7 +55,7 @@ export function PGalleryView() {
                   }}
                 >
                   <Icons.star size={12} />
-                  Cover
+                  {t("Cover")}
                 </span>
               )}
               {g.video && (
@@ -85,7 +87,7 @@ export function PGalleryView() {
                   style={{ flex: 1, fontSize: 12 }}
                   onClick={() => setCover(g.id)}
                 >
-                  Set cover
+                  {t("Set cover")}
                 </button>
               )}
               <button

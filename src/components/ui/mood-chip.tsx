@@ -1,4 +1,7 @@
+"use client";
+
 import { MOODS } from "@/lib/constants";
+import { useT } from "@/components/i18n";
 
 export function MoodChip({
   mood,
@@ -9,6 +12,7 @@ export function MoodChip({
   active?: boolean;
   onClick?: () => void;
 }) {
+  const t = useT();
   const m = MOODS[mood];
   if (!m) return null;
   return (
@@ -29,7 +33,7 @@ export function MoodChip({
         className="h-2 w-2 rounded-full"
         style={{ background: active ? "#fff" : m.hex }}
       />
-      {m.label}
+      {t(m.label)}
     </button>
   );
 }

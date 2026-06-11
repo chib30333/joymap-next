@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useT } from "@/components/i18n";
 import { Icons } from "@/components/Icons";
 import { rpc, useBusy } from "@/lib/client";
 import {
@@ -51,11 +52,15 @@ export function ADashboard({
   pend: any[];
   top: any[];
 }) {
+  const t = useT();
   const router = useRouter();
   const days = Object.keys(s.byDay)
     .map(Number)
     .sort((a, b) => a - b);
-  const gmvPts = days.map((d) => ({ label: d + " Jun", value: s.byDay[d] }));
+  const gmvPts = days.map((d) => ({
+    label: d + " " + t("Jun"),
+    value: s.byDay[d],
+  }));
   const cats = Object.keys(s.byCat).map((c) => ({
     label: c,
     value: s.byCat[c],
@@ -63,14 +68,14 @@ export function ADashboard({
   }));
   const queue = [
     ...apps.map((a) => ({
-      kind: "Provider",
+      kind: t("Provider"),
       name: a.name,
       sub: a.cat + " · " + a.city,
     })),
     ...pend.map((p) => ({
-      kind: "Service",
+      kind: t("Service"),
       name: p.name,
-      sub: "by " + p.providerName,
+      sub: t("by") + " " + p.providerName,
     })),
   ];
   return (
@@ -84,32 +89,32 @@ export function ADashboard({
         }}
       >
         <Stat
-          label="GMV · June"
+          label={t("GMV · June")}
           value={money(s.gmv)}
           icon={<Icons.flame size={16} />}
           accent="#1FA46E"
-          sub="confirmed bookings"
+          sub={t("confirmed bookings")}
         />
         <Stat
-          label="Platform revenue"
+          label={t("Platform revenue")}
           value={money(s.revenue)}
           icon={<Icons.wallet size={16} />}
           accent="#5563D6"
-          sub="15% commission"
+          sub={t("15% commission")}
         />
         <Stat
-          label="Active providers"
+          label={t("Active providers")}
           value={String(s.activeProviders)}
           icon={<Icons.user size={16} />}
           accent="#E89015"
-          sub={`${apps.length} in review`}
+          sub={`${apps.length} ${t("in review")}`}
         />
         <Stat
-          label="Bookings"
+          label={t("Bookings")}
           value={String(s.bookings)}
           icon={<Icons.calendar size={16} />}
           accent="#FF8A4C"
-          sub={`${s.customers} customers`}
+          sub={`${s.customers} ${t("customers")}`}
         />
       </div>
       <div
@@ -123,9 +128,9 @@ export function ADashboard({
         <div className="card" style={{ padding: 22 }}>
           <div className="shead" style={{ marginBottom: 8 }}>
             <div>
-              <h3 className="text-[17px]">Gross merchandise value</h3>
+              <h3 className="text-[17px]">{t("Gross merchandise value")}</h3>
               <div className="text-[13px] text-ink-3 font-semibold">
-                By booking day · live
+                {t("By booking day · live")}
               </div>
             </div>
             {s.gmv > 0 && (
@@ -133,7 +138,7 @@ export function ADashboard({
                 className="tag"
                 style={{ background: "rgba(31,164,110,.13)", color: "#1FA46E" }}
               >
-                ▴ Live
+                ▴ {t("Live")}
               </span>
             )}
           </div>
@@ -151,7 +156,7 @@ export function ADashboard({
               className="h-[210px] grid text-ink-3 font-semibold text-[13.5px]"
               style={{ placeItems: "center" }}
             >
-              GMV charts light up once bookings are confirmed.
+              {t("GMV charts light up once bookings are confirmed.")}
             </div>
           )}
         </div>
@@ -168,20 +173,20 @@ export function ADashboard({
             className="text-[17px] mb-[16px]"
             style={{ alignSelf: "flex-start" }}
           >
-            GMV by category
+            {t("GMV by category")}
           </h3>
           {cats.length === 0 ? (
             <div
               className="flex-1 grid text-ink-3 font-semibold text-[13.5px] text-center"
               style={{ placeItems: "center" }}
             >
-              No category data yet.
+              {t("No category data yet.")}
             </div>
           ) : (
             <>
               <Donut
                 segments={cats}
-                center={{ v: money(s.gmv), l: "total" }}
+                center={{ v: money(s.gmv), l: t("total") }}
                 size={170}
                 valFmt={(seg, total) =>
                   `${Math.round((seg.value / total) * 100)}% · ${money(seg.value)}`
@@ -200,7 +205,7 @@ export function ADashboard({
                       className="w-[9px] h-[9px] rounded-[99px]"
                       style={{ background: c.color }}
                     />
-                    {c.label}
+                    {t(c.label)}
                     <span className="ml-auto text-ink-3">
                       {Math.round((c.value / s.gmv) * 100)}%
                     </span>
@@ -217,17 +222,17 @@ export function ADashboard({
       >
         <div className="card" style={{ overflow: "hidden" }}>
           <div className="flex items-center justify-between px-[20px] py-[18px]">
-            <h3 className="text-[16px]">Moderation queue</h3>
+            <h3 className="text-[16px]">{t("Moderation queue")}</h3>
             <button
               className="btn btn-ghost btn-sm"
               onClick={() => router.push("/admin/moderation")}
             >
-              Review <Icons.arrowR size={15} />
+              {t("Review")} <Icons.arrowR size={15} />
             </button>
           </div>
           {queue.length === 0 && (
             <div className="px-[20px] py-[18px] border-t border-line text-ink-3 font-semibold text-[13.5px]">
-              Queue is clear — nothing awaiting review.
+              {t("Queue is clear — nothing awaiting review.")}
             </div>
           )}
           {queue.slice(0, 3).map((m, i) => (
@@ -246,23 +251,23 @@ export function ADashboard({
                   {m.kind} · {m.sub}
                 </div>
               </div>
-              <Pill status="review" label="new" />
+              <Pill status="review" label={t("new")} />
             </div>
           ))}
         </div>
         <div className="card" style={{ overflow: "hidden" }}>
           <div className="flex items-center justify-between px-[20px] py-[18px]">
-            <h3 className="text-[16px]">Top providers by GMV</h3>
+            <h3 className="text-[16px]">{t("Top providers by GMV")}</h3>
             <button
               className="btn btn-ghost btn-sm"
               onClick={() => router.push("/admin/providers")}
             >
-              All <Icons.arrowR size={15} />
+              {t("All")} <Icons.arrowR size={15} />
             </button>
           </div>
           {top.length === 0 && (
             <div className="px-[20px] py-[18px] border-t border-line text-ink-3 font-semibold text-[13.5px]">
-              No providers yet.
+              {t("No providers yet.")}
             </div>
           )}
           {top.map((p, i) => (
@@ -293,6 +298,7 @@ export function ADashboard({
 
 /* ===== Providers ===== */
 export function AProviders({ rows }: { rows: any[] }) {
+  const t = useT();
   const [q, setQ] = useState("");
   const [st, setSt] = useState("all");
   const [sel, setSel] = useState<any>(null);
@@ -303,7 +309,15 @@ export function AProviders({ rows }: { rows: any[] }) {
   );
   const exportCsv = () =>
     downloadCSV("joymap-providers.csv", [
-      ["Provider", "Category", "City", "Bookings", "GMV", "Rating", "Status"],
+      [
+        t("Provider"),
+        t("Category"),
+        t("City"),
+        t("Bookings"),
+        t("GMV"),
+        t("Rating"),
+        t("Status"),
+      ],
       ...rows.map((p) => [
         p.name,
         p.cat,
@@ -325,7 +339,7 @@ export function AProviders({ rows }: { rows: any[] }) {
             <Icons.search size={17} />
           </span>
           <Input
-            placeholder="Search providers…"
+            placeholder={t("Search providers…")}
             value={q}
             onChange={(e) => setQ(e.target.value)}
             style={{ paddingLeft: 42, borderRadius: "var(--r-pill)" }}
@@ -335,16 +349,16 @@ export function AProviders({ rows }: { rows: any[] }) {
           <Seg
             value={st}
             options={[
-              { v: "all", l: "All" },
-              { v: "active", l: "Active" },
-              { v: "review", l: "In review" },
-              { v: "rejected", l: "Rejected" },
+              { v: "all", l: t("All") },
+              { v: "active", l: t("Active") },
+              { v: "review", l: t("In review") },
+              { v: "rejected", l: t("Rejected") },
             ]}
             onChange={setSt}
           />
           <button className="btn btn-ghost btn-md" onClick={exportCsv}>
             <Icons.download size={16} />
-            Export CSV
+            {t("Export CSV")}
           </button>
         </div>
       </div>
@@ -358,8 +372,9 @@ export function AProviders({ rows }: { rows: any[] }) {
             fontWeight: 600,
           }}
         >
-          No providers{st !== "all" ? ` with status “${st}”` : ""} yet — they
-          appear here after signing up.
+          {t("No providers")}
+          {st !== "all" ? ` ${t("with status")} “${t(st)}”` : ""}{" "}
+          {t("yet — they appear here after signing up.")}
         </div>
       ) : (
         <div className="card" style={{ overflow: "hidden" }}>
@@ -367,13 +382,13 @@ export function AProviders({ rows }: { rows: any[] }) {
             <table className="tbl">
               <thead>
                 <tr>
-                  <th>Provider</th>
-                  <th>Category</th>
-                  <th>City</th>
-                  <th>Bookings</th>
-                  <th>GMV</th>
-                  <th>Rating</th>
-                  <th>Status</th>
+                  <th>{t("Provider")}</th>
+                  <th>{t("Category")}</th>
+                  <th>{t("City")}</th>
+                  <th>{t("Bookings")}</th>
+                  <th>{t("GMV")}</th>
+                  <th>{t("Rating")}</th>
+                  <th>{t("Status")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -407,10 +422,10 @@ export function AProviders({ rows }: { rows: any[] }) {
                         status={p.status}
                         label={
                           p.status === "review"
-                            ? "In review"
+                            ? t("In review")
                             : p.status === "rejected"
-                              ? "Rejected"
-                              : "Active"
+                              ? t("Rejected")
+                              : t("Active")
                         }
                       />
                     </td>
@@ -427,6 +442,7 @@ export function AProviders({ rows }: { rows: any[] }) {
 }
 
 function ProviderDrawer({ p, onClose }: { p: any; onClose: () => void }) {
+  const t = useT();
   const comm = Math.round(p.gmv * ((p.commission || 15) / 100));
   return (
     <Modal onClose={onClose} maxWidth={520}>
@@ -456,31 +472,31 @@ function ProviderDrawer({ p, onClose }: { p: any; onClose: () => void }) {
             <div className="flex-1 pb-[4px]">
               <h3 className="text-[21px]">{p.name}</h3>
               <div className="text-[13px] text-ink-3 font-semibold">
-                {p.cat} · {p.city} · joined {p.joined || "Jun 2026"}
+                {p.cat} · {p.city} · {t("joined")} {p.joined || "Jun 2026"}
               </div>
             </div>
             <Pill
               status={p.status}
               label={
                 p.status === "review"
-                  ? "In review"
+                  ? t("In review")
                   : p.status === "rejected"
-                    ? "Rejected"
-                    : "Active"
+                    ? t("Rejected")
+                    : t("Active")
               }
             />
           </div>
           <div className="text-[12px] font-extrabold tracking-[.06em] uppercase text-ink-3 mb-[10px]">
-            Financials
+            {t("Financials")}
           </div>
           <div
             className="grid gap-[10px] mb-[20px]"
             style={{ gridTemplateColumns: "1fr 1fr 1fr" }}
           >
             {[
-              ["GMV", money(p.gmv)],
-              ["Commission (15%)", money(comm)],
-              ["Bookings", String(p.bookings)],
+              [t("GMV"), money(p.gmv)],
+              [t("Commission (15%)"), money(comm)],
+              [t("Bookings"), String(p.bookings)],
             ].map(([l, v]) => (
               <div
                 key={l}
@@ -498,7 +514,7 @@ function ProviderDrawer({ p, onClose }: { p: any; onClose: () => void }) {
           </div>
           <div className="flex items-center gap-[8px] mb-[12px]">
             <div className="text-[12px] font-extrabold tracking-[.06em] uppercase text-ink-3">
-              Rating & complaints
+              {t("Rating & complaints")}
             </div>
             <span className="ml-auto inline-flex gap-[4px] items-center font-bold">
               <Icons.star size={14} style={{ color: "var(--m-joy)" }} />
@@ -519,14 +535,14 @@ function ProviderDrawer({ p, onClose }: { p: any; onClose: () => void }) {
             }}
           >
             <Icons.checkCirc size={18} style={{ color: "#1FA46E" }} />
-            No open complaints — a clean record.
+            {t("No open complaints — a clean record.")}
           </div>
           <div className="flex gap-[10px] mt-[22px]">
             <button
               className="btn btn-ghost btn-md btn-block"
               onClick={onClose}
             >
-              Close
+              {t("Close")}
             </button>
           </div>
         </div>
@@ -537,6 +553,7 @@ function ProviderDrawer({ p, onClose }: { p: any; onClose: () => void }) {
 
 /* ===== Moderation ===== */
 export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
+  const t = useT();
   const [sel, setSel] = useState<any>(null);
   const empty = apps.length === 0 && svcs.length === 0;
   return (
@@ -544,22 +561,24 @@ export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
       <div className="shead">
         <div>
           <div className="eyebrow" style={{ marginBottom: 6 }}>
-            {apps.length + svcs.length} awaiting review
+            {apps.length + svcs.length} {t("awaiting review")}
           </div>
-          <h2 className="text-[22px]">Moderation</h2>
+          <h2 className="text-[22px]">{t("Moderation")}</h2>
         </div>
       </div>
       {empty && (
         <div className="text-center p-[70px] text-ink-3">
           <Icons.checkCirc size={40} />
-          <h3 className="text-ink mt-[12px]">Queue cleared 🎉</h3>
-          <p>New provider applications and service submissions land here.</p>
+          <h3 className="text-ink mt-[12px]">{t("Queue cleared 🎉")}</h3>
+          <p>
+            {t("New provider applications and service submissions land here.")}
+          </p>
         </div>
       )}
       {apps.length > 0 && (
         <>
           <h3 className="text-[16px] mt-[4px] mx-0 mb-[14px]">
-            Provider applications
+            {t("Provider applications")}
           </h3>
           <div
             className="grid"
@@ -583,7 +602,7 @@ export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
                       {m.cat} · {m.city}
                     </div>
                   </div>
-                  <Pill status="review" label="new" />
+                  <Pill status="review" label={t("new")} />
                 </div>
                 <div className="flex gap-[14px] text-[13px] text-ink-2 font-semibold mb-[16px]">
                   <span className="inline-flex gap-[6px] items-center">
@@ -592,7 +611,7 @@ export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
                   </span>
                   <span className="inline-flex gap-[6px] items-center">
                     <Icons.checkCirc size={15} />
-                    {m.docs || 3} documents
+                    {m.docs || 3} {t("documents")}
                   </span>
                 </div>
                 <div className="flex gap-[9px]">
@@ -604,7 +623,7 @@ export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
                     }
                   >
                     <Icons.check size={15} />
-                    Approve
+                    {t("Approve")}
                   </Btn>
                   <button
                     className="btn btn-ghost btn-sm btn-block"
@@ -612,7 +631,7 @@ export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
                       setSel({ kind: "provider", item: m, mode: "reject" })
                     }
                   >
-                    Reject
+                    {t("Reject")}
                   </button>
                 </div>
               </div>
@@ -623,7 +642,7 @@ export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
       {svcs.length > 0 && (
         <>
           <h3 className="text-[16px] mt-[4px] mx-0 mb-[14px]">
-            Service submissions
+            {t("Service submissions")}
           </h3>
           <div
             className="grid"
@@ -650,10 +669,10 @@ export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
                     <div className="flex-1">
                       <div className="font-extrabold text-[16px]">{s.name}</div>
                       <div className="text-[12.5px] text-ink-3 font-semibold">
-                        by {s.providerName} · {s.cat} · {money(s.price)}
+                        {t("by")} {s.providerName} · {s.cat} · {money(s.price)}
                       </div>
                     </div>
-                    <Pill status="review" label="new" />
+                    <Pill status="review" label={t("new")} />
                   </div>
                   {s.about && (
                     <p className="mt-0 mx-0 mb-[14px] text-[13.5px] text-ink-2 leading-[1.5]">
@@ -670,7 +689,7 @@ export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
                       }
                     >
                       <Icons.check size={15} />
-                      Approve & publish
+                      {t("Approve & publish")}
                     </Btn>
                     <button
                       className="btn btn-ghost btn-sm btn-block"
@@ -678,7 +697,7 @@ export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
                         setSel({ kind: "service", item: s, mode: "reject" })
                       }
                     >
-                      Reject
+                      {t("Reject")}
                     </button>
                   </div>
                 </div>
@@ -693,6 +712,7 @@ export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
 }
 
 function ModerationModal({ sel, onClose }: { sel: any; onClose: () => void }) {
+  const t = useT();
   const router = useRouter();
   const [reason, setReason] = useState(REJECT_REASONS[0]);
   const { busy, run } = useBusy();
@@ -725,7 +745,7 @@ function ModerationModal({ sel, onClose }: { sel: any; onClose: () => void }) {
             <div className="text-[13px] text-ink-3 font-semibold">
               {sel.kind === "provider"
                 ? `${it.cat} · ${it.city}`
-                : `Service · by ${it.providerName}`}
+                : `${t("Service")} · ${t("by")} ${it.providerName}`}
             </div>
           </div>
         </div>
@@ -750,9 +770,9 @@ function ModerationModal({ sel, onClose }: { sel: any; onClose: () => void }) {
                   className="flex items-center gap-[10px] px-0 py-[7px] text-[13.5px] font-semibold"
                 >
                   <Icons.checkCirc size={17} style={{ color: "#1FA46E" }} />
-                  {d}
+                  {t(d)}
                   <span className="ml-auto text-[12px] text-ink-3">
-                    Verified
+                    {t("Verified")}
                   </span>
                 </div>
               ))}
@@ -761,32 +781,34 @@ function ModerationModal({ sel, onClose }: { sel: any; onClose: () => void }) {
         {reject ? (
           <div className="mb-[18px]">
             <div className="font-bold text-[14px] mb-[8px]">
-              Reason for rejection
+              {t("Reason for rejection")}
             </div>
             <Select value={reason} onChange={(e) => setReason(e.target.value)}>
               {REJECT_REASONS.map((r) => (
-                <option key={r}>{r}</option>
+                <option key={r} value={r}>
+                  {t(r)}
+                </option>
               ))}
             </Select>
           </div>
         ) : (
           <p className="text-ink-2 text-[14px] mb-[18px]">
-            Approving will{" "}
+            {t("Approving will")}{" "}
             {sel.kind === "provider" ? (
               <>
-                activate <b>{it.name}</b> on the marketplace
+                {t("activate")} <b>{it.name}</b> {t("on the marketplace")}
               </>
             ) : (
               <>
-                publish <b>{it.name}</b> to the customer catalogue
+                {t("publish")} <b>{it.name}</b> {t("to the customer catalogue")}
               </>
             )}{" "}
-            and notify the owner.
+            {t("and notify the owner.")}
           </p>
         )}
         <div className="flex gap-[10px]">
           <button className="btn btn-ghost btn-md btn-block" onClick={onClose}>
-            Cancel
+            {t("Cancel")}
           </button>
           {reject ? (
             <BusyBtn
@@ -795,7 +817,7 @@ function ModerationModal({ sel, onClose }: { sel: any; onClose: () => void }) {
               style={{ background: "var(--coral)", color: "#fff" }}
               onClick={decide}
             >
-              Reject
+              {t("Reject")}
             </BusyBtn>
           ) : (
             <BusyBtn
@@ -804,7 +826,7 @@ function ModerationModal({ sel, onClose }: { sel: any; onClose: () => void }) {
               icon={<Icons.check size={16} />}
               onClick={decide}
             >
-              Approve
+              {t("Approve")}
             </BusyBtn>
           )}
         </div>
@@ -815,6 +837,7 @@ function ModerationModal({ sel, onClose }: { sel: any; onClose: () => void }) {
 
 /* ===== Content ===== */
 export function AContent({ items }: { items: any[] }) {
+  const t = useT();
   const router = useRouter();
   const [filter, setFilter] = useState("all");
   const [acting, setActing] = useState<string | null>(null);
@@ -837,17 +860,17 @@ export function AContent({ items }: { items: any[] }) {
       <div className="shead">
         <div>
           <div className="eyebrow" style={{ marginBottom: 6 }}>
-            {items.length} flagged items
+            {items.length} {t("flagged items")}
           </div>
-          <h2 className="text-[22px]">Content moderation</h2>
+          <h2 className="text-[22px]">{t("Content moderation")}</h2>
         </div>
         <Seg
           value={filter}
           options={[
-            { v: "all", l: "All" },
-            { v: "review", l: "Reviews" },
-            { v: "photo", l: "Photos" },
-            { v: "promo", l: "Promos" },
+            { v: "all", l: t("All") },
+            { v: "review", l: t("Reviews") },
+            { v: "photo", l: t("Photos") },
+            { v: "promo", l: t("Promos") },
           ]}
           onChange={setFilter}
         />
@@ -855,8 +878,8 @@ export function AContent({ items }: { items: any[] }) {
       {list.length === 0 ? (
         <div className="text-center p-[70px] text-ink-3">
           <Icons.checkCirc size={40} />
-          <h3 className="text-ink mt-[12px]">Nothing flagged 🎉</h3>
-          <p>Reported reviews, photos and promos land here.</p>
+          <h3 className="text-ink mt-[12px]">{t("Nothing flagged 🎉")}</h3>
+          <p>{t("Reported reviews, photos and promos land here.")}</p>
         </div>
       ) : (
         <div
@@ -887,7 +910,7 @@ export function AContent({ items }: { items: any[] }) {
                       color: tc,
                     }}
                   >
-                    {tl}
+                    {t(tl)}
                   </span>
                   <span
                     className="tag"
@@ -919,7 +942,8 @@ export function AContent({ items }: { items: any[] }) {
                 <div className="flex items-center gap-[8px] text-[12.5px] text-ink-3 font-semibold">
                   <Avatar name={c.author} size={24} />
                   {c.author}
-                  <span className="opacity-[.5]">·</span>on {c.target}
+                  <span className="opacity-[.5]">·</span>
+                  {t("on")} {c.target}
                 </div>
                 <div className="flex gap-[8px] mt-[2px]">
                   {acting === c.id ? (
@@ -934,7 +958,7 @@ export function AContent({ items }: { items: any[] }) {
                         onClick={() => act(c.id)}
                       >
                         <Icons.check size={15} />
-                        Keep
+                        {t("Keep")}
                       </button>
                       <button
                         className="btn btn-sm btn-block"
@@ -942,7 +966,7 @@ export function AContent({ items }: { items: any[] }) {
                         onClick={() => act(c.id)}
                       >
                         <Icons.trash size={15} />
-                        Remove
+                        {t("Remove")}
                       </button>
                     </>
                   )}
@@ -958,12 +982,13 @@ export function AContent({ items }: { items: any[] }) {
 
 /* ===== Customers ===== */
 export function ACustomers({ list }: { list: any[] }) {
+  const t = useT();
   const avgLtv = list.length
     ? Math.round(list.reduce((a, c) => a + c.ltv, 0) / list.length)
     : 0;
   const exportCsv = () =>
     downloadCSV("joymap-customers-ltv.csv", [
-      ["Customer", "Tier", "Bookings", "LTV", "Joined"],
+      [t("Customer"), t("Tier"), t("Bookings"), t("LTV"), t("Joined")],
       ...list.map((c) => [c.name, c.tier, c.bookings, c.ltv, c.joined]),
     ]);
   return (
@@ -972,7 +997,7 @@ export function ACustomers({ list }: { list: any[] }) {
         <div />
         <button className="btn btn-ghost btn-md" onClick={exportCsv}>
           <Icons.download size={16} />
-          Export LTV
+          {t("Export LTV")}
         </button>
       </div>
       <div
@@ -984,19 +1009,19 @@ export function ACustomers({ list }: { list: any[] }) {
         }}
       >
         <Stat
-          label="Customers"
+          label={t("Customers")}
           value={String(list.length)}
           icon={<Icons.user size={16} />}
           accent="#5563D6"
         />
         <Stat
-          label="Avg LTV"
+          label={t("Avg LTV")}
           value={money(avgLtv)}
           icon={<Icons.heart size={16} />}
           accent="#7B53F0"
         />
         <Stat
-          label="Total bookings"
+          label={t("Total bookings")}
           value={String(list.reduce((a, c) => a + c.bookings, 0))}
           icon={<Icons.calendar size={16} />}
           accent="#1FA46E"
@@ -1012,7 +1037,7 @@ export function ACustomers({ list }: { list: any[] }) {
             fontWeight: 600,
           }}
         >
-          No customers yet — they appear here after signing up.
+          {t("No customers yet — they appear here after signing up.")}
         </div>
       ) : (
         <div className="card" style={{ overflow: "hidden" }}>
@@ -1020,11 +1045,11 @@ export function ACustomers({ list }: { list: any[] }) {
             <table className="tbl">
               <thead>
                 <tr>
-                  <th>Customer</th>
-                  <th>Tier</th>
-                  <th>Bookings</th>
-                  <th>Lifetime value</th>
-                  <th>Joined</th>
+                  <th>{t("Customer")}</th>
+                  <th>{t("Tier")}</th>
+                  <th>{t("Bookings")}</th>
+                  <th>{t("Lifetime value")}</th>
+                  <th>{t("Joined")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -1047,10 +1072,10 @@ export function ACustomers({ list }: { list: any[] }) {
                         }
                         label={
                           c.tier === "vip"
-                            ? "VIP"
+                            ? t("VIP")
                             : c.tier === "new"
-                              ? "New"
-                              : "Active"
+                              ? t("New")
+                              : t("Active")
                         }
                       />
                     </td>
@@ -1070,6 +1095,7 @@ export function ACustomers({ list }: { list: any[] }) {
 
 /* ===== Financials ===== */
 export function AFinancials({ s, queue }: { s: any; queue: any[] }) {
+  const t = useT();
   const router = useRouter();
   const [releasing, setReleasing] = useState<string | null>(null);
   const release = (id: string) => {
@@ -1081,7 +1107,7 @@ export function AFinancials({ s, queue }: { s: any; queue: any[] }) {
   };
   const exportCsv = () =>
     downloadCSV("joymap-payouts.csv", [
-      ["Provider", "Amount", "Due", "Status"],
+      [t("Provider"), t("Amount"), t("Due"), t("Status")],
       ...queue.map((p) => [p.providerName, p.amount, p.due, p.status]),
     ]);
   return (
@@ -1095,27 +1121,27 @@ export function AFinancials({ s, queue }: { s: any; queue: any[] }) {
         }}
       >
         <Stat
-          label="GMV · June"
+          label={t("GMV · June")}
           value={money(s.gmv)}
           icon={<Icons.flame size={16} />}
           accent="#1FA46E"
         />
         <Stat
-          label="Commission collected"
+          label={t("Commission collected")}
           value={money(s.revenue)}
           icon={<Icons.wallet size={16} />}
           accent="#5563D6"
-          sub="15% / booking"
+          sub={t("15% / booking")}
         />
         <Stat
-          label="Pending payouts"
+          label={t("Pending payouts")}
           value={money(s.pendingPayouts)}
           icon={<Icons.user size={16} />}
           accent="#FF8A4C"
-          sub={`${queue.filter((p) => p.status === "pending").length} requests`}
+          sub={`${queue.filter((p) => p.status === "pending").length} ${t("requests")}`}
         />
         <Stat
-          label="Paid out"
+          label={t("Paid out")}
           value={money(
             queue
               .filter((p) => p.status === "paid")
@@ -1127,25 +1153,26 @@ export function AFinancials({ s, queue }: { s: any; queue: any[] }) {
       </div>
       <div className="card" style={{ overflow: "hidden" }}>
         <div className="flex items-center justify-between px-[20px] py-[18px]">
-          <h3 className="text-[17px]">Payouts queue</h3>
+          <h3 className="text-[17px]">{t("Payouts queue")}</h3>
           <button className="btn btn-ghost btn-sm" onClick={exportCsv}>
             <Icons.download size={15} />
-            Export CSV
+            {t("Export CSV")}
           </button>
         </div>
         {queue.length === 0 ? (
           <div className="px-[20px] py-[34px] text-ink-3 font-semibold text-[13.5px] border-t border-line">
-            No payout requests yet. When providers hit “Withdraw”, requests land
-            here for release.
+            {t(
+              "No payout requests yet. When providers hit “Withdraw”, requests land here for release.",
+            )}
           </div>
         ) : (
           <table className="tbl">
             <thead>
               <tr>
-                <th>Provider</th>
-                <th>Amount</th>
-                <th>Due</th>
-                <th>Status</th>
+                <th>{t("Provider")}</th>
+                <th>{t("Amount")}</th>
+                <th>{t("Due")}</th>
+                <th>{t("Status")}</th>
                 <th />
               </tr>
             </thead>
@@ -1175,7 +1202,7 @@ export function AFinancials({ s, queue }: { s: any; queue: any[] }) {
                           className="btn btn-soft btn-sm"
                           onClick={() => release(p.id)}
                         >
-                          Release
+                          {t("Release")}
                         </button>
                       ))}
                   </td>
@@ -1217,6 +1244,7 @@ const A_CAMPAIGNS = [
   },
 ];
 export function AMarketing() {
+  const t = useT();
   const [promo, setPromo] = useState(false);
   return (
     <div className="anim-fade">
@@ -1228,11 +1256,11 @@ export function AMarketing() {
             onClick={() => setPromo(true)}
           >
             <Icons.percent size={16} />
-            Mass-create promos
+            {t("Mass-create promos")}
           </button>
           <Btn size="md">
             <Icons.send size={16} />
-            New campaign
+            {t("New campaign")}
           </Btn>
         </div>
       </div>
@@ -1240,23 +1268,25 @@ export function AMarketing() {
         className="card"
         style={{ overflow: "hidden", marginBottom: "var(--gap)" }}
       >
-        <h3 className="text-[17px] pt-[18px] px-[20px] pb-[4px]">Campaigns</h3>
+        <h3 className="text-[17px] pt-[18px] px-[20px] pb-[4px]">
+          {t("Campaigns")}
+        </h3>
         <table className="tbl">
           <thead>
             <tr>
-              <th>Campaign</th>
-              <th>Channel</th>
-              <th>Audience</th>
-              <th>Sent</th>
-              <th>CTR</th>
-              <th>Status</th>
+              <th>{t("Campaign")}</th>
+              <th>{t("Channel")}</th>
+              <th>{t("Audience")}</th>
+              <th>{t("Sent")}</th>
+              <th>{t("CTR")}</th>
+              <th>{t("Status")}</th>
             </tr>
           </thead>
           <tbody>
             {A_CAMPAIGNS.map((c, i) => (
               <tr key={i} className="row">
                 <td>
-                  <b className="font-bold">{c.name}</b>
+                  <b className="font-bold">{t(c.name)}</b>
                 </td>
                 <td>
                   <span
@@ -1267,16 +1297,16 @@ export function AMarketing() {
                       border: "1px solid var(--line)",
                     }}
                   >
-                    {c.channel}
+                    {t(c.channel)}
                   </span>
                 </td>
-                <td className="text-ink-2">{c.audience}</td>
+                <td className="text-ink-2">{t(c.audience)}</td>
                 <td>{c.sent.toLocaleString("ru-RU")}</td>
                 <td className="font-bold">{c.ctr}</td>
                 <td>
                   <Pill
                     status={c.status === "active" ? "active" : "review"}
-                    label={c.status === "active" ? "Active" : "Scheduled"}
+                    label={c.status === "active" ? t("Active") : t("Scheduled")}
                   />
                 </td>
               </tr>
@@ -1290,6 +1320,7 @@ export function AMarketing() {
 }
 
 function PromoMassModal({ onClose }: { onClose: () => void }) {
+  const t = useT();
   const [prefix, setPrefix] = useState("SUMMER");
   const [count, setCount] = useState(50);
   const [disc, setDisc] = useState("20");
@@ -1303,15 +1334,17 @@ function PromoMassModal({ onClose }: { onClose: () => void }) {
       <div className="px-[26px] py-[24px]">
         {!done ? (
           <>
-            <h3 className="text-[20px] mb-[6px]">Mass-create promo codes</h3>
+            <h3 className="text-[20px] mb-[6px]">
+              {t("Mass-create promo codes")}
+            </h3>
             <p className="text-ink-2 text-[14px] mt-0 mx-0 mb-[18px]">
-              Generate a batch of unique single-use codes for a campaign.
+              {t("Generate a batch of unique single-use codes for a campaign.")}
             </p>
             <div className="flex flex-col gap-[14px]">
               <div className="flex gap-[12px]">
                 <div className="flex-1">
                   <div className="text-[12.5px] font-bold text-ink-2 mb-[7px]">
-                    Code prefix
+                    {t("Code prefix")}
                   </div>
                   <Input
                     value={prefix}
@@ -1321,7 +1354,7 @@ function PromoMassModal({ onClose }: { onClose: () => void }) {
                 </div>
                 <div className="w-[120px]">
                   <div className="text-[12.5px] font-bold text-ink-2 mb-[7px]">
-                    How many
+                    {t("How many")}
                   </div>
                   <Input
                     type="number"
@@ -1332,7 +1365,7 @@ function PromoMassModal({ onClose }: { onClose: () => void }) {
               </div>
               <div>
                 <div className="text-[12.5px] font-bold text-ink-2 mb-[7px]">
-                  Discount (%)
+                  {t("Discount (%)")}
                 </div>
                 <Input value={disc} onChange={(e) => setDisc(e.target.value)} />
               </div>
@@ -1341,7 +1374,7 @@ function PromoMassModal({ onClose }: { onClose: () => void }) {
                 style={{ padding: 14, background: "var(--surface-2)" }}
               >
                 <div className="text-[12px] font-bold text-ink-3 mb-[8px]">
-                  PREVIEW
+                  {t("PREVIEW")}
                 </div>
                 <div className="flex gap-[8px] flex-wrap">
                   {sample.map((sm, i) => (
@@ -1357,7 +1390,7 @@ function PromoMassModal({ onClose }: { onClose: () => void }) {
                     className="text-[13px] text-ink-3 font-semibold"
                     style={{ alignSelf: "center" }}
                   >
-                    +{Math.max(count - 3, 0)} more
+                    +{Math.max(count - 3, 0)} {t("more")}
                   </span>
                 </div>
               </div>
@@ -1367,11 +1400,11 @@ function PromoMassModal({ onClose }: { onClose: () => void }) {
                 className="btn btn-ghost btn-md btn-block"
                 onClick={onClose}
               >
-                Cancel
+                {t("Cancel")}
               </button>
               <Btn size="md" block onClick={() => setDone(true)}>
                 <Icons.sparkle size={16} />
-                Generate {count} codes
+                {t("Generate")} {count} {t("codes")}
               </Btn>
             </div>
           </>
@@ -1383,23 +1416,25 @@ function PromoMassModal({ onClose }: { onClose: () => void }) {
             >
               <Icons.check size={32} />
             </div>
-            <h3 className="text-[20px] mb-[6px]">{count} codes created</h3>
+            <h3 className="text-[20px] mb-[6px]">
+              {count} {t("codes created")}
+            </h3>
             <p className="text-ink-2 text-[14px] mt-0 mx-0 mb-[20px]">
-              Download the batch as CSV to share with your campaign.
+              {t("Download the batch as CSV to share with your campaign.")}
             </p>
             <div className="flex gap-[10px]">
               <button
                 className="btn btn-ghost btn-md btn-block"
                 onClick={onClose}
               >
-                Close
+                {t("Close")}
               </button>
               <Btn
                 size="md"
                 block
                 onClick={() => {
                   downloadCSV(`${prefix}-codes.csv`, [
-                    ["Code", "Discount"],
+                    [t("Code"), t("Discount")],
                     ...Array.from({ length: count }, (_, i) => [
                       `${prefix}-${1000 + i}`,
                       disc + "%",
@@ -1409,7 +1444,7 @@ function PromoMassModal({ onClose }: { onClose: () => void }) {
                 }}
               >
                 <Icons.download size={16} />
-                Download CSV
+                {t("Download CSV")}
               </Btn>
             </div>
           </div>
