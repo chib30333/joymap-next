@@ -1,5 +1,5 @@
 "use client";
-// ProviderNav — 1:1 port of dash.jsx TopNav (provider portal). Tabs map to routes.
+
 import { useEffect, useRef, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
@@ -8,27 +8,97 @@ import { LangSwitcher, t } from "@/components/i18n";
 import { Avatar } from "@/components/dash/primitives";
 import { rpc } from "@/lib/client";
 
-type NavItem = { sec?: string; key?: string; label?: string; icon?: keyof typeof Icons; href?: string; badge?: number | null };
+type NavItem = {
+  sec?: string;
+  key?: string;
+  label?: string;
+  icon?: keyof typeof Icons;
+  href?: string;
+  badge?: number | null;
+};
 
 const P_NAV: NavItem[] = [
   { sec: "Workspace" },
-  { key: "overview", label: "Overview", icon: "grid", href: "/provider/overview" },
-  { key: "calendar", label: "Calendar", icon: "calendar", href: "/provider/calendar" },
-  { key: "bookings", label: "Bookings", icon: "check", href: "/provider/bookings" },
-  { key: "messages", label: "Messages", icon: "chat", href: "/provider/messages" },
+  {
+    key: "overview",
+    label: "Overview",
+    icon: "grid",
+    href: "/provider/overview",
+  },
+  {
+    key: "calendar",
+    label: "Calendar",
+    icon: "calendar",
+    href: "/provider/calendar",
+  },
+  {
+    key: "bookings",
+    label: "Bookings",
+    icon: "check",
+    href: "/provider/bookings",
+  },
+  {
+    key: "messages",
+    label: "Messages",
+    icon: "chat",
+    href: "/provider/messages",
+  },
   { sec: "Business" },
-  { key: "profile", label: "Business profile", icon: "user", href: "/provider/profile" },
-  { key: "services", label: "Services", icon: "compass", href: "/provider/services" },
-  { key: "pricing", label: "Pricing", icon: "percent", href: "/provider/pricing" },
-  { key: "gallery", label: "Gallery", icon: "image", href: "/provider/gallery" },
+  {
+    key: "profile",
+    label: "Business profile",
+    icon: "user",
+    href: "/provider/profile",
+  },
+  {
+    key: "services",
+    label: "Services",
+    icon: "compass",
+    href: "/provider/services",
+  },
+  {
+    key: "pricing",
+    label: "Pricing",
+    icon: "percent",
+    href: "/provider/pricing",
+  },
+  {
+    key: "gallery",
+    label: "Gallery",
+    icon: "image",
+    href: "/provider/gallery",
+  },
   { sec: "Growth" },
-  { key: "analytics", label: "Analytics", icon: "flame", href: "/provider/analytics" },
-  { key: "payouts", label: "Payouts", icon: "wallet", href: "/provider/payouts" },
+  {
+    key: "analytics",
+    label: "Analytics",
+    icon: "flame",
+    href: "/provider/analytics",
+  },
+  {
+    key: "payouts",
+    label: "Payouts",
+    icon: "wallet",
+    href: "/provider/payouts",
+  },
   { key: "reviews", label: "Reviews", icon: "star", href: "/provider/reviews" },
-  { key: "marketing", label: "Marketing", icon: "send", href: "/provider/marketing" },
+  {
+    key: "marketing",
+    label: "Marketing",
+    icon: "send",
+    href: "/provider/marketing",
+  },
 ];
 
-export function ProviderNav({ name, providerName, badges }: { name: string; providerName: string; badges: { bookings: number | null; messages: number | null } }) {
+export function ProviderNav({
+  name,
+  providerName,
+  badges,
+}: {
+  name: string;
+  providerName: string;
+  badges: { bookings: number | null; messages: number | null };
+}) {
   const router = useRouter();
   const pathname = usePathname();
   const TITLES: Record<string, [string, string]> = {
@@ -45,30 +115,75 @@ export function ProviderNav({ name, providerName, badges }: { name: string; prov
     "/provider/reviews": ["Reviews", "What customers are saying"],
     "/provider/marketing": ["Marketing", "Promo codes & growth"],
   };
-  const [title, sub] = TITLES[pathname] || ["Overview", `Welcome back, ${providerName}`];
+  const [title, sub] = TITLES[pathname] || [
+    "Overview",
+    `Welcome back, ${providerName}`,
+  ];
   return (
     <header className="topnav">
       <div className="tn-row1">
-        <div className="tn-brand">
+        <div
+          className="tn-brand"
+          role="button"
+          tabIndex={0}
+          style={{ cursor: "pointer" }}
+          onClick={() => router.push("/provider/overview")}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              router.push("/provider/overview");
+            }
+          }}
+          title={t("Go to Overview")}
+        >
           <Logo size={25} />
-          <span className="tn-badge"><span className="ld" />Partner</span>
+          <span className="tn-badge">
+            <span className="ld" />
+            Partner
+          </span>
         </div>
-        <div style={{ marginInlineStart: 6, minWidth: 0 }}>
-          <h1 style={{ fontSize: 18, lineHeight: 1.1 }}>{t(title)}</h1>
-          {sub && <div style={{ fontSize: 12.5, color: "var(--ink-3)", fontWeight: 600, marginTop: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{t(sub)}</div>}
+        <div className="min-w-0" style={{ marginInlineStart: 6 }}>
+          <h1 className="text-[18px] leading-[1.1]">{t(title)}</h1>
+          {sub && (
+            <div
+              className="text-[12.5px] text-ink-3 font-semibold mt-[1px] whitespace-nowrap overflow-hidden"
+              style={{ textOverflow: "ellipsis" }}
+            >
+              {t(sub)}
+            </div>
+          )}
         </div>
-        <div style={{ flex: 1 }} />
-        <button className="icon-btn"><Icons.bell size={18} /><span className="dot-badge" /></button>
+        <div className="flex-1" />
+        <button className="icon-btn">
+          <Icons.bell size={18} />
+          <span className="dot-badge" />
+        </button>
         <LangSwitcher />
         <AccountMenu name={name} />
       </div>
       <div className="tn-row2 no-scrollbar">
         {P_NAV.map((n, i) => {
-          if (n.sec) return <span key={`s${i}`} style={{ display: "inline-flex", alignItems: "center" }}>{i > 0 && <span className="tn-sep" />}<span className="tn-grouplbl">{t(n.sec)}</span></span>;
+          if (n.sec)
+            return (
+              <span key={`s${i}`} className="inline-flex items-center">
+                {i > 0 && <span className="tn-sep" />}
+                <span className="tn-grouplbl">{t(n.sec)}</span>
+              </span>
+            );
           const I = Icons[n.icon!];
           const b = (badges as Record<string, number | null>)[n.key!];
           const on = pathname === n.href;
-          return <button key={n.key} className={`tn-tab ${on ? "on" : ""}`} onClick={() => router.push(n.href!)}><I size={17} />{t(n.label!)}{b ? <span className="tn-badge-n">{b}</span> : null}</button>;
+          return (
+            <button
+              key={n.key}
+              className={`tn-tab ${on ? "on" : ""}`}
+              onClick={() => router.push(n.href!)}
+            >
+              <I size={17} />
+              {t(n.label!)}
+              {b ? <span className="tn-badge-n">{b}</span> : null}
+            </button>
+          );
         })}
       </div>
     </header>
@@ -80,31 +195,72 @@ function AccountMenu({ name }: { name: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
   useEffect(() => {
-    const h = (e: MouseEvent) => { if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false); };
+    const h = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node))
+        setOpen(false);
+    };
     document.addEventListener("mousedown", h);
     return () => document.removeEventListener("mousedown", h);
   }, []);
   const grad = "linear-gradient(140deg,var(--m-calm),#2E8C80)";
-  const logout = async () => { await rpc("logout"); router.push("/auth"); };
+  const logout = async () => {
+    await rpc("logout");
+    router.push("/auth");
+  };
   return (
-    <div ref={ref} style={{ position: "relative" }}>
+    <div ref={ref} className="relative">
       <div className="tn-avatar-btn" onClick={() => setOpen((o) => !o)}>
         <Avatar name={name} size={38} grad={grad} />
-        <Icons.chevR size={15} style={{ transform: "rotate(90deg)", color: "var(--ink-3)" }} />
+        <Icons.chevR
+          size={15}
+          style={{ transform: "rotate(90deg)", color: "var(--ink-3)" }}
+        />
       </div>
       {open && (
         <div className="menu-pop anim-pop">
-          <div style={{ display: "flex", alignItems: "center", gap: 11, padding: "8px 10px 12px" }}>
+          <div className="flex items-center gap-[11px] pt-[8px] px-[10px] pb-[12px]">
             <Avatar name={name} size={42} grad={grad} />
-            <div style={{ minWidth: 0 }}><div style={{ fontWeight: 800, fontFamily: "var(--display)", fontSize: 15 }}>{name}</div><div style={{ fontSize: 12, color: "var(--ink-3)", fontWeight: 600 }}>Partner</div></div>
+            <div className="min-w-0">
+              <div className="font-extrabold font-display text-[15px]">
+                {name}
+              </div>
+              <div className="text-[12px] text-ink-3 font-semibold">
+                Partner
+              </div>
+            </div>
           </div>
           <div className="menu-div" />
           <div className="menu-sec">{t("Switch portal")}</div>
-          <Link className="menu-item" href="/joymap"><span style={{ width: 7, height: 7, borderRadius: 99, background: "var(--ink-3)" }} />{t("Customer")}</Link>
-          <a className="menu-item on" style={{ cursor: "default" }}><span style={{ width: 7, height: 7, borderRadius: 99, background: "var(--coral)" }} />{t("Provider")}<span style={{ marginInlineStart: "auto", fontSize: 11, fontWeight: 700 }}>{t("You")}</span></a>
-          <Link className="menu-item" href="/admin"><span style={{ width: 7, height: 7, borderRadius: 99, background: "var(--ink-3)" }} />{t("Admin")}</Link>
+          <Link className="menu-item" href="/joymap">
+            <span className="w-[7px] h-[7px] rounded-[99px] bg-[var(--ink-3)]" />
+            {t("Customer")}
+          </Link>
+          <a className="menu-item on" style={{ cursor: "default" }}>
+            <span className="w-[7px] h-[7px] rounded-[99px] bg-coral" />
+            {t("Provider")}
+            <span
+              style={{
+                marginInlineStart: "auto",
+                fontSize: 11,
+                fontWeight: 700,
+              }}
+            >
+              {t("You")}
+            </span>
+          </a>
+          <Link className="menu-item" href="/admin">
+            <span className="w-[7px] h-[7px] rounded-[99px] bg-[var(--ink-3)]" />
+            {t("Admin")}
+          </Link>
           <div className="menu-div" />
-          <button className="menu-item" style={{ color: "var(--ink-3)" }} onClick={logout}><Icons.logout size={18} />{t("Log out")}</button>
+          <button
+            className="menu-item"
+            style={{ color: "var(--ink-3)" }}
+            onClick={logout}
+          >
+            <Icons.logout size={18} />
+            {t("Log out")}
+          </button>
         </div>
       )}
     </div>

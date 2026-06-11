@@ -1,5 +1,5 @@
 "use client";
-// useFav — toggle favorites via RPC then refresh server data. Shared by screens.
+
 import { useRouter } from "next/navigation";
 import { rpc } from "@/lib/client";
 

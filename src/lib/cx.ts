@@ -1,4 +1,3 @@
-// Tiny classnames helper (no dependency).
 export function clsx(...parts: Array<string | false | null | undefined>) {
   return parts.filter(Boolean).join(" ");
 }

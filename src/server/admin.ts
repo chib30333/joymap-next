@@ -1,5 +1,3 @@
-// Payouts (provider request + admin release) and admin moderation decisions.
-// Mirrors api.requestPayout / releasePayout / decideProvider / decideService / resolveFlag.
 import { prisma } from "@/lib/db";
 import { currentProvider, requireRole, ApiError } from "@/lib/session";
 import { notify, notifyAdmins } from "./notify";
@@ -92,6 +90,6 @@ export async function decideService(id: string, approve: boolean, reason?: strin
 
 export async function resolveFlag(id: string) {
   await requireRole("admin");
-  await prisma.flag.delete({ where: { id } }).catch(() => {});
+  await prisma.flag.delete({ where: { id } }).catch(() => { });
   return { ok: true };
 }

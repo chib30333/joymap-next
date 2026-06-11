@@ -1,6 +1,3 @@
-// Node.js API gateway. One POST endpoint dispatches every mutation, mirroring
-// the prototype's `api.*` object. Read queries live in Server Components /
-// /api/state; this handles writes. Runs on the Node runtime (Prisma needs it).
 import { NextRequest, NextResponse } from "next/server";
 import { latency } from "@/lib/latency";
 import { ApiError } from "@/lib/session";
@@ -15,7 +12,6 @@ import * as admin from "@/server/admin";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-// action name -> handler. args is a single object/array forwarded positionally.
 const ACTIONS: Record<string, (...a: any[]) => Promise<any>> = {
   // auth
   signup: (a) => auth.signup(a),

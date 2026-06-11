@@ -4,17 +4,22 @@ import { currentUser } from "@/lib/session";
 import { myBookings, unreadNotifications } from "@/server/selectors";
 import { threadsFor } from "@/server/chat";
 import { TopNav } from "@/components/customer/TopNav";
-import "./customer.css";
-import "./customer-extra.css";
-import "./corporate.css";
 
-// Server guard + shell for the customer portal (1:1 with the prototype's TopNav layout).
-export default async function CustomerLayout({ children }: { children: React.ReactNode }) {
+export default async function CustomerLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const user = await currentUser();
   if (!user) redirect("/auth");
-  if (user.role !== "customer") redirect(user.role === "provider" ? "/provider" : "/admin");
+  if (user.role !== "customer")
+    redirect(user.role === "provider" ? "/provider" : "/admin");
 
-  const [bookings, threads, unread] = await Promise.all([myBookings(), threadsFor("c"), unreadNotifications()]);
+  const [bookings, threads, unread] = await Promise.all([
+    myBookings(),
+    threadsFor("c"),
+    unreadNotifications(),
+  ]);
   const badges = {
     bookings: bookings.upcoming.length || null,
     messages: threads.reduce((a, t) => a + (t.unread || 0), 0) || null,
@@ -23,7 +28,12 @@ export default async function CustomerLayout({ children }: { children: React.Rea
 
   return (
     <div className="app-top fx">
-      <TopNav user={{ name: user.name, plan: user.plan || "Joy Map" }} badges={badges} unread={unread} city={city} />
+      <TopNav
+        user={{ name: user.name, plan: user.plan || "Joy Map" }}
+        badges={badges}
+        unread={unread}
+        city={city}
+      />
       <div className="content-top">{children}</div>
     </div>
   );

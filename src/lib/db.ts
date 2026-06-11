@@ -1,4 +1,3 @@
-// Prisma client singleton — avoids exhausting connections during dev hot-reload.
 import { PrismaClient } from "@prisma/client";
 
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
