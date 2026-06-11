@@ -2,7 +2,7 @@
 
 import { useRouter, usePathname } from "next/navigation";
 import { Icons, Logo } from "@/components/Icons";
-import { LangSwitcher, t } from "@/components/i18n";
+import { LangSwitcher, useT } from "@/components/i18n";
 import { Avatar } from "@/components/dash/primitives";
 import { rpc } from "@/lib/client";
 
@@ -59,6 +59,7 @@ export function AdminSidebar({
 }) {
   const router = useRouter();
   const pathname = usePathname();
+  const t = useT();
   const logout = async () => {
     await rpc("logout");
     router.push("/auth");
@@ -125,6 +126,7 @@ export function AdminTopbar({
   unread: number;
 }) {
   const pathname = usePathname();
+  const t = useT();
   const TITLES: Record<string, [string, string]> = {
     "/admin": ["Dashboard", "Platform health at a glance"],
     "/admin/providers": ["Providers", "Manage marketplace partners"],

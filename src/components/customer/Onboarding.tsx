@@ -6,8 +6,10 @@ import { Icons } from "@/components/Icons";
 import { rpc } from "@/lib/client";
 import { MOODS, MOOD_ORDER, Btn, MoodChip } from "./primitives";
 import { Textarea } from "@/components/ui";
+import { useT } from "@/components/i18n";
 
 export function Onboarding() {
+  const t = useT();
   const router = useRouter();
   const [msgs, setMsgs] = useState<{ from: "ai" | "me"; node: ReactNode }[]>(
     [],
@@ -36,14 +38,16 @@ export function Onboarding() {
     (async () => {
       await ai(
         <>
-          Hi, I&apos;m <b>Joy</b> — your guide. ✦ Over a minute I&apos;ll learn
-          your vibe and build a personal weekly <b>Joy Map</b>.
+          {t("Hi, I'm")} <b>{t("Joy")}</b>{" "}
+          {t("— your guide. ✦ Over a minute I'll learn your vibe and build a personal weekly")}{" "}
+          <b>{t("Joy Map")}</b>.
         </>,
         500,
       );
       await ai(
         <>
-          First — how are you hoping to <b>feel</b> more often? Pick a few.
+          {t("First — how are you hoping to")} <b>{t("feel")}</b>{" "}
+          {t("more often? Pick a few.")}
         </>,
         800,
       );
@@ -72,20 +76,20 @@ export function Onboarding() {
     setStep(0);
     await ai(
       <>
-        Lovely — more{" "}
+        {t("Lovely — more")}{" "}
         <b>
           {picked
-            .map((k) => MOODS[k].label)
+            .map((k) => t(MOODS[k].label))
             .join(", ")
             .toLowerCase()}
         </b>
-        . Got it.
+        . {t("Got it.")}
       </>,
       600,
     );
     await ai(
       <>
-        Now tell me in your own words. What are you in the mood for this week?
+        {t("Now tell me in your own words. What are you in the mood for this week?")}
       </>,
       900,
     );
@@ -94,11 +98,11 @@ export function Onboarding() {
 
   const submitText = async () => {
     const tx =
-      text.trim() || "Something fun and a little new, mostly evenings.";
+      text.trim() || t("Something fun and a little new, mostly evenings.");
     push("me", <span>{tx}</span>);
     setText("");
     setStep(0);
-    await ai(<>Perfect. I&apos;m reading between the lines… 🔎</>, 600);
+    await ai(<>{t("Perfect. I'm reading between the lines… 🔎")}</>, 600);
     setBuilding(true);
     await new Promise((r) => setTimeout(r, 2400));
     complete(picked.length ? picked : ["calm", "joy", "focus"]);
@@ -144,9 +148,9 @@ export function Onboarding() {
             />
           </div>
           <div>
-            <div className="font-display font-extrabold text-[16px]">Joy</div>
+            <div className="font-display font-extrabold text-[16px]">{t("Joy")}</div>
             <div className="text-[12.5px] text-ink-3 font-semibold">
-              Building your map · step {Math.max(1, Math.min(step, 2))} of 2
+              {t("Building your map · step")} {Math.max(1, Math.min(step, 2))} {t("of 2")}
             </div>
           </div>
           <button
@@ -154,7 +158,7 @@ export function Onboarding() {
             style={{ marginLeft: "auto" }}
             onClick={() => complete(["calm", "joy", "focus"])}
           >
-            Skip
+            {t("Skip")}
           </button>
         </div>
 
@@ -203,8 +207,8 @@ export function Onboarding() {
                   }
                 >
                   {picked.length
-                    ? `Continue with ${picked.length} mood${picked.length > 1 ? "s" : ""}`
-                    : "Pick at least one"}
+                    ? `${t("Continue with")} ${picked.length} ${picked.length > 1 ? t("moods") : t("mood")}`
+                    : t("Pick at least one")}
                 </Btn>
               </>
             )}
@@ -220,7 +224,7 @@ export function Onboarding() {
                       submitText();
                     }
                   }}
-                  placeholder="e.g. A fun date idea under 3000 ₽…"
+                  placeholder={t("e.g. A fun date idea under 3000 ₽…")}
                   style={{ resize: "none", minHeight: 48 }}
                 />
                 <button
@@ -248,15 +252,15 @@ export function Onboarding() {
                   "A thrill this weekend",
                   "Meet new people",
                 ].map((s) => (
-                  <button key={s} className="chip" onClick={() => setText(s)}>
-                    {s}
+                  <button key={s} className="chip" onClick={() => setText(t(s))}>
+                    {t(s)}
                   </button>
                 ))}
               </div>
             )}
             {step === 0 && (
               <div className="text-center text-ink-3 text-[13px] font-semibold py-[6px] px-0">
-                Joy is thinking…
+                {t("Joy is thinking…")}
               </div>
             )}
           </div>
@@ -313,19 +317,20 @@ function Typing() {
   );
 }
 function BuildingMap() {
+  const t = useT();
   const steps = [
-    "Reading your moods",
-    "Scanning 240 experiences in Moscow",
-    "Balancing your week",
-    "Placing the perfect days",
+    t("Reading your moods"),
+    t("Scanning 240 experiences in Moscow"),
+    t("Balancing your week"),
+    t("Placing the perfect days"),
   ];
   const [i, setI] = useState(0);
   useEffect(() => {
-    const t = setInterval(
+    const timer = setInterval(
       () => setI((x) => Math.min(x + 1, steps.length - 1)),
       560,
     );
-    return () => clearInterval(t);
+    return () => clearInterval(timer);
   }, []);
   return (
     <div
@@ -339,7 +344,7 @@ function BuildingMap() {
       <div className="flex items-center gap-[10px] mb-[14px]">
         <Icons.sparkle size={20} style={{ color: "var(--coral)" }} />
         <span className="font-display font-bold text-[16px]">
-          Composing your Joy Map…
+          {t("Composing your Joy Map…")}
         </span>
       </div>
       <div className="flex flex-col gap-[9px]">

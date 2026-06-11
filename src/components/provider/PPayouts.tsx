@@ -4,8 +4,10 @@ import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { rpc, useBusy } from "@/lib/client";
 import { money, Pill, BusyBtn } from "@/components/dash/primitives";
+import { useT } from "@/components/i18n";
 
 export function PPayouts({ fin, list }: { fin: any; list: any[] }) {
+  const t = useT();
   const router = useRouter();
   const { busy, run, error } = useBusy();
   return (
@@ -19,13 +21,14 @@ export function PPayouts({ fin, list }: { fin: any; list: any[] }) {
           style={{ padding: 26, position: "relative", overflow: "hidden" }}
         >
           <div className="text-[13.5px] opacity-[.82] font-semibold mb-[8px]">
-            Available balance
+            {t("Available balance")}
           </div>
           <div className="font-display font-extrabold text-[38px] tracking-[-.02em]">
             {money(fin.available)}
           </div>
           <div className="text-[13px] opacity-[.82] font-semibold mt-[6px]">
-            Net of {fin.commission}% platform commission
+            {t("Net of")} {fin.commission}
+            {t("% platform commission")}
           </div>
           <BusyBtn
             busy={busy}
@@ -40,7 +43,7 @@ export function PPayouts({ fin, list }: { fin: any; list: any[] }) {
             }
             style={{ marginTop: 18 }}
           >
-            Withdraw {fin.available > 0 ? money(fin.available) : ""}
+            {t("Withdraw")} {fin.available > 0 ? money(fin.available) : ""}
           </BusyBtn>
           {error && (
             <div className="mt-[10px] text-[13px] font-bold text-[#FFC58A]">
@@ -50,21 +53,21 @@ export function PPayouts({ fin, list }: { fin: any; list: any[] }) {
           <div className="absolute right-[-30px] bottom-[-40px] w-[150px] h-[150px] rounded-[99px] bg-[rgba(255,255,255,.05)]" />
         </div>
         <div className="card" style={{ padding: 22 }}>
-          <h3 className="text-[16px] mb-[14px]">Earnings breakdown</h3>
-          <PRow l="Gross bookings" r={money(fin.gross)} />
+          <h3 className="text-[16px] mb-[14px]">{t("Earnings breakdown")}</h3>
+          <PRow l={t("Gross bookings")} r={money(fin.gross)} />
           <PRow
-            l={`Platform commission (${fin.commission}%)`}
+            l={`${t("Platform commission")} (${fin.commission}%)`}
             r={"− " + money(fin.gross - fin.net)}
             neg
           />
           <PRow
-            l="Already withdrawn / pending"
+            l={t("Already withdrawn / pending")}
             r={"− " + money(fin.withdrawn)}
             neg
           />
           <div className="border-t border-line mt-[8px] pt-[12px]">
             <PRow
-              l={<b>Available</b>}
+              l={<b>{t("Available")}</b>}
               r={
                 <b className="font-display text-[17px]">
                   {money(fin.available)}
@@ -76,21 +79,22 @@ export function PPayouts({ fin, list }: { fin: any; list: any[] }) {
       </div>
       <div className="card" style={{ overflow: "hidden" }}>
         <h3 className="text-[17px] pt-[18px] px-[20px] pb-[4px]">
-          Payout history
+          {t("Payout history")}
         </h3>
         {list.length === 0 ? (
           <div className="py-[34px] px-[20px] text-ink-3 font-semibold text-[13.5px]">
-            No payouts yet. Withdraw your balance and the request lands in the
-            admin payout queue.
+            {t(
+              "No payouts yet. Withdraw your balance and the request lands in the admin payout queue.",
+            )}
           </div>
         ) : (
           <table className="tbl">
             <thead>
               <tr>
-                <th>Requested</th>
-                <th>Amount</th>
-                <th>Due</th>
-                <th>Status</th>
+                <th>{t("Requested")}</th>
+                <th>{t("Amount")}</th>
+                <th>{t("Due")}</th>
+                <th>{t("Status")}</th>
               </tr>
             </thead>
             <tbody>

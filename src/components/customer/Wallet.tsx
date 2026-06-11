@@ -6,10 +6,12 @@ import { Icons } from "@/components/Icons";
 import { rpc, useBusy } from "@/lib/client";
 import { fmt, Modal, BusyBtn } from "./primitives";
 import { Input } from "@/components/ui";
+import { useT } from "@/components/i18n";
 
 type Tx = { id: string; label: string; amount: number; date: string };
 
 export function Wallet({ wallet, tx }: { wallet: number; tx: Tx[] }) {
+  const t = useT();
   const [topup, setTopup] = useState(false);
   return (
     <div className="anim-fade">
@@ -26,7 +28,7 @@ export function Wallet({ wallet, tx }: { wallet: number; tx: Tx[] }) {
         }}
       >
         <div className="text-[13.5px] opacity-[.82] font-semibold mb-[8px]">
-          Joymap balance
+          {t("Joymap balance")}
         </div>
         <div className="font-display font-extrabold text-[40px] tracking-[-.02em]">
           {fmt(wallet)}
@@ -42,12 +44,12 @@ export function Wallet({ wallet, tx }: { wallet: number; tx: Tx[] }) {
             onClick={() => setTopup(true)}
           >
             <Icons.plus size={16} />
-            Top up
+            {t("Top up")}
           </button>
         </div>
         <div className="absolute right-[-30px] bottom-[-40px] w-[160px] h-[160px] rounded-[99px] bg-[rgba(255,255,255,.05)]" />
       </div>
-      <h3 className="text-[17px] mb-[14px]">Recent transactions</h3>
+      <h3 className="text-[17px] mb-[14px]">{t("Recent transactions")}</h3>
       {tx.length === 0 ? (
         <div
           className="card"
@@ -59,8 +61,9 @@ export function Wallet({ wallet, tx }: { wallet: number; tx: Tx[] }) {
             fontSize: 14,
           }}
         >
-          No transactions yet. Top up or pay with your balance and the ledger
-          appears here.
+          {t(
+            "No transactions yet. Top up or pay with your balance and the ledger appears here.",
+          )}
         </div>
       ) : (
         <div className="card" style={{ overflow: "hidden" }}>
@@ -93,13 +96,14 @@ export function Wallet({ wallet, tx }: { wallet: number; tx: Tx[] }) {
 }
 
 function TopUpModal({ onClose }: { onClose: () => void }) {
+  const t = useT();
   const router = useRouter();
   const [amt, setAmt] = useState(3000);
   const { busy, run } = useBusy();
   return (
     <Modal onClose={onClose} maxWidth={400}>
       <div className="p-[26px]">
-        <h3 className="text-[20px] mb-[16px]">Top up balance</h3>
+        <h3 className="text-[20px] mb-[16px]">{t("Top up balance")}</h3>
         <div className="flex gap-[8px] flex-wrap mb-[14px]">
           {[1000, 3000, 5000, 10000].map((v) => (
             <button
@@ -119,7 +123,7 @@ function TopUpModal({ onClose }: { onClose: () => void }) {
         />
         <div className="flex gap-[10px]">
           <button className="btn btn-ghost btn-md btn-block" onClick={onClose}>
-            Cancel
+            {t("Cancel")}
           </button>
           <BusyBtn
             busy={busy}
@@ -136,7 +140,7 @@ function TopUpModal({ onClose }: { onClose: () => void }) {
               )
             }
           >
-            Pay {fmt(amt)}
+            {t("Pay")} {fmt(amt)}
           </BusyBtn>
         </div>
       </div>

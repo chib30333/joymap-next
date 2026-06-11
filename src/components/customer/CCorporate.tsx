@@ -17,6 +17,7 @@ import {
 import { Input, Select, Textarea } from "@/components/ui";
 import { ServiceModal, type Slot } from "./ServiceModal";
 import { useFav } from "./useFav";
+import { useT } from "@/components/i18n";
 
 const COMPANY = {
   name: "Acme Corp",
@@ -140,6 +141,7 @@ export function CCorporate({
   slotsByService: Record<string, Slot[]>;
   wallet: number;
 }) {
+  const t = useT();
   const byId = (id: string) => catalog.find((e) => e.id === id) || null;
   const [modal, setModal] = useState<"quote" | "gift" | null>(null);
   const [open, setOpen] = useState<Exp | null>(null);
@@ -157,7 +159,7 @@ export function CCorporate({
         <div className="relative flex gap-[30px] items-center flex-wrap">
           <div className="flex-1 min-w-[280px] max-w-[560px]">
             <div className="corp-eyebrow" style={{ marginBottom: 16 }}>
-              Corporate wellbeing
+              {t("Corporate wellbeing")}
             </div>
             <div className="corp-lockup" style={{ marginBottom: 18 }}>
               <span className="corp-logo">{COMPANY.letter}</span>
@@ -168,15 +170,13 @@ export function CCorporate({
               className="text-[#FFF3E4] leading-[1.05]"
               style={{ fontSize: "clamp(28px,3.4vw,40px)", maxWidth: "14ch" }}
             >
-              Your wellbeing, on the house.
+              {t("Your wellbeing, on the house.")}
             </h1>
             <p
               className="text-[rgba(244,233,216,.8)] text-[15.5px] leading-[1.6] mt-[14px]"
               style={{ maxWidth: "52ch" }}
             >
-              {COMPANY.name} sponsors your Joymap experiences. Spend your
-              monthly credit on anything that brings you joy — no receipts, no
-              approvals.
+              {COMPANY.name} {t("sponsors your Joymap experiences. Spend your monthly credit on anything that brings you joy — no receipts, no approvals.")}
             </p>
             <div className="flex gap-[10px] mt-[24px] flex-wrap">
               <button
@@ -188,7 +188,7 @@ export function CCorporate({
                 }}
                 onClick={() => openExp("e1")}
               >
-                Spend my credit
+                {t("Spend my credit")}
                 <Icons.arrowR size={18} />
               </button>
               <button
@@ -200,7 +200,7 @@ export function CCorporate({
                 }}
                 onClick={() => setModal("quote")}
               >
-                Plan a team event
+                {t("Plan a team event")}
               </button>
             </div>
           </div>
@@ -212,22 +212,25 @@ export function CCorporate({
                     {fmt(remaining)}
                   </div>
                   <div className="text-[10.5px] text-[rgba(244,233,216,.7)] font-bold tracking-[.04em] mt-[3px]">
-                    LEFT THIS MONTH
+                    {t("LEFT THIS MONTH")}
                   </div>
                 </div>
               </div>
             </div>
             <div className="text-center text-[12.5px] text-[rgba(244,233,216,.7)] font-semibold">
-              {fmt(COMPANY.used)} of {fmt(COMPANY.allowance)} used
+              {fmt(COMPANY.used)} {t("of")} {fmt(COMPANY.allowance)} {t("used")}
               <br />
-              Renews {COMPANY.renews}
+              {t("Renews")} {COMPANY.renews}
             </div>
           </div>
         </div>
       </div>
 
       <div className="mt-[34px] mx-0 mb-[14px]">
-        <SectionHead eyebrow="Included with your plan" title="Your perks" />
+        <SectionHead
+          eyebrow={t("Included with your plan")}
+          title={t("Your perks")}
+        />
       </div>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(238px,1fr))] gap-[var(--gap)]">
         {CORP_PERKS.map((p) => {
@@ -258,13 +261,13 @@ export function CCorporate({
                       border: "none",
                     }}
                   >
-                    {p.tag}
+                    {t(p.tag)}
                   </span>
                 )}
               </div>
-              <h3 className="text-[16.5px] mb-[5px]">{p.title}</h3>
+              <h3 className="text-[16.5px] mb-[5px]">{t(p.title)}</h3>
               <p className="text-[13px] text-ink-3 font-semibold mt-0 mx-0 mb-[14px] leading-[1.45]">
-                {p.desc}
+                {t(p.desc)}
               </p>
               <div
                 className="inline-flex items-center gap-[6px] font-extrabold font-display text-[15px]"
@@ -278,7 +281,7 @@ export function CCorporate({
                     background: p.accent,
                   }}
                 />
-                {p.value}
+                {t(p.value)}
               </div>
             </div>
           );
@@ -287,8 +290,8 @@ export function CCorporate({
 
       <div className="mt-[40px] mx-0 mb-[14px]">
         <SectionHead
-          eyebrow="With your colleagues"
-          title="Team-building events"
+          eyebrow={t("With your colleagues")}
+          title={t("Team-building events")}
           action={
             <Btn
               variant="ghost"
@@ -296,7 +299,7 @@ export function CCorporate({
               onClick={() => openExp("e9")}
               iconR={<Icons.arrowR size={17} />}
             >
-              Browse team experiences
+              {t("Browse team experiences")}
             </Btn>
           }
         />
@@ -312,7 +315,7 @@ export function CCorporate({
           <div className="relative flex flex-col h-full">
             <div className="flex items-center justify-between mb-[18px]">
               <span className="corp-eyebrow" style={{ color: "var(--gold)" }}>
-                Joymap gift card
+                {t("Joymap gift card")}
               </span>
               <Icons.gift size={26} style={{ color: "var(--gold)" }} />
             </div>
@@ -320,14 +323,13 @@ export function CCorporate({
               className="text-[24px] text-[#FFF3E4] mb-[8px]"
               style={{ maxWidth: "16ch" }}
             >
-              Share the joy with a colleague.
+              {t("Share the joy with a colleague.")}
             </h3>
             <p
               className="text-[rgba(244,233,216,.78)] text-[14px] leading-[1.55] mb-[20px]"
               style={{ maxWidth: "46ch" }}
             >
-              Send an experience gift card by email — they pick what brings them
-              joy.
+              {t("Send an experience gift card by email — they pick what brings them joy.")}
             </p>
             <div className="flex gap-[8px] mt-auto flex-wrap">
               {GIFT_DENOMS.map((d) => (
@@ -355,10 +357,11 @@ export function CCorporate({
             <Icons.sparkle size={24} />
           </span>
           <div>
-            <h3 className="text-[18px] mb-[6px]">Something bigger in mind?</h3>
+            <h3 className="text-[18px] mb-[6px]">
+              {t("Something bigger in mind?")}
+            </h3>
             <p className="text-[13.5px] text-ink-2 leading-[1.5] m-0">
-              Off-sites, launches, away-days — our team curates a custom
-              experience for any group size.
+              {t("Off-sites, launches, away-days — our team curates a custom experience for any group size.")}
             </p>
           </div>
           <Btn
@@ -366,7 +369,7 @@ export function CCorporate({
             onClick={() => setModal("quote")}
             icon={<Icons.briefcase size={17} />}
           >
-            Request a quote
+            {t("Request a quote")}
           </Btn>
         </div>
       </div>
@@ -377,21 +380,19 @@ export function CCorporate({
       >
         <div className="relative max-w-[560px]">
           <div className="corp-eyebrow" style={{ marginBottom: 12 }}>
-            Off-sites & away-days
+            {t("Off-sites & away-days")}
           </div>
           <h2
             className="text-[#fff] leading-[1.06] mb-[12px]"
             style={{ fontSize: "clamp(24px,3vw,34px)" }}
           >
-            Bring the whole team together.
+            {t("Bring the whole team together.")}
           </h2>
           <p
             className="text-[rgba(255,255,255,.85)] text-[15px] leading-[1.6] mb-[20px]"
             style={{ maxWidth: "48ch" }}
           >
-            From strategy days to celebration nights, our events team curates a
-            custom experience for any group size — fully handled, beautifully
-            run.
+            {t("From strategy days to celebration nights, our events team curates a custom experience for any group size — fully handled, beautifully run.")}
           </p>
           <button
             className="btn btn-lg"
@@ -403,15 +404,15 @@ export function CCorporate({
             onClick={() => setModal("quote")}
           >
             <Icons.briefcase size={18} />
-            Plan a team event
+            {t("Plan a team event")}
           </button>
         </div>
       </div>
 
       <div className="mt-[40px] mx-0 mb-[14px]">
         <SectionHead
-          eyebrow="Managed by your company"
-          title="Your company plan"
+          eyebrow={t("Managed by your company")}
+          title={t("Your company plan")}
         />
       </div>
       <div className="grid grid-cols-[1fr_1.25fr] gap-[var(--gap)] items-start">
@@ -435,12 +436,12 @@ export function CCorporate({
                 {COMPANY.name}
               </div>
               <div className="text-[12.5px] text-ink-3 font-semibold">
-                {COMPANY.plan} · since {COMPANY.since}
+                {COMPANY.plan} · {t("since")} {COMPANY.since}
               </div>
             </div>
           </div>
           <div className="mb-[8px] flex justify-between text-[13px] font-bold">
-            <span className="text-ink-2">Seats in use</span>
+            <span className="text-ink-2">{t("Seats in use")}</span>
             <span>
               {COMPANY.seatsUsed} / {COMPANY.seats}
             </span>
@@ -457,17 +458,18 @@ export function CCorporate({
           </div>
           <div className="flex items-center gap-[9px] py-[12px] px-[14px] rounded-sm bg-surface-2 text-[12.5px] text-ink-2 font-semibold">
             <Icons.building size={16} style={{ color: "var(--ink-3)" }} />
-            Managed by {COMPANY.hr}. Need a seat changed? Contact your admin.
+            {t("Managed by")} {COMPANY.hr}.{" "}
+            {t("Need a seat changed? Contact your admin.")}
           </div>
         </div>
         <div className="corp-card" style={{ padding: 0, overflow: "hidden" }}>
           <div className="flex items-center justify-between py-[18px] px-[22px]">
-            <h3 className="text-[16px]">Billing & invoices</h3>
+            <h3 className="text-[16px]">{t("Billing & invoices")}</h3>
             <span
               className="tag"
               style={{ background: "var(--surface-2)", color: "var(--ink-3)" }}
             >
-              View only
+              {t("View only")}
             </span>
           </div>
           {CORP_INVOICES.map((inv) => (
@@ -505,7 +507,7 @@ export function CCorporate({
                       inv.status === "paid" ? "#1FA46E" : "var(--orange-deep)",
                   }}
                 >
-                  {inv.status}
+                  {t(inv.status)}
                 </span>
               </div>
               <button className="icon-btn" style={{ width: 34, height: 34 }}>
@@ -541,6 +543,7 @@ function TeamEventCard({
   byId: (id: string) => Exp | null;
   onOpen: (e: Exp) => void;
 }) {
+  const t = useT();
   const e = byId(ev.expId);
   const [joined, setJoined] = useState(ev.joined);
   if (!e) return null;
@@ -551,14 +554,14 @@ function TeamEventCard({
         <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,.4))]" />
         <div className="absolute top-[12px] left-[12px] flex gap-[7px]">
           <span className="bg-[rgba(255,255,255,.92)] text-[#241C2E] py-[5px] px-[11px] rounded-[99px] text-[11.5px] font-extrabold">
-            {CAL_WD[calDow(ev.day)]} {ev.day} Jun · {ev.time}
+            {t(CAL_WD[calDow(ev.day)])} {ev.day} {t("Jun")} · {ev.time}
           </span>
         </div>
         <span
           className="absolute bottom-[12px] left-[14px] text-[#fff] font-display font-extrabold text-[18px]"
           style={{ textShadow: "0 1px 10px rgba(0,0,0,.4)" }}
         >
-          {ev.title}
+          {t(ev.title)}
         </span>
       </div>
       <div className="py-[15px] px-[17px]">
@@ -568,7 +571,7 @@ function TeamEventCard({
             style={{ background: "var(--surface-2)", color: "var(--ink-2)" }}
           >
             <Icons.briefcase size={12} style={{ marginRight: 4 }} />
-            {ev.team}
+            {t(ev.team)}
           </span>
           <span
             className="mood-chip"
@@ -580,7 +583,7 @@ function TeamEventCard({
             }}
           >
             <MoodDot mood={e.mood} size={6} />
-            {m.label}
+            {t(m.label)}
           </span>
         </div>
         <div className="flex items-center gap-[10px]">
@@ -593,7 +596,7 @@ function TeamEventCard({
             </span>
           </div>
           <span className="text-[12.5px] text-ink-3 font-bold">
-            {ev.going.length + ev.extra}/{ev.cap} going
+            {ev.going.length + ev.extra}/{ev.cap} {t("going")}
           </span>
           <button
             className={`btn btn-sm ${joined ? "btn-soft" : "btn-primary"}`}
@@ -603,10 +606,10 @@ function TeamEventCard({
             {joined ? (
               <>
                 <Icons.check size={15} />
-                Going
+                {t("Going")}
               </>
             ) : (
-              "Join"
+              t("Join")
             )}
           </button>
         </div>
@@ -624,6 +627,7 @@ function Lbl({ children }: { children: React.ReactNode }) {
 }
 
 function QuoteModal({ onClose }: { onClose: () => void }) {
+  const t = useT();
   const [step, setStep] = useState(0);
   const [size, setSize] = useState(12);
   const [vibe, setVibe] = useState("joy");
@@ -638,17 +642,19 @@ function QuoteModal({ onClose }: { onClose: () => void }) {
             className="corp-eyebrow"
             style={{ marginBottom: 8, color: "var(--coral-deep)" }}
           >
-            Custom team event
+            {t("Custom team event")}
           </div>
-          <h2 className="text-[23px] mb-[6px]">Tell us your vision</h2>
+          <h2 className="text-[23px] mb-[6px]">{t("Tell us your vision")}</h2>
           <p className="text-ink-2 text-[14px] mt-0 mx-0 mb-[20px]">
-            Our events team replies within one business day with a tailored
-            plan.
+            {t("Our events team replies within one business day with a tailored plan.")}
           </p>
           <div className="flex flex-col gap-[16px]">
             <div>
               <Lbl>
-                Team size — <b className="text-coral-deep">{size} people</b>
+                {t("Team size")} —{" "}
+                <b className="text-coral-deep">
+                  {size} {t("people")}
+                </b>
               </Lbl>
               <input
                 type="range"
@@ -661,7 +667,7 @@ function QuoteModal({ onClose }: { onClose: () => void }) {
               />
             </div>
             <div>
-              <Lbl>Vibe</Lbl>
+              <Lbl>{t("Vibe")}</Lbl>
               <div className="flex flex-wrap gap-[8px]">
                 {MOOD_ORDER.map((k) => (
                   <MoodChip
@@ -675,7 +681,7 @@ function QuoteModal({ onClose }: { onClose: () => void }) {
             </div>
             <div className="flex gap-[12px]">
               <div className="flex-1">
-                <Lbl>Preferred date</Lbl>
+                <Lbl>{t("Preferred date")}</Lbl>
                 <Input
                   type="date"
                   value={date}
@@ -683,25 +689,25 @@ function QuoteModal({ onClose }: { onClose: () => void }) {
                 />
               </div>
               <div className="flex-1">
-                <Lbl>Budget / person</Lbl>
+                <Lbl>{t("Budget / person")}</Lbl>
                 <div className="cal-sel" style={{ display: "block" }}>
                   <Select
                     value={budget}
                     onChange={(e) => setBudget(e.target.value)}
                     style={{ appearance: "none" }}
                   >
-                    <option value="low">Up to 2 000 ₽</option>
-                    <option value="mid">2 000–5 000 ₽</option>
-                    <option value="high">5 000 ₽+</option>
+                    <option value="low">{t("Up to 2 000 ₽")}</option>
+                    <option value="mid">{t("2 000–5 000 ₽")}</option>
+                    <option value="high">{t("5 000 ₽+")}</option>
                   </Select>
                 </div>
               </div>
             </div>
             <div>
-              <Lbl>Anything else?</Lbl>
+              <Lbl>{t("Anything else?")}</Lbl>
               <Textarea
                 rows={3}
-                placeholder="Dietary needs, accessibility, the occasion…"
+                placeholder={t("Dietary needs, accessibility, the occasion…")}
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
                 style={{ resize: "vertical" }}
@@ -713,10 +719,10 @@ function QuoteModal({ onClose }: { onClose: () => void }) {
               className="btn btn-ghost btn-md btn-block"
               onClick={onClose}
             >
-              Cancel
+              {t("Cancel")}
             </button>
             <Btn size="md" block onClick={() => setStep(1)}>
-              Send request
+              {t("Send request")}
               <Icons.send size={16} />
             </Btn>
           </div>
@@ -726,16 +732,19 @@ function QuoteModal({ onClose }: { onClose: () => void }) {
           <div className="w-[66px] h-[66px] rounded-[99px] bg-[color-mix(in_srgb,#1FA46E_14%,transparent)] text-[#1FA46E] grid place-items-center mt-0 mx-auto mb-[18px]">
             <Icons.check size={34} />
           </div>
-          <h2 className="text-[23px] mb-[8px]">Request sent ✦</h2>
+          <h2 className="text-[23px] mb-[8px]">{t("Request sent ✦")}</h2>
           <p
             className="text-ink-2 text-[14.5px] mt-0 mx-auto mb-[22px] leading-[1.55]"
             style={{ maxWidth: "36ch" }}
           >
-            Our events team will email you a tailored plan for{" "}
-            <b>{size} people</b> within one business day.
+            {t("Our events team will email you a tailored plan for")}{" "}
+            <b>
+              {size} {t("people")}
+            </b>{" "}
+            {t("within one business day.")}
           </p>
           <Btn size="md" onClick={onClose}>
-            Done
+            {t("Done")}
           </Btn>
         </div>
       )}
@@ -744,6 +753,7 @@ function QuoteModal({ onClose }: { onClose: () => void }) {
 }
 
 function GiftModal({ onClose }: { onClose: () => void }) {
+  const t = useT();
   const [amt, setAmt] = useState(2500);
   const [to, setTo] = useState("");
   const [msg, setMsg] = useState("");
@@ -756,9 +766,9 @@ function GiftModal({ onClose }: { onClose: () => void }) {
             className="corp-eyebrow"
             style={{ marginBottom: 8, color: "#B97714" }}
           >
-            Joymap gift card
+            {t("Joymap gift card")}
           </div>
-          <h2 className="text-[23px] mb-[18px]">Send the joy</h2>
+          <h2 className="text-[23px] mb-[18px]">{t("Send the joy")}</h2>
           <div
             className="corp-gift"
             style={{ marginBottom: 20, cursor: "default" }}
@@ -766,7 +776,7 @@ function GiftModal({ onClose }: { onClose: () => void }) {
             <div className="relative flex items-center justify-between">
               <div>
                 <div className="text-[11.5px] tracking-[.1em] opacity-[.7] font-bold">
-                  JOYMAP GIFT
+                  {t("JOYMAP GIFT")}
                 </div>
                 <div className="font-display font-extrabold text-[30px] text-[#FFF3E4] mt-[4px]">
                   {fmt(amt)}
@@ -775,7 +785,7 @@ function GiftModal({ onClose }: { onClose: () => void }) {
               <Icons.gift size={34} style={{ color: "var(--gold)" }} />
             </div>
           </div>
-          <Lbl>Amount</Lbl>
+          <Lbl>{t("Amount")}</Lbl>
           <div className="grid grid-cols-[repeat(4,1fr)] gap-[8px] mb-[16px]">
             {GIFT_DENOMS.map((d) => (
               <div
@@ -789,7 +799,7 @@ function GiftModal({ onClose }: { onClose: () => void }) {
               </div>
             ))}
           </div>
-          <Lbl>Colleague&apos;s email</Lbl>
+          <Lbl>{t("Colleague's email")}</Lbl>
           <Input
             type="email"
             placeholder="name@acme.com"
@@ -797,10 +807,10 @@ function GiftModal({ onClose }: { onClose: () => void }) {
             onChange={(e) => setTo(e.target.value)}
             style={{ marginBottom: 14 }}
           />
-          <Lbl>Message (optional)</Lbl>
+          <Lbl>{t("Message (optional)")}</Lbl>
           <Textarea
             rows={2}
-            placeholder="Thanks for everything — enjoy! 🎉"
+            placeholder={t("Thanks for everything — enjoy! 🎉")}
             value={msg}
             onChange={(e) => setMsg(e.target.value)}
             style={{ resize: "vertical", marginBottom: 20 }}
@@ -810,7 +820,7 @@ function GiftModal({ onClose }: { onClose: () => void }) {
               className="btn btn-ghost btn-md btn-block"
               onClick={onClose}
             >
-              Cancel
+              {t("Cancel")}
             </button>
             <Btn
               size="md"
@@ -819,7 +829,7 @@ function GiftModal({ onClose }: { onClose: () => void }) {
               style={!to ? { opacity: 0.5 } : undefined}
             >
               <Icons.gift size={16} />
-              Send {fmt(amt)}
+              {t("Send")} {fmt(amt)}
             </Btn>
           </div>
         </div>
@@ -828,16 +838,16 @@ function GiftModal({ onClose }: { onClose: () => void }) {
           <div className="w-[66px] h-[66px] rounded-[99px] bg-[color-mix(in_srgb,var(--gold)_18%,transparent)] text-[#B97714] grid place-items-center mt-0 mx-auto mb-[18px]">
             <Icons.gift size={32} />
           </div>
-          <h2 className="text-[23px] mb-[8px]">Gift on its way 🎁</h2>
+          <h2 className="text-[23px] mb-[8px]">{t("Gift on its way 🎁")}</h2>
           <p
             className="text-ink-2 text-[14.5px] mt-0 mx-auto mb-[22px] leading-[1.55]"
             style={{ maxWidth: "34ch" }}
           >
-            A <b>{fmt(amt)}</b> Joymap gift card is heading to{" "}
-            {to || "your colleague"}.
+            {t("A Joymap gift card of")} <b>{fmt(amt)}</b> {t("is heading to")}{" "}
+            {to || t("your colleague")}.
           </p>
           <Btn size="md" onClick={onClose}>
-            Done
+            {t("Done")}
           </Btn>
         </div>
       )}

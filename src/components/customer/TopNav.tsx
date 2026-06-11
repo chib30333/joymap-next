@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { Icons, Logo } from "@/components/Icons";
-import { LangSwitcher, t } from "@/components/i18n";
+import { LangSwitcher, useT } from "@/components/i18n";
 import { Avatar, CITIES } from "@/components/customer/primitives";
 import { Input } from "@/components/ui";
 import { rpc } from "@/lib/client";
@@ -42,6 +42,7 @@ export function TopNav({
 }) {
   const router = useRouter();
   const pathname = usePathname();
+  const t = useT();
   const [query, setQuery] = useState("");
 
   const search = (v: string) => {
@@ -130,6 +131,7 @@ function CityMenu({ city }: { city: string }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const t = useT();
   useEffect(() => {
     const h = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node))
@@ -151,7 +153,7 @@ function CityMenu({ city }: { city: string }) {
         style={{ padding: "10px 14px" }}
       >
         <Icons.pin size={16} />
-        {city}
+        {t(city)}
         <Icons.chevR
           size={14}
           style={{ transform: "rotate(90deg)", opacity: 0.6 }}
@@ -166,7 +168,7 @@ function CityMenu({ city }: { city: string }) {
               onClick={() => pick(c)}
             >
               <Icons.pin size={16} />
-              {c}
+              {t(c)}
               {c === city && (
                 <span
                   className="text-coral"
@@ -187,6 +189,7 @@ function AccountMenu({ user }: { user: { name: string; plan: string } }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const t = useT();
   useEffect(() => {
     const h = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node))

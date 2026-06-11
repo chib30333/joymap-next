@@ -18,6 +18,7 @@ import {
   type Exp,
 } from "./primitives";
 import { Textarea } from "@/components/ui";
+import { useT } from "@/components/i18n";
 
 type B = {
   id: string;
@@ -34,6 +35,7 @@ type B = {
 };
 
 export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
+  const t = useT();
   const [tab, setTab] = useState<"upcoming" | "past">("upcoming");
   const [modal, setModal] = useState<{ kind: string; b: B } | null>(null);
   const list = tab === "upcoming" ? upcoming : past;
@@ -43,8 +45,8 @@ export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
       <div className="flex gap-[8px] mb-[24px] bg-surface-2 p-[5px] rounded-pill w-fit border border-line">
         {(
           [
-            ["upcoming", "Upcoming"],
-            ["past", "Past"],
+            ["upcoming", t("Upcoming")],
+            ["past", t("Past")],
           ] as const
         ).map(([k, l]) => (
           <button
@@ -72,12 +74,16 @@ export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
             <Icons.calendar size={28} />
           </div>
           <h3 className="text-[19px] text-ink">
-            {tab === "upcoming" ? "Nothing booked yet" : "No past experiences"}
+            {tab === "upcoming"
+              ? t("Nothing booked yet")
+              : t("No past experiences")}
           </h3>
           <p className="max-w-[360px] mt-[8px] mx-auto mb-0">
             {tab === "upcoming"
-              ? "Find something in Discover and book your first experience — it will appear here."
-              : "Completed and cancelled bookings will show up here."}
+              ? t(
+                  "Find something in Discover and book your first experience — it will appear here.",
+                )
+              : t("Completed and cancelled bookings will show up here.")}
           </p>
         </div>
       ) : (
@@ -123,7 +129,7 @@ export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
                       }}
                     >
                       <MoodDot mood={e.mood} size={6} />
-                      {m.label}
+                      {t(m.label)}
                     </span>
                     <h3 className="text-[18px] mt-[8px]">{e.title}</h3>
                     <div className="flex gap-[14px] mt-[8px] text-ink-3 text-[13.5px] font-semibold flex-wrap">
@@ -150,21 +156,21 @@ export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
                           onClick={() => setModal({ kind: "qr", b })}
                         >
                           <Icons.qr size={16} />
-                          QR
+                          {t("QR")}
                         </button>
                         <button
                           className="btn btn-ghost btn-sm"
                           onClick={() => setModal({ kind: "move", b })}
                         >
                           <Icons.clock size={15} />
-                          Move
+                          {t("Move")}
                         </button>
                         <button
                           className="btn btn-ghost btn-sm"
                           style={{ color: "var(--coral)" }}
                           onClick={() => setModal({ kind: "cancel", b })}
                         >
-                          Cancel
+                          {t("Cancel")}
                         </button>
                       </div>
                       <span className="text-[12px] text-ink-3 font-semibold">
@@ -182,7 +188,7 @@ export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
                           className="btn btn-soft btn-sm"
                           onClick={() => setModal({ kind: "rate", b })}
                         >
-                          Rate it
+                          {t("Rate it")}
                         </button>
                       )}
                     </div>
@@ -211,6 +217,7 @@ export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
 }
 
 export function BookingPill({ status }: { status: string }) {
+  const t = useT();
   const map: Record<string, [string, string, string, keyof typeof Icons]> = {
     pending: [
       "Awaiting confirmation",
@@ -235,12 +242,13 @@ export function BookingPill({ status }: { status: string }) {
       style={{ background: bgc, color: c, border: "none", fontWeight: 700 }}
     >
       <I size={13} style={{ marginRight: 4 }} />
-      {l}
+      {t(l)}
     </span>
   );
 }
 
 function QRModal({ b, onClose }: { b: B; onClose: () => void }) {
+  const t = useT();
   return (
     <Modal onClose={onClose} maxWidth={360}>
       <div className="p-[28px] text-center">
@@ -257,7 +265,7 @@ function QRModal({ b, onClose }: { b: B; onClose: () => void }) {
             {b.code}
           </div>
           <div className="text-[12.5px] text-ink-3 font-semibold mt-[3px]">
-            Show this at the door
+            {t("Show this at the door")}
           </div>
         </div>
         <button
@@ -265,7 +273,7 @@ function QRModal({ b, onClose }: { b: B; onClose: () => void }) {
           style={{ marginTop: 16 }}
           onClick={onClose}
         >
-          Close
+          {t("Close")}
         </button>
       </div>
     </Modal>
@@ -273,6 +281,7 @@ function QRModal({ b, onClose }: { b: B; onClose: () => void }) {
 }
 
 function RateModal({ b, onClose }: { b: B; onClose: () => void }) {
+  const t = useT();
   const router = useRouter();
   const [stars, setStars] = useState(5);
   const [text, setText] = useState("");
@@ -280,7 +289,7 @@ function RateModal({ b, onClose }: { b: B; onClose: () => void }) {
   return (
     <Modal onClose={onClose} maxWidth={420}>
       <div className="p-[26px]">
-        <h3 className="text-[20px] mb-[4px]">How was it?</h3>
+        <h3 className="text-[20px] mb-[4px]">{t("How was it?")}</h3>
         <div className="text-[13.5px] text-ink-3 font-semibold mb-[18px]">
           {b.exp?.title ?? ""} · {b.date}
         </div>
@@ -304,14 +313,14 @@ function RateModal({ b, onClose }: { b: B; onClose: () => void }) {
         </div>
         <Textarea
           rows={3}
-          placeholder="Tell others what you loved (optional)…"
+          placeholder={t("Tell others what you loved (optional)…")}
           value={text}
           onChange={(e) => setText(e.target.value)}
           style={{ resize: "vertical", marginBottom: 18 }}
         />
         <div className="flex gap-[10px]">
           <button className="btn btn-ghost btn-md btn-block" onClick={onClose}>
-            Cancel
+            {t("Cancel")}
           </button>
           <BusyBtn
             busy={busy}
@@ -327,7 +336,7 @@ function RateModal({ b, onClose }: { b: B; onClose: () => void }) {
               )
             }
           >
-            Submit review
+            {t("Submit review")}
           </BusyBtn>
         </div>
       </div>
@@ -336,6 +345,7 @@ function RateModal({ b, onClose }: { b: B; onClose: () => void }) {
 }
 
 function MoveModal({ b, onClose }: { b: B; onClose: () => void }) {
+  const t = useT();
   const router = useRouter();
   const days = Array.from({ length: 7 }, (_, i) => 10 + i).filter(
     (d) => d <= 30,
@@ -356,11 +366,11 @@ function MoveModal({ b, onClose }: { b: B; onClose: () => void }) {
   return (
     <Modal onClose={onClose} maxWidth={440}>
       <div className="p-[26px]">
-        <h3 className="text-[20px] mb-[4px]">Reschedule</h3>
+        <h3 className="text-[20px] mb-[4px]">{t("Reschedule")}</h3>
         <div className="text-[13.5px] text-ink-3 font-semibold mb-[18px]">
-          {b.exp?.title ?? ""} — the provider will re-confirm.
+          {b.exp?.title ?? ""} — {t("the provider will re-confirm.")}
         </div>
-        <div className="font-bold text-[14px] mb-[10px]">New day</div>
+        <div className="font-bold text-[14px] mb-[10px]">{t("New day")}</div>
         <div
           className="no-scrollbar"
           style={{
@@ -391,7 +401,7 @@ function MoveModal({ b, onClose }: { b: B; onClose: () => void }) {
                   color: day === d ? "var(--coral-deep)" : "var(--ink-3)",
                 }}
               >
-                {WD[dow(d)]}
+                {t(WD[dow(d)])}
               </div>
               <div
                 style={{
@@ -406,7 +416,7 @@ function MoveModal({ b, onClose }: { b: B; onClose: () => void }) {
             </button>
           ))}
         </div>
-        <div className="font-bold text-[14px] mb-[10px]">New time</div>
+        <div className="font-bold text-[14px] mb-[10px]">{t("New time")}</div>
         <div className="flex gap-[8px] flex-wrap mb-[20px]">
           {times.map((tm) => (
             <button
@@ -420,7 +430,7 @@ function MoveModal({ b, onClose }: { b: B; onClose: () => void }) {
         </div>
         <div className="flex gap-[10px]">
           <button className="btn btn-ghost btn-md btn-block" onClick={onClose}>
-            Cancel
+            {t("Cancel")}
           </button>
           <BusyBtn
             busy={busy}
@@ -436,7 +446,7 @@ function MoveModal({ b, onClose }: { b: B; onClose: () => void }) {
               )
             }
           >
-            Move booking
+            {t("Move booking")}
           </BusyBtn>
         </div>
       </div>
@@ -445,6 +455,7 @@ function MoveModal({ b, onClose }: { b: B; onClose: () => void }) {
 }
 
 function CancelModal({ b, onClose }: { b: B; onClose: () => void }) {
+  const t = useT();
   const router = useRouter();
   const { busy, run } = useBusy();
   return (
@@ -453,18 +464,18 @@ function CancelModal({ b, onClose }: { b: B; onClose: () => void }) {
         <div className="w-[56px] h-[56px] rounded-[99px] bg-coral-soft text-coral grid place-items-center mt-0 mx-auto mb-[14px]">
           <Icons.close size={26} />
         </div>
-        <h3 className="text-[20px] mb-[8px]">Cancel this booking?</h3>
+        <h3 className="text-[20px] mb-[8px]">{t("Cancel this booking?")}</h3>
         <p className="text-ink-2 text-[14px] mb-[6px]">
           <b>{b.exp?.title ?? ""}</b> · {b.date}, {b.time}
         </p>
         <p className="text-ink-3 text-[13px] mb-[20px]">
           {b.pay === "wallet"
-            ? `${fmt(b.total)} will be refunded to your Joymap balance.`
-            : "Free cancellation up to 12h before the start."}
+            ? `${fmt(b.total)} ${t("will be refunded to your Joymap balance.")}`
+            : t("Free cancellation up to 12h before the start.")}
         </p>
         <div className="flex gap-[10px]">
           <button className="btn btn-ghost btn-md btn-block" onClick={onClose}>
-            Keep it
+            {t("Keep it")}
           </button>
           <BusyBtn
             busy={busy}
@@ -480,7 +491,7 @@ function CancelModal({ b, onClose }: { b: B; onClose: () => void }) {
               )
             }
           >
-            Cancel booking
+            {t("Cancel booking")}
           </BusyBtn>
         </div>
       </div>

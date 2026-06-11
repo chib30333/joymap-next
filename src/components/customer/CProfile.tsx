@@ -15,6 +15,7 @@ import {
   type Exp,
 } from "./primitives";
 import { Input } from "@/components/ui";
+import { useT } from "@/components/i18n";
 
 type B = {
   id: string;
@@ -39,6 +40,7 @@ export function CProfile({
   };
   bookings: { upcoming: B[]; past: B[] };
 }) {
+  const t = useT();
   const router = useRouter();
   const [tab, setTab] = useState<"account" | "history" | "moods">("account");
   const [edit, setEdit] = useState(false);
@@ -112,7 +114,7 @@ export function CProfile({
             </span>
             <span className="inline-flex gap-[5px] items-center">
               <Icons.sparkle size={14} />
-              {user.plan || "Joy Map"} member
+              {user.plan || "Joy Map"} {t("member")}
             </span>
           </div>
         </div>
@@ -121,7 +123,7 @@ export function CProfile({
             {total}
           </span>
           <span className="text-[12.5px] text-ink-3 font-semibold">
-            experiences booked
+            {t("experiences booked")}
           </span>
         </div>
       </div>
@@ -129,9 +131,9 @@ export function CProfile({
       <div className="flex gap-[6px] mb-[20px] bg-surface-2 p-[5px] rounded-pill w-fit border border-line">
         {(
           [
-            ["account", "Personal data"],
-            ["history", "Activity history"],
-            ["moods", "Moods"],
+            ["account", t("Personal data")],
+            ["history", t("Activity history")],
+            ["moods", t("Moods")],
           ] as const
         ).map(([k, l]) => (
           <button
@@ -156,23 +158,23 @@ export function CProfile({
       {tab === "account" && (
         <div className="card" style={{ padding: 24 }}>
           <div className="flex items-center justify-between mb-[18px]">
-            <h3 className="text-[17px]">Personal data</h3>
+            <h3 className="text-[17px]">{t("Personal data")}</h3>
             <BusyBtn
               busy={busy}
               className="btn btn-ghost btn-sm"
               icon={edit ? <Icons.check size={15} /> : <Icons.edit size={15} />}
               onClick={saveOrEdit}
             >
-              {edit ? "Save" : "Edit"}
+              {edit ? t("Save") : t("Edit")}
             </BusyBtn>
           </div>
           <div className="grid grid-cols-2 gap-[16px]">
             {(
               [
-                ["name", "Full name", "user"],
-                ["email", "Email", "mail"],
-                ["phone", "Phone", "phone"],
-                ["city", "City", "pin"],
+                ["name", t("Full name"), "user"],
+                ["email", t("Email"), "mail"],
+                ["phone", t("Phone"), "phone"],
+                ["city", t("City"), "pin"],
               ] as const
             ).map(([k, l, ic]) => {
               const I = Icons[ic];
@@ -220,16 +222,16 @@ export function CProfile({
               <Icons.shield size={19} />
             </span>
             <div className="flex-1">
-              <div className="font-bold text-[14px]">Account secured</div>
+              <div className="font-bold text-[14px]">{t("Account secured")}</div>
               <div className="text-[12.5px] text-ink-3 font-semibold">
-                Signed in as {user.email}
+                {t("Signed in as")} {user.email}
               </div>
             </div>
             <button
               className="btn btn-ghost btn-sm"
               onClick={() => rpc("logout").then(() => router.push("/auth"))}
             >
-              Log out
+              {t("Log out")}
             </button>
           </div>
         </div>
@@ -239,7 +241,7 @@ export function CProfile({
         <div>
           <div className="flex items-center justify-between mb-[14px]">
             <span className="font-bold text-[14px] text-ink-2">
-              {past.length} past experiences · {fmt(spent)} spent
+              {past.length} {t("past experiences")} · {fmt(spent)} {t("spent")}
             </span>
           </div>
           {past.length === 0 ? (
@@ -253,7 +255,7 @@ export function CProfile({
                 fontSize: 14,
               }}
             >
-              Your completed experiences will appear here.
+              {t("Your completed experiences will appear here.")}
             </div>
           ) : (
             <div className="card" style={{ overflow: "hidden" }}>
@@ -284,7 +286,7 @@ export function CProfile({
                     />
                     <div className="flex-1 min-w-0">
                       <div className="font-bold text-[14.5px]">
-                        {e ? e.title : "Experience"}
+                        {e ? e.title : t("Experience")}
                       </div>
                       <div className="text-[12.5px] text-ink-3 font-semibold">
                         {e ? e.provider : ""} · {h.date}
@@ -300,7 +302,7 @@ export function CProfile({
                         </div>
                       ) : h.status === "completed" ? (
                         <span className="text-[12px] text-ink-3 font-semibold">
-                          Not rated
+                          {t("Not rated")}
                         </span>
                       ) : null}
                     </div>
@@ -314,10 +316,11 @@ export function CProfile({
 
       {tab === "moods" && (
         <div className="card" style={{ padding: 24 }}>
-          <h3 className="text-[17px] mb-[8px]">Your moods</h3>
+          <h3 className="text-[17px] mb-[8px]">{t("Your moods")}</h3>
           <p className="text-ink-2 text-[14px] mb-[16px]">
-            Joy tunes your weekly map around these. Tap to toggle — your next
-            Joy Map uses them.
+            {t(
+              "Joy tunes your weekly map around these. Tap to toggle — your next Joy Map uses them.",
+            )}
           </p>
           <MoodPicker initial={user.moods || []} />
         </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { Icons } from "@/components/Icons";
+import { useT } from "@/components/i18n";
 import { money, Pill, Avatar } from "@/components/dash/primitives";
 
 type Booking = any;
@@ -18,17 +19,18 @@ export function BookingsTable({
   onRow?: (b: Booking) => void;
   actingId?: string | null;
 }) {
+  const t = useT();
   return (
     <table className="tbl">
       <thead>
         <tr>
-          <th>Customer</th>
-          <th>Service</th>
-          {!compact && <th>Date</th>}
-          <th>Time</th>
-          <th>People</th>
-          <th>Total</th>
-          <th>Status</th>
+          <th>{t("Customer")}</th>
+          <th>{t("Service")}</th>
+          {!compact && <th>{t("Date")}</th>}
+          <th>{t("Time")}</th>
+          <th>{t("People")}</th>
+          <th>{t("Total")}</th>
+          <th>{t("Status")}</th>
           {onAct && <th />}
         </tr>
       </thead>
@@ -51,7 +53,7 @@ export function BookingsTable({
             <td>{b.people}</td>
             <td className="font-display font-bold">{money(b.total)}</td>
             <td>
-              <Pill status={b.status} />
+              <Pill status={b.status} label={t(b.status)} />
             </td>
             {onAct && (
               <td>
@@ -72,12 +74,12 @@ export function BookingsTable({
                               onAct(b.id, "confirmed");
                             }}
                           >
-                            Confirm
+                            {t("Confirm")}
                           </button>
                           <button
                             className="icon-btn"
                             style={{ width: 34, height: 34 }}
-                            title="Decline"
+                            title={t("Decline")}
                             onClick={(e) => {
                               e.stopPropagation();
                               onAct(b.id, "cancelled");
@@ -96,7 +98,7 @@ export function BookingsTable({
                               onAct(b.id, "completed");
                             }}
                           >
-                            Complete
+                            {t("Complete")}
                           </button>
                           <button
                             className="btn btn-ghost btn-sm"
@@ -105,7 +107,7 @@ export function BookingsTable({
                               onAct(b.id, "cancelled");
                             }}
                           >
-                            Cancel
+                            {t("Cancel")}
                           </button>
                         </>
                       )}

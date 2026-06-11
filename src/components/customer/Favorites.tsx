@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Icons } from "@/components/Icons";
+import { useT } from "@/components/i18n";
 import { ExperienceCard, type Exp } from "./primitives";
 import { ServiceModal, type Slot } from "./ServiceModal";
 import { useFav } from "./useFav";
@@ -17,6 +18,7 @@ export function Favorites({
   slotsByService: Record<string, Slot[]>;
   wallet: number;
 }) {
+  const t = useT();
   const [open, setOpen] = useState<Exp | null>(null);
   const onFav = useFav();
   return (
@@ -26,9 +28,9 @@ export function Favorites({
           <div className="w-16 h-16 rounded-[99px] bg-[var(--m-energy-soft)] grid place-items-center mt-0 mx-auto mb-4 text-[var(--m-energy)]">
             <Icons.heart size={28} />
           </div>
-          <h3 className="text-[19px] text-ink">No favorites yet</h3>
+          <h3 className="text-[19px] text-ink">{t("No favorites yet")}</h3>
           <p className="max-w-[340px] mt-2 mx-auto mb-0">
-            Tap the heart on any experience to save it here for later.
+            {t("Tap the heart on any experience to save it here for later.")}
           </p>
         </div>
       ) : (

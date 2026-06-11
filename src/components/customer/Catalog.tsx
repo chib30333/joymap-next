@@ -14,6 +14,7 @@ import { Select } from "@/components/ui";
 import { ServiceModal, type Slot } from "./ServiceModal";
 import { EmptyMarketplace } from "./JoyMapScreen";
 import { useFav } from "./useFav";
+import { useT } from "@/components/i18n";
 
 export function Catalog({
   list: source,
@@ -30,6 +31,7 @@ export function Catalog({
   wallet: number;
   initialQuery?: string;
 }) {
+  const t = useT();
   const [mood, setMood] = useState<string | null>(null);
   const [cat, setCat] = useState("All");
   const [sort, setSort] = useState("Recommended");
@@ -59,7 +61,7 @@ export function Catalog({
     <div className="anim-fade">
       <div className="mb-[18px]">
         <div className="eyebrow" style={{ marginBottom: 12 }}>
-          Browse by how you want to feel
+          {t("Browse by how you want to feel")}
         </div>
         <div
           className="no-scrollbar"
@@ -75,7 +77,7 @@ export function Catalog({
             style={{ padding: "9px 16px" }}
             onClick={() => setMood(null)}
           >
-            All moods
+            {t("All moods")}
           </button>
           {MOOD_ORDER.map((k) => (
             <MoodChip
@@ -95,13 +97,13 @@ export function Catalog({
             className={`chip ${cat === c ? "on" : ""}`}
             onClick={() => setCat(c)}
           >
-            {c}
+            {t(c)}
           </button>
         ))}
         <div className="flex-1" />
         <div className="flex items-center gap-[8px] text-ink-3 text-[13.5px] font-semibold">
           <Icons.filter size={16} />
-          Sort
+          {t("Sort")}
           <Select
             style={{
               width: "auto",
@@ -114,7 +116,9 @@ export function Catalog({
             onChange={(e) => setSort(e.target.value)}
           >
             {["Recommended", "Price", "Rating"].map((s) => (
-              <option key={s}>{s}</option>
+              <option key={s} value={s}>
+                {t(s)}
+              </option>
             ))}
           </Select>
         </div>
@@ -122,11 +126,11 @@ export function Catalog({
 
       <div className="flex items-baseline gap-[10px] mb-[16px]">
         <span className="font-bold text-[15px]">
-          {list.length} experience{list.length !== 1 ? "s" : ""}
+          {list.length} {list.length !== 1 ? t("experiences") : t("experience")}
         </span>
         <span className="text-ink-3 text-[14px]">
-          in {city}
-          {mood ? ` · ${MOODS[mood].label}` : ""}
+          {t("in")} {city}
+          {mood ? ` · ${t(MOODS[mood].label)}` : ""}
         </span>
       </div>
 
@@ -170,14 +174,15 @@ export function Catalog({
 }
 
 function Empty() {
+  const t = useT();
   return (
     <div className="text-center py-[80px] px-[20px] text-ink-3">
       <div className="w-[64px] h-[64px] rounded-[99px] bg-surface-2 grid place-items-center mt-0 mx-auto mb-[16px] text-ink-3">
         <Icons.search size={28} />
       </div>
-      <h3 className="text-[19px] text-ink">Nothing matches — yet</h3>
+      <h3 className="text-[19px] text-ink">{t("Nothing matches — yet")}</h3>
       <p className="max-w-[340px] mt-[8px] mx-auto mb-0">
-        Try a different mood or clear your filters to see everything nearby.
+        {t("Try a different mood or clear your filters to see everything nearby.")}
       </p>
     </div>
   );

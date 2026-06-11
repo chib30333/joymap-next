@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { rpc } from "@/lib/client";
 import { MOODS } from "@/components/customer/primitives";
+import { useT } from "@/components/i18n";
 
 const WD = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const dow = (d: number) => (d - 1) % 7;
@@ -24,6 +25,7 @@ type Svc = any;
 type Slot = any;
 
 export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
+  const t = useT();
   const router = useRouter();
   const days = Array.from({ length: 7 }, (_, i) => TODAY + i).filter(
     (d) => d <= 30,
@@ -105,21 +107,23 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
       <div className="shead">
         <div>
           <div className="eyebrow" style={{ marginBottom: 6 }}>
-            Week of {TODAY}–{Math.min(TODAY + 6, 30)} Jun · {total} sessions
+            {t("Week of")} {TODAY}–{Math.min(TODAY + 6, 30)} {t("Jun")} · {total}{" "}
+            {t("sessions")}
           </div>
-          <h2 className="text-[22px]">Schedule</h2>
+          <h2 className="text-[22px]">{t("Schedule")}</h2>
         </div>
         <div className="flex items-center gap-[10px] text-ink-3 text-[13px] font-bold">
           <Icons.briefcase size={16} />
-          Drag a service onto a day — saved instantly
+          {t("Drag a service onto a day — saved instantly")}
         </div>
       </div>
       <div className="pcal-wrap">
         <aside className="pcal-palette">
-          <div className="pcal-pal-head">Your services</div>
+          <div className="pcal-pal-head">{t("Your services")}</div>
           {svcs.length === 0 && (
             <div className="text-[12.5px] text-ink-3 font-semibold leading-[1.5]">
-              No services yet — create one in <b>Services</b> first.
+              {t("No services yet — create one in")} <b>{t("Services")}</b>{" "}
+              {t("first.")}
             </div>
           )}
           {svcs.map((svc) => {
@@ -154,16 +158,16 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
                       style={{ background: m.color }}
                     />
                     <span className="text-[11px] text-ink-3 font-semibold">
-                      {svc.dur} · {svc.cap} cap
+                      {svc.dur} · {svc.cap} {t("cap")}
                     </span>
                     {svc.status === "review" && (
                       <span className="text-[9.5px] font-extrabold text-[#E89015] bg-[rgba(232,144,21,.12)] rounded-[99px] px-[6px] py-[1px]">
-                        IN REVIEW
+                        {t("IN REVIEW")}
                       </span>
                     )}
                     {svc.active === false && (
                       <span className="text-[9.5px] font-extrabold text-ink-3 bg-surface border border-line rounded-[99px] px-[6px] py-[1px]">
-                        PAUSED
+                        {t("PAUSED")}
                       </span>
                     )}
                   </div>
@@ -176,7 +180,7 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
               size={15}
               style={{ color: "var(--coral)", flex: "none", marginTop: 1 }}
             />
-            Slots feed the customer calendar and booking flow instantly.
+            {t("Slots feed the customer calendar and booking flow instantly.")}
           </div>
         </aside>
         <div className="pcal-week">
@@ -199,7 +203,7 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
                 onDrop={(e) => drop(d, e)}
               >
                 <div className={`pcal-col-h ${today ? "today" : ""}`}>
-                  <div className="wd">{WD[dow(d)]}</div>
+                  <div className="wd">{t(WD[dow(d)])}</div>
                   <div className="dn">{d}</div>
                   {list.length > 0 && (
                     <span className="pcal-cnt">{list.length}</span>
@@ -208,12 +212,14 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
                 <div className="pcal-col-b">
                   {list.length === 0 ? (
                     <div className="pcal-drop">
-                      {isOver ? "Release to schedule" : "Drop a service here"}
+                      {isOver
+                        ? t("Release to schedule")
+                        : t("Drop a service here")}
                     </div>
                   ) : (
                     list.map((slot) => {
                       const svc = svcs.find((x) => x.id === slot.serviceId) || {
-                        name: "Service",
+                        name: t("Service"),
                         mood: "calm",
                         cap: 0,
                       };
@@ -233,7 +239,7 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
                           <button
                             className="pcal-x"
                             onClick={() => remove(slot.id)}
-                            title="Remove"
+                            title={t("Remove")}
                           >
                             <Icons.close size={12} />
                           </button>
@@ -253,7 +259,7 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
                             {svc.name}
                           </div>
                           <div className="text-[10.5px] text-ink-3 font-semibold mt-[3px]">
-                            {slot.booked || 0}/{svc.cap} booked
+                            {slot.booked || 0}/{svc.cap} {t("booked")}
                           </div>
                           {editing === slot.id && (
                             <div className="pcal-times">

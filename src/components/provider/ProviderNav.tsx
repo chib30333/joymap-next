@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { Icons, Logo } from "@/components/Icons";
-import { LangSwitcher, t } from "@/components/i18n";
+import { LangSwitcher, useT } from "@/components/i18n";
 import { Avatar } from "@/components/dash/primitives";
 import { rpc } from "@/lib/client";
 
@@ -100,8 +100,9 @@ export function ProviderNav({
 }) {
   const router = useRouter();
   const pathname = usePathname();
+  const t = useT();
   const TITLES: Record<string, [string, string]> = {
-    "/provider/overview": ["Overview", `Welcome back, ${providerName}`],
+    "/provider/overview": ["Overview", `${t("Welcome back")}, ${providerName}`],
     "/provider/calendar": ["Calendar", "Manage your weekly availability"],
     "/provider/bookings": ["Bookings", "Confirm, complete & track sessions"],
     "/provider/messages": ["Messages", "Chat with your customers"],
@@ -116,7 +117,7 @@ export function ProviderNav({
   };
   const [title, sub] = TITLES[pathname] || [
     "Overview",
-    `Welcome back, ${providerName}`,
+    `${t("Welcome back")}, ${providerName}`,
   ];
   return (
     <header className="topnav">
@@ -138,7 +139,7 @@ export function ProviderNav({
           <Logo size={25} />
           <span className="tn-badge">
             <span className="ld" />
-            Partner
+            {t("Partner")}
           </span>
         </div>
         <div className="min-w-0" style={{ marginInlineStart: 6 }}>
@@ -193,6 +194,7 @@ function AccountMenu({ name }: { name: string }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const t = useT();
   useEffect(() => {
     const h = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node))
@@ -224,7 +226,7 @@ function AccountMenu({ name }: { name: string }) {
                 {name}
               </div>
               <div className="text-[12px] text-ink-3 font-semibold">
-                Partner
+                {t("Partner")}
               </div>
             </div>
           </div>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui";
 import { rpc } from "@/lib/client";
+import { useT } from "@/components/i18n";
 
 type N = {
   id: string;
@@ -16,6 +17,7 @@ type N = {
 };
 
 export function NotificationsList({ items }: { items: N[] }) {
+  const t = useT();
   const router = useRouter();
   const [filter, setFilter] = useState<"all" | "unread">("all");
   const unread = items.filter((n) => n.unread).length;
@@ -40,7 +42,9 @@ export function NotificationsList({ items }: { items: N[] }) {
               onClick={() => setFilter(k)}
               className={`rounded-pill px-4 py-2 text-[13px] font-bold ${filter === k ? "bg-surface text-ink shadow-sm" : "text-ink-3"}`}
             >
-              {k === "all" ? "All" : `Unread${unread ? ` · ${unread}` : ""}`}
+              {k === "all"
+                ? t("All")
+                : `${t("Unread")}${unread ? ` · ${unread}` : ""}`}
             </button>
           ))}
         </div>
@@ -49,7 +53,7 @@ export function NotificationsList({ items }: { items: N[] }) {
           onClick={markAll}
           className="text-[13px] font-bold text-ink-3 hover:text-ink"
         >
-          Mark all read
+          {t("Mark all read")}
         </button>
       </div>
       <div className="flex flex-col gap-2.5">
@@ -92,7 +96,7 @@ export function NotificationsList({ items }: { items: N[] }) {
         ))}
         {list.length === 0 && (
           <Card className="p-12 text-center font-semibold text-ink-3">
-            You&apos;re all caught up.
+            {t("You're all caught up.")}
           </Card>
         )}
       </div>

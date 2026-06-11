@@ -1,4 +1,7 @@
+"use client";
+
 import { Icons } from "@/components/Icons";
+import { useT } from "@/components/i18n";
 
 export function ProviderBanner({
   status,
@@ -7,6 +10,7 @@ export function ProviderBanner({
   status: string;
   rejectReason?: string | null;
 }) {
+  const t = useT();
   const rejected = status === "rejected";
   return (
     <div
@@ -37,13 +41,15 @@ export function ProviderBanner({
       </span>
       <div className="flex-1 min-w-0">
         <div className="font-extrabold text-[14.5px]">
-          {rejected ? "Application rejected" : "Application under review"}
+          {rejected ? t("Application rejected") : t("Application under review")}
         </div>
         <div className="text-[13px] text-ink-2 font-semibold">
           {rejected
-            ? (rejectReason || "Requirements not met") +
-              " — contact support to re-apply."
-            : "The platform team is verifying your documents. You can prepare services & schedule meanwhile — they go live once you’re approved."}
+            ? (rejectReason || t("Requirements not met")) +
+              t(" — contact support to re-apply.")
+            : t(
+                "The platform team is verifying your documents. You can prepare services & schedule meanwhile — they go live once you’re approved.",
+              )}
         </div>
       </div>
     </div>

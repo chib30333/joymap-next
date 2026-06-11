@@ -7,10 +7,12 @@ import { rpc, useBusy } from "@/lib/client";
 import { BusyBtn } from "@/components/dash/primitives";
 import { Input, Textarea } from "@/components/ui";
 import { P_GALLERY } from "@/components/provider/data";
+import { useT } from "@/components/i18n";
 
 type Provider = any;
 
 export function PBusinessProfile({ provider }: { provider: Provider }) {
+  const t = useT();
   const router = useRouter();
   const [edit, setEdit] = useState(false);
   const { busy, run } = useBusy();
@@ -63,7 +65,7 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
             style={{ position: "absolute", right: 14, top: 14 }}
           >
             <Icons.camera size={15} />
-            Change cover
+            {t("Change cover")}
           </button>
         </div>
         <div className="pt-0 px-[24px] pb-[22px] flex gap-[18px] items-end mt-[-36px] flex-wrap relative z-[1]">
@@ -82,13 +84,13 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
             <div className="text-ink-3 font-semibold mt-[3px]">
               {edit ? (
                 <Input
-                  placeholder="A short tagline customers see"
+                  placeholder={t("A short tagline customers see")}
                   value={f.tagline}
                   onChange={(e) => set("tagline", e.target.value)}
                   style={{ marginTop: 6 }}
                 />
               ) : (
-                f.tagline || "Add a tagline so customers know your vibe"
+                f.tagline || t("Add a tagline so customers know your vibe")
               )}
             </div>
           </div>
@@ -99,7 +101,7 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
                 style={{ color: "#1FA46E", background: "rgba(31,164,110,.13)" }}
               >
                 <Icons.shield size={13} />
-                Verified
+                {t("Verified")}
               </span>
             ) : (
               <span
@@ -107,7 +109,7 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
                 style={{ color: "#E89015", background: "rgba(232,144,21,.14)" }}
               >
                 <Icons.clock size={13} />
-                In review
+                {t("In review")}
               </span>
             )}
             <BusyBtn
@@ -116,7 +118,7 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
               icon={edit ? <Icons.check size={15} /> : <Icons.edit size={15} />}
               onClick={saveOrEdit}
             >
-              {edit ? "Save" : "Edit"}
+              {edit ? t("Save") : t("Edit")}
             </BusyBtn>
           </div>
         </div>
@@ -124,19 +126,21 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
 
       <div className="grid grid-cols-[1.4fr_1fr] gap-[var(--gap)] items-start">
         <div className="card" style={{ padding: 24 }}>
-          <h3 className="text-[17px] mb-[14px]">About the business</h3>
+          <h3 className="text-[17px] mb-[14px]">{t("About the business")}</h3>
           {edit ? (
             <Textarea
               rows={5}
               value={f.about}
               onChange={(e) => set("about", e.target.value)}
-              placeholder="Tell customers your story…"
+              placeholder={t("Tell customers your story…")}
               style={{ resize: "vertical", lineHeight: 1.5 }}
             />
           ) : (
             <p className="text-ink-2 text-[14.5px] leading-[1.6] m-0">
               {f.about ||
-                "No description yet — hit Edit and tell customers what makes you special."}
+                t(
+                  "No description yet — hit Edit and tell customers what makes you special.",
+                )}
             </p>
           )}
           <hr
@@ -164,7 +168,7 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
                   style={{ gridColumn: k === "address" ? "1 / -1" : "auto" }}
                 >
                   <div className="text-[12px] font-bold text-ink-3 mb-[6px]">
-                    {l}
+                    {t(l)}
                   </div>
                   {edit ? (
                     <Input
@@ -187,7 +191,7 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
 
         <div className="flex flex-col gap-[var(--gap)]">
           <div className="card" style={{ padding: 22 }}>
-            <h3 className="text-[16px] mb-[14px]">Categories</h3>
+            <h3 className="text-[16px] mb-[14px]">{t("Categories")}</h3>
             <div className="flex flex-wrap gap-[8px]">
               {f.cats.map((c: string) => (
                 <span
@@ -205,7 +209,7 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
               {edit && (
                 <button className="chip" style={{ padding: "4px 12px" }}>
                   <Icons.plus size={13} />
-                  Add
+                  {t("Add")}
                 </button>
               )}
             </div>
@@ -220,24 +224,32 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
             />
             <div className="flex justify-between text-[13.5px]">
               <div>
-                <div className="text-ink-3 font-semibold mb-[4px]">Founded</div>
+                <div className="text-ink-3 font-semibold mb-[4px]">
+                  {t("Founded")}
+                </div>
                 <b>{f.founded}</b>
               </div>
               <div>
-                <div className="text-ink-3 font-semibold mb-[4px]">Team</div>
-                <b>{f.team} people</b>
+                <div className="text-ink-3 font-semibold mb-[4px]">
+                  {t("Team")}
+                </div>
+                <b>
+                  {f.team} {t("people")}
+                </b>
               </div>
               <div>
-                <div className="text-ink-3 font-semibold mb-[4px]">Joined</div>
+                <div className="text-ink-3 font-semibold mb-[4px]">
+                  {t("Joined")}
+                </div>
                 <b>{p.joined || "Jun 2026"}</b>
               </div>
             </div>
           </div>
           <div className="card" style={{ padding: 22 }}>
             <div className="flex items-center justify-between mb-[6px]">
-              <h3 className="text-[16px]">Gallery</h3>
+              <h3 className="text-[16px]">{t("Gallery")}</h3>
               <span className="text-[12.5px] text-ink-3 font-semibold">
-                {P_GALLERY.length} items
+                {P_GALLERY.length} {t("items")}
               </span>
             </div>
             <div className="grid grid-cols-[repeat(3,1fr)] gap-[8px] mt-[10px]">

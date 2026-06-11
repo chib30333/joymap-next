@@ -7,10 +7,12 @@ import { rpc, useBusy } from "@/lib/client";
 import { money, Toggle, Modal, Btn, BusyBtn } from "@/components/dash/primitives";
 import { Input, Select, Textarea } from "@/components/ui";
 import { MOODS, MOOD_ORDER, CATS } from "@/components/customer/primitives";
+import { useT } from "@/components/i18n";
 
 type Svc = any;
 
 export function PServices({ svcs }: { svcs: Svc[] }) {
+  const t = useT();
   const router = useRouter();
   const [modal, setModal] = useState<"new" | Svc | null>(null);
   const toggle = (id: string) =>
@@ -24,7 +26,7 @@ export function PServices({ svcs }: { svcs: Svc[] }) {
           icon={<Icons.plus size={17} />}
           onClick={() => setModal("new")}
         >
-          New service
+          {t("New service")}
         </Btn>
       </div>
       {svcs.length === 0 ? (
@@ -35,17 +37,18 @@ export function PServices({ svcs }: { svcs: Svc[] }) {
           <div className="w-[60px] h-[60px] rounded-[99px] bg-coral-soft text-coral-deep grid place-items-center mt-0 mx-auto mb-[14px]">
             <Icons.compass size={26} />
           </div>
-          <h3 className="text-[20px]">List your first experience</h3>
+          <h3 className="text-[20px]">{t("List your first experience")}</h3>
           <p className="text-ink-2 text-[14.5px] mt-[8px] mx-auto mb-[18px] max-w-[420px] leading-[1.55]">
-            Create a service, send it for review, and once the platform team
-            approves it customers can book it.
+            {t(
+              "Create a service, send it for review, and once the platform team approves it customers can book it.",
+            )}
           </p>
           <Btn
             size="md"
             icon={<Icons.plus size={16} />}
             onClick={() => setModal("new")}
           >
-            Create a service
+            {t("Create a service")}
           </Btn>
         </div>
       ) : (
@@ -91,12 +94,12 @@ export function PServices({ svcs }: { svcs: Svc[] }) {
                       </span>
                       {s.status === "review" && (
                         <span className="bg-[rgba(232,144,21,.92)] text-[#fff] py-[4px] px-[10px] rounded-[99px] text-[11px] font-extrabold">
-                          IN REVIEW
+                          {t("IN REVIEW")}
                         </span>
                       )}
                       {s.status === "rejected" && (
                         <span className="bg-[rgba(224,33,47,.92)] text-[#fff] py-[4px] px-[10px] rounded-[99px] text-[11px] font-extrabold">
-                          REJECTED
+                          {t("REJECTED")}
                         </span>
                       )}
                     </div>
@@ -120,7 +123,7 @@ export function PServices({ svcs }: { svcs: Svc[] }) {
                     </span>
                     <span className="inline-flex gap-[5px] items-center">
                       <Icons.user size={14} />
-                      {s.cap} cap
+                      {s.cap} {t("cap")}
                     </span>
                     <span className="inline-flex gap-[5px] items-center">
                       <Icons.star size={14} />
@@ -133,7 +136,7 @@ export function PServices({ svcs }: { svcs: Svc[] }) {
                         {money(s.price)}
                       </div>
                       <div className="text-[12px] text-ink-3 font-semibold">
-                        {s.booked} booked all-time
+                        {s.booked} {t("booked all-time")}
                       </div>
                     </div>
                     <button
@@ -141,7 +144,7 @@ export function PServices({ svcs }: { svcs: Svc[] }) {
                       onClick={() => setModal(s)}
                     >
                       <Icons.settings size={15} />
-                      Edit
+                      {t("Edit")}
                     </button>
                   </div>
                 </div>
@@ -167,6 +170,7 @@ function ServiceFormModal({
   svc: Svc | null;
   onClose: () => void;
 }) {
+  const t = useT();
   const router = useRouter();
   const isNew = !svc;
   const [f, setF] = useState<any>(
@@ -222,25 +226,27 @@ function ServiceFormModal({
     <Modal onClose={onClose} maxWidth={500}>
       <div className="py-[24px] px-[26px]">
         <h3 className="text-[20px] mb-[4px]">
-          {isNew ? "New service" : "Edit service"}
+          {isNew ? t("New service") : t("Edit service")}
         </h3>
         <p className="text-ink-2 text-[13.5px] mt-0 mx-0 mb-[18px]">
           {isNew
-            ? "New services go to platform review before customers can see them."
-            : "Changes apply immediately."}
+            ? t(
+                "New services go to platform review before customers can see them.",
+              )
+            : t("Changes apply immediately.")}
         </p>
         <div className="flex flex-col gap-[14px]">
           <div>
-            <L>Name</L>
+            <L>{t("Name")}</L>
             <Input
-              placeholder="Sunrise Rooftop Yoga"
+              placeholder={t("Sunrise Rooftop Yoga")}
               value={f.name}
               onChange={(e) => set("name", e.target.value)}
             />
           </div>
           <div className="flex gap-[12px]">
             <div className="flex-1">
-              <L>Category</L>
+              <L>{t("Category")}</L>
               <Select
                 value={f.cat}
                 onChange={(e) => set("cat", e.target.value)}
@@ -251,7 +257,7 @@ function ServiceFormModal({
               </Select>
             </div>
             <div className="flex-1">
-              <L>Mood</L>
+              <L>{t("Mood")}</L>
               <Select
                 value={f.mood}
                 onChange={(e) => set("mood", e.target.value)}
@@ -266,7 +272,7 @@ function ServiceFormModal({
           </div>
           <div className="flex gap-[12px]">
             <div className="flex-1">
-              <L>Price (₽)</L>
+              <L>{t("Price")} (₽)</L>
               <Input
                 type="number"
                 value={f.price}
@@ -274,7 +280,7 @@ function ServiceFormModal({
               />
             </div>
             <div className="flex-1">
-              <L>Duration</L>
+              <L>{t("Duration")}</L>
               <Select
                 value={f.dur}
                 onChange={(e) => set("dur", e.target.value)}
@@ -293,7 +299,7 @@ function ServiceFormModal({
               </Select>
             </div>
             <div className="w-[90px]">
-              <L>Capacity</L>
+              <L>{t("Capacity")}</L>
               <Input
                 type="number"
                 value={f.cap}
@@ -302,12 +308,12 @@ function ServiceFormModal({
             </div>
           </div>
           <div>
-            <L>About</L>
+            <L>{t("About")}</L>
             <Textarea
               rows={3}
               value={f.about}
               onChange={(e) => set("about", e.target.value)}
-              placeholder="What makes this experience special?"
+              placeholder={t("What makes this experience special?")}
               style={{ resize: "vertical" }}
             />
           </div>
@@ -319,7 +325,7 @@ function ServiceFormModal({
         )}
         <div className="flex gap-[10px] mt-[20px]">
           <button className="btn btn-ghost btn-md btn-block" onClick={onClose}>
-            Cancel
+            {t("Cancel")}
           </button>
           <BusyBtn
             busy={busy}
@@ -328,7 +334,7 @@ function ServiceFormModal({
             icon={<Icons.check size={16} />}
             onClick={save}
           >
-            {isNew ? "Submit for review" : "Save changes"}
+            {isNew ? t("Submit for review") : t("Save changes")}
           </BusyBtn>
         </div>
       </div>

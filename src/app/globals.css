@@ -2073,8 +2073,9 @@ img {
   }
 }
 
-/* language switcher reuse */
-.app-top .lang-switch {
+/* language switcher reuse (top-nav portals + admin dashboard topbar) */
+.app-top .lang-switch,
+.topbar .lang-switch {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -2088,12 +2089,14 @@ img {
   cursor: pointer;
   transition: 0.15s;
 }
-.app-top .lang-switch:hover {
+.app-top .lang-switch:hover,
+.topbar .lang-switch:hover {
   border-color: var(--line-2);
   color: var(--ink);
   background: var(--surface-2);
 }
-.app-top .lang-menu {
+.app-top .lang-menu,
+.topbar .lang-menu {
   position: absolute;
   top: 46px;
   inset-inline-end: 0;
@@ -2107,7 +2110,8 @@ img {
   min-width: 150px;
   z-index: 60;
 }
-.app-top .lang-menu button {
+.app-top .lang-menu button,
+.topbar .lang-menu button {
   display: flex;
   align-items: center;
   gap: 9px;
@@ -2122,11 +2126,13 @@ img {
   text-align: left;
   transition: 0.12s;
 }
-.app-top .lang-menu button:hover {
+.app-top .lang-menu button:hover,
+.topbar .lang-menu button:hover {
   background: var(--surface-2);
   color: var(--ink);
 }
-.app-top .lang-menu button.on {
+.app-top .lang-menu button.on,
+.topbar .lang-menu button.on {
   color: var(--coral-deep);
   font-weight: 800;
 }

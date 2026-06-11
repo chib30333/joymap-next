@@ -5,8 +5,10 @@ import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { rpc } from "@/lib/client";
 import { Avatar, BusyBtn } from "@/components/dash/primitives";
+import { useT } from "@/components/i18n";
 
 export function PReviews({ list, rating }: { list: any[]; rating: any }) {
+  const t = useT();
   const router = useRouter();
   const [replying, setReplying] = useState<string | null>(null);
   if (list.length === 0)
@@ -21,10 +23,11 @@ export function PReviews({ list, rating }: { list: any[]; rating: any }) {
         }}
       >
         <Icons.star size={36} />
-        <h3 className="text-ink mt-[12px] text-[19px]">No reviews yet</h3>
+        <h3 className="text-ink mt-[12px] text-[19px]">{t("No reviews yet")}</h3>
         <p className="max-w-[380px] mt-[8px] mx-auto mb-0 font-semibold text-[14px]">
-          After a completed session, customers can rate the experience — reviews
-          appear here.
+          {t(
+            "After a completed session, customers can rate the experience — reviews appear here.",
+          )}
         </p>
       </div>
     );
@@ -55,7 +58,7 @@ export function PReviews({ list, rating }: { list: any[]; rating: any }) {
           </div>
           <div className="text-[var(--m-joy)] text-[15px]">★★★★★</div>
           <div className="text-[12.5px] text-ink-3 font-semibold mt-[4px]">
-            {list.length} review{list.length !== 1 ? "s" : ""}
+            {list.length} {list.length !== 1 ? t("reviews") : t("review")}
           </div>
         </div>
         <div className="flex-1 flex flex-col gap-[6px]">
@@ -103,7 +106,7 @@ export function PReviews({ list, rating }: { list: any[]; rating: any }) {
             {rv.replied ? (
               <div className="text-[13px] text-ink-3 font-semibold flex items-center gap-[6px]">
                 <Icons.check size={15} />
-                You replied
+                {t("You replied")}
               </div>
             ) : (
               <BusyBtn
@@ -118,7 +121,7 @@ export function PReviews({ list, rating }: { list: any[]; rating: any }) {
                   });
                 }}
               >
-                Reply
+                {t("Reply")}
               </BusyBtn>
             )}
           </div>

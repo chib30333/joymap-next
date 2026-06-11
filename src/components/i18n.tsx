@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import { Icons } from "@/components/Icons";
+import { DICTS } from "@/lib/i18n-dict";
 
 export type Lang = {
   code: string;
@@ -19,11 +20,11 @@ export type Lang = {
 export const LANGS: readonly Lang[] = [
   { code: "en", name: "English", native: "English", flag: "🇬🇧" },
   { code: "ru", name: "Russian", native: "Русский", flag: "🇷🇺" },
-  { code: "es", name: "Spanish", native: "Español", flag: "🇪🇸" },
-  { code: "de", name: "German", native: "Deutsch", flag: "🇩🇪" },
-  { code: "fr", name: "French", native: "Français", flag: "🇫🇷" },
-  { code: "zh", name: "Chinese", native: "中文", flag: "🇨🇳" },
-  { code: "ar", name: "Arabic", native: "العربية", flag: "🇸🇦", rtl: true },
+  // { code: "es", name: "Spanish", native: "Español", flag: "🇪🇸" },
+  // { code: "de", name: "German", native: "Deutsch", flag: "🇩🇪" },
+  // { code: "fr", name: "French", native: "Français", flag: "🇫🇷" },
+  // { code: "zh", name: "Chinese", native: "中文", flag: "🇨🇳" },
+  // { code: "ar", name: "Arabic", native: "العربية", flag: "🇸🇦", rtl: true },
 ];
 
 type LangCtx = { lang: string; setLang: (c: string) => void };
@@ -52,7 +53,22 @@ export function useLang() {
   return useContext(Ctx);
 }
 
-// English-source passthrough (matches the prototype's default render).
+// Core lookup: returns the translation for the current language, falling back
+// to the English source string when there is no entry (or when lang is "en").
+export function translate(s: string, lang: string) {
+  return DICTS[lang]?.[s] ?? s;
+}
+
+// Reactive translator hook. Components call `const t = useT()` once, then use
+// `t("English source")`; subscribing to the lang context makes them re-render
+// (and re-translate) the moment the LangSwitcher changes language.
+export function useT() {
+  const { lang } = useLang();
+  return useCallback((s: string) => translate(s, lang), [lang]);
+}
+
+// Non-reactive passthrough for server components / non-React call sites. Always
+// renders the English source. Prefer useT() in client components.
 export function t(s: string) {
   return s;
 }

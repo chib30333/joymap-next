@@ -2,13 +2,13 @@
 
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
+import { useT } from "@/components/i18n";
 import { money, Stat, Bars } from "@/components/dash/primitives";
 import { MOODS } from "@/components/customer/primitives";
 import { BookingsTable } from "@/components/provider/BookingsTable";
 
 const WD = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const dow = (d: number) => (d - 1) % 7;
-const dateLabel = (d: number) => `${WD[dow(Math.min(d, 30))]} ${d} Jun`;
 const TODAY = 10;
 
 type Booking = any;
@@ -28,12 +28,13 @@ export function POverview({
   rating: any;
 }) {
   const router = useRouter();
+  const t = useT();
   const week = Array.from({ length: 7 }, (_, i) => {
     const d = TODAY + i;
     const v = bookings
       .filter((b) => b.day === d && b.status !== "cancelled")
       .reduce((a, b) => a + b.total, 0);
-    return { label: WD[dow(Math.min(d, 30))], value: v };
+    return { label: t(WD[dow(Math.min(d, 30))]), value: v };
   });
   const max = Math.max(...week.map((w) => w.value));
   const cap = todaySlots.reduce((a, s) => {
@@ -86,11 +87,11 @@ export function POverview({
           return (
             <Stat
               key={i}
-              label={k.label}
+              label={t(k.label)}
               value={k.value}
               icon={<I size={16} />}
               accent={k.accent}
-              sub="live from bookings"
+              sub={t("live from bookings")}
             />
           );
         })}
@@ -102,11 +103,11 @@ export function POverview({
         <div className="card" style={{ padding: 22 }}>
           <div className="shead" style={{ marginBottom: 8 }}>
             <div>
-              <h3 className="text-[17px]">Revenue this week</h3>
+              <h3 className="text-[17px]">{t("Revenue this week")}</h3>
               <div className="text-[13px] text-ink-3 font-semibold">
                 {max > 0
-                  ? "Confirmed + pending bookings by day"
-                  : "No bookings this week yet"}
+                  ? t("Confirmed + pending bookings by day")
+                  : t("No bookings this week yet")}
               </div>
             </div>
           </div>
@@ -117,26 +118,26 @@ export function POverview({
             />
           ) : (
             <div className="h-[160px] grid place-items-center text-ink-3 font-semibold text-[13.5px]">
-              Revenue appears here as bookings come in.
+              {t("Revenue appears here as bookings come in.")}
             </div>
           )}
         </div>
         <div className="card" style={{ padding: 22 }}>
-          <h3 className="text-[17px] mb-[4px]">Today&apos;s schedule</h3>
+          <h3 className="text-[17px] mb-[4px]">{t("Today's schedule")}</h3>
           <div className="text-[13px] text-ink-3 font-semibold mb-[16px]">
-            {dateLabel(TODAY)} · {todaySlots.length} session
-            {todaySlots.length !== 1 ? "s" : ""}
+            {t(WD[dow(TODAY)])} {TODAY} {t("Jun")} · {todaySlots.length}{" "}
+            {todaySlots.length !== 1 ? t("sessions") : t("session")}
           </div>
           {todaySlots.length === 0 ? (
             <div className="py-[30px] px-0 text-center text-ink-3 font-semibold text-[13.5px]">
-              Nothing scheduled today.
+              {t("Nothing scheduled today.")}
               <br />
-              Drag services onto days in{" "}
+              {t("Drag services onto days in")}{" "}
               <a
                 className="text-coral-deep cursor-pointer"
                 onClick={() => router.push("/provider/calendar")}
               >
-                Calendar
+                {t("Calendar")}
               </a>
               .
             </div>
@@ -147,7 +148,7 @@ export function POverview({
                 .sort((a, b) => a.time.localeCompare(b.time))
                 .map((s, i) => {
                   const sv = svcs.find((x) => x.id === s.serviceId) || {
-                    name: "Service",
+                    name: t("Service"),
                     mood: "calm",
                     cap: 0,
                   };
@@ -168,7 +169,7 @@ export function POverview({
                           {sv.name}
                         </div>
                         <div className="text-[12.5px] text-ink-3 font-semibold">
-                          {s.booked || 0}/{sv.cap} booked
+                          {s.booked || 0}/{sv.cap} {t("booked")}
                         </div>
                       </div>
                     </div>
@@ -180,18 +181,19 @@ export function POverview({
       </div>
       <div className="card" style={{ overflow: "hidden" }}>
         <div className="flex items-center justify-between py-[18px] px-[20px]">
-          <h3 className="text-[17px]">Recent bookings</h3>
+          <h3 className="text-[17px]">{t("Recent bookings")}</h3>
           <button
             className="btn btn-ghost btn-sm"
             onClick={() => router.push("/provider/bookings")}
           >
-            View all <Icons.arrowR size={15} />
+            {t("View all")} <Icons.arrowR size={15} />
           </button>
         </div>
         {bookings.length === 0 ? (
           <div className="py-[26px] px-[20px] text-ink-3 font-semibold text-[13.5px] border-t border-line">
-            No bookings yet — once your services are approved and customers
-            book, they land here.
+            {t(
+              "No bookings yet — once your services are approved and customers book, they land here.",
+            )}
           </div>
         ) : (
           <div style={{ overflowX: "auto" }}>

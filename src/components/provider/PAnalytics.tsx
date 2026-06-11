@@ -3,6 +3,7 @@
 import { Icons } from "@/components/Icons";
 import { Bars, LineChart } from "@/components/dash/primitives";
 import { MOODS } from "@/components/customer/primitives";
+import { useT } from "@/components/i18n";
 
 type Booking = any;
 type Svc = any;
@@ -14,6 +15,7 @@ export function PAnalytics({
   bookings: Booking[];
   svcs: Svc[];
 }) {
+  const t = useT();
   const ok = bookings.filter((b) => b.status !== "cancelled");
   if (ok.length === 0)
     return (
@@ -26,10 +28,11 @@ export function PAnalytics({
         }}
       >
         <Icons.flame size={36} />
-        <h3 className="text-ink mt-[12px] text-[19px]">No data yet</h3>
+        <h3 className="text-ink mt-[12px] text-[19px]">{t("No data yet")}</h3>
         <p className="max-w-[380px] mt-[8px] mx-auto mb-0 font-semibold text-[14px]">
-          Analytics light up as bookings come in — revenue trends, peak hours
-          and top services.
+          {t(
+            "Analytics light up as bookings come in — revenue trends, peak hours and top services."
+          )}
         </p>
       </div>
     );
@@ -40,7 +43,10 @@ export function PAnalytics({
   const days = Object.keys(byDay)
     .map(Number)
     .sort((a, b) => a - b);
-  const trend = days.map((day) => ({ label: day + " Jun", value: byDay[day] }));
+  const trend = days.map((day) => ({
+    label: day + " " + t("Jun"),
+    value: byDay[day],
+  }));
   const byHour: Record<string, number> = {};
   ok.forEach((b) => {
     byHour[b.time] = (byHour[b.time] || 0) + 1;
@@ -60,9 +66,9 @@ export function PAnalytics({
         style={{ gap: "var(--gap)", marginBottom: "var(--gap)" }}
       >
         <div className="card" style={{ padding: 22 }}>
-          <h3 className="text-[17px] mb-[4px]">Revenue by day</h3>
+          <h3 className="text-[17px] mb-[4px]">{t("Revenue by day")}</h3>
           <div className="text-[13px] text-ink-3 font-semibold mb-[8px]">
-            June 2026 · live
+            {t("June 2026 · live")}
           </div>
           {trend.length > 1 ? (
             <LineChart points={trend} />
@@ -71,9 +77,11 @@ export function PAnalytics({
           )}
         </div>
         <div className="card" style={{ padding: 22 }}>
-          <h3 className="text-[17px] mb-[4px]">Bookings by start time</h3>
+          <h3 className="text-[17px] mb-[4px]">
+            {t("Bookings by start time")}
+          </h3>
           <div className="text-[13px] text-ink-3 font-semibold mb-[8px]">
-            Across all services
+            {t("Across all services")}
           </div>
           <Bars
             data={peak.map((p) => ({ ...p, hot: p.value === maxPeak }))}
@@ -82,7 +90,7 @@ export function PAnalytics({
         </div>
       </div>
       <div className="card" style={{ padding: 22, maxWidth: 640 }}>
-        <h3 className="text-[17px] mb-[16px]">Top services</h3>
+        <h3 className="text-[17px] mb-[16px]">{t("Top services")}</h3>
         <div className="flex flex-col gap-[14px]">
           {top.map((s) => (
             <div key={s.id}>

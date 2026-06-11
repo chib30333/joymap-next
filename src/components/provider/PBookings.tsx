@@ -6,10 +6,12 @@ import { Icons } from "@/components/Icons";
 import { rpc } from "@/lib/client";
 import { money, Pill, Seg, Modal, Btn, Avatar } from "@/components/dash/primitives";
 import { BookingsTable } from "@/components/provider/BookingsTable";
+import { useT } from "@/components/i18n";
 
 type Booking = any;
 
 export function PBookings({ rows }: { rows: Booking[] }) {
+  const t = useT();
   const router = useRouter();
   const [f, setF] = useState("all");
   const [sel, setSel] = useState<Booking | null>(null);
@@ -29,11 +31,11 @@ export function PBookings({ rows }: { rows: Booking[] }) {
         <Seg
           value={f}
           options={[
-            { v: "all", l: "All" },
-            { v: "pending", l: "Pending" },
-            { v: "confirmed", l: "Confirmed" },
-            { v: "completed", l: "Completed" },
-            { v: "cancelled", l: "Cancelled" },
+            { v: "all", l: t("All") },
+            { v: "pending", l: t("Pending") },
+            { v: "confirmed", l: t("Confirmed") },
+            { v: "completed", l: t("Completed") },
+            { v: "cancelled", l: t("Cancelled") },
           ]}
           onChange={setF}
         />
@@ -48,7 +50,8 @@ export function PBookings({ rows }: { rows: Booking[] }) {
             fontWeight: 600,
           }}
         >
-          No {f === "all" ? "" : f + " "}bookings yet.
+          {t("No")} {f === "all" ? "" : t(f) + " "}
+          {t("bookings yet.")}
         </div>
       ) : (
         <div className="card" style={{ overflow: "hidden" }}>
@@ -82,6 +85,7 @@ function BookingDetailModal({
   onClose: () => void;
   onAct: (id: string, st: string) => void;
 }) {
+  const t = useT();
   const b = booking;
   return (
     <Modal onClose={onClose} maxWidth={460}>
@@ -104,15 +108,15 @@ function BookingDetailModal({
             marginBottom: 18,
           }}
         >
-          <Row l="Date" r={b.date} />
-          <Row l="Time" r={b.time} />
-          <Row l="People" r={String(b.people)} />
-          <Row l="Total" r={money(b.total)} />
-          <Row l="Code" r={b.code} />
+          <Row l={t("Date")} r={b.date} />
+          <Row l={t("Time")} r={b.time} />
+          <Row l={t("People")} r={String(b.people)} />
+          <Row l={t("Total")} r={money(b.total)} />
+          <Row l={t("Code")} r={b.code} />
         </div>
         <div className="flex gap-[10px]">
           <button className="btn btn-ghost btn-md btn-block" onClick={onClose}>
-            Close
+            {t("Close")}
           </button>
           {b.status === "pending" ? (
             <Btn
@@ -124,7 +128,7 @@ function BookingDetailModal({
               }}
             >
               <Icons.check size={16} />
-              Confirm booking
+              {t("Confirm booking")}
             </Btn>
           ) : b.status === "confirmed" ? (
             <Btn
@@ -136,11 +140,11 @@ function BookingDetailModal({
               }}
             >
               <Icons.sparkle size={16} />
-              Mark completed
+              {t("Mark completed")}
             </Btn>
           ) : (
             <Btn size="md" block onClick={onClose}>
-              Done
+              {t("Done")}
             </Btn>
           )}
         </div>
