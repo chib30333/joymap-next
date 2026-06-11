@@ -25,7 +25,7 @@ export function CNotifications({ items }: { items: N[] }) {
   const markAll = () => rpc("markAllNotifs").then(() => router.refresh());
 
   return (
-    <div className="anim-fade max-w-[640px]">
+    <div className="anim-fade">
       <div className="flex items-center gap-3 mb-5 flex-wrap">
         <div className="flex gap-1.5 bg-surface-2 p-[5px] rounded-pill border border-line">
           {(

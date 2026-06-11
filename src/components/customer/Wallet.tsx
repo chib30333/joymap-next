@@ -12,7 +12,7 @@ type Tx = { id: string; label: string; amount: number; date: string };
 export function Wallet({ wallet, tx }: { wallet: number; tx: Tx[] }) {
   const [topup, setTopup] = useState(false);
   return (
-    <div className="anim-fade max-w-[640px]">
+    <div className="anim-fade">
       <div
         className="card"
         style={{

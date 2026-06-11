@@ -920,7 +920,6 @@ export function PAnalytics({
   );
 }
 
-/* ===== Payouts ===== */
 export function PPayouts({ fin, list }: { fin: any; list: any[] }) {
   const router = useRouter();
   const { busy, run, error } = useBusy();
@@ -1082,7 +1081,7 @@ export function PReviews({ list, rating }: { list: any[]; rating: any }) {
       ] as [number, number],
   );
   return (
-    <div className="anim-fade max-w-[760px]">
+    <div className="anim-fade">
       <div
         className="card"
         style={{

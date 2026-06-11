@@ -1,5 +1,5 @@
 import { currentProvider } from "@/lib/session";
-import { PBusinessProfile } from "@/components/provider/extra";
+import { PBusinessProfile } from "@/components/provider/Extra";
 
 export default async function ProviderProfilePage() {
   const p = (await currentProvider())!;

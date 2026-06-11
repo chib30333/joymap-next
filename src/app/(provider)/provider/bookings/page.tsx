@@ -1,6 +1,6 @@
 import { currentProvider } from "@/lib/session";
 import { providerBookings } from "@/server/selectors";
-import { PBookings } from "@/components/provider/screens";
+import { PBookings } from "@/components/provider/Screens";
 
 export default async function ProviderBookingsPage() {
   const p = (await currentProvider())!;

@@ -6,7 +6,7 @@ import {
   providerServices,
   providerSlots,
 } from "@/server/selectors";
-import { POverview } from "@/components/provider/screens";
+import { POverview } from "@/components/provider/Screens";
 
 const TODAY = 10;
 export default async function ProviderOverviewPage() {

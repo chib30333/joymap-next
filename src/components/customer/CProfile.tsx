@@ -73,7 +73,7 @@ export function CProfile({
   };
 
   return (
-    <div className="anim-fade max-w-[720px]">
+    <div className="anim-fade">
       <div
         className="card"
         style={{

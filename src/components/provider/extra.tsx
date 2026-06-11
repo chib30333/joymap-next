@@ -163,7 +163,7 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
     );
   };
   return (
-    <div className="anim-fade max-w-[840px]">
+    <div className="anim-fade">
       <div
         className="card"
         style={{ overflow: "hidden", marginBottom: "var(--gap)" }}
@@ -375,7 +375,7 @@ export function PPricing({ svcs }: { svcs: any[] }) {
       r.map((x) => (x.id === id ? { ...x, active: !x.active } : x)),
     );
   return (
-    <div className="anim-fade max-w-[820px]">
+    <div className="anim-fade">
       <div className="card" style={{ padding: 22, marginBottom: "var(--gap)" }}>
         <div className="shead" style={{ marginBottom: 14 }}>
           <div>
@@ -587,7 +587,7 @@ export function PMarketing() {
     setModal(false);
   };
   return (
-    <div className="anim-fade max-w-[860px]">
+    <div className="anim-fade">
       <div className="shead">
         <div>
           <h3 className="text-[17px]">Promo codes</h3>

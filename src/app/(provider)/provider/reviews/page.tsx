@@ -1,6 +1,6 @@
 import { currentProvider } from "@/lib/session";
 import { providerReviews, providerRating } from "@/server/selectors";
-import { PReviews } from "@/components/provider/screens";
+import { PReviews } from "@/components/provider/Screens";
 
 export default async function ProviderReviewsPage() {
   const p = (await currentProvider())!;

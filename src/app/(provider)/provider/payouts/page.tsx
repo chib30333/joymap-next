@@ -1,6 +1,6 @@
 import { currentProvider } from "@/lib/session";
 import { providerFinance, providerPayouts } from "@/server/selectors";
-import { PPayouts } from "@/components/provider/screens";
+import { PPayouts } from "@/components/provider/Screens";
 
 export default async function ProviderPayoutsPage() {
   const p = (await currentProvider())!;
