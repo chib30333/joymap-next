@@ -27,7 +27,7 @@ export function PBookings({ rows }: { rows: Booking[] }) {
   const list = f === "all" ? rows : rows.filter((b) => b.status === f);
   return (
     <div className="animate-anim-fade-dash">
-      <div className="shead">
+      <div className="flex items-end justify-between gap-4 mb-[18px]">
         <div />
         <Seg
           value={f}

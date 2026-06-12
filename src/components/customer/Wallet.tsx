@@ -109,7 +109,7 @@ function TopUpModal({ onClose }: { onClose: () => void }) {
           {[1000, 3000, 5000, 10000].map((v) => (
             <button
               key={v}
-              className={`chip ${amt === v ? "on" : ""}`}
+              className={`inline-flex items-center gap-[7px] py-[7px] px-[13px] rounded-pill text-[13px] font-semibold border cursor-pointer [transition:0.14s] whitespace-nowrap ${amt === v ? "bg-coral text-white border-coral" : "bg-surface text-ink-2 border-line-2 hover:border-ink-3 hover:text-ink"}`}
               onClick={() => setAmt(v)}
             >
               {fmt(v)}

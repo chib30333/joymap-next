@@ -55,6 +55,8 @@ const config: Config = {
         jmpop: { from: { transform: "translateY(10px) scale(.98)" }, to: { transform: "none" } },
         jmrise: { from: { transform: "translateY(8px)" }, to: { transform: "none" } },
         jmcardin: { from: { transform: "translateY(16px)" }, to: { transform: "none" } },
+        jmfade: { from: { opacity: "0" }, to: { opacity: "1" } },
+        jmslideup: { from: { opacity: "0", transform: "translateY(24px)" }, to: { opacity: "1", transform: "none" } },
       },
       animation: {
         sweep: "sweep 1.4s ease-in-out infinite",
@@ -69,6 +71,9 @@ const config: Config = {
         "anim-fade-dash": "rise .4s ease",
         // auth card / reset-icon entrance (.auth-wrap.fx) — transform only
         "anim-cardin": "jmcardin .5s cubic-bezier(.22,1,.36,1) both",
+        // modal scrim fade + sheet slide-up (.fx-gated entrances)
+        "anim-fade": "jmfade .25s ease both",
+        "anim-slideup": "jmslideup .35s cubic-bezier(.22,1,.36,1) both",
       },
     },
   },

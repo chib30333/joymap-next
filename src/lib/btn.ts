@@ -17,18 +17,18 @@ const COMMON =
   "inline-flex items-center justify-center font-bold rounded-pill whitespace-nowrap leading-none cursor-pointer [transition:0.16s] active:[transform:translateY(1px)_scale(0.99)]";
 
 const GAP: Record<BtnCtx, string> = {
-  lp: "gap-[9px]",
-  auth: "gap-[9px]",
-  app: "gap-[9px]",
+  lp: "gap-2",
+  auth: "gap-2",
+  app: "gap-2",
   dash: "gap-2",
 };
 
 function fontSize(ctx: BtnCtx, size?: BtnSize) {
   const m: Record<BtnCtx, Partial<Record<BtnSize | "_", string>>> = {
-    lp: { _: "text-[15px]" },
-    auth: { _: "text-[14.5px]", lg: "text-[15.5px]" },
-    app: { _: "text-[14.5px]", lg: "text-[15.5px]", sm: "text-[13.5px]" },
-    dash: { _: "text-[14px]", lg: "text-[15px]", sm: "text-[13px]" },
+    lp: { _: "text-base" },
+    auth: { _: "text-sm", lg: "text-base" },
+    app: { _: "text-sm", lg: "text-base", sm: "text-sm" },
+    dash: { _: "text-sm", lg: "text-base", sm: "text-sm" },
   };
   return (size && m[ctx][size]) || m[ctx]._ || "";
 }
@@ -36,16 +36,16 @@ function fontSize(ctx: BtnCtx, size?: BtnSize) {
 function padding(ctx: BtnCtx, size?: BtnSize) {
   if (ctx === "lp") return "py-[14px] px-[26px]";
   const m: Record<string, Partial<Record<BtnSize, string>>> = {
-    auth: { lg: "py-[15px] px-[26px]" },
+    auth: { lg: "py-3.5 px-6" },
     app: {
-      lg: "py-[15px] px-[26px]",
-      md: "py-[11px] px-[20px]",
-      sm: "py-[8px] px-[15px]",
+      lg: "py-3.5 px-6",
+      md: "py-2.5 px-5",
+      sm: "py-2 px-4",
     },
     dash: {
-      lg: "py-[14px] px-[24px]",
-      md: "py-[10px] px-[18px]",
-      sm: "py-[8px] px-[14px]",
+      lg: "py-3.5 px-6",
+      md: "py-2.5 px-5",
+      sm: "py-2 px-4",
     },
   };
   return (size && m[ctx]?.[size]) || "";

@@ -102,7 +102,10 @@ export function POverview({
         style={{ gap: "var(--gap)", marginBottom: "var(--gap)" }}
       >
         <div className="bg-surface border border-line rounded-lg" style={{ padding: 22 }}>
-          <div className="shead" style={{ marginBottom: 8 }}>
+          <div
+            className="flex items-end justify-between gap-4"
+            style={{ marginBottom: 8 }}
+          >
             <div>
               <h3 className="text-[17px]">{t("Revenue this week")}</h3>
               <div className="text-[13px] text-ink-3 font-semibold">

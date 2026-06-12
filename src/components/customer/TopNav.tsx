@@ -52,12 +52,12 @@ export function TopNav({
     router.push(`/discover${query ? `?q=${encodeURIComponent(query)}` : ""}`);
 
   return (
-    <header className="topnav">
-      <div className="tn-row1">
-        <div className="tn-brand">
+    <header className="sticky top-0 z-40 bg-[color-mix(in_srgb,var(--bg)_82%,transparent)] [backdrop-filter:blur(16px)] [-webkit-backdrop-filter:blur(16px)] border-b border-line">
+      <div className="flex items-center gap-4 py-[13px] px-[30px] max-[720px]:flex-wrap">
+        <div className="flex items-center gap-[9px] flex-none">
           <Logo size={26} />
-          <span className="tn-badge">
-            <span className="ld" />
+          <span className="inline-flex items-center gap-[5px] whitespace-nowrap bg-[color-mix(in_srgb,var(--orange)_16%,transparent)] text-orange-deep py-[3px] px-[9px] rounded-[99px] text-[10px] font-extrabold font-display">
+            <span className="w-[6px] h-[6px] rounded-[99px] bg-orange" />
             Live now!
           </span>
         </div>
@@ -104,7 +104,7 @@ export function TopNav({
         <LangSwitcher />
         <AccountMenu user={user} />
       </div>
-      <div className="tn-row2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="flex items-center gap-[2px] px-[30px] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {NAV.map((n) => {
           const I = Icons[n.icon];
           const b = (badges as Record<string, number | null>)[n.key];
@@ -113,12 +113,12 @@ export function TopNav({
           return (
             <button
               key={n.key}
-              className={`tn-tab ${on ? "on" : ""}`}
+              className={`inline-flex items-center gap-2 py-[13px] px-[15px] font-semibold text-[14px] whitespace-nowrap cursor-pointer relative [transition:0.14s] border-b-[2.5px] border-solid mb-[-1px] hover:text-ink ${on ? "text-coral border-coral [&_svg]:text-coral" : "text-ink-2 border-transparent"}`}
               onClick={() => router.push(n.href)}
             >
               <I size={18} />
               {t(n.label)}
-              {b ? <span className="tn-badge-n">{b}</span> : null}
+              {b ? <span className="bg-coral text-white text-[10.5px] font-extrabold min-w-[17px] h-[17px] rounded-[99px] grid place-items-center px-1">{b}</span> : null}
             </button>
           );
         })}
@@ -148,7 +148,7 @@ function CityMenu({ city }: { city: string }) {
   return (
     <div ref={ref} className="relative">
       <button
-        className="chip"
+        className="inline-flex items-center gap-[7px] rounded-pill text-[13px] font-semibold border border-line-2 bg-surface text-ink-2 cursor-pointer [transition:0.14s] whitespace-nowrap hover:border-ink-3 hover:text-ink"
         onClick={() => setOpen((o) => !o)}
         style={{ padding: "10px 14px" }}
       >
@@ -160,11 +160,11 @@ function CityMenu({ city }: { city: string }) {
         />
       </button>
       {open && (
-        <div className="menu-pop animate-anim-pop-app" style={{ minWidth: 180 }}>
+        <div className="absolute end-0 top-[54px] min-w-[248px] bg-surface border border-line rounded shadow-lg p-2 z-[60] animate-anim-pop-app" style={{ minWidth: 180 }}>
           {CITIES.map((c) => (
             <button
               key={c}
-              className={`menu-item ${c === city ? "on" : ""}`}
+              className={`flex items-center gap-[11px] w-full py-[10px] px-[11px] rounded-sm text-[14px] font-semibold cursor-pointer [transition:0.12s] text-left ${c === city ? "bg-coral-soft text-coral-deep" : "text-ink-2 hover:bg-surface-2 hover:text-ink"}`}
               onClick={() => pick(c)}
             >
               <Icons.pin size={16} />
@@ -204,7 +204,7 @@ function AccountMenu({ user }: { user: { name: string; plan: string } }) {
   };
   return (
     <div ref={ref} className="relative">
-      <div className="tn-avatar-btn" onClick={() => setOpen((o) => !o)}>
+      <div className="flex items-center gap-2 cursor-pointer p-[3px] rounded-[99px] [transition:0.14s] hover:bg-surface-2" onClick={() => setOpen((o) => !o)}>
         <Avatar name={user.name} size={38} />
         <Icons.chevR
           size={15}
@@ -212,7 +212,7 @@ function AccountMenu({ user }: { user: { name: string; plan: string } }) {
         />
       </div>
       {open && (
-        <div className="menu-pop animate-anim-pop-app">
+        <div className="absolute end-0 top-[54px] min-w-[248px] bg-surface border border-line rounded shadow-lg p-2 z-[60] animate-anim-pop-app">
           <div className="flex items-center gap-[11px] pt-[8px] px-[10px] pb-[12px]">
             <Avatar name={user.name} size={42} />
             <div className="min-w-0">
@@ -226,7 +226,7 @@ function AccountMenu({ user }: { user: { name: string; plan: string } }) {
             </div>
           </div>
           <button
-            className="menu-item"
+            className="flex items-center gap-[11px] w-full py-[10px] px-[11px] rounded-sm text-[14px] font-semibold text-ink-2 cursor-pointer [transition:0.12s] text-left hover:bg-surface-2 hover:text-ink"
             onClick={() => {
               router.push("/profile");
               setOpen(false);
@@ -236,7 +236,7 @@ function AccountMenu({ user }: { user: { name: string; plan: string } }) {
             {t("Your profile")}
           </button>
           <button
-            className="menu-item"
+            className="flex items-center gap-[11px] w-full py-[10px] px-[11px] rounded-sm text-[14px] font-semibold text-ink-2 cursor-pointer [transition:0.12s] text-left hover:bg-surface-2 hover:text-ink"
             onClick={() => {
               router.push("/wallet");
               setOpen(false);
@@ -246,7 +246,7 @@ function AccountMenu({ user }: { user: { name: string; plan: string } }) {
             {t("Wallet")}
           </button>
           <button
-            className="menu-item"
+            className="flex items-center gap-[11px] w-full py-[10px] px-[11px] rounded-sm text-[14px] font-semibold text-ink-2 cursor-pointer [transition:0.12s] text-left hover:bg-surface-2 hover:text-ink"
             onClick={() => {
               router.push("/profile");
               setOpen(false);
@@ -255,9 +255,9 @@ function AccountMenu({ user }: { user: { name: string; plan: string } }) {
             <Icons.settings size={18} />
             {t("Settings")}
           </button>
-          <div className="menu-div" />
+          <div className="h-px bg-line my-[6px] mx-[4px]" />
           <button
-            className="menu-item"
+            className="flex items-center gap-[11px] w-full py-[10px] px-[11px] rounded-sm text-[14px] font-semibold text-ink-2 cursor-pointer [transition:0.12s] text-left hover:bg-surface-2 hover:text-ink"
             style={{ color: "var(--ink-3)" }}
             onClick={logout}
           >

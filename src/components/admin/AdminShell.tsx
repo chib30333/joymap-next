@@ -65,9 +65,9 @@ export function AdminSidebar({
     router.push("/auth");
   };
   return (
-    <aside className="side">
+    <aside className="sticky top-0 h-screen bg-surface border-r border-line flex flex-col p-[20px_14px] gap-[5px] z-20">
       <div
-        className="side-brand"
+        className="pt-[6px] px-[10px] pb-[16px]"
         style={{
           display: "flex",
           alignItems: "center",
@@ -84,7 +84,10 @@ export function AdminSidebar({
         {A_NAV.map((n, i) => {
           if (n.sec)
             return (
-              <div key={`s${i}`} className="nav-sec">
+              <div
+                key={`s${i}`}
+                className="text-[11px] font-extrabold tracking-[0.1em] uppercase text-ink-3 pt-[14px] px-[13px] pb-[6px]"
+              >
                 {t(n.sec)}
               </div>
             );
@@ -94,19 +97,27 @@ export function AdminSidebar({
           return (
             <button
               key={n.key}
-              className={`nav-item ${on ? "on" : ""}`}
+              className={`flex items-center gap-[12px] py-[10px] px-[13px] rounded-sm font-semibold text-[14px] [transition:0.15s] cursor-pointer bg-none border-none w-full text-left ${
+                on
+                  ? "bg-[color-mix(in_srgb,var(--red)_14%,transparent)] text-coral"
+                  : "text-ink-2 hover:bg-surface-2 hover:text-ink"
+              }`}
               onClick={() => router.push(n.href!)}
             >
               <I size={19} />
               {t(n.label!)}
-              {b ? <span className="nav-badge">{b}</span> : null}
+              {b ? (
+                <span className="ml-auto bg-coral text-white text-[11px] font-bold min-w-[19px] h-[19px] rounded-[99px] grid place-items-center px-[5px]">
+                  {b}
+                </span>
+              ) : null}
             </button>
           );
         })}
       </nav>
-      <div className="side-foot">
+      <div className="mt-auto pt-[10px]">
         <button
-          className="nav-item"
+          className="flex items-center gap-[12px] py-[10px] px-[13px] rounded-sm font-semibold text-[14px] [transition:0.15s] cursor-pointer bg-none border-none w-full text-left hover:bg-surface-2 hover:text-ink"
           style={{ color: "var(--ink-3)" }}
           onClick={logout}
         >
@@ -141,7 +152,7 @@ export function AdminTopbar({
     "Platform health at a glance",
   ];
   return (
-    <div className="topbar">
+    <div className="sticky top-0 bg-[color-mix(in_srgb,var(--bg)_80%,transparent)] [backdrop-filter:blur(12px)] [-webkit-backdrop-filter:blur(12px)] z-[15] flex items-center gap-[14px] py-[16px] px-[var(--pad)] border-b border-line">
       <div className="flex-1 min-w-0">
         <h1 className="text-[20px] leading-[1.1]">{t(title)}</h1>
         {sub && (

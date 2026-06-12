@@ -154,7 +154,7 @@ export function JoyMapScreen({
           </div>
           {days.length > 0 && (
             <div
-              className="card-fill"
+              className="bg-[linear-gradient(160deg,#5e1014,var(--maroon))] border border-[color-mix(in_srgb,var(--coral)_55%,transparent)] text-[#f3ebe0] rounded-lg"
               style={{
                 marginTop: 26,
                 padding: "22px 24px",
@@ -164,13 +164,13 @@ export function JoyMapScreen({
               }}
             >
               <div
-                className="ricon"
+                className="rounded-[99px] flex-none grid place-items-center bg-coral text-white"
                 style={{ width: 44, height: 44, borderRadius: 14 }}
               >
                 <Icons.sparkle size={22} />
               </div>
               <div>
-                <h3 className="text-[17px] mb-[6px]">
+                <h3 className="text-[17px] mb-[6px] text-[#fff3e8]">
                   {t("Why Joy built this week")}
                 </h3>
                 <p className="text-[rgba(243,235,224,.85)] text-[14.5px] leading-[1.55] max-w-[760px]">
@@ -358,14 +358,14 @@ function DayCard({
             </span>
           )}
         </div>
-        <div className="ttl" style={{ fontSize: 18 }}>
+        <div className="absolute left-[14px] right-[14px] bottom-[12px] text-[#fff] font-display font-bold text-[18px] tracking-[-0.01em] leading-[1.1] [text-shadow:0_1px_12px_rgba(0,0,0,0.35)]" style={{ fontSize: 18 }}>
           {e.title}
         </div>
       </PhotoFrame>
       <div className="pt-[13px] pr-[15px] pb-[15px] pl-[15px] flex flex-col gap-[11px]">
         <div className="flex items-center justify-between">
           <span
-            className="mood-chip"
+            className="inline-flex items-center gap-[8px] pt-[7px] pr-[13px] pb-[7px] pl-[11px] rounded-pill text-[13px] font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid border-transparent"
             style={{
               background: m.soft,
               color: m.color,

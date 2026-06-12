@@ -89,7 +89,7 @@ export function MoodDot({ mood, size = 9 }: { mood: string; size?: number }) {
   const m = MOODS[mood];
   return (
     <span
-      className="mood-dot"
+      className="rounded-pill flex-none"
       style={{ width: size, height: size, background: m.color }}
     />
   );
@@ -108,7 +108,7 @@ export function MoodChip({
   const m = MOODS[mood];
   return (
     <button
-      className="mood-chip"
+      className="inline-flex items-center gap-[8px] pt-[7px] pr-[13px] pb-[7px] pl-[11px] rounded-pill text-[13px] font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid border-transparent"
       onClick={onClick}
       style={
         active
@@ -117,8 +117,8 @@ export function MoodChip({
       }
     >
       <span
-        className="mood-dot"
-        style={{ background: active ? "#fff" : m.color }}
+        className="rounded-pill flex-none"
+        style={{ width: 9, height: 9, background: active ? "#fff" : m.color }}
       />
       {t(m.label)}
     </button>
@@ -133,7 +133,7 @@ export function Rating({
   reviews?: number | null;
 }) {
   return (
-    <span className="rating">
+    <span className="inline-flex items-center gap-[5px] font-bold text-[13.5px] text-ink [&_svg]:text-m-joy">
       <Icons.star size={15} />
       {value}
       {reviews != null && (
@@ -146,7 +146,7 @@ export function Rating({
 export function Avatar({ name, size = 40 }: { name: string; size?: number }) {
   return (
     <div
-      className="avatar"
+      className="rounded-pill bg-[linear-gradient(140deg,var(--red),var(--orange))] text-[#fff] grid place-items-center font-extrabold font-display flex-none"
       style={{ width: size, height: size, fontSize: size * 0.42 }}
     >
       {(name || "?")[0]}
@@ -165,11 +165,11 @@ export function PhotoFrame({
 }) {
   return (
     <div
-      className="xphoto"
+      className="relative aspect-[4/3] overflow-hidden"
       style={{ background: bg(exp), ...(ratio ? { aspectRatio: ratio } : {}) }}
     >
-      <div className="grain" />
-      <div className="veil" />
+      <div className="absolute inset-0 opacity-[0.16] mix-blend-overlay bg-[radial-gradient(rgba(255,255,255,0.9)_0.6px,transparent_0.6px)] bg-[length:7px_7px]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_40%,rgba(0,0,0,0.42))]" />
       {children}
     </div>
   );
@@ -189,11 +189,16 @@ export function ExperienceCard({
   const t = useT();
   const m = MOODS[exp.mood];
   return (
-    <article className="xcard" onClick={() => onOpen(exp)}>
+    <article
+      className="cursor-pointer flex flex-col overflow-hidden bg-surface border border-line rounded-lg [transition:0.2s] hover:-translate-y-[4px] hover:shadow-lg hover:border-transparent"
+      onClick={() => onOpen(exp)}
+    >
       <PhotoFrame exp={exp}>
-        <span className="cat">{t(exp.cat)}</span>
+        <span className="absolute top-[12px] left-[12px] bg-[rgba(255,255,255,0.92)] text-[#241c2e] px-[11px] py-[5px] rounded-pill text-[11.5px] font-bold tracking-[0.01em]">
+          {t(exp.cat)}
+        </span>
         <button
-          className={`fav ${fav ? "on" : ""}`}
+          className={`absolute top-[10px] right-[10px] w-[34px] h-[34px] rounded-pill border-none bg-[rgba(255,255,255,0.85)] grid place-items-center [transition:0.15s] cursor-pointer hover:bg-[#fff] hover:scale-[1.08] ${fav ? "text-m-energy" : "text-[#241c2e]"}`}
           onClick={(e) => {
             e.stopPropagation();
             onFav?.(exp.id);
@@ -201,12 +206,14 @@ export function ExperienceCard({
         >
           <Icons.heart size={17} fill={fav} />
         </button>
-        <div className="ttl">{exp.title}</div>
+        <div className="absolute left-[14px] right-[14px] bottom-[12px] text-[#fff] font-display font-bold text-[18px] tracking-[-0.01em] leading-[1.1] [text-shadow:0_1px_12px_rgba(0,0,0,0.35)]">
+          {exp.title}
+        </div>
       </PhotoFrame>
-      <div className="xbody">
+      <div className="px-[16px] pt-[14px] pb-[16px] flex flex-col gap-[10px]">
         <div className="flex items-center justify-between gap-[8px]">
           <span
-            className="mood-chip"
+            className="inline-flex items-center gap-[8px] rounded-pill font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid border-transparent"
             style={{
               background: m.soft,
               color: m.color,
@@ -221,7 +228,7 @@ export function ExperienceCard({
             <Rating value={exp.rating} reviews={exp.reviews} />
           ) : (
             <span
-              className="tag"
+              className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] font-semibold bg-surface-2 text-ink-2 border border-line"
               style={{
                 background: "var(--coral-soft)",
                 color: "var(--coral-deep)",
@@ -233,7 +240,7 @@ export function ExperienceCard({
             </span>
           )}
         </div>
-        <div className="xmeta">
+        <div className="flex items-center gap-[12px] text-ink-3 text-[13px] font-semibold">
           <span className="inline-flex items-center gap-[5px]">
             <Icons.pin size={14} />
             {exp.area}
@@ -243,8 +250,8 @@ export function ExperienceCard({
             {exp.dur}
           </span>
         </div>
-        <div className="xrow">
-          <span className="price">
+        <div className="flex items-center justify-between mt-[2px]">
+          <span className="font-display font-bold text-[18px] text-ink whitespace-nowrap [&_small]:font-semibold [&_small]:text-[12.5px] [&_small]:text-ink-3">
             {fmt(exp.price)} <small>/ {t("person")}</small>
           </span>
           <span className="text-coral-deep inline-flex">
@@ -266,7 +273,7 @@ export function SectionHead({
   action?: ReactNode;
 }) {
   return (
-    <div className="shead">
+    <div className="flex items-end justify-between gap-[16px] mb-[18px]">
       <div>
         {eyebrow && (
           <div className="text-[12.5px] font-bold tracking-[0.1em] uppercase text-orange" style={{ marginBottom: 7 }}>
@@ -301,9 +308,12 @@ export function Modal({
     };
   }, [onClose]);
   return (
-    <div className="scrim" onClick={onClose}>
+    <div
+      className="fixed inset-0 bg-[rgba(20,14,26,0.55)] [backdrop-filter:blur(4px)] z-[100] flex items-end justify-center min-[760px]:items-center min-[760px]:p-[30px] animate-anim-fade motion-reduce:animate-none"
+      onClick={onClose}
+    >
       <div
-        className="sheet"
+        className="bg-bg w-full max-w-[560px] rounded-t-xl max-h-[92vh] overflow-auto min-[760px]:rounded-xl animate-anim-slideup motion-reduce:animate-none"
         style={maxWidth ? { maxWidth } : undefined}
         onClick={(e) => e.stopPropagation()}
       >

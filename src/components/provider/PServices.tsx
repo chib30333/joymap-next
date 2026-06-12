@@ -20,7 +20,7 @@ export function PServices({ svcs }: { svcs: Svc[] }) {
     rpc("toggleService", { id }).then(() => router.refresh());
   return (
     <div className="animate-anim-fade-dash">
-      <div className="shead">
+      <div className="flex items-end justify-between gap-4 mb-[18px]">
         <div />
         <Btn
           size="md"

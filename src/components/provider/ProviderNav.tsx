@@ -120,10 +120,10 @@ export function ProviderNav({
     `${t("Welcome back")}, ${providerName}`,
   ];
   return (
-    <header className="topnav">
-      <div className="tn-row1">
+    <header className="sticky top-0 z-40 bg-[color-mix(in_srgb,var(--bg)_82%,transparent)] [backdrop-filter:blur(16px)] [-webkit-backdrop-filter:blur(16px)] border-b border-line">
+      <div className="flex items-center gap-4 py-[13px] px-[var(--pad)]">
         <div
-          className="tn-brand"
+          className="flex items-center gap-[9px] flex-none"
           role="button"
           tabIndex={0}
           style={{ cursor: "pointer" }}
@@ -137,8 +137,8 @@ export function ProviderNav({
           title={t("Go to Overview")}
         >
           <Logo size={25} />
-          <span className="tn-badge">
-            <span className="ld" />
+          <span className="inline-flex items-center gap-[5px] whitespace-nowrap bg-[color-mix(in_srgb,var(--orange)_16%,transparent)] text-orange-deep py-[3px] px-[9px] rounded-[99px] text-[10px] font-extrabold font-display">
+            <span className="w-[6px] h-[6px] rounded-[99px] bg-orange" />
             {t("Partner")}
           </span>
         </div>
@@ -161,13 +161,15 @@ export function ProviderNav({
         <LangSwitcher />
         <AccountMenu name={name} />
       </div>
-      <div className="tn-row2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="flex items-center gap-[2px] px-[var(--pad)] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {P_NAV.map((n, i) => {
           if (n.sec)
             return (
               <span key={`s${i}`} className="inline-flex items-center">
-                {i > 0 && <span className="tn-sep" />}
-                <span className="tn-grouplbl">{t(n.sec)}</span>
+                {i > 0 && <span className="w-px h-5 bg-line-2 mx-2 flex-none" />}
+                <span className="text-[10px] font-extrabold tracking-[0.08em] uppercase text-ink-3 pl-[10px] pr-2 whitespace-nowrap">
+                  {t(n.sec)}
+                </span>
               </span>
             );
           const I = Icons[n.icon!];
@@ -176,12 +178,12 @@ export function ProviderNav({
           return (
             <button
               key={n.key}
-              className={`tn-tab ${on ? "on" : ""}`}
+              className={`inline-flex items-center gap-2 py-[13px] px-[15px] font-semibold text-[14px] whitespace-nowrap cursor-pointer relative [transition:0.14s] border-b-[2.5px] border-solid mb-[-1px] hover:text-ink ${on ? "text-coral border-coral [&_svg]:text-coral" : "text-ink-2 border-transparent"}`}
               onClick={() => router.push(n.href!)}
             >
               <I size={17} />
               {t(n.label!)}
-              {b ? <span className="tn-badge-n">{b}</span> : null}
+              {b ? <span className="bg-coral text-white text-[10.5px] font-extrabold min-w-[17px] h-[17px] rounded-[99px] grid place-items-center px-1">{b}</span> : null}
             </button>
           );
         })}
@@ -210,7 +212,7 @@ function AccountMenu({ name }: { name: string }) {
   };
   return (
     <div ref={ref} className="relative">
-      <div className="tn-avatar-btn" onClick={() => setOpen((o) => !o)}>
+      <div className="flex items-center gap-2 cursor-pointer p-[3px] rounded-[99px] [transition:0.14s] hover:bg-surface-2" onClick={() => setOpen((o) => !o)}>
         <Avatar name={name} size={38} grad={grad} />
         <Icons.chevR
           size={15}
@@ -218,7 +220,7 @@ function AccountMenu({ name }: { name: string }) {
         />
       </div>
       {open && (
-        <div className="menu-pop animate-anim-pop-dash">
+        <div className="absolute end-0 top-[54px] min-w-[248px] bg-surface border border-line rounded shadow-lg p-2 z-[60] animate-anim-pop-app">
           <div className="flex items-center gap-[11px] pt-[8px] px-[10px] pb-[12px]">
             <Avatar name={name} size={42} grad={grad} />
             <div className="min-w-0">
@@ -230,9 +232,9 @@ function AccountMenu({ name }: { name: string }) {
               </div>
             </div>
           </div>
-          <div className="menu-div" />
+          <div className="h-px bg-line my-[6px] mx-[4px]" />
           <button
-            className="menu-item"
+            className="flex items-center gap-[11px] w-full py-[10px] px-[11px] rounded-sm text-[14px] font-semibold text-ink-2 cursor-pointer [transition:0.12s] text-left hover:bg-surface-2 hover:text-ink"
             style={{ color: "var(--ink-3)" }}
             onClick={logout}
           >

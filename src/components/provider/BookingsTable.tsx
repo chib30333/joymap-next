@@ -21,43 +21,47 @@ export function BookingsTable({
   actingId?: string | null;
 }) {
   const t = useT();
+  const th =
+    "text-left text-[11.5px] font-extrabold tracking-[0.06em] uppercase text-ink-3 px-4 pt-0 pb-3";
+  const td =
+    "px-4 py-[14px] border-t border-line text-[14px] align-middle group-hover:bg-surface-2";
   return (
-    <table className="tbl">
+    <table className="w-full border-collapse">
       <thead>
         <tr>
-          <th>{t("Customer")}</th>
-          <th>{t("Service")}</th>
-          {!compact && <th>{t("Date")}</th>}
-          <th>{t("Time")}</th>
-          <th>{t("People")}</th>
-          <th>{t("Total")}</th>
-          <th>{t("Status")}</th>
-          {onAct && <th />}
+          <th className={th}>{t("Customer")}</th>
+          <th className={th}>{t("Service")}</th>
+          {!compact && <th className={th}>{t("Date")}</th>}
+          <th className={th}>{t("Time")}</th>
+          <th className={th}>{t("People")}</th>
+          <th className={th}>{t("Total")}</th>
+          <th className={th}>{t("Status")}</th>
+          {onAct && <th className={th} />}
         </tr>
       </thead>
       <tbody>
         {rows.map((b) => (
           <tr
             key={b.id}
-            className="row"
+            className="group [transition:0.12s] cursor-pointer"
             onClick={onRow ? () => onRow(b) : undefined}
           >
-            <td>
+            <td className={td}>
               <div className="flex items-center gap-[10px]">
                 <Avatar name={b.customer} size={30} />
                 <b className="font-bold">{b.customer}</b>
               </div>
             </td>
-            <td className="text-ink-2">{b.service}</td>
-            {!compact && <td className="text-ink-2">{b.date}</td>}
-            <td className="font-bold">{b.time}</td>
-            <td>{b.people}</td>
-            <td className="font-display font-bold">{money(b.total)}</td>
-            <td>
+            <td className={`${td} text-ink-2`}>{b.service}</td>
+            {!compact && <td className={`${td} text-ink-2`}>{b.date}</td>}
+            <td className={`${td} font-bold`}>{b.time}</td>
+            <td className={td}>{b.people}</td>
+            <td className={`${td} font-display font-bold`}>{money(b.total)}</td>
+            <td className={td}>
               <Pill status={b.status} label={t(b.status)} />
             </td>
             {onAct && (
-              <td>
+              <td className={td}>
                 <div className="flex gap-[6px] justify-end items-center">
                   {actingId === b.id ? (
                     <span

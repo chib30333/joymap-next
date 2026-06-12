@@ -106,7 +106,7 @@ export function ServiceModal({
           <Icons.close size={18} />
         </button>
         <button
-          className={`fav ${fav ? "on" : ""}`}
+          className={`absolute top-[10px] right-[10px] w-[34px] h-[34px] rounded-pill border-none bg-[rgba(255,255,255,0.85)] grid place-items-center [transition:0.15s] cursor-pointer hover:bg-[#fff] hover:scale-[1.08] ${fav ? "text-m-energy" : "text-[#241c2e]"}`}
           style={{
             position: "absolute",
             top: 14,
@@ -122,7 +122,7 @@ export function ServiceModal({
         </button>
         <div className="absolute left-[18px] bottom-[16px] right-[18px]">
           <span
-            className="mood-chip"
+            className="inline-flex items-center gap-[8px] pt-[7px] pr-[13px] pb-[7px] pl-[11px] rounded-pill text-[13px] font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid border-transparent"
             style={{
               background: "rgba(255,255,255,.92)",
               color: m.color,
@@ -159,7 +159,7 @@ export function ServiceModal({
                 <Rating value={exp.rating} reviews={exp.reviews} />
               ) : (
                 <span
-                  className="tag"
+                  className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] font-semibold bg-surface-2 text-ink-2 border border-line"
                   style={{
                     background: "var(--coral-soft)",
                     color: "var(--coral-deep)",
@@ -183,7 +183,7 @@ export function ServiceModal({
             </div>
             <div className="flex items-center gap-[12px] py-[14px] border-t border-b border-line mb-[18px]">
               <div
-                className="avatar"
+                className="w-[40px] h-[40px] rounded-pill bg-[linear-gradient(140deg,var(--red),var(--orange))] text-[#fff] grid place-items-center font-extrabold font-display flex-none"
                 style={{ background: "var(--bg-2)", color: "var(--ink-2)" }}
               >
                 {exp.provider[0]}
@@ -195,7 +195,7 @@ export function ServiceModal({
                 </div>
               </div>
               <span
-                className="tag"
+                className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] font-semibold bg-surface-2 text-ink-2 border border-line"
                 style={{
                   marginLeft: "auto",
                   background: "var(--m-calm-soft)",
@@ -212,12 +212,12 @@ export function ServiceModal({
             </p>
             <div className="flex gap-[8px] flex-wrap mb-[6px]">
               {exp.tags.map((tg) => (
-                <span key={tg} className="tag">
+                <span key={tg} className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] font-semibold bg-surface-2 text-ink-2 border border-line">
                   {tg}
                 </span>
               ))}
               <span
-                className="tag"
+                className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] font-semibold bg-surface-2 text-ink-2 border border-line"
                 style={{
                   background: "var(--coral-soft)",
                   color: "var(--coral-deep)",
@@ -232,7 +232,7 @@ export function ServiceModal({
           <Footer>
             <div>
               <div className="text-[12.5px] text-ink-3 font-semibold">{t("From")}</div>
-              <div className="price" style={{ fontSize: 22 }}>
+              <div className="font-display font-bold text-[18px] text-ink whitespace-nowrap [&_small]:font-semibold [&_small]:text-[12.5px] [&_small]:text-ink-3" style={{ fontSize: 22 }}>
                 {fmt(exp.price)}
               </div>
             </div>
@@ -307,7 +307,7 @@ export function ServiceModal({
               {timesFor(day).map((tm) => (
                 <button
                   key={tm}
-                  className={`chip ${time === tm ? "on" : ""}`}
+                  className={`inline-flex items-center gap-[7px] rounded-pill text-[13px] font-semibold border cursor-pointer [transition:0.14s] whitespace-nowrap ${time === tm ? "bg-coral text-white border-coral" : "bg-surface text-ink-2 border-line-2 hover:border-ink-3 hover:text-ink"}`}
                   style={{ padding: "10px 16px" }}
                   onClick={() => setTime(tm)}
                 >
@@ -469,7 +469,7 @@ export function ServiceModal({
               <div className="text-[12.5px] text-ink-3 font-semibold">
                 {t("Total")}
               </div>
-              <div className="price" style={{ fontSize: 22 }}>
+              <div className="font-display font-bold text-[18px] text-ink whitespace-nowrap [&_small]:font-semibold [&_small]:text-[12.5px] [&_small]:text-ink-3" style={{ fontSize: 22 }}>
                 {fmt(total)}
               </div>
             </div>

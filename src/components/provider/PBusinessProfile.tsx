@@ -98,7 +98,7 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
           <div className="flex gap-[8px] pb-[4px]">
             {p.status === "active" ? (
               <span
-                className="pill"
+                className="inline-flex items-center gap-[6px] py-1 px-[11px] rounded-pill text-[12px] font-bold whitespace-nowrap"
                 style={{ color: "#1FA46E", background: "rgba(31,164,110,.13)" }}
               >
                 <Icons.shield size={13} />
@@ -106,7 +106,7 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
               </span>
             ) : (
               <span
-                className="pill"
+                className="inline-flex items-center gap-[6px] py-1 px-[11px] rounded-pill text-[12px] font-bold whitespace-nowrap"
                 style={{ color: "#E89015", background: "rgba(232,144,21,.14)" }}
               >
                 <Icons.clock size={13} />
@@ -144,15 +144,7 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
                 )}
             </p>
           )}
-          <hr
-            className="divider"
-            style={{
-              margin: "20px 0",
-              border: 0,
-              height: 1,
-              background: "var(--line)",
-            }}
-          />
+          <hr className="h-px bg-line border-0 my-5" />
           <div className="grid grid-cols-[1fr_1fr] gap-[16px]">
             {(
               [
@@ -197,7 +189,7 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
               {f.cats.map((c: string) => (
                 <span
                   key={c}
-                  className="tag"
+                  className="inline-flex items-center gap-[5px] py-1 px-[10px] rounded-pill text-[12px] font-bold whitespace-nowrap"
                   style={{
                     background: "var(--surface-2)",
                     color: "var(--ink-2)",
@@ -208,21 +200,16 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
                 </span>
               ))}
               {edit && (
-                <button className="chip" style={{ padding: "4px 12px" }}>
+                <button
+                  className="inline-flex items-center gap-[7px] rounded-pill text-[13px] font-semibold border border-line-2 bg-surface text-ink-2 cursor-pointer [transition:0.14s] whitespace-nowrap hover:border-ink-3 hover:text-ink"
+                  style={{ padding: "4px 12px" }}
+                >
                   <Icons.plus size={13} />
                   {t("Add")}
                 </button>
               )}
             </div>
-            <hr
-              className="divider"
-              style={{
-                margin: "18px 0",
-                border: 0,
-                height: 1,
-                background: "var(--line)",
-              }}
-            />
+            <hr className="h-px bg-line border-0 my-[18px]" />
             <div className="flex justify-between text-[13.5px]">
               <div>
                 <div className="text-ink-3 font-semibold mb-[4px]">

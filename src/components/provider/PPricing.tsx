@@ -47,10 +47,17 @@ export function PPricing({ svcs }: { svcs: any[] }) {
     setRules((r) =>
       r.map((x) => (x.id === id ? { ...x, active: !x.active } : x)),
     );
+  const prTh =
+    "text-left text-[11.5px] font-extrabold tracking-[0.06em] uppercase text-ink-3 px-4 pt-0 pb-3";
+  const prTd =
+    "px-4 py-[14px] border-t border-line text-[14px] align-middle group-hover:bg-surface-2";
   return (
     <div className="animate-anim-fade-dash">
       <div className="bg-surface border border-line rounded-lg" style={{ padding: 22, marginBottom: "var(--gap)" }}>
-        <div className="shead" style={{ marginBottom: 14 }}>
+        <div
+          className="flex items-end justify-between gap-4"
+          style={{ marginBottom: 14 }}
+        >
           <div>
             <h3 className="text-[17px]">{t("Base prices")}</h3>
             <div className="text-[13px] text-ink-3 font-semibold">
@@ -63,25 +70,28 @@ export function PPricing({ svcs }: { svcs: any[] }) {
             {t("No services yet — create one in Services.")}
           </div>
         ) : (
-          <table className="tbl">
+          <table className="w-full border-collapse">
             <thead>
               <tr>
-                <th>{t("Service")}</th>
-                <th>{t("Duration")}</th>
-                <th>{t("Capacity")}</th>
-                <th>{t("Base price")}</th>
+                <th className={prTh}>{t("Service")}</th>
+                <th className={prTh}>{t("Duration")}</th>
+                <th className={prTh}>{t("Capacity")}</th>
+                <th className={prTh}>{t("Base price")}</th>
               </tr>
             </thead>
             <tbody>
               {svcs.map((s) => (
-                <tr key={s.id} className="row">
-                  <td>
+                <tr
+                  key={s.id}
+                  className="group [transition:0.12s] cursor-pointer"
+                >
+                  <td className={prTd}>
                     <b className="font-bold">{s.name}</b>
                   </td>
-                  <td className="text-ink-2">{s.dur}</td>
-                  <td className="text-ink-2">{s.cap}</td>
+                  <td className={`${prTd} text-ink-2`}>{s.dur}</td>
+                  <td className={`${prTd} text-ink-2`}>{s.cap}</td>
                   <td
-                    className="font-bold"
+                    className={`${prTd} font-bold`}
                     style={{ fontFamily: "var(--display)" }}
                   >
                     {money(s.price)}
@@ -92,7 +102,7 @@ export function PPricing({ svcs }: { svcs: any[] }) {
           </table>
         )}
       </div>
-      <div className="shead">
+      <div className="flex items-end justify-between gap-4 mb-[18px]">
         <div>
           <h3 className="text-[17px]">{t("Dynamic pricing rules")}</h3>
           <div className="text-[13px] text-ink-3 font-semibold">

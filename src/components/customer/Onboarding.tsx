@@ -135,7 +135,7 @@ export function Onboarding() {
         <div className="flex items-center gap-[12px] py-[18px] px-[22px] border-b border-line">
           <div className="relative">
             <div
-              className="avatar"
+              className="w-[40px] h-[40px] rounded-pill bg-[linear-gradient(140deg,var(--red),var(--orange))] text-[#fff] grid place-items-center font-extrabold font-display flex-none"
               style={{
                 background: "linear-gradient(140deg,var(--orange),var(--red))",
                 animation: "float 4s ease-in-out infinite",
@@ -253,7 +253,7 @@ export function Onboarding() {
                   "A thrill this weekend",
                   "Meet new people",
                 ].map((s) => (
-                  <button key={s} className="chip" onClick={() => setText(t(s))}>
+                  <button key={s} className="inline-flex items-center gap-[7px] py-[7px] px-[13px] rounded-pill text-[13px] font-semibold border border-line-2 bg-surface text-ink-2 cursor-pointer [transition:0.14s] whitespace-nowrap hover:border-ink-3 hover:text-ink" onClick={() => setText(t(s))}>
                     {t(s)}
                   </button>
                 ))}

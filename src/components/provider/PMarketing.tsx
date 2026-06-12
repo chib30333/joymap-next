@@ -44,7 +44,7 @@ export function PMarketing() {
   };
   return (
     <div className="animate-anim-fade-dash">
-      <div className="shead">
+      <div className="flex items-end justify-between gap-4 mb-[18px]">
         <div>
           <h3 className="text-[17px]">{t("Promo codes")}</h3>
           <div className="text-[13px] text-ink-3 font-semibold">

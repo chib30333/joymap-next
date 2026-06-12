@@ -73,7 +73,7 @@ export function Catalog({
           }}
         >
           <button
-            className={`chip ${!mood ? "on" : ""}`}
+            className={`inline-flex items-center gap-[7px] rounded-pill text-[13px] font-semibold border cursor-pointer [transition:0.14s] whitespace-nowrap ${!mood ? "bg-coral text-white border-coral" : "bg-surface text-ink-2 border-line-2 hover:border-ink-3 hover:text-ink"}`}
             style={{ padding: "9px 16px" }}
             onClick={() => setMood(null)}
           >
@@ -94,7 +94,7 @@ export function Catalog({
         {["All", ...CATS].map((c) => (
           <button
             key={c}
-            className={`chip ${cat === c ? "on" : ""}`}
+            className={`inline-flex items-center gap-[7px] py-[7px] px-[13px] rounded-pill text-[13px] font-semibold border cursor-pointer [transition:0.14s] whitespace-nowrap ${cat === c ? "bg-coral text-white border-coral" : "bg-surface text-ink-2 border-line-2 hover:border-ink-3 hover:text-ink"}`}
             onClick={() => setCat(c)}
           >
             {t(c)}

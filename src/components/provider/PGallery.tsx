@@ -15,7 +15,7 @@ export function PGalleryView() {
     setItems((it) => it.map((g) => ({ ...g, cover: g.id === id })));
   return (
     <div className="animate-anim-fade-dash">
-      <div className="shead">
+      <div className="flex items-end justify-between gap-4 mb-[18px]">
         <div>
           <div className="text-[12px] font-extrabold tracking-[0.1em] uppercase text-orange" style={{ marginBottom: 6 }}>
             {items.length} {t("items")}
@@ -46,7 +46,7 @@ export function PGalleryView() {
             >
               {g.cover && (
                 <span
-                  className="pill"
+                  className="inline-flex items-center gap-[6px] py-1 px-[11px] rounded-pill text-[12px] font-bold whitespace-nowrap"
                   style={{
                     position: "absolute",
                     top: 10,

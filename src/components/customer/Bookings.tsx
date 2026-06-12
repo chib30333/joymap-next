@@ -113,14 +113,14 @@ export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
                   }}
                 >
                   <div
-                    className="grain"
+                    className="absolute inset-0 opacity-[0.16] mix-blend-overlay bg-[radial-gradient(rgba(255,255,255,0.9)_0.6px,transparent_0.6px)] bg-[length:7px_7px]"
                     style={{ position: "absolute", inset: 0, opacity: 0.15 }}
                   />
                 </div>
                 <div className="flex-1 py-[18px] px-[22px] flex items-center gap-[20px] flex-wrap">
                   <div className="flex-1 min-w-[180px]">
                     <span
-                      className="mood-chip"
+                      className="inline-flex items-center gap-[8px] pt-[7px] pr-[13px] pb-[7px] pl-[11px] rounded-pill text-[13px] font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid border-transparent"
                       style={{
                         background: m.soft,
                         color: m.color,
@@ -239,7 +239,7 @@ export function BookingPill({ status }: { status: string }) {
   const I = Icons[ic];
   return (
     <span
-      className="tag"
+      className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] font-semibold bg-surface-2 text-ink-2 border border-line"
       style={{ background: bgc, color: c, border: "none", fontWeight: 700 }}
     >
       <I size={13} style={{ marginRight: 4 }} />
@@ -422,7 +422,7 @@ function MoveModal({ b, onClose }: { b: B; onClose: () => void }) {
           {times.map((tm) => (
             <button
               key={tm}
-              className={`chip ${time === tm ? "on" : ""}`}
+              className={`inline-flex items-center gap-[7px] py-[7px] px-[13px] rounded-pill text-[13px] font-semibold border cursor-pointer [transition:0.14s] whitespace-nowrap ${time === tm ? "bg-coral text-white border-coral" : "bg-surface text-ink-2 border-line-2 hover:border-ink-3 hover:text-ink"}`}
               onClick={() => setTime(tm)}
             >
               {tm}

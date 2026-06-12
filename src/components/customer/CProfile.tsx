@@ -206,7 +206,7 @@ export function CProfile({
               );
             })}
           </div>
-          <hr className="divider" style={{ margin: "22px 0" }} />
+          <hr className="h-px bg-line border-0" style={{ margin: "22px 0" }} />
           <div className="flex items-center gap-[12px]">
             <span
               style={{

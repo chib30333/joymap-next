@@ -127,7 +127,7 @@ export function ADashboard({
         }}
       >
         <div className="bg-surface border border-line rounded-lg" style={{ padding: 22 }}>
-          <div className="shead" style={{ marginBottom: 8 }}>
+          <div className="flex items-end justify-between gap-[16px] mb-[8px]">
             <div>
               <h3 className="text-[17px]">{t("Gross merchandise value")}</h3>
               <div className="text-[13px] text-ink-3 font-semibold">
@@ -136,7 +136,7 @@ export function ADashboard({
             </div>
             {s.gmv > 0 && (
               <span
-                className="tag"
+                className="inline-flex items-center gap-[5px] py-[4px] px-[10px] rounded-pill text-[12px] font-bold whitespace-nowrap"
                 style={{ background: "rgba(31,164,110,.13)", color: "#1FA46E" }}
               >
                 ▴ {t("Live")}
@@ -331,7 +331,7 @@ export function AProviders({ rows }: { rows: any[] }) {
     ]);
   return (
     <div className="animate-anim-fade-dash">
-      <div className="shead">
+      <div className="flex items-end justify-between gap-[16px] mb-[18px]">
         <div className="relative flex-1 max-w-[340px]">
           <span
             className="absolute left-[14px] top-[50%] text-ink-3"
@@ -380,7 +380,7 @@ export function AProviders({ rows }: { rows: any[] }) {
       ) : (
         <div className="bg-surface border border-line rounded-lg" style={{ overflow: "hidden" }}>
           <div style={{ overflowX: "auto" }}>
-            <table className="tbl">
+            <table className="w-full border-collapse [&_th]:text-left [&_th]:text-[11.5px] [&_th]:font-extrabold [&_th]:tracking-[0.06em] [&_th]:uppercase [&_th]:text-ink-3 [&_th]:px-[16px] [&_th]:pt-0 [&_th]:pb-[12px] [&_td]:px-[16px] [&_td]:py-[14px] [&_td]:border-t [&_td]:border-line [&_td]:text-[14px] [&_td]:align-middle">
               <thead>
                 <tr>
                   <th>{t("Provider")}</th>
@@ -394,7 +394,11 @@ export function AProviders({ rows }: { rows: any[] }) {
               </thead>
               <tbody>
                 {list.map((p) => (
-                  <tr key={p.id} className="row" onClick={() => setSel(p)}>
+                  <tr
+                    key={p.id}
+                    className="[transition:0.12s] cursor-pointer hover:[&>td]:bg-surface-2"
+                    onClick={() => setSel(p)}
+                  >
                     <td>
                       <div className="flex items-center gap-[10px]">
                         <Avatar name={p.name} size={32} />
@@ -559,7 +563,7 @@ export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
   const empty = apps.length === 0 && svcs.length === 0;
   return (
     <div className="animate-anim-fade-dash">
-      <div className="shead">
+      <div className="flex items-end justify-between gap-[16px] mb-[18px]">
         <div>
           <div className="text-[12px] font-extrabold tracking-[0.1em] uppercase text-orange" style={{ marginBottom: 6 }}>
             {apps.length + svcs.length} {t("awaiting review")}
@@ -858,7 +862,7 @@ export function AContent({ items }: { items: any[] }) {
   };
   return (
     <div className="animate-anim-fade-dash">
-      <div className="shead">
+      <div className="flex items-end justify-between gap-[16px] mb-[18px]">
         <div>
           <div className="text-[12px] font-extrabold tracking-[0.1em] uppercase text-orange" style={{ marginBottom: 6 }}>
             {items.length} {t("flagged items")}
@@ -905,7 +909,7 @@ export function AContent({ items }: { items: any[] }) {
               >
                 <div className="flex items-center gap-[10px]">
                   <span
-                    className="tag"
+                    className="inline-flex items-center gap-[5px] py-[4px] px-[10px] rounded-pill text-[12px] font-bold whitespace-nowrap"
                     style={{
                       background: `color-mix(in srgb,${tc} 14%,transparent)`,
                       color: tc,
@@ -914,7 +918,7 @@ export function AContent({ items }: { items: any[] }) {
                     {t(tl)}
                   </span>
                   <span
-                    className="tag"
+                    className="inline-flex items-center gap-[5px] py-[4px] px-[10px] rounded-pill text-[12px] font-bold whitespace-nowrap"
                     style={{
                       background: "rgba(224,33,47,.1)",
                       color: "var(--coral)",
@@ -994,7 +998,10 @@ export function ACustomers({ list }: { list: any[] }) {
     ]);
   return (
     <div className="animate-anim-fade-dash">
-      <div className="shead" style={{ marginBottom: "var(--gap)" }}>
+      <div
+        className="flex items-end justify-between gap-[16px]"
+        style={{ marginBottom: "var(--gap)" }}
+      >
         <div />
         <button className={btnCls("dash", "ghost", "md")} onClick={exportCsv}>
           <Icons.download size={16} />
@@ -1043,7 +1050,7 @@ export function ACustomers({ list }: { list: any[] }) {
       ) : (
         <div className="bg-surface border border-line rounded-lg" style={{ overflow: "hidden" }}>
           <div style={{ overflowX: "auto" }}>
-            <table className="tbl">
+            <table className="w-full border-collapse [&_th]:text-left [&_th]:text-[11.5px] [&_th]:font-extrabold [&_th]:tracking-[0.06em] [&_th]:uppercase [&_th]:text-ink-3 [&_th]:px-[16px] [&_th]:pt-0 [&_th]:pb-[12px] [&_td]:px-[16px] [&_td]:py-[14px] [&_td]:border-t [&_td]:border-line [&_td]:text-[14px] [&_td]:align-middle">
               <thead>
                 <tr>
                   <th>{t("Customer")}</th>
@@ -1055,7 +1062,10 @@ export function ACustomers({ list }: { list: any[] }) {
               </thead>
               <tbody>
                 {list.map((c, i) => (
-                  <tr key={i} className="row">
+                  <tr
+                  key={i}
+                  className="[transition:0.12s] cursor-pointer hover:[&>td]:bg-surface-2"
+                >
                     <td>
                       <div className="flex items-center gap-[10px]">
                         <Avatar name={c.name} size={32} />
@@ -1167,7 +1177,7 @@ export function AFinancials({ s, queue }: { s: any; queue: any[] }) {
             )}
           </div>
         ) : (
-          <table className="tbl">
+          <table className="w-full border-collapse [&_th]:text-left [&_th]:text-[11.5px] [&_th]:font-extrabold [&_th]:tracking-[0.06em] [&_th]:uppercase [&_th]:text-ink-3 [&_th]:px-[16px] [&_th]:pt-0 [&_th]:pb-[12px] [&_td]:px-[16px] [&_td]:py-[14px] [&_td]:border-t [&_td]:border-line [&_td]:text-[14px] [&_td]:align-middle">
             <thead>
               <tr>
                 <th>{t("Provider")}</th>
@@ -1179,7 +1189,10 @@ export function AFinancials({ s, queue }: { s: any; queue: any[] }) {
             </thead>
             <tbody>
               {queue.map((p) => (
-                <tr key={p.id} className="row">
+                <tr
+                  key={p.id}
+                  className="[transition:0.12s] cursor-pointer hover:[&>td]:bg-surface-2"
+                >
                   <td>
                     <div className="flex items-center gap-[10px]">
                       <Avatar name={p.providerName} size={30} />
@@ -1249,7 +1262,7 @@ export function AMarketing() {
   const [promo, setPromo] = useState(false);
   return (
     <div className="animate-anim-fade-dash">
-      <div className="shead">
+      <div className="flex items-end justify-between gap-[16px] mb-[18px]">
         <div />
         <div className="flex gap-[10px]">
           <button
@@ -1272,7 +1285,7 @@ export function AMarketing() {
         <h3 className="text-[17px] pt-[18px] px-[20px] pb-[4px]">
           {t("Campaigns")}
         </h3>
-        <table className="tbl">
+        <table className="w-full border-collapse [&_th]:text-left [&_th]:text-[11.5px] [&_th]:font-extrabold [&_th]:tracking-[0.06em] [&_th]:uppercase [&_th]:text-ink-3 [&_th]:px-[16px] [&_th]:pt-0 [&_th]:pb-[12px] [&_td]:px-[16px] [&_td]:py-[14px] [&_td]:border-t [&_td]:border-line [&_td]:text-[14px] [&_td]:align-middle">
           <thead>
             <tr>
               <th>{t("Campaign")}</th>
@@ -1285,13 +1298,16 @@ export function AMarketing() {
           </thead>
           <tbody>
             {A_CAMPAIGNS.map((c, i) => (
-              <tr key={i} className="row">
+              <tr
+                key={i}
+                className="[transition:0.12s] cursor-pointer hover:[&>td]:bg-surface-2"
+              >
                 <td>
                   <b className="font-bold">{t(c.name)}</b>
                 </td>
                 <td>
                   <span
-                    className="tag"
+                    className="inline-flex items-center gap-[5px] py-[4px] px-[10px] rounded-pill text-[12px] font-bold whitespace-nowrap"
                     style={{
                       background: "var(--surface-2)",
                       color: "var(--ink-2)",
