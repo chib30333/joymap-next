@@ -699,13 +699,8 @@ img {
 /* ===== page layout ===== */
 .auth-wrap {
   display: grid;
-  grid-template-columns: 1.05fr 1fr;
+  grid-template-columns: 1fr;
   min-height: 100vh;
-}
-@media (max-width: 920px) {
-  .auth-wrap {
-    grid-template-columns: 1fr;
-  }
 }
 
 /* ---- left brand showcase ---- */
