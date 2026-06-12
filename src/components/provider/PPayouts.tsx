@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { btnCls } from "@/lib/btn";
 import { Icons } from "@/components/Icons";
 import { rpc, useBusy } from "@/lib/client";
 import { money, Pill, BusyBtn } from "@/components/dash/primitives";
@@ -12,7 +13,7 @@ export function PPayouts({ fin, list }: { fin: any; list: any[] }) {
   const { busy, run, error } = useBusy();
   return (
     <div
-      className="anim-fade grid grid-cols-[1fr_1.3fr] items-start"
+      className="animate-anim-fade-dash grid grid-cols-[1fr_1.3fr] items-start"
       style={{ gap: "var(--gap)" }}
     >
       <div className="flex flex-col" style={{ gap: "var(--gap)" }}>
@@ -32,7 +33,7 @@ export function PPayouts({ fin, list }: { fin: any; list: any[] }) {
           </div>
           <BusyBtn
             busy={busy}
-            className="btn btn-orange btn-md"
+            className={btnCls("dash", "orange", "md")}
             icon={<Icons.wallet size={16} />}
             disabled={fin.available <= 0}
             onClick={() =>
@@ -52,7 +53,7 @@ export function PPayouts({ fin, list }: { fin: any; list: any[] }) {
           )}
           <div className="absolute right-[-30px] bottom-[-40px] w-[150px] h-[150px] rounded-[99px] bg-[rgba(255,255,255,.05)]" />
         </div>
-        <div className="card" style={{ padding: 22 }}>
+        <div className="bg-surface border border-line rounded-lg" style={{ padding: 22 }}>
           <h3 className="text-[16px] mb-[14px]">{t("Earnings breakdown")}</h3>
           <PRow l={t("Gross bookings")} r={money(fin.gross)} />
           <PRow
@@ -77,7 +78,7 @@ export function PPayouts({ fin, list }: { fin: any; list: any[] }) {
           </div>
         </div>
       </div>
-      <div className="card" style={{ overflow: "hidden" }}>
+      <div className="bg-surface border border-line rounded-lg" style={{ overflow: "hidden" }}>
         <h3 className="text-[17px] pt-[18px] px-[20px] pb-[4px]">
           {t("Payout history")}
         </h3>

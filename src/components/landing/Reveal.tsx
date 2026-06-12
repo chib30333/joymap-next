@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, type ReactNode } from "react";
+import { clsx } from "@/lib/cx";
 
 export function Reveal({
   children,
@@ -28,7 +29,15 @@ export function Reveal({
     return () => io.disconnect();
   }, []);
   return (
-    <div ref={ref} className={className} id={id} data-reveal>
+    <div
+      ref={ref}
+      className={clsx(
+        "opacity-0 translate-y-[22px] [transition:opacity_0.7s_cubic-bezier(0.22,1,0.36,1),transform_0.7s_cubic-bezier(0.22,1,0.36,1)] [&.in]:opacity-100 [&.in]:translate-y-0 motion-reduce:opacity-100 motion-reduce:translate-y-0",
+        className,
+      )}
+      id={id}
+      data-reveal
+    >
       {children}
     </div>
   );

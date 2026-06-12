@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Reveal } from "@/components/landing/Reveal";
+import { btnCls } from "@/lib/btn";
 import Logo from "@/components/landing/Logo";
 
 export default function Landing() {
@@ -22,14 +23,14 @@ export default function Landing() {
           </nav>
           <div className="flex-1" />
           <Link
-            className="btn btn-ghost"
+            className={btnCls("lp", "ghost")}
             href="/auth"
             style={{ padding: "11px 20px", fontSize: 14 }}
           >
             Sign in
           </Link>
           <Link
-            className="btn btn-primary"
+            className={btnCls("lp", "primary")}
             href="/auth"
             style={{ padding: "12px 22px", fontSize: 14 }}
           >
@@ -43,7 +44,7 @@ export default function Landing() {
         <div className="hero-scrim" />
         <div className="wrap hero-in">
           <div
-            className="eyebrow"
+            className="text-[12.5px] font-extrabold tracking-[0.16em] uppercase text-orange"
             style={{ color: "var(--orange)", marginBottom: 18 }}
           >
             Moscow · marketplace of real-life experiences
@@ -57,10 +58,10 @@ export default function Landing() {
             One subscription, infinite joy.
           </p>
           <div className="hero-cta">
-            <Link className="btn btn-primary" href="/auth">
+            <Link className={btnCls("lp", "primary")} href="/auth">
               Start exploring →
             </Link>
-            <a className="btn btn-glass" href="#experiences">
+            <a className={btnCls("lp", "glass")} href="#experiences">
               See how it works
             </a>
           </div>
@@ -84,7 +85,7 @@ export default function Landing() {
       <section className="sec" id="experiences">
         <div className="wrap">
           <Reveal className="sec-head">
-            <div className="eyebrow">Discover by feeling</div>
+            <div className="text-[12.5px] font-extrabold tracking-[0.16em] uppercase text-orange">Discover by feeling</div>
             <h2>Pick a mood. We&apos;ll map the week.</h2>
             <p>
               Tell our AI how you want to feel and it composes a personal weekly
@@ -145,7 +146,7 @@ export default function Landing() {
               />
             </div>
             <div className="split-txt">
-              <div className="eyebrow">For explorers</div>
+              <div className="text-[12.5px] font-extrabold tracking-[0.16em] uppercase text-orange">For explorers</div>
               <h2>A new thing to love, every week.</h2>
               <p>
                 Joymap turns &quot;what should we do?&quot; into a beautiful
@@ -166,7 +167,7 @@ export default function Landing() {
                   before
                 </li>
               </ul>
-              <Link className="btn btn-primary" href="/auth">
+              <Link className={btnCls("lp", "primary")} href="/auth">
                 Build my Joy Map →
               </Link>
             </div>
@@ -193,7 +194,7 @@ export default function Landing() {
               }}
             />
             <div className="band-in">
-              <div className="eyebrow">For service providers</div>
+              <div className="text-[12.5px] font-extrabold tracking-[0.16em] uppercase text-orange">For service providers</div>
               <h2>Fill every session. Grow your studio.</h2>
               <p>
                 List your experiences, manage your calendar with drag-and-drop
@@ -202,10 +203,10 @@ export default function Landing() {
                 dashboard.
               </p>
               <div className="flex gap-[12px] flex-wrap">
-                <Link className="btn btn-light" href="/auth">
+                <Link className={btnCls("lp", "light")} href="/auth">
                   Become a partner
                 </Link>
-                <Link className="btn btn-glass" href="/provider">
+                <Link className={btnCls("lp", "glass")} href="/provider">
                   Preview the dashboard
                 </Link>
               </div>
@@ -236,7 +237,7 @@ export default function Landing() {
               className="band-in"
               style={{ marginInlineStart: "auto", textAlign: "right" }}
             >
-              <div className="eyebrow">For teams</div>
+              <div className="text-[12.5px] font-extrabold tracking-[0.16em] uppercase text-orange">For teams</div>
               <h2>Wellbeing your team will actually use.</h2>
               <p>
                 Sponsor monthly experience credits, run team-building events,
@@ -244,7 +245,7 @@ export default function Landing() {
                 one place. Happier teams, zero admin.
               </p>
               <Link
-                className="btn btn-light"
+                className={btnCls("lp", "light")}
                 href="/auth"
                 style={{ background: "var(--orange)", color: "#3a0a0d" }}
               >
@@ -259,7 +260,7 @@ export default function Landing() {
       <section className="cta">
         <div className="wrap">
           <Reveal>
-            <div className="eyebrow" style={{ marginBottom: 14 }}>
+            <div className="text-[12.5px] font-extrabold tracking-[0.16em] uppercase text-orange" style={{ marginBottom: 14 }}>
               Live now in Moscow
             </div>
             <h2>Turn this week into a week worth remembering.</h2>
@@ -268,10 +269,10 @@ export default function Landing() {
               experience at a time.
             </p>
             <div className="flex gap-[13px] justify-center flex-wrap">
-              <Link className="btn btn-primary" href="/auth">
+              <Link className={btnCls("lp", "primary")} href="/auth">
                 Get started — 499 ₽/mo
               </Link>
-              <a className="btn btn-ghost" href="#partners">
+              <a className={btnCls("lp", "ghost")} href="#partners">
                 I&apos;m a provider
               </a>
             </div>

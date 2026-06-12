@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { rpc } from "@/lib/client";
@@ -120,7 +121,7 @@ export function Onboarding() {
       }}
     >
       <div
-        className="card anim-pop"
+        className="bg-surface border border-line rounded-lg animate-anim-pop-app"
         style={{
           width: "100%",
           maxWidth: 560,
@@ -154,7 +155,7 @@ export function Onboarding() {
             </div>
           </div>
           <button
-            className="btn btn-ghost btn-sm"
+            className={btnCls("app", "ghost", "sm")}
             style={{ marginLeft: "auto" }}
             onClick={() => complete(["calm", "joy", "focus"])}
           >
@@ -164,7 +165,7 @@ export function Onboarding() {
 
         <div
           ref={scroll}
-          className="no-scrollbar flex-1 p-[22px] flex flex-col gap-[14px]"
+          className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden flex-1 p-[22px] flex flex-col gap-[14px]"
           style={{ overflow: "auto" }}
         >
           {msgs.map((m, i) => (
@@ -228,7 +229,7 @@ export function Onboarding() {
                   style={{ resize: "none", minHeight: 48 }}
                 />
                 <button
-                  className="icon-btn"
+                  className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
                   style={{
                     background: "var(--coral)",
                     color: "#fff",
@@ -280,7 +281,7 @@ function Bubble({
   const me = from === "me";
   return (
     <div
-      className="anim-pop max-w-[82%]"
+      className="animate-anim-pop-app max-w-[82%]"
       style={{ alignSelf: me ? "flex-end" : "flex-start" }}
     >
       <div
@@ -334,7 +335,7 @@ function BuildingMap() {
   }, []);
   return (
     <div
-      className="anim-pop card"
+      className="animate-anim-pop-app bg-surface border border-line rounded-lg"
       style={{
         padding: 20,
         background: "var(--surface-2)",

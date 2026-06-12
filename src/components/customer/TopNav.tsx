@@ -95,16 +95,16 @@ export function TopNav({
         <div className="flex-1" />
         <CityMenu city={city} />
         <button
-          className="icon-btn"
+          className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
           onClick={() => router.push("/notifications")}
         >
           <Icons.bell size={19} />
-          {unread > 0 && <span className="dot-badge" />}
+          {unread > 0 && <span className="absolute top-[9px] right-[10px] w-2 h-2 rounded-full bg-coral border-2 border-surface" />}
         </button>
         <LangSwitcher />
         <AccountMenu user={user} />
       </div>
-      <div className="tn-row2 no-scrollbar">
+      <div className="tn-row2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {NAV.map((n) => {
           const I = Icons[n.icon];
           const b = (badges as Record<string, number | null>)[n.key];
@@ -160,7 +160,7 @@ function CityMenu({ city }: { city: string }) {
         />
       </button>
       {open && (
-        <div className="menu-pop anim-pop" style={{ minWidth: 180 }}>
+        <div className="menu-pop animate-anim-pop-app" style={{ minWidth: 180 }}>
           {CITIES.map((c) => (
             <button
               key={c}
@@ -212,7 +212,7 @@ function AccountMenu({ user }: { user: { name: string; plan: string } }) {
         />
       </div>
       {open && (
-        <div className="menu-pop anim-pop">
+        <div className="menu-pop animate-anim-pop-app">
           <div className="flex items-center gap-[11px] pt-[8px] px-[10px] pb-[12px]">
             <Avatar name={user.name} size={42} />
             <div className="min-w-0">

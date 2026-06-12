@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { btnCls } from "@/lib/btn";
 import { Icons, Logo } from "@/components/Icons";
 import {
   MOODS,
@@ -154,7 +155,7 @@ export function CCorporate({
   };
 
   return (
-    <div className="anim-fade corp">
+    <div className="animate-anim-fade-app corp">
       <div className="corp-hero">
         <div className="relative flex gap-[30px] items-center flex-wrap">
           <div className="flex-1 min-w-[280px] max-w-[560px]">
@@ -180,7 +181,7 @@ export function CCorporate({
             </p>
             <div className="flex gap-[10px] mt-[24px] flex-wrap">
               <button
-                className="btn btn-lg"
+                className={btnCls("app", undefined, "lg")}
                 style={{
                   background: "var(--gold)",
                   color: "#3a0a0d",
@@ -192,7 +193,7 @@ export function CCorporate({
                 <Icons.arrowR size={18} />
               </button>
               <button
-                className="btn btn-lg"
+                className={btnCls("app", undefined, "lg")}
                 style={{
                   background: "rgba(255,255,255,.1)",
                   color: "#F4E9D8",
@@ -395,7 +396,7 @@ export function CCorporate({
             {t("From strategy days to celebration nights, our events team curates a custom experience for any group size — fully handled, beautifully run.")}
           </p>
           <button
-            className="btn btn-lg"
+            className={btnCls("app", undefined, "lg")}
             style={{
               background: "var(--gold)",
               color: "#3a0a0d",
@@ -510,7 +511,7 @@ export function CCorporate({
                   {t(inv.status)}
                 </span>
               </div>
-              <button className="icon-btn" style={{ width: 34, height: 34 }}>
+              <button className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2" style={{ width: 34, height: 34 }}>
                 <Icons.download size={15} />
               </button>
             </div>
@@ -549,7 +550,7 @@ function TeamEventCard({
   if (!e) return null;
   const m = MOODS[e.mood];
   return (
-    <div className="card" style={{ overflow: "hidden" }}>
+    <div className="bg-surface border border-line rounded-lg" style={{ overflow: "hidden" }}>
       <div className="relative h-[120px]" style={{ background: e.gradient }}>
         <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,.4))]" />
         <div className="absolute top-[12px] left-[12px] flex gap-[7px]">
@@ -599,7 +600,7 @@ function TeamEventCard({
             {ev.going.length + ev.extra}/{ev.cap} {t("going")}
           </span>
           <button
-            className={`btn btn-sm ${joined ? "btn-soft" : "btn-primary"}`}
+            className={btnCls("app", joined ? "soft" : "primary", "sm")}
             style={{ marginLeft: "auto" }}
             onClick={() => setJoined((j) => !j)}
           >
@@ -716,7 +717,7 @@ function QuoteModal({ onClose }: { onClose: () => void }) {
           </div>
           <div className="flex gap-[10px] mt-[22px]">
             <button
-              className="btn btn-ghost btn-md btn-block"
+              className={btnCls("app", "ghost", "md", true)}
               onClick={onClose}
             >
               {t("Cancel")}
@@ -817,7 +818,7 @@ function GiftModal({ onClose }: { onClose: () => void }) {
           />
           <div className="flex gap-[10px]">
             <button
-              className="btn btn-ghost btn-md btn-block"
+              className={btnCls("app", "ghost", "md", true)}
               onClick={onClose}
             >
               {t("Cancel")}

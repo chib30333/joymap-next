@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { rpc, useBusy } from "@/lib/client";
@@ -14,9 +15,9 @@ export function Wallet({ wallet, tx }: { wallet: number; tx: Tx[] }) {
   const t = useT();
   const [topup, setTopup] = useState(false);
   return (
-    <div className="anim-fade">
+    <div className="animate-anim-fade-app">
       <div
-        className="card"
+        className="bg-surface border border-line rounded-lg"
         style={{
           padding: 28,
           background: "linear-gradient(150deg,#5E1014,var(--maroon))",
@@ -35,7 +36,7 @@ export function Wallet({ wallet, tx }: { wallet: number; tx: Tx[] }) {
         </div>
         <div className="flex gap-[10px] mt-[20px]">
           <button
-            className="btn btn-sm"
+            className={btnCls("app", undefined, "sm")}
             style={{
               background: "var(--orange)",
               color: "#1A0A04",
@@ -52,7 +53,7 @@ export function Wallet({ wallet, tx }: { wallet: number; tx: Tx[] }) {
       <h3 className="text-[17px] mb-[14px]">{t("Recent transactions")}</h3>
       {tx.length === 0 ? (
         <div
-          className="card"
+          className="bg-surface border border-line rounded-lg"
           style={{
             padding: "34px 20px",
             textAlign: "center",
@@ -66,7 +67,7 @@ export function Wallet({ wallet, tx }: { wallet: number; tx: Tx[] }) {
           )}
         </div>
       ) : (
-        <div className="card" style={{ overflow: "hidden" }}>
+        <div className="bg-surface border border-line rounded-lg" style={{ overflow: "hidden" }}>
           {tx.map((t, i) => (
             <div
               key={t.id}
@@ -122,12 +123,12 @@ function TopUpModal({ onClose }: { onClose: () => void }) {
           style={{ marginBottom: 18 }}
         />
         <div className="flex gap-[10px]">
-          <button className="btn btn-ghost btn-md btn-block" onClick={onClose}>
+          <button className={btnCls("app", "ghost", "md", true)} onClick={onClose}>
             {t("Cancel")}
           </button>
           <BusyBtn
             busy={busy}
-            className="btn btn-primary btn-md btn-block"
+            className={btnCls("app", "primary", "md", true)}
             icon={<Icons.wallet size={16} />}
             disabled={amt <= 0}
             onClick={() =>

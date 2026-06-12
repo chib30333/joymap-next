@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { useT } from "@/components/Language";
 import { Icons } from "@/components/Icons";
@@ -79,7 +80,7 @@ export function ADashboard({
     })),
   ];
   return (
-    <div className="anim-fade">
+    <div className="animate-anim-fade-dash">
       <div
         className="grid"
         style={{
@@ -125,7 +126,7 @@ export function ADashboard({
           marginBottom: "var(--gap)",
         }}
       >
-        <div className="card" style={{ padding: 22 }}>
+        <div className="bg-surface border border-line rounded-lg" style={{ padding: 22 }}>
           <div className="shead" style={{ marginBottom: 8 }}>
             <div>
               <h3 className="text-[17px]">{t("Gross merchandise value")}</h3>
@@ -161,7 +162,7 @@ export function ADashboard({
           )}
         </div>
         <div
-          className="card"
+          className="bg-surface border border-line rounded-lg"
           style={{
             padding: 22,
             display: "flex",
@@ -220,11 +221,11 @@ export function ADashboard({
         className="grid"
         style={{ gridTemplateColumns: "1fr 1fr", gap: "var(--gap)" }}
       >
-        <div className="card" style={{ overflow: "hidden" }}>
+        <div className="bg-surface border border-line rounded-lg" style={{ overflow: "hidden" }}>
           <div className="flex items-center justify-between px-[20px] py-[18px]">
             <h3 className="text-[16px]">{t("Moderation queue")}</h3>
             <button
-              className="btn btn-ghost btn-sm"
+              className={btnCls("dash", "ghost", "sm")}
               onClick={() => router.push("/admin/moderation")}
             >
               {t("Review")} <Icons.arrowR size={15} />
@@ -255,11 +256,11 @@ export function ADashboard({
             </div>
           ))}
         </div>
-        <div className="card" style={{ overflow: "hidden" }}>
+        <div className="bg-surface border border-line rounded-lg" style={{ overflow: "hidden" }}>
           <div className="flex items-center justify-between px-[20px] py-[18px]">
             <h3 className="text-[16px]">{t("Top providers by GMV")}</h3>
             <button
-              className="btn btn-ghost btn-sm"
+              className={btnCls("dash", "ghost", "sm")}
               onClick={() => router.push("/admin/providers")}
             >
               {t("All")} <Icons.arrowR size={15} />
@@ -329,7 +330,7 @@ export function AProviders({ rows }: { rows: any[] }) {
       ]),
     ]);
   return (
-    <div className="anim-fade">
+    <div className="animate-anim-fade-dash">
       <div className="shead">
         <div className="relative flex-1 max-w-[340px]">
           <span
@@ -356,7 +357,7 @@ export function AProviders({ rows }: { rows: any[] }) {
             ]}
             onChange={setSt}
           />
-          <button className="btn btn-ghost btn-md" onClick={exportCsv}>
+          <button className={btnCls("dash", "ghost", "md")} onClick={exportCsv}>
             <Icons.download size={16} />
             {t("Export CSV")}
           </button>
@@ -364,7 +365,7 @@ export function AProviders({ rows }: { rows: any[] }) {
       </div>
       {list.length === 0 ? (
         <div
-          className="card"
+          className="bg-surface border border-line rounded-lg"
           style={{
             padding: "56px 20px",
             textAlign: "center",
@@ -377,7 +378,7 @@ export function AProviders({ rows }: { rows: any[] }) {
           {t("yet — they appear here after signing up.")}
         </div>
       ) : (
-        <div className="card" style={{ overflow: "hidden" }}>
+        <div className="bg-surface border border-line rounded-lg" style={{ overflow: "hidden" }}>
           <div style={{ overflowX: "auto" }}>
             <table className="tbl">
               <thead>
@@ -449,7 +450,7 @@ function ProviderDrawer({ p, onClose }: { p: any; onClose: () => void }) {
       <div>
         <div className="h-[90px] bg-[linear-gradient(140deg,var(--red),var(--orange))] relative">
           <button
-            className="icon-btn"
+            className="w-10 h-10 rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
             style={{
               position: "absolute",
               top: 12,
@@ -500,7 +501,7 @@ function ProviderDrawer({ p, onClose }: { p: any; onClose: () => void }) {
             ].map(([l, v]) => (
               <div
                 key={l}
-                className="card"
+                className="bg-surface border border-line rounded-lg"
                 style={{ padding: "13px 14px", background: "var(--surface-2)" }}
               >
                 <div className="text-[11.5px] text-ink-3 font-semibold mb-[4px]">
@@ -522,7 +523,7 @@ function ProviderDrawer({ p, onClose }: { p: any; onClose: () => void }) {
             </span>
           </div>
           <div
-            className="card"
+            className="bg-surface border border-line rounded-lg"
             style={{
               padding: 16,
               background: "var(--surface-2)",
@@ -539,7 +540,7 @@ function ProviderDrawer({ p, onClose }: { p: any; onClose: () => void }) {
           </div>
           <div className="flex gap-[10px] mt-[22px]">
             <button
-              className="btn btn-ghost btn-md btn-block"
+              className={btnCls("dash", "ghost", "md", true)}
               onClick={onClose}
             >
               {t("Close")}
@@ -557,10 +558,10 @@ export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
   const [sel, setSel] = useState<any>(null);
   const empty = apps.length === 0 && svcs.length === 0;
   return (
-    <div className="anim-fade">
+    <div className="animate-anim-fade-dash">
       <div className="shead">
         <div>
-          <div className="eyebrow" style={{ marginBottom: 6 }}>
+          <div className="text-[12px] font-extrabold tracking-[0.1em] uppercase text-orange" style={{ marginBottom: 6 }}>
             {apps.length + svcs.length} {t("awaiting review")}
           </div>
           <h2 className="text-[22px]">{t("Moderation")}</h2>
@@ -589,7 +590,7 @@ export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
             }}
           >
             {apps.map((m) => (
-              <div key={m.id} className="card anim-pop" style={{ padding: 20 }}>
+              <div key={m.id} className="bg-surface border border-line rounded-lg animate-anim-pop-dash" style={{ padding: 20 }}>
                 <div className="flex items-center gap-[12px] mb-[14px]">
                   <Avatar
                     name={m.name}
@@ -626,7 +627,7 @@ export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
                     {t("Approve")}
                   </Btn>
                   <button
-                    className="btn btn-ghost btn-sm btn-block"
+                    className={btnCls("dash", "ghost", "sm", true)}
                     onClick={() =>
                       setSel({ kind: "provider", item: m, mode: "reject" })
                     }
@@ -656,7 +657,7 @@ export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
               return (
                 <div
                   key={s.id}
-                  className="card anim-pop"
+                  className="bg-surface border border-line rounded-lg animate-anim-pop-dash"
                   style={{ padding: 20 }}
                 >
                   <div className="flex items-center gap-[12px] mb-[12px]">
@@ -692,7 +693,7 @@ export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
                       {t("Approve & publish")}
                     </Btn>
                     <button
-                      className="btn btn-ghost btn-sm btn-block"
+                      className={btnCls("dash", "ghost", "sm", true)}
                       onClick={() =>
                         setSel({ kind: "service", item: s, mode: "reject" })
                       }
@@ -751,7 +752,7 @@ function ModerationModal({ sel, onClose }: { sel: any; onClose: () => void }) {
         </div>
         {sel.kind === "provider" && (
           <div
-            className="card"
+            className="bg-surface border border-line rounded-lg"
             style={{
               padding: 14,
               background: "var(--surface-2)",
@@ -807,13 +808,13 @@ function ModerationModal({ sel, onClose }: { sel: any; onClose: () => void }) {
           </p>
         )}
         <div className="flex gap-[10px]">
-          <button className="btn btn-ghost btn-md btn-block" onClick={onClose}>
+          <button className={btnCls("dash", "ghost", "md", true)} onClick={onClose}>
             {t("Cancel")}
           </button>
           {reject ? (
             <BusyBtn
               busy={busy}
-              className="btn btn-md btn-block"
+              className={btnCls("dash", undefined, "md", true)}
               style={{ background: "var(--coral)", color: "#fff" }}
               onClick={decide}
             >
@@ -822,7 +823,7 @@ function ModerationModal({ sel, onClose }: { sel: any; onClose: () => void }) {
           ) : (
             <BusyBtn
               busy={busy}
-              className="btn btn-primary btn-md btn-block"
+              className={btnCls("dash", "primary", "md", true)}
               icon={<Icons.check size={16} />}
               onClick={decide}
             >
@@ -856,10 +857,10 @@ export function AContent({ items }: { items: any[] }) {
     promo: ["Promo material", "#7B53F0"],
   };
   return (
-    <div className="anim-fade">
+    <div className="animate-anim-fade-dash">
       <div className="shead">
         <div>
-          <div className="eyebrow" style={{ marginBottom: 6 }}>
+          <div className="text-[12px] font-extrabold tracking-[0.1em] uppercase text-orange" style={{ marginBottom: 6 }}>
             {items.length} {t("flagged items")}
           </div>
           <h2 className="text-[22px]">{t("Content moderation")}</h2>
@@ -894,7 +895,7 @@ export function AContent({ items }: { items: any[] }) {
             return (
               <div
                 key={c.id}
-                className="card anim-pop"
+                className="bg-surface border border-line rounded-lg animate-anim-pop-dash"
                 style={{
                   padding: 18,
                   display: "flex",
@@ -948,20 +949,20 @@ export function AContent({ items }: { items: any[] }) {
                 <div className="flex gap-[8px] mt-[2px]">
                   {acting === c.id ? (
                     <span
-                      className="jm-spin"
+                      className="w-[17px] h-[17px] rounded-full inline-block flex-none border-[2.5px] border-solid [border-top-color:currentColor] [border-right-color:color-mix(in_srgb,currentColor_35%,transparent)] [border-bottom-color:color-mix(in_srgb,currentColor_35%,transparent)] [border-left-color:color-mix(in_srgb,currentColor_35%,transparent)] animate-jm-spin"
                       style={{ margin: "8px auto", color: "var(--ink-3)" }}
                     />
                   ) : (
                     <>
                       <button
-                        className="btn btn-ghost btn-sm btn-block"
+                        className={btnCls("dash", "ghost", "sm", true)}
                         onClick={() => act(c.id)}
                       >
                         <Icons.check size={15} />
                         {t("Keep")}
                       </button>
                       <button
-                        className="btn btn-sm btn-block"
+                        className={btnCls("dash", undefined, "sm", true)}
                         style={{ background: "var(--coral)", color: "#fff" }}
                         onClick={() => act(c.id)}
                       >
@@ -992,10 +993,10 @@ export function ACustomers({ list }: { list: any[] }) {
       ...list.map((c) => [c.name, c.tier, c.bookings, c.ltv, c.joined]),
     ]);
   return (
-    <div className="anim-fade">
+    <div className="animate-anim-fade-dash">
       <div className="shead" style={{ marginBottom: "var(--gap)" }}>
         <div />
-        <button className="btn btn-ghost btn-md" onClick={exportCsv}>
+        <button className={btnCls("dash", "ghost", "md")} onClick={exportCsv}>
           <Icons.download size={16} />
           {t("Export LTV")}
         </button>
@@ -1029,7 +1030,7 @@ export function ACustomers({ list }: { list: any[] }) {
       </div>
       {list.length === 0 ? (
         <div
-          className="card"
+          className="bg-surface border border-line rounded-lg"
           style={{
             padding: "56px 20px",
             textAlign: "center",
@@ -1040,7 +1041,7 @@ export function ACustomers({ list }: { list: any[] }) {
           {t("No customers yet — they appear here after signing up.")}
         </div>
       ) : (
-        <div className="card" style={{ overflow: "hidden" }}>
+        <div className="bg-surface border border-line rounded-lg" style={{ overflow: "hidden" }}>
           <div style={{ overflowX: "auto" }}>
             <table className="tbl">
               <thead>
@@ -1111,7 +1112,7 @@ export function AFinancials({ s, queue }: { s: any; queue: any[] }) {
       ...queue.map((p) => [p.providerName, p.amount, p.due, p.status]),
     ]);
   return (
-    <div className="anim-fade">
+    <div className="animate-anim-fade-dash">
       <div
         className="grid"
         style={{
@@ -1151,10 +1152,10 @@ export function AFinancials({ s, queue }: { s: any; queue: any[] }) {
           accent="#E89015"
         />
       </div>
-      <div className="card" style={{ overflow: "hidden" }}>
+      <div className="bg-surface border border-line rounded-lg" style={{ overflow: "hidden" }}>
         <div className="flex items-center justify-between px-[20px] py-[18px]">
           <h3 className="text-[17px]">{t("Payouts queue")}</h3>
-          <button className="btn btn-ghost btn-sm" onClick={exportCsv}>
+          <button className={btnCls("dash", "ghost", "sm")} onClick={exportCsv}>
             <Icons.download size={15} />
             {t("Export CSV")}
           </button>
@@ -1194,12 +1195,12 @@ export function AFinancials({ s, queue }: { s: any; queue: any[] }) {
                     {p.status === "pending" &&
                       (releasing === p.id ? (
                         <span
-                          className="jm-spin"
+                          className="w-[17px] h-[17px] rounded-full inline-block flex-none border-[2.5px] border-solid [border-top-color:currentColor] [border-right-color:color-mix(in_srgb,currentColor_35%,transparent)] [border-bottom-color:color-mix(in_srgb,currentColor_35%,transparent)] [border-left-color:color-mix(in_srgb,currentColor_35%,transparent)] animate-jm-spin"
                           style={{ color: "var(--ink-3)" }}
                         />
                       ) : (
                         <button
-                          className="btn btn-soft btn-sm"
+                          className={btnCls("dash", "soft", "sm")}
                           onClick={() => release(p.id)}
                         >
                           {t("Release")}
@@ -1247,12 +1248,12 @@ export function AMarketing() {
   const t = useT();
   const [promo, setPromo] = useState(false);
   return (
-    <div className="anim-fade">
+    <div className="animate-anim-fade-dash">
       <div className="shead">
         <div />
         <div className="flex gap-[10px]">
           <button
-            className="btn btn-ghost btn-md"
+            className={btnCls("dash", "ghost", "md")}
             onClick={() => setPromo(true)}
           >
             <Icons.percent size={16} />
@@ -1265,7 +1266,7 @@ export function AMarketing() {
         </div>
       </div>
       <div
-        className="card"
+        className="bg-surface border border-line rounded-lg"
         style={{ overflow: "hidden", marginBottom: "var(--gap)" }}
       >
         <h3 className="text-[17px] pt-[18px] px-[20px] pb-[4px]">
@@ -1370,7 +1371,7 @@ function PromoMassModal({ onClose }: { onClose: () => void }) {
                 <Input value={disc} onChange={(e) => setDisc(e.target.value)} />
               </div>
               <div
-                className="card"
+                className="bg-surface border border-line rounded-lg"
                 style={{ padding: 14, background: "var(--surface-2)" }}
               >
                 <div className="text-[12px] font-bold text-ink-3 mb-[8px]">
@@ -1397,7 +1398,7 @@ function PromoMassModal({ onClose }: { onClose: () => void }) {
             </div>
             <div className="flex gap-[10px] mt-[22px]">
               <button
-                className="btn btn-ghost btn-md btn-block"
+                className={btnCls("dash", "ghost", "md", true)}
                 onClick={onClose}
               >
                 {t("Cancel")}
@@ -1424,7 +1425,7 @@ function PromoMassModal({ onClose }: { onClose: () => void }) {
             </p>
             <div className="flex gap-[10px]">
               <button
-                className="btn btn-ghost btn-md btn-block"
+                className={btnCls("dash", "ghost", "md", true)}
                 onClick={onClose}
               >
                 {t("Close")}

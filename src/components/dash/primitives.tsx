@@ -9,6 +9,7 @@ import {
   type CSSProperties,
 } from "react";
 import { statusColor } from "@/components/ui/pill";
+import { btnCls } from "@/lib/btn";
 
 export const money = (n: number) =>
   new Intl.NumberFormat("ru-RU").format(Math.round(n)) + "\u00A0₽";
@@ -30,7 +31,7 @@ export function Btn({
 }) {
   return (
     <button
-      className={`btn btn-${variant} btn-${size} ${block ? "btn-block" : ""}`}
+      className={btnCls("dash", variant, size, block)}
       {...p}
     >
       {icon}
@@ -90,7 +91,7 @@ export function Stat({
   accent?: string;
 }) {
   return (
-    <div className="stat anim-pop">
+    <div className="stat animate-anim-pop-dash">
       <div className="lbl">
         {icon && (
           <span
@@ -137,7 +138,7 @@ export function SectionHead({
     <div className="shead">
       <div>
         {eyebrow && (
-          <div className="eyebrow" style={{ marginBottom: 7 }}>
+          <div className="text-[12px] font-extrabold tracking-[0.1em] uppercase text-orange" style={{ marginBottom: 7 }}>
             {eyebrow}
           </div>
         )}

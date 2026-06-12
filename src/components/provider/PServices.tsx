@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { rpc, useBusy } from "@/lib/client";
@@ -18,7 +19,7 @@ export function PServices({ svcs }: { svcs: Svc[] }) {
   const toggle = (id: string) =>
     rpc("toggleService", { id }).then(() => router.refresh());
   return (
-    <div className="anim-fade">
+    <div className="animate-anim-fade-dash">
       <div className="shead">
         <div />
         <Btn
@@ -31,7 +32,7 @@ export function PServices({ svcs }: { svcs: Svc[] }) {
       </div>
       {svcs.length === 0 ? (
         <div
-          className="card"
+          className="bg-surface border border-line rounded-lg"
           style={{ padding: "60px 24px", textAlign: "center" }}
         >
           <div className="w-[60px] h-[60px] rounded-[99px] bg-coral-soft text-coral-deep grid place-items-center mt-0 mx-auto mb-[14px]">
@@ -64,7 +65,7 @@ export function PServices({ svcs }: { svcs: Svc[] }) {
             return (
               <div
                 key={s.id}
-                className="card anim-pop"
+                className="bg-surface border border-line rounded-lg animate-anim-pop-dash"
                 style={{
                   padding: 0,
                   overflow: "hidden",
@@ -140,7 +141,7 @@ export function PServices({ svcs }: { svcs: Svc[] }) {
                       </div>
                     </div>
                     <button
-                      className="btn btn-ghost btn-sm"
+                      className={btnCls("dash", "ghost", "sm")}
                       onClick={() => setModal(s)}
                     >
                       <Icons.settings size={15} />
@@ -324,12 +325,12 @@ function ServiceFormModal({
           </div>
         )}
         <div className="flex gap-[10px] mt-[20px]">
-          <button className="btn btn-ghost btn-md btn-block" onClick={onClose}>
+          <button className={btnCls("dash", "ghost", "md", true)} onClick={onClose}>
             {t("Cancel")}
           </button>
           <BusyBtn
             busy={busy}
-            className="btn btn-primary btn-md btn-block"
+            className={btnCls("dash", "primary", "md", true)}
             disabled={!ok}
             icon={<Icons.check size={16} />}
             onClick={save}

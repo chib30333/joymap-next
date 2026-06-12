@@ -14,7 +14,7 @@ export function ProviderBanner({
   const rejected = status === "rejected";
   return (
     <div
-      className="card"
+      className="bg-surface border border-line rounded-lg"
       style={{
         margin: "0 0 var(--gap)",
         padding: "14px 18px",

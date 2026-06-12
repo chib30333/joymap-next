@@ -103,10 +103,10 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
   };
 
   return (
-    <div className="anim-fade">
+    <div className="animate-anim-fade-dash">
       <div className="shead">
         <div>
-          <div className="eyebrow" style={{ marginBottom: 6 }}>
+          <div className="text-[12px] font-extrabold tracking-[0.1em] uppercase text-orange" style={{ marginBottom: 6 }}>
             {t("Week of")} {TODAY}–{Math.min(TODAY + 6, 30)} {t("Jun")} · {total}{" "}
             {t("sessions")}
           </div>

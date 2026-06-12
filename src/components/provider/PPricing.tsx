@@ -48,8 +48,8 @@ export function PPricing({ svcs }: { svcs: any[] }) {
       r.map((x) => (x.id === id ? { ...x, active: !x.active } : x)),
     );
   return (
-    <div className="anim-fade">
-      <div className="card" style={{ padding: 22, marginBottom: "var(--gap)" }}>
+    <div className="animate-anim-fade-dash">
+      <div className="bg-surface border border-line rounded-lg" style={{ padding: 22, marginBottom: "var(--gap)" }}>
         <div className="shead" style={{ marginBottom: 14 }}>
           <div>
             <h3 className="text-[17px]">{t("Base prices")}</h3>
@@ -107,7 +107,7 @@ export function PPricing({ svcs }: { svcs: any[] }) {
         {rules.map((r) => (
           <div
             key={r.id}
-            className="card"
+            className="bg-surface border border-line rounded-lg"
             style={{
               padding: "16px 20px",
               display: "flex",

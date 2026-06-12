@@ -151,9 +151,9 @@ export function AdminTopbar({
         )}
       </div>
       <LangSwitcher />
-      <button className="icon-btn">
+      <button className="w-10 h-10 rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2">
         <Icons.bell size={18} />
-        {unread > 0 && <span className="dot-badge" />}
+        {unread > 0 && <span className="absolute top-[9px] right-[10px] w-2 h-2 rounded-full bg-coral border-2 border-surface" />}
       </button>
       <Avatar
         name={name}

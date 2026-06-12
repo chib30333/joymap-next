@@ -58,13 +58,13 @@ export function Catalog({
   }, [source, mood, cat, sort, query]);
 
   return (
-    <div className="anim-fade">
+    <div className="animate-anim-fade-app">
       <div className="mb-[18px]">
-        <div className="eyebrow" style={{ marginBottom: 12 }}>
+        <div className="text-[12.5px] font-bold tracking-[0.1em] uppercase text-orange" style={{ marginBottom: 12 }}>
           {t("Browse by how you want to feel")}
         </div>
         <div
-          className="no-scrollbar"
+          className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           style={{
             display: "flex",
             gap: 10,
@@ -145,7 +145,7 @@ export function Catalog({
           {list.map((e, i) => (
             <div
               key={e.id}
-              className="anim-pop"
+              className="animate-anim-pop-app"
               style={{ animationDelay: `${Math.min(i * 0.04, 0.4)}s` }}
             >
               <ExperienceCard

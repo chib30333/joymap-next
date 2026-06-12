@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { btnCls } from "@/lib/btn";
 import { Icons } from "@/components/Icons";
 import { Btn } from "@/components/dash/primitives";
 import { P_GALLERY } from "@/components/provider/data";
@@ -13,10 +14,10 @@ export function PGalleryView() {
   const setCover = (id: string) =>
     setItems((it) => it.map((g) => ({ ...g, cover: g.id === id })));
   return (
-    <div className="anim-fade">
+    <div className="animate-anim-fade-dash">
       <div className="shead">
         <div>
-          <div className="eyebrow" style={{ marginBottom: 6 }}>
+          <div className="text-[12px] font-extrabold tracking-[0.1em] uppercase text-orange" style={{ marginBottom: 6 }}>
             {items.length} {t("items")}
           </div>
           <h2 className="text-[22px]">{t("Photos & videos")}</h2>
@@ -36,7 +37,7 @@ export function PGalleryView() {
         {items.map((g) => (
           <div
             key={g.id}
-            className="card anim-pop"
+            className="bg-surface border border-line rounded-lg animate-anim-pop-dash"
             style={{ overflow: "hidden", padding: 0 }}
           >
             <div
@@ -83,7 +84,7 @@ export function PGalleryView() {
             <div className="flex gap-[6px] py-[10px] px-[12px]">
               {!g.cover && (
                 <button
-                  className="btn btn-ghost btn-sm"
+                  className={btnCls("dash", "ghost", "sm")}
                   style={{ flex: 1, fontSize: 12 }}
                   onClick={() => setCover(g.id)}
                 >
@@ -91,7 +92,7 @@ export function PGalleryView() {
                 </button>
               )}
               <button
-                className="icon-btn"
+                className="w-10 h-10 rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
                 style={{ width: 34, height: 34 }}
                 onClick={() => del(g.id)}
               >

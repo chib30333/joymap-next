@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { btnCls } from "@/lib/btn";
 import { Icons } from "@/components/Icons";
 import { useT } from "@/components/Language";
 import {
@@ -125,7 +126,7 @@ export function CCalendar({
   );
 
   return (
-    <div className="anim-fade">
+    <div className="animate-anim-fade-app">
       <div className="cal-toolbar">
         <Seg
           accent
@@ -138,7 +139,7 @@ export function CCalendar({
         />
         <div className="cal-nav">
           <button
-            className="icon-btn"
+            className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
             style={{ width: 38, height: 38 }}
             onClick={() => setCursor((c) => Math.max(1, c - 7))}
             disabled={view === "month"}
@@ -157,7 +158,7 @@ export function CCalendar({
             )}
           </b>
           <button
-            className="icon-btn"
+            className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
             style={{ width: 38, height: 38 }}
             onClick={() => setCursor((c) => Math.min(CAL_MONTH.days, c + 7))}
             disabled={view === "month"}
@@ -167,7 +168,7 @@ export function CCalendar({
         </div>
         <div className="flex-1" />
         <button
-          className="btn btn-soft btn-sm"
+          className={btnCls("app", "soft", "sm")}
           onClick={() => {
             setCursor(CAL_MONTH.today);
             setSel(CAL_MONTH.today);
@@ -226,7 +227,7 @@ export function CCalendar({
             ))}
           </Sel>
           {activeFilters > 0 && (
-            <button className="btn btn-ghost btn-sm" onClick={clear}>
+            <button className={btnCls("app", "ghost", "sm")} onClick={clear}>
               <Icons.close size={14} />
               {t("Clear")}
               {` (${activeFilters})`}
@@ -551,7 +552,7 @@ function WeekView({
               </div>
               <div className="font-display font-extrabold text-[22px]">{d}</div>
             </div>
-            <div className="cal-col-b no-scrollbar">
+            <div className="cal-col-b [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {list.length === 0 ? (
                 <div className="wk-empty">{t("No sessions")}</div>
               ) : (

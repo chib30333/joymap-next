@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { useT } from "@/components/Language";
 import { Icons } from "@/components/Icons";
@@ -91,7 +92,7 @@ export function ServiceModal({
     <div className="relative">
       <PhotoFrame exp={exp} ratio="16/8">
         <button
-          className="icon-btn"
+          className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
           style={{
             position: "absolute",
             top: 14,
@@ -252,7 +253,7 @@ export function ServiceModal({
           <div className="pt-[22px] px-[24px] pb-0">
             <Label n="1" t={t("Pick a day")} />
             <div
-              className="no-scrollbar"
+              className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
               style={{
                 display: "flex",
                 gap: 9,
@@ -323,7 +324,7 @@ export function ServiceModal({
             <Label n="3" t={t("How many spots?")} />
             <div className="flex items-center gap-[16px] mb-[8px]">
               <button
-                className="icon-btn"
+                className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
                 onClick={() => setSpots((s) => Math.max(1, s - 1))}
               >
                 <Icons.minus size={18} />
@@ -332,7 +333,7 @@ export function ServiceModal({
                 {spots}
               </span>
               <button
-                className="icon-btn"
+                className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
                 onClick={() => setSpots((s) => Math.min(exp.spots, s + 1))}
               >
                 <Icons.plus size={18} />
@@ -343,7 +344,7 @@ export function ServiceModal({
             </div>
           </div>
           <Footer>
-            <button className="btn btn-ghost btn-md" onClick={() => setStep(0)}>
+            <button className={btnCls("app", "ghost", "md")} onClick={() => setStep(0)}>
               <Icons.arrowL size={18} />
               {t("Back")}
             </button>
@@ -362,13 +363,13 @@ export function ServiceModal({
         <div>
           <div className="pt-[22px] px-[24px] pb-0">
             <div className="flex items-center gap-[10px] mb-[20px]">
-              <button className="icon-btn" onClick={() => setStep(1)}>
+              <button className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2" onClick={() => setStep(1)}>
                 <Icons.arrowL size={18} />
               </button>
               <h2 className="text-[22px]">{t("Confirm & pay")}</h2>
             </div>
             <div
-              className="card"
+              className="bg-surface border border-line rounded-lg"
               style={{
                 padding: 16,
                 display: "flex",
@@ -474,7 +475,7 @@ export function ServiceModal({
             </div>
             <BusyBtn
               busy={busy}
-              className="btn btn-primary btn-lg"
+              className={btnCls("app", "primary", "lg")}
               icon={<Icons.check size={19} />}
               disabled={pay === "wallet" && wallet < total}
               onClick={confirm}
@@ -488,7 +489,7 @@ export function ServiceModal({
       {step === 3 && (
         <div className="py-[30px] px-[28px] text-center">
           <div
-            className="anim-pop w-[72px] h-[72px] rounded-[99px] bg-[var(--m-calm)] grid place-items-center mt-0 mx-auto mb-[18px] text-[#fff]"
+            className="animate-anim-pop-app w-[72px] h-[72px] rounded-[99px] bg-[var(--m-calm)] grid place-items-center mt-0 mx-auto mb-[18px] text-[#fff]"
             style={{ boxShadow: "0 12px 30px rgba(63,168,155,.4)" }}
           >
             <Icons.check size={38} />
@@ -500,7 +501,7 @@ export function ServiceModal({
             {t("will confirm shortly — watch your notifications.")}
           </p>
           <div
-            className="card"
+            className="bg-surface border border-line rounded-lg"
             style={{
               padding: 22,
               maxWidth: 300,

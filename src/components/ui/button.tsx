@@ -33,7 +33,7 @@ export function Button({
         className,
       )}
     >
-      {busy && <span className="jm-spin" />}
+      {busy && <span className="w-[17px] h-[17px] rounded-full inline-block flex-none border-[2.5px] border-solid [border-top-color:currentColor] [border-right-color:color-mix(in_srgb,currentColor_35%,transparent)] [border-bottom-color:color-mix(in_srgb,currentColor_35%,transparent)] [border-left-color:color-mix(in_srgb,currentColor_35%,transparent)] animate-jm-spin" />}
       {children}
     </button>
   );

@@ -154,14 +154,14 @@ export function ProviderNav({
           )}
         </div>
         <div className="flex-1" />
-        <button className="icon-btn">
+        <button className="w-10 h-10 rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2">
           <Icons.bell size={18} />
-          <span className="dot-badge" />
+          <span className="absolute top-[9px] right-[10px] w-2 h-2 rounded-full bg-coral border-2 border-surface" />
         </button>
         <LangSwitcher />
         <AccountMenu name={name} />
       </div>
-      <div className="tn-row2 no-scrollbar">
+      <div className="tn-row2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {P_NAV.map((n, i) => {
           if (n.sec)
             return (
@@ -218,7 +218,7 @@ function AccountMenu({ name }: { name: string }) {
         />
       </div>
       {open && (
-        <div className="menu-pop anim-pop">
+        <div className="menu-pop animate-anim-pop-dash">
           <div className="flex items-center gap-[11px] pt-[8px] px-[10px] pb-[12px]">
             <Avatar name={name} size={42} grad={grad} />
             <div className="min-w-0">

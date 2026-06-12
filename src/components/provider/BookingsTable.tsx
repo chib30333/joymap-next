@@ -1,6 +1,7 @@
 "use client";
 
 import { Icons } from "@/components/Icons";
+import { btnCls } from "@/lib/btn";
 import { useT } from "@/components/Language";
 import { money, Pill, Avatar } from "@/components/dash/primitives";
 
@@ -60,7 +61,7 @@ export function BookingsTable({
                 <div className="flex gap-[6px] justify-end items-center">
                   {actingId === b.id ? (
                     <span
-                      className="jm-spin"
+                      className="w-[17px] h-[17px] rounded-full inline-block flex-none border-[2.5px] border-solid [border-top-color:currentColor] [border-right-color:color-mix(in_srgb,currentColor_35%,transparent)] [border-bottom-color:color-mix(in_srgb,currentColor_35%,transparent)] [border-left-color:color-mix(in_srgb,currentColor_35%,transparent)] animate-jm-spin"
                       style={{ color: "var(--ink-3)" }}
                     />
                   ) : (
@@ -68,7 +69,7 @@ export function BookingsTable({
                       {b.status === "pending" && (
                         <>
                           <button
-                            className="btn btn-primary btn-sm"
+                            className={btnCls("dash", "primary", "sm")}
                             onClick={(e) => {
                               e.stopPropagation();
                               onAct(b.id, "confirmed");
@@ -77,7 +78,7 @@ export function BookingsTable({
                             {t("Confirm")}
                           </button>
                           <button
-                            className="icon-btn"
+                            className="w-10 h-10 rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
                             style={{ width: 34, height: 34 }}
                             title={t("Decline")}
                             onClick={(e) => {
@@ -92,7 +93,7 @@ export function BookingsTable({
                       {b.status === "confirmed" && (
                         <>
                           <button
-                            className="btn btn-soft btn-sm"
+                            className={btnCls("dash", "soft", "sm")}
                             onClick={(e) => {
                               e.stopPropagation();
                               onAct(b.id, "completed");
@@ -101,7 +102,7 @@ export function BookingsTable({
                             {t("Complete")}
                           </button>
                           <button
-                            className="btn btn-ghost btn-sm"
+                            className={btnCls("dash", "ghost", "sm")}
                             onClick={(e) => {
                               e.stopPropagation();
                               onAct(b.id, "cancelled");

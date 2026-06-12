@@ -9,6 +9,7 @@ import {
 import { Icons } from "@/components/Icons";
 import { useT } from "@/components/Language";
 import { MOODS, type Mood } from "@/lib/constants";
+import { btnCls } from "@/lib/btn";
 
 export { MOODS, type Mood };
 export const MOOD_ORDER = [
@@ -74,7 +75,7 @@ export function Btn({
 }) {
   return (
     <button
-      className={`btn btn-${variant} btn-${size} ${block ? "btn-block" : ""}`}
+      className={btnCls("app", variant, size, block)}
       {...p}
     >
       {icon}
@@ -268,7 +269,7 @@ export function SectionHead({
     <div className="shead">
       <div>
         {eyebrow && (
-          <div className="eyebrow" style={{ marginBottom: 7 }}>
+          <div className="text-[12.5px] font-bold tracking-[0.1em] uppercase text-orange" style={{ marginBottom: 7 }}>
             {eyebrow}
           </div>
         )}

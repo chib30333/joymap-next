@@ -56,7 +56,7 @@ export function ChatPanel({
   if (threads.length === 0) {
     return (
       <div
-        className="chat-wrap anim-fade"
+        className="chat-wrap animate-anim-fade-app"
         style={{ gridTemplateColumns: "1fr" }}
       >
         <div
@@ -88,8 +88,8 @@ export function ChatPanel({
   }
 
   return (
-    <div className={`chat-wrap anim-fade ${cur ? "has-active" : ""}`}>
-      <div className="chat-list no-scrollbar">
+    <div className={`chat-wrap animate-anim-fade-app ${cur ? "has-active" : ""}`}>
+      <div className="chat-list [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {threads.map((th) => (
           <div
             key={th.id}
@@ -147,11 +147,11 @@ export function ChatPanel({
                 {thread.service || t("Joymap chat")}
               </div>
             </div>
-            <button className="icon-btn">
+            <button className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2">
               <Icons.phone size={17} />
             </button>
           </div>
-          <div className="chat-body no-scrollbar" ref={bodyRef}>
+          <div className="chat-body [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" ref={bodyRef}>
             {thread.msgs.length === 0 && (
               <div className="self-center text-ink-3 text-[13px] font-semibold py-[30px] px-0">
                 {t("Say hello — messages are delivered instantly.")}
@@ -175,7 +175,7 @@ export function ChatPanel({
               style={{ borderRadius: "var(--r-pill)" }}
             />
             <button
-              className="icon-btn"
+              className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
               style={{
                 background: "var(--coral)",
                 color: "#fff",
@@ -185,7 +185,7 @@ export function ChatPanel({
               onClick={send}
             >
               {sending ? (
-                <span className="jm-spin" />
+                <span className="w-[17px] h-[17px] rounded-full inline-block flex-none border-[2.5px] border-solid [border-top-color:currentColor] [border-right-color:color-mix(in_srgb,currentColor_35%,transparent)] [border-bottom-color:color-mix(in_srgb,currentColor_35%,transparent)] [border-left-color:color-mix(in_srgb,currentColor_35%,transparent)] animate-jm-spin" />
               ) : (
                 <Icons.send size={18} />
               )}

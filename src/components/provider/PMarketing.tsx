@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { btnCls } from "@/lib/btn";
 import { Icons } from "@/components/Icons";
 import { Pill, Seg, Modal, Btn } from "@/components/dash/primitives";
 import { Input } from "@/components/ui";
@@ -42,7 +43,7 @@ export function PMarketing() {
     setModal(false);
   };
   return (
-    <div className="anim-fade">
+    <div className="animate-anim-fade-dash">
       <div className="shead">
         <div>
           <h3 className="text-[17px]">{t("Promo codes")}</h3>
@@ -60,7 +61,7 @@ export function PMarketing() {
       </div>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-[var(--gap)]">
         {promos.map((p, i) => (
-          <div key={i} className="card anim-pop" style={{ padding: 20 }}>
+          <div key={i} className="bg-surface border border-line rounded-lg animate-anim-pop-dash" style={{ padding: 20 }}>
             <div className="flex items-center justify-between mb-[12px]">
               <span
                 className="font-extrabold text-[18px] tracking-[.04em] py-[5px] px-[12px] rounded-xs bg-[color-mix(in_srgb,var(--orange)_14%,transparent)] text-[var(--orange-deep)]"
@@ -184,7 +185,7 @@ function PromoModal({
           </div>
         </div>
         <div className="flex gap-[10px] mt-[22px]">
-          <button className="btn btn-ghost btn-md btn-block" onClick={onClose}>
+          <button className={btnCls("dash", "ghost", "md", true)} onClick={onClose}>
             {t("Cancel")}
           </button>
           <Btn

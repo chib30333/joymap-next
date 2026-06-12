@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { rpc, useBusy } from "@/lib/client";
@@ -54,14 +55,14 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
     );
   };
   return (
-    <div className="anim-fade">
+    <div className="animate-anim-fade-dash">
       <div
-        className="card"
+        className="bg-surface border border-line rounded-lg"
         style={{ overflow: "hidden", marginBottom: "var(--gap)" }}
       >
         <div className="h-[150px] relative" style={{ background: cover.g }}>
           <button
-            className="btn btn-ghost btn-sm"
+            className={btnCls("dash", "ghost", "sm")}
             style={{ position: "absolute", right: 14, top: 14 }}
           >
             <Icons.camera size={15} />
@@ -114,7 +115,7 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
             )}
             <BusyBtn
               busy={busy}
-              className="btn btn-ghost btn-sm"
+              className={btnCls("dash", "ghost", "sm")}
               icon={edit ? <Icons.check size={15} /> : <Icons.edit size={15} />}
               onClick={saveOrEdit}
             >
@@ -125,7 +126,7 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
       </div>
 
       <div className="grid grid-cols-[1.4fr_1fr] gap-[var(--gap)] items-start">
-        <div className="card" style={{ padding: 24 }}>
+        <div className="bg-surface border border-line rounded-lg" style={{ padding: 24 }}>
           <h3 className="text-[17px] mb-[14px]">{t("About the business")}</h3>
           {edit ? (
             <Textarea
@@ -190,7 +191,7 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
         </div>
 
         <div className="flex flex-col gap-[var(--gap)]">
-          <div className="card" style={{ padding: 22 }}>
+          <div className="bg-surface border border-line rounded-lg" style={{ padding: 22 }}>
             <h3 className="text-[16px] mb-[14px]">{t("Categories")}</h3>
             <div className="flex flex-wrap gap-[8px]">
               {f.cats.map((c: string) => (
@@ -245,7 +246,7 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
               </div>
             </div>
           </div>
-          <div className="card" style={{ padding: 22 }}>
+          <div className="bg-surface border border-line rounded-lg" style={{ padding: 22 }}>
             <div className="flex items-center justify-between mb-[6px]">
               <h3 className="text-[16px]">{t("Gallery")}</h3>
               <span className="text-[12.5px] text-ink-3 font-semibold">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { rpc, useBusy } from "@/lib/client";
@@ -68,10 +69,10 @@ export function JoyMapScreen({
     );
 
   return (
-    <div className="anim-fade">
+    <div className="animate-anim-fade-app">
       <div className="flex items-end justify-between gap-[20px] flex-wrap mt-[6px] mb-[22px]">
         <div>
-          <div className="eyebrow" style={{ marginBottom: 9 }}>
+          <div className="text-[12.5px] font-bold tracking-[0.1em] uppercase text-orange" style={{ marginBottom: 9 }}>
             {t("This week")} · {weekLabel}
           </div>
           <h1
@@ -91,7 +92,7 @@ export function JoyMapScreen({
         </div>
         <BusyBtn
           busy={busy}
-          className="btn btn-ghost btn-md"
+          className={btnCls("app", "ghost", "md")}
           icon={<Icons.refresh size={18} />}
           onClick={regen}
         >
@@ -103,7 +104,7 @@ export function JoyMapScreen({
         <EmptyMarketplace />
       ) : map.length === 0 ? (
         <div
-          className="card"
+          className="bg-surface border border-line rounded-lg"
           style={{ padding: "56px 24px", textAlign: "center" }}
         >
           <div
@@ -118,7 +119,7 @@ export function JoyMapScreen({
           </p>
           <BusyBtn
             busy={busy}
-            className="btn btn-primary btn-md"
+            className={btnCls("app", "primary", "md")}
             icon={<Icons.sparkle size={17} />}
             onClick={regen}
           >
@@ -130,7 +131,7 @@ export function JoyMapScreen({
           <MoodArc map={map} byId={byId} />
           <div className="relative mt-[26px]">
             <div
-              className="no-scrollbar"
+              className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
               style={{
                 display: "flex",
                 gap: 16,
@@ -209,7 +210,7 @@ export function JoyMapScreen({
 export function EmptyMarketplace() {
   const t = useT();
   return (
-    <div className="card" style={{ padding: "60px 24px", textAlign: "center" }}>
+    <div className="bg-surface border border-line rounded-lg" style={{ padding: "60px 24px", textAlign: "center" }}>
       <div
         className="w-[64px] h-[64px] rounded-[99px] bg-surface-2 grid mt-0 mb-[16px] mx-auto text-ink-3"
         style={{ placeItems: "center" }}
@@ -237,7 +238,7 @@ function MoodArc({
   const t = useT();
   return (
     <div
-      className="card"
+      className="bg-surface border border-line rounded-lg"
       style={{
         padding: "14px 18px",
         display: "flex",
@@ -290,7 +291,7 @@ function DayCard({
   if (d.rest || !e) {
     return (
       <div
-        className="card anim-pop"
+        className="bg-surface border border-line rounded-lg animate-anim-pop-app"
         style={{
           flex: "none",
           width: 230,
@@ -334,7 +335,7 @@ function DayCard({
   );
   return (
     <div
-      className="card anim-pop"
+      className="bg-surface border border-line rounded-lg animate-anim-pop-app"
       onClick={() => onOpen(e)}
       style={{
         flex: "none",
@@ -383,7 +384,7 @@ function DayCard({
         <p className="m-0 text-[13px] text-ink-3 font-semibold">{d.note}</p>
         {booked ? (
           <div
-            className="btn btn-sm"
+            className={btnCls("app", undefined, "sm")}
             style={{
               background: "var(--m-calm-soft)",
               color: "var(--m-calm)",
@@ -397,7 +398,7 @@ function DayCard({
           </div>
         ) : (
           <button
-            className="btn btn-primary btn-sm btn-block"
+            className={btnCls("app", "primary", "sm", true)}
             onClick={(ev) => {
               ev.stopPropagation();
               onOpen(e);
