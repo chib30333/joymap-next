@@ -8,22 +8,6 @@ import { LangSwitcher, useT } from "@/components/Language";
 import { Input } from "@/components/ui/input";
 import { rpc } from "@/lib/client";
 
-const A_MOODS: [string, string][] = [
-  ["Calm", "#3FA89B"],
-  ["Joy", "#E89015"],
-  ["Energy", "#FF4D74"],
-  ["Focus", "#5563D6"],
-  ["Adventure", "#7B53F0"],
-  ["Connection", "#FF8A4C"],
-];
-const A_TILES = [
-  "linear-gradient(150deg,#6FD4C4,#2E8C80)",
-  "linear-gradient(150deg,#FF6F8E,#D81E52)",
-  "linear-gradient(150deg,#9E7BF6,#5B33C9)",
-  "linear-gradient(150deg,#FBC15B,#E08B12)",
-  "linear-gradient(150deg,#7E8BE6,#3F49B0)",
-  "linear-gradient(150deg,#FF9A57,#E36A1E)",
-];
 const ROLES: Record<string, { sub: string; icon: keyof typeof Icons }> = {
   customer: {
     sub: "Find activities & build your weekly Joy Map",
@@ -486,78 +470,6 @@ function Social() {
   );
 }
 
-function Showcase() {
-  return (
-    <div className="auth-brand">
-      <div className="auth-brand-inner">
-        <div className="auth-brand-top" style={{ color: "#F6EAD9" }}>
-          <Link
-            href="/"
-            title="Back to the Joymap site"
-            className="inline-flex"
-            style={{ textDecoration: "none" }}
-          >
-            <Logo size={30} mono />
-          </Link>
-          <span className="live-badge">
-            <span className="live-dot" />
-            Live now!
-          </span>
-        </div>
-        <div className="auth-tiles" aria-hidden="true">
-          {A_TILES.map((g, i) => (
-            <span
-              key={i}
-              className="auth-tile"
-              style={{ background: g, animationDelay: `${i * 0.4}s` }}
-            />
-          ))}
-        </div>
-        <div className="auth-hero">
-          <h1>Turn this week into a week worth remembering.</h1>
-          <p>
-            Joymap reads your mood and books real-life experiences around it —
-            from sunrise yoga to neon karting. One subscription, infinite joy.
-          </p>
-        </div>
-        <div className="mood-row" aria-hidden="true">
-          {A_MOODS.map(([n, c]) => (
-            <span
-              key={n}
-              className="mood-pill"
-              style={{
-                background: `color-mix(in srgb,${c} 16%,transparent)`,
-                color: c,
-                borderColor: `color-mix(in srgb,${c} 35%,transparent)`,
-              }}
-            >
-              <span
-                className="w-[7px] h-[7px] rounded-[99px]"
-                style={{ background: c }}
-              />
-              {n}
-            </span>
-          ))}
-        </div>
-        <div className="auth-quote">
-          <div className="auth-stars">★★★★★</div>
-          <p>
-            &quot;It&apos;s like having a friend who always knows the perfect
-            thing to do. I&apos;ve tried 14 new things in two months.&quot;
-          </p>
-          <div className="auth-quote-by">
-            <span className="auth-quote-av">A</span>
-            <div>
-              <b>Anya K.</b>
-              <span>Joy Map+ member · Moscow</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function AuthPage() {
   const router = useRouter();
   const t = useT();
@@ -615,7 +527,6 @@ export default function AuthPage() {
 
   return (
     <div className="auth-wrap fx">
-      <Showcase />
       <div className="auth-form-col">
         <div className="auth-mobilebrand">
           <Link
@@ -625,10 +536,6 @@ export default function AuthPage() {
           >
             <Logo size={26} />
           </Link>
-          <span className="live-badge">
-            <span className="live-dot" />
-            Live now!
-          </span>
         </div>
         <div
           className="absolute top-[18px]"
@@ -637,7 +544,7 @@ export default function AuthPage() {
           <LangSwitcher />
         </div>
 
-        <div className={`auth-card ${busy ? "is-busy" : ""}`}>
+        <div className={`auth-card ${busy ? "pointer-events-none" : ""}`}>
           {mode === "reset" ? (
             <ResetFlow
               initialEmail={email}
@@ -862,37 +769,7 @@ export default function AuthPage() {
             {admin ? "Back to member sign-in" : "Sign in as platform team"}
           </button>
         )}
-        {mode !== "reset" && <DemoHint admin={admin} />}
       </div>
-    </div>
-  );
-}
-
-function DemoHint({ admin }: { admin: boolean }) {
-  const rows = admin
-    ? [["Platform team", "admin@joymap.ru", "JoymapAdmin!2026"]]
-    : [
-        ["Customer", "mira@joymap.ru", "JoymapDemo!2026"],
-        ["Provider", "aether@joymap.ru", "JoymapDemo!2026"],
-      ];
-  return (
-    <div
-      className="w-full max-w-[420px] bg-surface-2 rounded px-[16px] py-[12px]"
-      style={{ border: "1px dashed var(--line-2)" }}
-    >
-      <div className="text-[11.5px] font-extrabold tracking-[.06em] uppercase text-ink-3 mb-[8px]">
-        Demo accounts (after seeding)
-      </div>
-      {rows.map(([l, e, p]) => (
-        <div
-          key={e}
-          className="flex gap-[10px] text-[12.5px] font-semibold text-ink-2 px-0 py-[3px]"
-        >
-          <span className="w-[96px] text-ink-3">{l}</span>
-          <b>{e}</b>
-          <span className="ml-auto font-display">{p}</span>
-        </div>
-      ))}
     </div>
   );
 }
