@@ -499,17 +499,13 @@ function Showcase() {
           >
             <Logo size={30} mono />
           </Link>
-          <span className="live-badge">
-            <span className="live-dot" />
-            Live now!
-          </span>
         </div>
         <div className="auth-tiles" aria-hidden="true">
           {A_TILES.map((g, i) => (
             <span
               key={i}
               className="auth-tile"
-              style={{ background: g, animationDelay: `${i * 0.4}s` }}
+              style={{ background: g }}
             />
           ))}
         </div>
@@ -625,10 +621,6 @@ export default function AuthPage() {
           >
             <Logo size={26} />
           </Link>
-          <span className="live-badge">
-            <span className="live-dot" />
-            Live now!
-          </span>
         </div>
         <div
           className="absolute top-[18px]"
@@ -862,37 +854,7 @@ export default function AuthPage() {
             {admin ? "Back to member sign-in" : "Sign in as platform team"}
           </button>
         )}
-        {mode !== "reset" && <DemoHint admin={admin} />}
       </div>
-    </div>
-  );
-}
-
-function DemoHint({ admin }: { admin: boolean }) {
-  const rows = admin
-    ? [["Platform team", "admin@joymap.ru", "JoymapAdmin!2026"]]
-    : [
-        ["Customer", "mira@joymap.ru", "JoymapDemo!2026"],
-        ["Provider", "aether@joymap.ru", "JoymapDemo!2026"],
-      ];
-  return (
-    <div
-      className="w-full max-w-[420px] bg-surface-2 rounded px-[16px] py-[12px]"
-      style={{ border: "1px dashed var(--line-2)" }}
-    >
-      <div className="text-[11.5px] font-extrabold tracking-[.06em] uppercase text-ink-3 mb-[8px]">
-        Demo accounts (after seeding)
-      </div>
-      {rows.map(([l, e, p]) => (
-        <div
-          key={e}
-          className="flex gap-[10px] text-[12.5px] font-semibold text-ink-2 px-0 py-[3px]"
-        >
-          <span className="w-[96px] text-ink-3">{l}</span>
-          <b>{e}</b>
-          <span className="ml-auto font-display">{p}</span>
-        </div>
-      ))}
     </div>
   );
 }

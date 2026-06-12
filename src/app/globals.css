@@ -750,7 +750,6 @@ img {
   display: flex;
   flex-direction: column;
   gap: 26px;
-  max-width: 560px;
 }
 .auth-wrap .auth-brand-top {
   display: flex;
@@ -790,9 +789,7 @@ img {
   border-radius: 16px;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.32);
 }
-.auth-wrap.fx .auth-tile {
-  animation: floaty 5s ease-in-out infinite;
-}
+
 @keyframes floaty {
   0%,
   100% {
@@ -811,7 +808,6 @@ img {
   line-height: 1.04;
   color: #fff3e4;
   letter-spacing: -0.01em;
-  max-width: 11ch;
 }
 .auth-wrap .auth-hero p {
   margin-top: 14px;
