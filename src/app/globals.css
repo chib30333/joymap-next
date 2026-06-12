@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 :root {
-  /* brand */
   --coral: #e0212f;
   --red: #e0212f;
   --red-deep: #b30f1c;
@@ -13,7 +12,6 @@
   --coral-deep: #b30f1c;
   --coral-soft: #fce2e5;
 
-  /* mood palette */
   --m-calm: #3fa89b;
   --m-calm-soft: #dcf1ed;
   --m-joy: #e89015;
@@ -27,7 +25,6 @@
   --m-connect: #ff8a4c;
   --m-connect-soft: #ffe8d9;
 
-  /* neutrals — LIGHT (near-pink, default) */
   --bg: #fdf0f2;
   --bg-2: #f8e2e6;
   --surface: #ffffff;
@@ -38,11 +35,9 @@
   --line: #f4dde2;
   --line-2: #eccbd3;
 
-  /* type */
   --display: var(--font-display), "Baloo 2", system-ui, sans-serif;
   --body: var(--font-body), "Hanken Grotesk", system-ui, sans-serif;
 
-  /* radii */
   --r-xs: 8px;
   --r-sm: 12px;
   --r: 18px;
@@ -53,7 +48,6 @@
   --gap: 24px;
   --pad: 30px;
 
-  /* shadow (warm pink-tinted) */
   --sh-sm: 0 1px 2px rgba(120, 30, 45, 0.06), 0 2px 6px rgba(120, 30, 45, 0.05);
   --sh: 0 4px 12px rgba(120, 30, 45, 0.08), 0 12px 28px rgba(120, 30, 45, 0.07);
   --sh-lg:
@@ -142,85 +136,12 @@ img {
   }
 }
 
-
-/* nav */
-.lp .live {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  background: color-mix(in srgb, var(--orange) 16%, transparent);
-  color: var(--orange-deep);
-  padding: 3px 9px;
-  border-radius: 99px;
-  font-size: 10px;
-  font-weight: 800;
-  font-family: var(--display);
-}
-.lp .live i {
-  width: 6px;
-  height: 6px;
-  border-radius: 99px;
-  background: var(--orange);
-  display: inline-block;
-  animation: pulse 1.8s infinite;
-}
-@media (max-width: 760px) {
-  .lp .nav-links {
-    display: none;
-  }
-}
-
-/* hero */
-
-/* section */
-
-/* moods */
-@media (max-width: 880px) {
-  .lp .moods {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-@media (max-width: 480px) {
-  .lp .moods {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* split feature */
-@media (max-width: 880px) {
-  .lp .split {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-  .lp .split.rev .split-txt {
-    order: 0;
-  }
-}
-
-/* band */
-
-/* cta */
-
-/* footer */
-
-/* ========================= AUTH (.auth-wrap) ========================= */
-/* Auth-screen styles now live as inline Tailwind in src/app/auth/page.tsx.
-   Only the page-layout shell and the shared language switcher remain here,
-
-/* ===== page layout ===== */
 .auth-wrap {
   display: grid;
   grid-template-columns: 1fr;
   min-height: 100vh;
 }
 
-/* language switcher (matches the prototype's pill control) */
-
-
-/* ============= CUSTOMER SHELL (.app-top) ============= */
-/* customer.css — component + top-nav CSS ported verbatim from components.jsx and
-
-/* ===== TOP NAV (from theme.css) ===== */
 .app-top {
   --gap: 24px;
   --pad: 30px;
@@ -240,188 +161,6 @@ img {
     ),
     var(--bg);
 }
-@media (max-width: 720px) {
-  .app-top .tn-row1 {
-    flex-wrap: wrap;
-  }
-}
-
-/* ===== buttons (from components.jsx) ===== */
-
-/* ===== cards & chips ===== */
-.app-top .scrim .card-fill {
-  background: linear-gradient(160deg, #5e1014, var(--maroon));
-  border: 1px solid color-mix(in srgb, var(--red) 55%, transparent);
-  color: #f3ebe0;
-  border-radius: var(--r-lg);
-}
-.app-top .scrim .chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 7px 13px;
-  border-radius: var(--r-pill);
-  font-size: 13px;
-  font-weight: 600;
-  border: 1px solid var(--line-2);
-  background: var(--surface);
-  color: var(--ink-2);
-  cursor: pointer;
-  transition: 0.14s;
-  white-space: nowrap;
-}
-.app-top .scrim .chip:hover {
-  border-color: var(--ink-3);
-  color: var(--ink);
-}
-.app-top .scrim .chip.on {
-  background: var(--coral);
-  color: #fff;
-  border-color: var(--coral);
-}
-.app-top .scrim .mood-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 99px;
-  flex: none;
-}
-.app-top .scrim .mood-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 13px 7px 11px;
-  border-radius: var(--r-pill);
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: 0.14s;
-  border: 1.5px solid transparent;
-}
-.app-top .scrim .tag {
-  display: inline-flex;
-  align-items: center;
-  padding: 5px 11px;
-  border-radius: var(--r-pill);
-  font-size: 12px;
-  font-weight: 600;
-  background: var(--surface-2);
-  color: var(--ink-2);
-  border: 1px solid var(--line);
-}
-
-/* experience card */
-.app-top .scrim .xphoto {
-  position: relative;
-  aspect-ratio: 4/3;
-  overflow: hidden;
-}
-.app-top .scrim .xphoto .grain {
-  position: absolute;
-  inset: 0;
-  opacity: 0.16;
-  mix-blend-mode: overlay;
-  background-image: radial-gradient(
-    rgba(255, 255, 255, 0.9) 0.6px,
-    transparent 0.6px
-  );
-  background-size: 7px 7px;
-}
-.app-top .scrim .xphoto .veil {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.42));
-}
-.app-top .scrim .xphoto .cat {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  background: rgba(255, 255, 255, 0.92);
-  color: #241c2e;
-  padding: 5px 11px;
-  border-radius: 99px;
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-}
-.app-top .scrim .xphoto .fav {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 34px;
-  height: 34px;
-  border-radius: 99px;
-  border: none;
-  background: rgba(255, 255, 255, 0.85);
-  display: grid;
-  place-items: center;
-  color: #241c2e;
-  transition: 0.15s;
-  cursor: pointer;
-}
-.app-top .scrim .xphoto .fav:hover {
-  background: #fff;
-  transform: scale(1.08);
-}
-.app-top .scrim .xphoto .fav.on {
-  color: var(--m-energy);
-}
-.app-top .scrim .xphoto .ttl {
-  position: absolute;
-  left: 14px;
-  right: 14px;
-  bottom: 12px;
-  color: #fff;
-  font-family: var(--display);
-  font-weight: 700;
-  font-size: 18px;
-  letter-spacing: -0.01em;
-  line-height: 1.1;
-  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35);
-}
-.app-top .scrim .price {
-  font-family: var(--display);
-  font-weight: 700;
-  font-size: 18px;
-  color: var(--ink);
-  white-space: nowrap;
-}
-.app-top .scrim .price small {
-  font-weight: 600;
-  font-size: 12.5px;
-  color: var(--ink-3);
-}
-
-.app-top .scrim .rating {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-weight: 700;
-  font-size: 13.5px;
-  color: var(--ink);
-}
-.app-top .scrim .rating svg {
-  color: var(--m-joy);
-}
-.app-top .scrim .avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 99px;
-  background: linear-gradient(140deg, var(--red), var(--orange));
-  color: #fff;
-  display: grid;
-  place-items: center;
-  font-weight: 800;
-  font-family: var(--display);
-  flex: none;
-}
-.app-top .scrim .divider {
-  height: 1px;
-  background: var(--line);
-  border: 0;
-  margin: 0;
-}
-
-/* animations */
 @keyframes fade {
   from {
     opacity: 0;
@@ -441,7 +180,6 @@ img {
   }
 }
 
-/* modal */
 .app-top .scrim {
   position: fixed;
   inset: 0;
@@ -478,22 +216,6 @@ img {
   }
 }
 
-/* language switcher reuse (top-nav portals + admin dashboard topbar) */
-
-/* ============= CUSTOMER CHAT + CALENDAR ============= */
-/* customer-extra.css — chat + calendar CSS ported verbatim from chat.jsx and
-
-/* ===== chat ===== */
-@media (max-width: 760px) {
-  .app-top .chat-wrap {
-    grid-template-columns: 1fr;
-  }
-  .app-top .chat-wrap.has-active .chat-list {
-    display: none;
-  }
-}
-
-/* ===== calendar ===== */
 .app-top .seg {
   display: inline-flex;
   background: var(--surface-2);
@@ -527,56 +249,6 @@ img {
   color: #fff;
   box-shadow: var(--sh-coral);
 }
-@media (max-width: 900px) {
-  .app-top .cal-week {
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(180px, 1fr);
-    grid-template-columns: none;
-    overflow-x: auto;
-  }
-}
-
-/* ============= CUSTOMER CORPORATE ============= */
-/* corporate.css — ported verbatim from corporate.jsx, scoped under .app-top. */
-.app-top .scrim .corp-gift {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--r-lg);
-  color: #f4e9d8;
-  background: linear-gradient(135deg, #5e1014, #2a0709);
-  border: 1px solid color-mix(in srgb, #e6a23c 40%, transparent);
-  padding: 20px;
-}
-.app-top .scrim .gift-denom {
-  border: 1.5px solid var(--line-2);
-  border-radius: var(--r);
-  padding: 16px 10px;
-  text-align: center;
-  cursor: pointer;
-  transition: 0.15s;
-  background: var(--surface);
-}
-.app-top .scrim .gift-denom:hover {
-  border-color: #e6a23c;
-}
-.app-top .scrim .gift-denom.on {
-  border-color: #e6a23c;
-  background: color-mix(in srgb, #e6a23c 12%, transparent);
-}
-.app-top .scrim .corp-eyebrow {
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-.app-top .scrim .cal-sel {
-  position: relative;
-}
-
-/* ============= PROVIDER + ADMIN DASHBOARD (.jmdash / .app) ============= */
-/* dash.css — shared Provider + Admin dashboard CSS, ported verbatim from dash.jsx
-   and the provider calendar block. Scoped under .jmdash (both portals carry it);
-   the admin sidebar grid uses .app. */
 
 .app {
   display: grid;
@@ -604,9 +276,6 @@ img {
   --gap: 24px;
   --pad: 30px;
 }
-
-
-
 
 .jmdash .seg {
   display: inline-flex;
@@ -666,21 +335,3 @@ img {
 .jmdash .sheet {
   animation: slideUp 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
-
-/* ===== provider calendar (drag & drop) ===== */
-@media (max-width: 920px) {
-  .jmdash .pcal-wrap {
-    grid-template-columns: 1fr;
-  }
-}
-@media (max-width: 1180px) {
-  .jmdash .pcal-week {
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(156px, 1fr);
-    grid-template-columns: none;
-    overflow-x: auto;
-    padding-bottom: 6px;
-  }
-}
-
-/* provider top-nav group labels + separators */

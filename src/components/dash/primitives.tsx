@@ -6,7 +6,6 @@ import {
   useState,
   type ReactNode,
   type ButtonHTMLAttributes,
-  type CSSProperties,
 } from "react";
 import { statusColor } from "@/components/ui/pill";
 import { btnCls } from "@/lib/btn";

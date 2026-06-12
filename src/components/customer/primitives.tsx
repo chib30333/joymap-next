@@ -3,7 +3,6 @@
 import {
   useEffect,
   type ReactNode,
-  type CSSProperties,
   type ButtonHTMLAttributes,
 } from "react";
 import { Icons } from "@/components/Icons";
@@ -323,7 +322,6 @@ export function Modal({
   );
 }
 
-// deterministic QR-ish pattern (1:1 with detail.jsx QR)
 export function QR() {
   const cells: JSX.Element[] = [];
   const N = 11;
@@ -372,6 +370,4 @@ export function QR() {
   );
 }
 
-// BusyBtn is the single shared CSS-class busy button (guideline 02). Re-exported here
-// so existing `import { BusyBtn } from "./primitives"` call sites keep working.
 export { BusyBtn } from "@/components/ui/busy-btn";

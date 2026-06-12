@@ -35,7 +35,7 @@ export function Catalog({
   const [mood, setMood] = useState<string | null>(null);
   const [cat, setCat] = useState("All");
   const [sort, setSort] = useState("Recommended");
-  const [query, setQuery] = useState(initialQuery || "");
+  const [query] = useState(initialQuery || "");
   const [open, setOpen] = useState<Exp | null>(null);
   const onFav = useFav();
 

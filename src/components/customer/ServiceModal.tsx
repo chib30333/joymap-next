@@ -15,7 +15,6 @@ import {
   Modal,
   PhotoFrame,
   MoodDot,
-  MoodChip,
   Rating,
   Btn,
   BusyBtn,

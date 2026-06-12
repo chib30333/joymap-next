@@ -5,14 +5,14 @@ import Logo from "@/components/landing/Logo";
 
 export default function Landing() {
   return (
-    <div className="lp">
+    <div>
       <header className="sticky top-0 z-50 bg-[color-mix(in_srgb,var(--bg)_80%,transparent)] backdrop-blur-[16px] border-b border-line">
         <div className="max-w-[1200px] mx-auto px-[28px] flex items-center gap-[26px] h-[68px]">
           <Link className="flex items-center gap-[9px]" href="/">
             <Logo />
             <b className="font-display font-extrabold text-[22px] tracking-[-0.03em]">joymap</b>
-            <span className="live">
-              <i />
+            <span className="inline-flex items-center gap-[5px] bg-[color-mix(in_srgb,var(--orange)_16%,transparent)] text-[var(--orange-deep)] px-[9px] py-[3px] rounded-[99px] text-[10px] font-extrabold font-display">
+              <i className="w-[6px] h-[6px] rounded-[99px] bg-[var(--orange)] inline-block animate-[pulse_1.8s_infinite]" />
               Live now!
             </span>
           </Link>
@@ -135,7 +135,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* CUSTOMER SPLIT */}
       <section className="py-[96px]" style={{ paddingTop: 0 }}>
         <div className="max-w-[1200px] mx-auto px-[28px]">
           <Reveal className="grid grid-cols-2 gap-[56px] items-center max-[880px]:grid-cols-1 max-[880px]:gap-[32px]">
@@ -176,7 +175,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* PARTNER BAND */}
       <section className="py-[96px]" id="partners" style={{ paddingTop: 0 }}>
         <div className="max-w-[1200px] mx-auto px-[28px]">
           <Reveal className="relative overflow-hidden rounded-xl min-h-[420px] flex items-center text-white">
@@ -216,7 +214,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* CORPORATE BAND */}
       <section className="py-[96px]" id="corporate" style={{ paddingTop: 0 }}>
         <div className="max-w-[1200px] mx-auto px-[28px]">
           <Reveal className="relative overflow-hidden rounded-xl min-h-[420px] flex items-center text-white">
@@ -257,7 +254,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="text-center py-[100px]">
         <div className="max-w-[1200px] mx-auto px-[28px]">
           <Reveal>
@@ -284,8 +280,8 @@ export default function Landing() {
       <footer className="border-t border-line py-[40px] flex items-center justify-between gap-[20px] flex-wrap text-ink-3 text-[13.5px] font-semibold max-w-[1200px] mx-auto px-[28px]">
         <div className="flex items-center gap-[9px]">
           <b className="font-display font-extrabold text-[18px]">joymap</b>
-          <span className="live">
-            <i />
+          <span className="inline-flex items-center gap-[5px] bg-[color-mix(in_srgb,var(--orange)_16%,transparent)] text-[var(--orange-deep)] px-[9px] py-[3px] rounded-[99px] text-[10px] font-extrabold font-display">
+            <i className="w-[6px] h-[6px] rounded-[99px] bg-[var(--orange)] inline-block animate-[pulse_1.8s_infinite]" />
             Live now!
           </span>
         </div>

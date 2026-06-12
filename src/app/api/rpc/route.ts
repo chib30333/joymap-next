@@ -13,24 +13,20 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const ACTIONS: Record<string, (...a: any[]) => Promise<any>> = {
-  // auth
   signup: (a) => auth.signup(a),
   login: (a) => auth.login(a.email, a.pw),
   logout: () => auth.logout(),
-  // customer account
   toggleFav: (a) => account.toggleFavorite(a.serviceId),
   updateUser: (a) => account.updateUser(a),
   topUp: (a) => account.topUp(a.amount),
   generateJoyMap: (a) => account.generateJoyMap(a?.moods),
   markNotif: (a) => account.markNotif(a.id),
   markAllNotifs: () => account.markAllNotifs(),
-  // bookings
   createBooking: (a) => bookings.createBooking(a),
   cancelBooking: (a) => bookings.cancelBooking(a.id),
   rescheduleBooking: (a) => bookings.rescheduleBooking(a.id, a.day, a.time),
   setBookingStatus: (a) => bookings.setBookingStatus(a.id, a.status),
   rateBooking: (a) => bookings.rateBooking(a.id, a.stars, a.text),
-  // provider services + slots
   createService: (a) => services.createService(a),
   updateService: (a) => services.updateService(a.id, a.patch),
   toggleService: (a) => services.toggleService(a.id),
@@ -40,11 +36,9 @@ const ACTIONS: Record<string, (...a: any[]) => Promise<any>> = {
   setSlotTime: (a) => services.setSlotTime(a.slotId, a.time),
   removeSlot: (a) => services.removeSlot(a.slotId),
   replyReview: (a) => services.replyReview(a.id),
-  // chat
   sendMessage: (a) => chat.sendMessage(a.threadId, a.role, a.text),
   openThread: (a) => chat.openThread(a.threadId, a.role),
   startThread: (a) => chat.startThread(a.providerId, a.service),
-  // admin
   requestPayout: () => admin.requestPayout(),
   releasePayout: (a) => admin.releasePayout(a.id),
   decideProvider: (a) => admin.decideProvider(a.id, a.approve, a.reason),
@@ -64,7 +58,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: `Unknown action: ${body.action}` }, { status: 404 });
   }
   try {
-    await latency(); // simulated network delay, matching the prototype
+    await latency();
     const data = await handler(body.args ?? {});
     return NextResponse.json({ data });
   } catch (e) {

@@ -9,7 +9,6 @@ import { LangSwitcher, useT } from "@/components/Language";
 import { Input } from "@/components/ui/input";
 import { rpc } from "@/lib/client";
 
-// Shared class clusters (ported from the former `.auth-wrap` scoped CSS).
 const SPIN =
   "inline-block w-[19px] h-[19px] rounded-full border-[2.5px] border-white/40 border-t-white animate-jm-spin";
 const BODY = "flex flex-col gap-[15px] mt-5";

@@ -50,7 +50,6 @@ export async function openThread(threadId: string, role: "c" | "p") {
   });
 }
 
-// Threads projected for one side, with messages relabelled me/them.
 export async function threadsFor(role: "c" | "p") {
   const u = await currentUser();
   if (!u) return [];

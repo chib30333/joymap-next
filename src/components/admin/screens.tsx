@@ -41,7 +41,6 @@ const REJECT_REASONS = [
   "Other",
 ];
 
-/* ===== Dashboard ===== */
 export function ADashboard({
   s,
   apps,
@@ -297,7 +296,6 @@ export function ADashboard({
   );
 }
 
-/* ===== Providers ===== */
 export function AProviders({ rows }: { rows: any[] }) {
   const t = useT();
   const [q, setQ] = useState("");
@@ -556,7 +554,6 @@ function ProviderDrawer({ p, onClose }: { p: any; onClose: () => void }) {
   );
 }
 
-/* ===== Moderation ===== */
 export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
   const t = useT();
   const [sel, setSel] = useState<any>(null);
@@ -840,7 +837,6 @@ function ModerationModal({ sel, onClose }: { sel: any; onClose: () => void }) {
   );
 }
 
-/* ===== Content ===== */
 export function AContent({ items }: { items: any[] }) {
   const t = useT();
   const router = useRouter();
@@ -985,7 +981,6 @@ export function AContent({ items }: { items: any[] }) {
   );
 }
 
-/* ===== Customers ===== */
 export function ACustomers({ list }: { list: any[] }) {
   const t = useT();
   const avgLtv = list.length
@@ -1104,7 +1099,6 @@ export function ACustomers({ list }: { list: any[] }) {
   );
 }
 
-/* ===== Financials ===== */
 export function AFinancials({ s, queue }: { s: any; queue: any[] }) {
   const t = useT();
   const router = useRouter();
@@ -1230,7 +1224,6 @@ export function AFinancials({ s, queue }: { s: any; queue: any[] }) {
   );
 }
 
-/* ===== Marketing ===== */
 const A_CAMPAIGNS = [
   {
     name: "Weekend in Moscow",

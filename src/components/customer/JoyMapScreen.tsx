@@ -7,7 +7,6 @@ import { Icons } from "@/components/Icons";
 import { rpc, useBusy } from "@/lib/client";
 import {
   MOODS,
-  fmt,
   PhotoFrame,
   MoodDot,
   BusyBtn,

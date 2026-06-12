@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/db";
-import { currentUser, currentProvider } from "@/lib/session";
+import { currentUser } from "@/lib/session";
 import { expById, providerRating, providerFinance, ratingOf } from "./catalog";
 import { TODAY } from "@/lib/constants";
 
@@ -36,7 +36,6 @@ export async function unreadNotifications() {
   return (await myNotifications()).filter((n) => n.unread).length;
 }
 
-// ---- provider portal ----
 export async function providerServices(providerId: string) {
   const svcs = await prisma.service.findMany({ where: { providerId }, orderBy: { createdAt: "desc" } });
   return Promise.all(
@@ -68,7 +67,6 @@ export async function providerPayouts(providerId: string) {
 }
 export { providerRating, providerFinance };
 
-// ---- admin portal ----
 export async function applications() {
   return prisma.provider.findMany({ where: { status: "review" } });
 }
@@ -105,7 +103,6 @@ export async function payoutQueue() {
   return prisma.payout.findMany({ orderBy: { createdAt: "desc" } });
 }
 
-// Available upcoming slots grouped by service — feeds the booking modal.
 export async function slotsByService() {
   const slots = await prisma.slot.findMany({ where: { day: { gte: TODAY } }, orderBy: [{ day: "asc" }, { time: "asc" }] });
   const map: Record<string, { day: number; time: string }[]> = {};

@@ -1,8 +1,3 @@
-// Tailwind class builder for the button system, replacing the legacy
-// `.btn`/`.btn-*` rules that were scoped per portal in globals.css.
-// Each portal context reproduces that context's exact computed styles:
-//   lp   = landing (.lp)        auth = auth screen (.auth-wrap)
-//   app  = customer (.app-top)  dash = provider/admin dashboards (.jmdash)
 export type BtnCtx = "lp" | "auth" | "app" | "dash";
 export type BtnVariant =
   | "primary"

@@ -68,7 +68,6 @@ export async function updateProvider(patch: Partial<{ name: string; tagline: str
   return prisma.provider.update({ where: { id: p.id }, data: patch });
 }
 
-// ---- slots ----
 export async function addSlot(serviceId: string, day: number, time: string) {
   const p = await myProvider();
   const svc = await prisma.service.findUnique({ where: { id: serviceId } });
