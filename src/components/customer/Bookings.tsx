@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { rpc, useBusy } from "@/lib/client";
@@ -41,7 +42,7 @@ export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
   const list = tab === "upcoming" ? upcoming : past;
 
   return (
-    <div className="anim-fade">
+    <div className="animate-anim-fade-app">
       <div className="flex gap-[8px] mb-[24px] bg-surface-2 p-[5px] rounded-pill w-fit border border-line">
         {(
           [
@@ -51,7 +52,7 @@ export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
         ).map(([k, l]) => (
           <button
             key={k}
-            className="btn btn-sm"
+            className={btnCls("app", undefined, "sm")}
             onClick={() => setTab(k)}
             style={
               tab === k
@@ -95,7 +96,7 @@ export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
             return (
               <div
                 key={b.id}
-                className="card anim-pop"
+                className="bg-surface border border-line rounded-lg animate-anim-pop-app"
                 style={{
                   display: "flex",
                   gap: 0,
@@ -112,14 +113,14 @@ export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
                   }}
                 >
                   <div
-                    className="grain"
+                    className="absolute inset-0 opacity-[0.16] mix-blend-overlay bg-[radial-gradient(rgba(255,255,255,0.9)_0.6px,transparent_0.6px)] bg-[length:7px_7px]"
                     style={{ position: "absolute", inset: 0, opacity: 0.15 }}
                   />
                 </div>
                 <div className="flex-1 py-[18px] px-[22px] flex items-center gap-[20px] flex-wrap">
                   <div className="flex-1 min-w-[180px]">
                     <span
-                      className="mood-chip"
+                      className="inline-flex items-center gap-[8px] pt-[7px] pr-[13px] pb-[7px] pl-[11px] rounded-pill text-[13px] font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid border-transparent"
                       style={{
                         background: m.soft,
                         color: m.color,
@@ -152,21 +153,21 @@ export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
                       <BookingPill status={b.status} />
                       <div className="flex gap-[6px]">
                         <button
-                          className="btn btn-ghost btn-sm"
+                          className={btnCls("app", "ghost", "sm")}
                           onClick={() => setModal({ kind: "qr", b })}
                         >
                           <Icons.qr size={16} />
                           {t("QR")}
                         </button>
                         <button
-                          className="btn btn-ghost btn-sm"
+                          className={btnCls("app", "ghost", "sm")}
                           onClick={() => setModal({ kind: "move", b })}
                         >
                           <Icons.clock size={15} />
                           {t("Move")}
                         </button>
                         <button
-                          className="btn btn-ghost btn-sm"
+                          className={btnCls("app", "ghost", "sm")}
                           style={{ color: "var(--coral)" }}
                           onClick={() => setModal({ kind: "cancel", b })}
                         >
@@ -185,7 +186,7 @@ export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
                         <Rating value={b.rated} />
                       ) : (
                         <button
-                          className="btn btn-soft btn-sm"
+                          className={btnCls("app", "soft", "sm")}
                           onClick={() => setModal({ kind: "rate", b })}
                         >
                           {t("Rate it")}
@@ -238,7 +239,7 @@ export function BookingPill({ status }: { status: string }) {
   const I = Icons[ic];
   return (
     <span
-      className="tag"
+      className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] font-semibold bg-surface-2 text-ink-2 border border-line"
       style={{ background: bgc, color: c, border: "none", fontWeight: 700 }}
     >
       <I size={13} style={{ marginRight: 4 }} />
@@ -257,7 +258,7 @@ function QRModal({ b, onClose }: { b: B; onClose: () => void }) {
           {b.date} · {b.time}
         </div>
         <div
-          className="card"
+          className="bg-surface border border-line rounded-lg"
           style={{ padding: 22, background: "var(--surface-2)" }}
         >
           <QR />
@@ -269,7 +270,7 @@ function QRModal({ b, onClose }: { b: B; onClose: () => void }) {
           </div>
         </div>
         <button
-          className="btn btn-ghost btn-md btn-block"
+          className={btnCls("app", "ghost", "md", true)}
           style={{ marginTop: 16 }}
           onClick={onClose}
         >
@@ -319,12 +320,12 @@ function RateModal({ b, onClose }: { b: B; onClose: () => void }) {
           style={{ resize: "vertical", marginBottom: 18 }}
         />
         <div className="flex gap-[10px]">
-          <button className="btn btn-ghost btn-md btn-block" onClick={onClose}>
+          <button className={btnCls("app", "ghost", "md", true)} onClick={onClose}>
             {t("Cancel")}
           </button>
           <BusyBtn
             busy={busy}
-            className="btn btn-primary btn-md btn-block"
+            className={btnCls("app", "primary", "md", true)}
             icon={<Icons.star size={16} />}
             onClick={() =>
               run(
@@ -372,7 +373,7 @@ function MoveModal({ b, onClose }: { b: B; onClose: () => void }) {
         </div>
         <div className="font-bold text-[14px] mb-[10px]">{t("New day")}</div>
         <div
-          className="no-scrollbar"
+          className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           style={{
             display: "flex",
             gap: 8,
@@ -421,7 +422,7 @@ function MoveModal({ b, onClose }: { b: B; onClose: () => void }) {
           {times.map((tm) => (
             <button
               key={tm}
-              className={`chip ${time === tm ? "on" : ""}`}
+              className={`inline-flex items-center gap-[7px] py-[7px] px-[13px] rounded-pill text-[13px] font-semibold border cursor-pointer [transition:0.14s] whitespace-nowrap ${time === tm ? "bg-coral text-white border-coral" : "bg-surface text-ink-2 border-line-2 hover:border-ink-3 hover:text-ink"}`}
               onClick={() => setTime(tm)}
             >
               {tm}
@@ -429,12 +430,12 @@ function MoveModal({ b, onClose }: { b: B; onClose: () => void }) {
           ))}
         </div>
         <div className="flex gap-[10px]">
-          <button className="btn btn-ghost btn-md btn-block" onClick={onClose}>
+          <button className={btnCls("app", "ghost", "md", true)} onClick={onClose}>
             {t("Cancel")}
           </button>
           <BusyBtn
             busy={busy}
-            className="btn btn-primary btn-md btn-block"
+            className={btnCls("app", "primary", "md", true)}
             icon={<Icons.check size={16} />}
             onClick={() =>
               run(
@@ -474,12 +475,12 @@ function CancelModal({ b, onClose }: { b: B; onClose: () => void }) {
             : t("Free cancellation up to 12h before the start.")}
         </p>
         <div className="flex gap-[10px]">
-          <button className="btn btn-ghost btn-md btn-block" onClick={onClose}>
+          <button className={btnCls("app", "ghost", "md", true)} onClick={onClose}>
             {t("Keep it")}
           </button>
           <BusyBtn
             busy={busy}
-            className="btn btn-md btn-block"
+            className={btnCls("app", undefined, "md", true)}
             style={{ background: "var(--coral)", color: "#fff" }}
             onClick={() =>
               run(

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { btnCls } from "@/lib/btn";
 import { Icons, Logo } from "@/components/Icons";
 import {
   MOODS,
@@ -154,16 +155,24 @@ export function CCorporate({
   };
 
   return (
-    <div className="anim-fade corp">
-      <div className="corp-hero">
+    <div
+      className="animate-anim-fade-app"
+      style={{ ["--gold" as any]: "#e6a23c" }}
+    >
+      <div className="relative overflow-hidden rounded-xl text-[#f4e9d8] min-h-[430px] flex items-end [background-image:linear-gradient(95deg,rgba(24,5,7,0.98)_0%,rgba(40,8,11,0.95)_40%,rgba(40,8,11,0.72)_64%,rgba(40,8,11,0.5)_100%),url('/images/corporate-hero.jpg')] bg-cover [background-position:right_28%] py-10 px-[44px] before:content-[''] before:absolute before:inset-0 before:opacity-30 before:[mix-blend-mode:overlay] before:[background-image:radial-gradient(rgba(255,255,255,0.5)_0.6px,transparent_0.6px)] before:[background-size:10px_10px] before:pointer-events-none [&_h1]:[text-shadow:0_2px_18px_rgba(20,4,6,0.5)] [&_p]:[text-shadow:0_2px_18px_rgba(20,4,6,0.5)]">
         <div className="relative flex gap-[30px] items-center flex-wrap">
           <div className="flex-1 min-w-[280px] max-w-[560px]">
-            <div className="corp-eyebrow" style={{ marginBottom: 16 }}>
+            <div className="text-[12px] font-extrabold tracking-[0.18em] uppercase text-[var(--gold)]" style={{ marginBottom: 16 }}>
               {t("Corporate wellbeing")}
             </div>
-            <div className="corp-lockup" style={{ marginBottom: 18 }}>
-              <span className="corp-logo">{COMPANY.letter}</span>
-              <span className="corp-x">×</span>
+            <div
+              className="inline-flex items-center gap-[14px]"
+              style={{ marginBottom: 18 }}
+            >
+              <span className="w-[46px] h-[46px] rounded-[13px] [background:linear-gradient(140deg,#fff,#f4e9d8)] text-[#5e1014] grid place-items-center font-display font-extrabold text-[24px] flex-none">
+                {COMPANY.letter}
+              </span>
+              <span className="text-[18px] opacity-50 font-light">×</span>
               <Logo size={30} mono />
             </div>
             <h1
@@ -180,7 +189,7 @@ export function CCorporate({
             </p>
             <div className="flex gap-[10px] mt-[24px] flex-wrap">
               <button
-                className="btn btn-lg"
+                className={btnCls("app", undefined, "lg")}
                 style={{
                   background: "var(--gold)",
                   color: "#3a0a0d",
@@ -192,7 +201,7 @@ export function CCorporate({
                 <Icons.arrowR size={18} />
               </button>
               <button
-                className="btn btn-lg"
+                className={btnCls("app", undefined, "lg")}
                 style={{
                   background: "rgba(255,255,255,.1)",
                   color: "#F4E9D8",
@@ -205,8 +214,11 @@ export function CCorporate({
             </div>
           </div>
           <div className="flex flex-col items-center gap-[14px]">
-            <div className="ring" style={{ ["--p" as any]: pct }}>
-              <div className="hole">
+            <div
+              className="w-[118px] h-[118px] rounded-[99px] flex-none [background:conic-gradient(var(--gold)_calc(var(--p)*1%),rgba(255,255,255,0.14)_0)] grid place-items-center"
+              style={{ ["--p" as any]: pct }}
+            >
+              <div className="w-[92px] h-[92px] rounded-[99px] bg-[rgba(30,8,9,0.72)] backdrop-blur-[4px] grid place-items-center text-center">
                 <div>
                   <div className="font-display font-extrabold text-[24px] text-[#FFF3E4] leading-[1]">
                     {fmt(remaining)}
@@ -236,7 +248,10 @@ export function CCorporate({
         {CORP_PERKS.map((p) => {
           const I = Icons[p.icon];
           return (
-            <div key={p.title} className="corp-card corp-perk">
+            <div
+              key={p.title}
+              className="bg-surface border border-line rounded-lg p-[22px] [transition:0.18s] hover:-translate-y-[3px] hover:shadow"
+            >
               <div className="flex items-start justify-between mb-[16px]">
                 <span
                   style={{
@@ -253,7 +268,7 @@ export function CCorporate({
                 </span>
                 {p.tag && (
                   <span
-                    className="tag"
+                    className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] font-semibold bg-surface-2 text-ink-2 border border-line"
                     style={{
                       background:
                         "color-mix(in srgb,var(--gold) 16%,transparent)",
@@ -311,10 +326,13 @@ export function CCorporate({
       </div>
 
       <div className="grid grid-cols-[1.3fr_1fr] gap-[var(--gap)] mt-[40px] mx-0 mb-0 items-stretch">
-        <div className="corp-gift" onClick={() => setModal("gift")}>
+        <div
+          className="relative overflow-hidden rounded-lg text-[#f4e9d8] cursor-pointer [background:linear-gradient(135deg,#5e1014,#2a0709)] border border-[color-mix(in_srgb,#e6a23c_40%,transparent)] p-5 [transition:0.18s] hover:-translate-y-[3px] hover:shadow-lg"
+          onClick={() => setModal("gift")}
+        >
           <div className="relative flex flex-col h-full">
             <div className="flex items-center justify-between mb-[18px]">
-              <span className="corp-eyebrow" style={{ color: "var(--gold)" }}>
+              <span className="text-[12px] font-extrabold tracking-[0.18em] uppercase text-[var(--gold)]" style={{ color: "var(--gold)" }}>
                 {t("Joymap gift card")}
               </span>
               <Icons.gift size={26} style={{ color: "var(--gold)" }} />
@@ -344,7 +362,7 @@ export function CCorporate({
           </div>
         </div>
         <div
-          className="corp-card"
+          className="bg-surface border border-line rounded-lg p-[22px] [transition:0.18s]"
           style={{
             display: "flex",
             flexDirection: "column",
@@ -375,11 +393,11 @@ export function CCorporate({
       </div>
 
       <div
-        className="corp-feature"
+        className="relative overflow-hidden rounded-xl min-h-[340px] flex items-end text-[#fff] [background-image:linear-gradient(0deg,rgba(20,8,6,0.82)_0%,rgba(20,8,6,0.25)_55%,rgba(20,8,6,0.45)_100%),url('/images/corporate-team-strategy.jpg')] bg-cover [background-position:center_32%] py-[34px] px-[38px]"
         style={{ marginTop: "calc(var(--gap) + 16px)" }}
       >
         <div className="relative max-w-[560px]">
-          <div className="corp-eyebrow" style={{ marginBottom: 12 }}>
+          <div className="text-[12px] font-extrabold tracking-[0.18em] uppercase text-[var(--gold)]" style={{ marginBottom: 12 }}>
             {t("Off-sites & away-days")}
           </div>
           <h2
@@ -395,7 +413,7 @@ export function CCorporate({
             {t("From strategy days to celebration nights, our events team curates a custom experience for any group size — fully handled, beautifully run.")}
           </p>
           <button
-            className="btn btn-lg"
+            className={btnCls("app", undefined, "lg")}
             style={{
               background: "var(--gold)",
               color: "#3a0a0d",
@@ -416,10 +434,10 @@ export function CCorporate({
         />
       </div>
       <div className="grid grid-cols-[1fr_1.25fr] gap-[var(--gap)] items-start">
-        <div className="corp-card">
+        <div className="bg-surface border border-line rounded-lg p-[22px] [transition:0.18s]">
           <div className="flex items-center gap-[12px] mb-[18px]">
             <span
-              className="corp-logo"
+              className="grid place-items-center font-display font-extrabold flex-none"
               style={{
                 width: 42,
                 height: 42,
@@ -462,11 +480,11 @@ export function CCorporate({
             {t("Need a seat changed? Contact your admin.")}
           </div>
         </div>
-        <div className="corp-card" style={{ padding: 0, overflow: "hidden" }}>
+        <div className="bg-surface border border-line rounded-lg p-[22px] [transition:0.18s]" style={{ padding: 0, overflow: "hidden" }}>
           <div className="flex items-center justify-between py-[18px] px-[22px]">
             <h3 className="text-[16px]">{t("Billing & invoices")}</h3>
             <span
-              className="tag"
+              className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] font-semibold bg-surface-2 text-ink-2 border border-line"
               style={{ background: "var(--surface-2)", color: "var(--ink-3)" }}
             >
               {t("View only")}
@@ -510,7 +528,7 @@ export function CCorporate({
                   {t(inv.status)}
                 </span>
               </div>
-              <button className="icon-btn" style={{ width: 34, height: 34 }}>
+              <button className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2" style={{ width: 34, height: 34 }}>
                 <Icons.download size={15} />
               </button>
             </div>
@@ -549,7 +567,7 @@ function TeamEventCard({
   if (!e) return null;
   const m = MOODS[e.mood];
   return (
-    <div className="card" style={{ overflow: "hidden" }}>
+    <div className="bg-surface border border-line rounded-lg" style={{ overflow: "hidden" }}>
       <div className="relative h-[120px]" style={{ background: e.gradient }}>
         <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,.4))]" />
         <div className="absolute top-[12px] left-[12px] flex gap-[7px]">
@@ -567,14 +585,14 @@ function TeamEventCard({
       <div className="py-[15px] px-[17px]">
         <div className="flex items-center gap-[8px] mb-[12px]">
           <span
-            className="tag"
+            className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] font-semibold bg-surface-2 text-ink-2 border border-line"
             style={{ background: "var(--surface-2)", color: "var(--ink-2)" }}
           >
             <Icons.briefcase size={12} style={{ marginRight: 4 }} />
             {t(ev.team)}
           </span>
           <span
-            className="mood-chip"
+            className="inline-flex items-center gap-[8px] pt-[7px] pr-[13px] pb-[7px] pl-[11px] rounded-pill text-[13px] font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid border-transparent"
             style={{
               background: m.soft,
               color: m.color,
@@ -587,7 +605,7 @@ function TeamEventCard({
           </span>
         </div>
         <div className="flex items-center gap-[10px]">
-          <div className="av-stack">
+          <div className="flex [&>*]:ml-[-9px] [&>*]:border-2 [&>*]:border-surface [&>*:first-child]:ml-0">
             {ev.going.slice(0, 5).map((a, i) => (
               <Avatar key={i} name={a} size={28} />
             ))}
@@ -599,7 +617,7 @@ function TeamEventCard({
             {ev.going.length + ev.extra}/{ev.cap} {t("going")}
           </span>
           <button
-            className={`btn btn-sm ${joined ? "btn-soft" : "btn-primary"}`}
+            className={btnCls("app", joined ? "soft" : "primary", "sm")}
             style={{ marginLeft: "auto" }}
             onClick={() => setJoined((j) => !j)}
           >
@@ -639,7 +657,7 @@ function QuoteModal({ onClose }: { onClose: () => void }) {
       {step === 0 ? (
         <div className="py-[26px] px-[28px]">
           <div
-            className="corp-eyebrow"
+            className="text-[12px] font-extrabold tracking-[0.18em] uppercase text-[var(--gold)]"
             style={{ marginBottom: 8, color: "var(--coral-deep)" }}
           >
             {t("Custom team event")}
@@ -690,7 +708,7 @@ function QuoteModal({ onClose }: { onClose: () => void }) {
               </div>
               <div className="flex-1">
                 <Lbl>{t("Budget / person")}</Lbl>
-                <div className="cal-sel" style={{ display: "block" }}>
+                <div className="relative" style={{ display: "block" }}>
                   <Select
                     value={budget}
                     onChange={(e) => setBudget(e.target.value)}
@@ -716,7 +734,7 @@ function QuoteModal({ onClose }: { onClose: () => void }) {
           </div>
           <div className="flex gap-[10px] mt-[22px]">
             <button
-              className="btn btn-ghost btn-md btn-block"
+              className={btnCls("app", "ghost", "md", true)}
               onClick={onClose}
             >
               {t("Cancel")}
@@ -763,14 +781,14 @@ function GiftModal({ onClose }: { onClose: () => void }) {
       {!sent ? (
         <div className="py-[26px] px-[28px]">
           <div
-            className="corp-eyebrow"
+            className="text-[12px] font-extrabold tracking-[0.18em] uppercase text-[var(--gold)]"
             style={{ marginBottom: 8, color: "#B97714" }}
           >
             {t("Joymap gift card")}
           </div>
           <h2 className="text-[23px] mb-[18px]">{t("Send the joy")}</h2>
           <div
-            className="corp-gift"
+            className="relative overflow-hidden rounded-lg text-[#f4e9d8] [background:linear-gradient(135deg,#5e1014,#2a0709)] border border-[color-mix(in_srgb,#e6a23c_40%,transparent)] p-5"
             style={{ marginBottom: 20, cursor: "default" }}
           >
             <div className="relative flex items-center justify-between">
@@ -790,7 +808,11 @@ function GiftModal({ onClose }: { onClose: () => void }) {
             {GIFT_DENOMS.map((d) => (
               <div
                 key={d}
-                className={`gift-denom ${amt === d ? "on" : ""}`}
+                className={`border-[1.5px] rounded py-4 px-[10px] text-center cursor-pointer [transition:0.15s] bg-surface hover:border-[#e6a23c] ${
+                  amt === d
+                    ? "border-[#e6a23c] bg-[color-mix(in_srgb,#e6a23c_12%,transparent)]"
+                    : "border-line-2"
+                }`}
                 onClick={() => setAmt(d)}
               >
                 <div className="font-display font-extrabold text-[15px]">
@@ -817,7 +839,7 @@ function GiftModal({ onClose }: { onClose: () => void }) {
           />
           <div className="flex gap-[10px]">
             <button
-              className="btn btn-ghost btn-md btn-block"
+              className={btnCls("app", "ghost", "md", true)}
               onClick={onClose}
             >
               {t("Cancel")}

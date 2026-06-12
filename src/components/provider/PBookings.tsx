@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { rpc } from "@/lib/client";
@@ -25,8 +26,8 @@ export function PBookings({ rows }: { rows: Booking[] }) {
   };
   const list = f === "all" ? rows : rows.filter((b) => b.status === f);
   return (
-    <div className="anim-fade">
-      <div className="shead">
+    <div className="animate-anim-fade-dash">
+      <div className="flex items-end justify-between gap-4 mb-[18px]">
         <div />
         <Seg
           value={f}
@@ -42,7 +43,7 @@ export function PBookings({ rows }: { rows: Booking[] }) {
       </div>
       {list.length === 0 ? (
         <div
-          className="card"
+          className="bg-surface border border-line rounded-lg"
           style={{
             padding: "56px 20px",
             textAlign: "center",
@@ -54,7 +55,7 @@ export function PBookings({ rows }: { rows: Booking[] }) {
           {t("bookings yet.")}
         </div>
       ) : (
-        <div className="card" style={{ overflow: "hidden" }}>
+        <div className="bg-surface border border-line rounded-lg" style={{ overflow: "hidden" }}>
           <div style={{ overflowX: "auto" }}>
             <BookingsTable
               rows={list}
@@ -101,7 +102,7 @@ function BookingDetailModal({
           <Pill status={b.status} />
         </div>
         <div
-          className="card"
+          className="bg-surface border border-line rounded-lg"
           style={{
             padding: 16,
             background: "var(--surface-2)",
@@ -115,7 +116,7 @@ function BookingDetailModal({
           <Row l={t("Code")} r={b.code} />
         </div>
         <div className="flex gap-[10px]">
-          <button className="btn btn-ghost btn-md btn-block" onClick={onClose}>
+          <button className={btnCls("dash", "ghost", "md", true)} onClick={onClose}>
             {t("Close")}
           </button>
           {b.status === "pending" ? (

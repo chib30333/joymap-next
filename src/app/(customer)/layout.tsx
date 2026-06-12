@@ -34,7 +34,9 @@ export default async function CustomerLayout({
         unread={unread}
         city={city}
       />
-      <div className="content-top">{children}</div>
+      <div className="pt-[28px] px-[var(--pad)] pb-[68px] max-w-[1280px] w-full mx-auto">
+        {children}
+      </div>
     </div>
   );
 }

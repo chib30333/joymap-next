@@ -103,10 +103,10 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
   };
 
   return (
-    <div className="anim-fade">
-      <div className="shead">
+    <div className="animate-anim-fade-dash">
+      <div className="flex items-end justify-between gap-4 mb-[18px]">
         <div>
-          <div className="eyebrow" style={{ marginBottom: 6 }}>
+          <div className="text-[12px] font-extrabold tracking-[0.1em] uppercase text-orange" style={{ marginBottom: 6 }}>
             {t("Week of")} {TODAY}–{Math.min(TODAY + 6, 30)} {t("Jun")} · {total}{" "}
             {t("sessions")}
           </div>
@@ -117,9 +117,11 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
           {t("Drag a service onto a day — saved instantly")}
         </div>
       </div>
-      <div className="pcal-wrap">
-        <aside className="pcal-palette">
-          <div className="pcal-pal-head">{t("Your services")}</div>
+      <div className="grid grid-cols-[240px_1fr] gap-[var(--gap)] items-start max-[920px]:grid-cols-[1fr]">
+        <aside className="sticky top-[94px] flex flex-col gap-[9px] bg-surface border border-line rounded-lg p-4">
+          <div className="text-[11.5px] font-extrabold tracking-[0.05em] uppercase text-ink-3">
+            {t("Your services")}
+          </div>
           {svcs.length === 0 && (
             <div className="text-[12.5px] text-ink-3 font-semibold leading-[1.5]">
               {t("No services yet — create one in")} <b>{t("Services")}</b>{" "}
@@ -131,13 +133,13 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
             return (
               <div
                 key={svc.id}
-                className={`pcal-svc ${dragId === "svc:" + svc.id ? "dragging" : ""}`}
+                className={`flex items-center gap-[10px] py-[10px] px-[11px] rounded border border-line border-l-4 bg-surface-2 cursor-grab [transition:0.14s] select-none hover:shadow hover:-translate-y-px active:cursor-grabbing ${dragId === "svc:" + svc.id ? "opacity-[0.38]" : ""}`}
                 draggable
                 style={{ borderLeftColor: m.color }}
                 onDragStart={(e) => startSvc(svc.id, e)}
                 onDragEnd={endDrag}
               >
-                <span className="pcal-grip">
+                <span className="grid grid-cols-[1fr_1fr] gap-[2px] flex-none [&>i]:w-[3px] [&>i]:h-[3px] [&>i]:rounded-[99px] [&>i]:bg-ink-3 [&>i]:block">
                   <i />
                   <i />
                   <i />
@@ -183,7 +185,7 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
             {t("Slots feed the customer calendar and booking flow instantly.")}
           </div>
         </aside>
-        <div className="pcal-week">
+        <div className="grid grid-cols-[repeat(7,1fr)] gap-[10px] max-[1180px]:grid-flow-col max-[1180px]:auto-cols-[minmax(156px,1fr)] max-[1180px]:grid-cols-none max-[1180px]:overflow-x-auto max-[1180px]:pb-[6px]">
           {days.map((d) => {
             const list = byDay[d] || [];
             const today = d === TODAY;
@@ -191,7 +193,13 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
             return (
               <div
                 key={d}
-                className={`pcal-col ${today ? "today" : ""} ${isOver ? "over" : ""}`}
+                className={`group/col bg-surface border rounded min-h-[360px] flex flex-col [transition:0.16s] ${
+                  isOver
+                    ? "border-coral border-dashed bg-coral-soft shadow-[0_0_0_3px_var(--coral-soft)] -translate-y-[2px]"
+                    : today
+                      ? "border-coral"
+                      : "border-line"
+                }`}
                 onDragOver={(e) => {
                   e.preventDefault();
                   if (over !== d) setOver(d);
@@ -202,16 +210,32 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
                 }}
                 onDrop={(e) => drop(d, e)}
               >
-                <div className={`pcal-col-h ${today ? "today" : ""}`}>
-                  <div className="wd">{t(WD[dow(d)])}</div>
-                  <div className="dn">{d}</div>
+                <div className="text-center py-[9px] px-2 border-b border-line relative">
+                  <div
+                    className={`text-[11px] font-extrabold tracking-[0.04em] uppercase ${today ? "text-coral" : "text-ink-3"}`}
+                  >
+                    {t(WD[dow(d)])}
+                  </div>
+                  <div
+                    className={`font-display font-extrabold text-[19px] ${today ? "text-coral" : ""}`}
+                  >
+                    {d}
+                  </div>
                   {list.length > 0 && (
-                    <span className="pcal-cnt">{list.length}</span>
+                    <span className="absolute top-[9px] right-[9px] text-[10.5px] font-extrabold text-ink-3 bg-surface-2 border border-line rounded-[99px] px-[6px] py-[1px]">
+                      {list.length}
+                    </span>
                   )}
                 </div>
-                <div className="pcal-col-b">
+                <div className="flex-1 p-[9px] flex flex-col gap-2">
                   {list.length === 0 ? (
-                    <div className="pcal-drop">
+                    <div
+                      className={`flex-1 grid place-items-center border-[1.5px] border-dashed rounded-[10px] m-[2px] text-[11.5px] font-bold text-center py-[14px] px-[10px] [transition:0.14s] ${
+                        isOver
+                          ? "border-coral text-coral-deep bg-[rgba(255,255,255,0.4)]"
+                          : "border-line-2 text-ink-3"
+                      }`}
+                    >
                       {isOver
                         ? t("Release to schedule")
                         : t("Drop a service here")}
@@ -227,7 +251,7 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
                       return (
                         <div
                           key={slot.id}
-                          className={`pcal-slot ${dragId === "slot:" + slot.id ? "dragging" : ""}`}
+                          className={`group/slot rounded-[11px] pt-2 px-[9px] pb-[9px] cursor-grab relative border-l-[3px] border-solid [transition:0.14s] select-none hover:shadow-sm active:cursor-grabbing ${dragId === "slot:" + slot.id ? "opacity-[0.38]" : ""}`}
                           draggable
                           style={{
                             background: m.soft,
@@ -237,14 +261,14 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
                           onDragEnd={endDrag}
                         >
                           <button
-                            className="pcal-x"
+                            className="absolute top-[5px] right-[5px] w-[18px] h-[18px] rounded-[99px] grid place-items-center bg-[rgba(0,0,0,0.07)] [[data-theme=dark]_&]:bg-[rgba(255,255,255,0.12)] text-ink-2 opacity-0 [transition:0.14s] border-none cursor-pointer group-hover/slot:opacity-100"
                             onClick={() => remove(slot.id)}
                             title={t("Remove")}
                           >
                             <Icons.close size={12} />
                           </button>
                           <button
-                            className="pcal-time-btn"
+                            className="font-display font-extrabold text-[12.5px] bg-none border-none cursor-pointer p-0 inline-flex items-center gap-1"
                             style={{ color: m.color }}
                             onClick={() =>
                               setEditing((e) =>
@@ -262,11 +286,15 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
                             {slot.booked || 0}/{svc.cap} {t("booked")}
                           </div>
                           {editing === slot.id && (
-                            <div className="pcal-times">
+                            <div className="flex flex-wrap gap-1 mt-2">
                               {PCAL_TIMES.map((tm) => (
                                 <button
                                   key={tm}
-                                  className={slot.time === tm ? "on" : ""}
+                                  className={`text-[10.5px] font-bold py-[3px] px-[7px] rounded-[99px] border cursor-pointer [transition:0.12s] ${
+                                    slot.time === tm
+                                      ? "bg-ink text-bg border-ink"
+                                      : "border-line-2 bg-surface hover:border-ink-3"
+                                  }`}
                                   onClick={() => setTime(slot.id, tm)}
                                 >
                                   {tm}

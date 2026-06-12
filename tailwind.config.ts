@@ -52,11 +52,28 @@ const config: Config = {
         rise: { from: { transform: "translateY(8px)", opacity: "0" }, to: { transform: "none", opacity: "1" } },
         pop: { from: { transform: "translateY(10px) scale(.98)", opacity: "0" }, to: { transform: "none", opacity: "1" } },
         spin: { to: { transform: "rotate(360deg)" } },
+        jmpop: { from: { transform: "translateY(10px) scale(.98)" }, to: { transform: "none" } },
+        jmrise: { from: { transform: "translateY(8px)" }, to: { transform: "none" } },
+        jmcardin: { from: { transform: "translateY(16px)" }, to: { transform: "none" } },
+        jmfade: { from: { opacity: "0" }, to: { opacity: "1" } },
+        jmslideup: { from: { opacity: "0", transform: "translateY(24px)" }, to: { opacity: "1", transform: "none" } },
       },
       animation: {
         sweep: "sweep 1.4s ease-in-out infinite",
         rise: "rise .4s ease both",
         pop: "pop .5s cubic-bezier(.22,1,.36,1) both",
+        "jm-spin": "spin 0.7s linear infinite",
+        // customer (.app-top) enter animations — transform only
+        "anim-pop-app": "jmpop .5s cubic-bezier(.22,1,.36,1)",
+        "anim-fade-app": "jmrise .4s ease",
+        // provider/admin (.jmdash) enter animations — transform + opacity
+        "anim-pop-dash": "pop .5s cubic-bezier(.22,1,.36,1)",
+        "anim-fade-dash": "rise .4s ease",
+        // auth card / reset-icon entrance (.auth-wrap.fx) — transform only
+        "anim-cardin": "jmcardin .5s cubic-bezier(.22,1,.36,1) both",
+        // modal scrim fade + sheet slide-up (.fx-gated entrances)
+        "anim-fade": "jmfade .25s ease both",
+        "anim-slideup": "jmslideup .35s cubic-bezier(.22,1,.36,1) both",
       },
     },
   },

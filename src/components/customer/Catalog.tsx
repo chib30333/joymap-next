@@ -35,7 +35,7 @@ export function Catalog({
   const [mood, setMood] = useState<string | null>(null);
   const [cat, setCat] = useState("All");
   const [sort, setSort] = useState("Recommended");
-  const [query, setQuery] = useState(initialQuery || "");
+  const [query] = useState(initialQuery || "");
   const [open, setOpen] = useState<Exp | null>(null);
   const onFav = useFav();
 
@@ -58,13 +58,13 @@ export function Catalog({
   }, [source, mood, cat, sort, query]);
 
   return (
-    <div className="anim-fade">
+    <div className="animate-anim-fade-app">
       <div className="mb-[18px]">
-        <div className="eyebrow" style={{ marginBottom: 12 }}>
+        <div className="text-[12.5px] font-bold tracking-[0.1em] uppercase text-orange" style={{ marginBottom: 12 }}>
           {t("Browse by how you want to feel")}
         </div>
         <div
-          className="no-scrollbar"
+          className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           style={{
             display: "flex",
             gap: 10,
@@ -73,7 +73,7 @@ export function Catalog({
           }}
         >
           <button
-            className={`chip ${!mood ? "on" : ""}`}
+            className={`inline-flex items-center gap-[7px] rounded-pill text-[13px] font-semibold border cursor-pointer [transition:0.14s] whitespace-nowrap ${!mood ? "bg-coral text-white border-coral" : "bg-surface text-ink-2 border-line-2 hover:border-ink-3 hover:text-ink"}`}
             style={{ padding: "9px 16px" }}
             onClick={() => setMood(null)}
           >
@@ -94,7 +94,7 @@ export function Catalog({
         {["All", ...CATS].map((c) => (
           <button
             key={c}
-            className={`chip ${cat === c ? "on" : ""}`}
+            className={`inline-flex items-center gap-[7px] py-[7px] px-[13px] rounded-pill text-[13px] font-semibold border cursor-pointer [transition:0.14s] whitespace-nowrap ${cat === c ? "bg-coral text-white border-coral" : "bg-surface text-ink-2 border-line-2 hover:border-ink-3 hover:text-ink"}`}
             onClick={() => setCat(c)}
           >
             {t(c)}
@@ -145,7 +145,7 @@ export function Catalog({
           {list.map((e, i) => (
             <div
               key={e.id}
-              className="anim-pop"
+              className="animate-anim-pop-app"
               style={{ animationDelay: `${Math.min(i * 0.04, 0.4)}s` }}
             >
               <ExperienceCard

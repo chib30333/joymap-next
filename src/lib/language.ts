@@ -1,11 +1,6 @@
-// Translation dictionaries keyed by the English source string (the same string
-// passed to t() in the UI). English is the source language, so it needs no map.
-// Add a language here and it becomes available through the LangSwitcher.
-
 export type Dict = Record<string, string>;
 
 const ru: Dict = {
-  // ── Navigation: sections ────────────────────────────────────────────────
   Workspace: "Рабочая область",
   Business: "Бизнес",
   Growth: "Рост",
@@ -13,7 +8,6 @@ const ru: Dict = {
   Operate: "Управление",
   "Money & growth": "Деньги и рост",
 
-  // ── Navigation: provider / customer / admin labels ──────────────────────
   Calendar: "Календарь",
   Bookings: "Бронирования",
   Messages: "Сообщения",
@@ -37,7 +31,6 @@ const ru: Dict = {
   Customers: "Клиенты",
   Financials: "Финансы",
 
-  // ── Menus & chrome ──────────────────────────────────────────────────────
   "Log out": "Выйти",
   "Your profile": "Ваш профиль",
   Settings: "Настройки",
@@ -50,7 +43,6 @@ const ru: Dict = {
   "Go to Overview": "Перейти к обзору",
   "Search activities, moods, places…": "Поиск занятий, настроений, мест…",
 
-  // ── Provider page subtitles ─────────────────────────────────────────────
   "Welcome back": "С возвращением",
   "Manage your weekly availability": "Управляйте расписанием на неделю",
   "Confirm, complete & track sessions": "Подтверждайте и отслеживайте сессии",
@@ -64,7 +56,6 @@ const ru: Dict = {
   "What customers are saying": "Что говорят клиенты",
   "Promo codes & growth": "Промокоды и рост",
 
-  // ── Admin page subtitles ────────────────────────────────────────────────
   "Platform health at a glance": "Состояние платформы кратко",
   "Manage marketplace partners": "Управление партнёрами",
   "Review providers & new services": "Проверка поставщиков и услуг",
@@ -73,7 +64,6 @@ const ru: Dict = {
   "Revenue, commission & payouts": "Доход, комиссия и выплаты",
   "Campaigns, promos & experiments": "Кампании, промо и эксперименты",
 
-  // ── Auth ────────────────────────────────────────────────────────────────
   "Log in": "Войти",
   "Sign up": "Регистрация",
   "Create your account": "Создайте аккаунт",
@@ -101,7 +91,6 @@ const ru: Dict = {
   "Already have an account?": "Уже есть аккаунт?",
   "Live now!": "Сейчас в эфире!",
 
-  // ── Provider overview (KPIs, charts, schedule) ──────────────────────────
   "Revenue · June": "Доход · июнь",
   "Fill rate · today": "Заполняемость · сегодня",
   "Avg rating": "Средний рейтинг",
@@ -124,7 +113,6 @@ const ru: Dict = {
     "Бронирований пока нет — как только ваши услуги одобрят и клиенты забронируют, они появятся здесь.",
   Service: "Услуга",
 
-  // ── Weekdays & months (short) ───────────────────────────────────────────
   Mon: "Пн",
   Tue: "Вт",
   Wed: "Ср",
@@ -134,7 +122,6 @@ const ru: Dict = {
   Sun: "Вс",
   Jun: "июн",
 
-  // ── Bookings table (Customer/Service already defined above) ─────────────
   Date: "Дата",
   Time: "Время",
   People: "Гостей",
@@ -144,13 +131,11 @@ const ru: Dict = {
   Decline: "Отклонить",
   Complete: "Завершить",
   Cancel: "Отменить",
-  // booking statuses
   pending: "ожидает",
   confirmed: "подтверждено",
   completed: "завершено",
   cancelled: "отменено",
 
-  // ── Full-project localization (auto-merged) ──────────────────────────────
   " — contact support to re-apply.": " — обратитесь в поддержку, чтобы подать заявку повторно.",
   "— your guide. ✦ Over a minute I'll learn your vibe and build a personal weekly": "— твой проводник. ✦ За минуту я пойму твоё настроение и составлю персональную недельную",
   "% platform commission": "% комиссии платформы",

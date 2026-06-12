@@ -29,7 +29,7 @@ export function PortalNav({
         <span className="rounded-pill bg-orange/20 px-2.5 py-1 font-display text-[10px] font-extrabold text-orange">
           {brandTag}
         </span>
-        <nav className="no-scrollbar ml-2 flex flex-1 items-center gap-1 overflow-x-auto">
+        <nav className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden ml-2 flex flex-1 items-center gap-1 overflow-x-auto">
           {tabs.map(([href, label]) => {
             const on = pathname === href;
             return (

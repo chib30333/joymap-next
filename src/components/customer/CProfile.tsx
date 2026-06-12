@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { rpc, useBusy } from "@/lib/client";
@@ -75,9 +76,9 @@ export function CProfile({
   };
 
   return (
-    <div className="anim-fade">
+    <div className="animate-anim-fade-app">
       <div
-        className="card"
+        className="bg-surface border border-line rounded-lg"
         style={{
           padding: 24,
           display: "flex",
@@ -90,7 +91,7 @@ export function CProfile({
         <div className="relative">
           <Avatar name={form.name || "?"} size={72} />
           <button
-            className="icon-btn"
+            className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
             style={{
               position: "absolute",
               bottom: -4,
@@ -138,7 +139,7 @@ export function CProfile({
         ).map(([k, l]) => (
           <button
             key={k}
-            className="btn btn-sm"
+            className={btnCls("app", undefined, "sm")}
             onClick={() => setTab(k as any)}
             style={
               tab === k
@@ -156,12 +157,12 @@ export function CProfile({
       </div>
 
       {tab === "account" && (
-        <div className="card" style={{ padding: 24 }}>
+        <div className="bg-surface border border-line rounded-lg" style={{ padding: 24 }}>
           <div className="flex items-center justify-between mb-[18px]">
             <h3 className="text-[17px]">{t("Personal data")}</h3>
             <BusyBtn
               busy={busy}
-              className="btn btn-ghost btn-sm"
+              className={btnCls("app", "ghost", "sm")}
               icon={edit ? <Icons.check size={15} /> : <Icons.edit size={15} />}
               onClick={saveOrEdit}
             >
@@ -205,7 +206,7 @@ export function CProfile({
               );
             })}
           </div>
-          <hr className="divider" style={{ margin: "22px 0" }} />
+          <hr className="h-px bg-line border-0" style={{ margin: "22px 0" }} />
           <div className="flex items-center gap-[12px]">
             <span
               style={{
@@ -228,7 +229,7 @@ export function CProfile({
               </div>
             </div>
             <button
-              className="btn btn-ghost btn-sm"
+              className={btnCls("app", "ghost", "sm")}
               onClick={() => rpc("logout").then(() => router.push("/auth"))}
             >
               {t("Log out")}
@@ -246,7 +247,7 @@ export function CProfile({
           </div>
           {past.length === 0 ? (
             <div
-              className="card"
+              className="bg-surface border border-line rounded-lg"
               style={{
                 padding: "40px 20px",
                 textAlign: "center",
@@ -258,7 +259,7 @@ export function CProfile({
               {t("Your completed experiences will appear here.")}
             </div>
           ) : (
-            <div className="card" style={{ overflow: "hidden" }}>
+            <div className="bg-surface border border-line rounded-lg" style={{ overflow: "hidden" }}>
               {past.map((h, i) => {
                 const e = h.exp;
                 const m = e ? MOODS[e.mood] : MOODS.calm;
@@ -315,7 +316,7 @@ export function CProfile({
       )}
 
       {tab === "moods" && (
-        <div className="card" style={{ padding: 24 }}>
+        <div className="bg-surface border border-line rounded-lg" style={{ padding: 24 }}>
           <h3 className="text-[17px] mb-[8px]">{t("Your moods")}</h3>
           <p className="text-ink-2 text-[14px] mb-[16px]">
             {t(

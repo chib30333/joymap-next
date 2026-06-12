@@ -20,7 +20,7 @@ export function PAnalytics({
   if (ok.length === 0)
     return (
       <div
-        className="card anim-fade"
+        className="bg-surface border border-line rounded-lg animate-anim-fade-dash"
         style={{
           padding: "60px 24px",
           textAlign: "center",
@@ -60,12 +60,12 @@ export function PAnalytics({
     .filter((s) => s.booked > 0);
   const maxB = Math.max(...top.map((tp) => tp.booked), 1);
   return (
-    <div className="anim-fade">
+    <div className="animate-anim-fade-dash">
       <div
         className="grid grid-cols-[1fr_1fr]"
         style={{ gap: "var(--gap)", marginBottom: "var(--gap)" }}
       >
-        <div className="card" style={{ padding: 22 }}>
+        <div className="bg-surface border border-line rounded-lg" style={{ padding: 22 }}>
           <h3 className="text-[17px] mb-[4px]">{t("Revenue by day")}</h3>
           <div className="text-[13px] text-ink-3 font-semibold mb-[8px]">
             {t("June 2026 · live")}
@@ -76,7 +76,7 @@ export function PAnalytics({
             <Bars data={trend} unit="₽" />
           )}
         </div>
-        <div className="card" style={{ padding: 22 }}>
+        <div className="bg-surface border border-line rounded-lg" style={{ padding: 22 }}>
           <h3 className="text-[17px] mb-[4px]">
             {t("Bookings by start time")}
           </h3>
@@ -89,7 +89,7 @@ export function PAnalytics({
           />
         </div>
       </div>
-      <div className="card" style={{ padding: 22, maxWidth: 640 }}>
+      <div className="bg-surface border border-line rounded-lg" style={{ padding: 22, maxWidth: 640 }}>
         <h3 className="text-[17px] mb-[16px]">{t("Top services")}</h3>
         <div className="flex flex-col gap-[14px]">
           {top.map((s) => (

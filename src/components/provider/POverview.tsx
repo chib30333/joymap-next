@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { btnCls } from "@/lib/btn";
 import { Icons } from "@/components/Icons";
 import { useT } from "@/components/Language";
 import { money, Stat, Bars } from "@/components/dash/primitives";
@@ -73,7 +74,7 @@ export function POverview({
     },
   ];
   return (
-    <div className="anim-fade">
+    <div className="animate-anim-fade-dash">
       <div
         className="grid"
         style={{
@@ -100,8 +101,11 @@ export function POverview({
         className="grid grid-cols-[1.5fr_1fr]"
         style={{ gap: "var(--gap)", marginBottom: "var(--gap)" }}
       >
-        <div className="card" style={{ padding: 22 }}>
-          <div className="shead" style={{ marginBottom: 8 }}>
+        <div className="bg-surface border border-line rounded-lg" style={{ padding: 22 }}>
+          <div
+            className="flex items-end justify-between gap-4"
+            style={{ marginBottom: 8 }}
+          >
             <div>
               <h3 className="text-[17px]">{t("Revenue this week")}</h3>
               <div className="text-[13px] text-ink-3 font-semibold">
@@ -122,7 +126,7 @@ export function POverview({
             </div>
           )}
         </div>
-        <div className="card" style={{ padding: 22 }}>
+        <div className="bg-surface border border-line rounded-lg" style={{ padding: 22 }}>
           <h3 className="text-[17px] mb-[4px]">{t("Today's schedule")}</h3>
           <div className="text-[13px] text-ink-3 font-semibold mb-[16px]">
             {t(WD[dow(TODAY)])} {TODAY} {t("Jun")} · {todaySlots.length}{" "}
@@ -179,11 +183,11 @@ export function POverview({
           )}
         </div>
       </div>
-      <div className="card" style={{ overflow: "hidden" }}>
+      <div className="bg-surface border border-line rounded-lg" style={{ overflow: "hidden" }}>
         <div className="flex items-center justify-between py-[18px] px-[20px]">
           <h3 className="text-[17px]">{t("Recent bookings")}</h3>
           <button
-            className="btn btn-ghost btn-sm"
+            className={btnCls("dash", "ghost", "sm")}
             onClick={() => router.push("/provider/bookings")}
           >
             {t("View all")} <Icons.arrowR size={15} />

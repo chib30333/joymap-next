@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { rpc } from "@/lib/client";
@@ -27,7 +28,7 @@ export function CNotifications({ items }: { items: N[] }) {
   const markAll = () => rpc("markAllNotifs").then(() => router.refresh());
 
   return (
-    <div className="anim-fade">
+    <div className="animate-anim-fade-app">
       <div className="flex items-center gap-3 mb-5 flex-wrap">
         <div className="flex gap-1.5 bg-surface-2 p-[5px] rounded-pill border border-line">
           {(
@@ -38,7 +39,7 @@ export function CNotifications({ items }: { items: N[] }) {
           ).map(([k, l]) => (
             <button
               key={k}
-              className="btn btn-sm"
+              className={btnCls("app", undefined, "sm")}
               onClick={() => setFilter(k as "all" | "unread")}
               style={
                 filter === k
@@ -55,7 +56,7 @@ export function CNotifications({ items }: { items: N[] }) {
           ))}
         </div>
         <div className="flex-1" />
-        <button className="btn btn-ghost btn-sm" onClick={markAll}>
+        <button className={btnCls("app", "ghost", "sm")} onClick={markAll}>
           <Icons.checkCirc size={15} />
           {t("Mark all read")}
         </button>
@@ -66,7 +67,7 @@ export function CNotifications({ items }: { items: N[] }) {
           return (
             <div
               key={n.id}
-              className="card"
+              className="bg-surface border border-line rounded-lg"
               onClick={() => mark(n.id)}
               style={{
                 padding: "15px 17px",

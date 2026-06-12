@@ -22,7 +22,7 @@ export function Favorites({
   const [open, setOpen] = useState<Exp | null>(null);
   const onFav = useFav();
   return (
-    <div className="anim-fade">
+    <div className="animate-anim-fade-app">
       {list.length === 0 ? (
         <div className="text-center py-[70px] px-5 text-ink-3">
           <div className="w-16 h-16 rounded-[99px] bg-[var(--m-energy-soft)] grid place-items-center mt-0 mx-auto mb-4 text-[var(--m-energy)]">

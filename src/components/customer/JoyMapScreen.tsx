@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { rpc, useBusy } from "@/lib/client";
 import {
   MOODS,
-  fmt,
   PhotoFrame,
   MoodDot,
   BusyBtn,
@@ -68,10 +68,10 @@ export function JoyMapScreen({
     );
 
   return (
-    <div className="anim-fade">
+    <div className="animate-anim-fade-app">
       <div className="flex items-end justify-between gap-[20px] flex-wrap mt-[6px] mb-[22px]">
         <div>
-          <div className="eyebrow" style={{ marginBottom: 9 }}>
+          <div className="text-[12.5px] font-bold tracking-[0.1em] uppercase text-orange" style={{ marginBottom: 9 }}>
             {t("This week")} · {weekLabel}
           </div>
           <h1
@@ -91,7 +91,7 @@ export function JoyMapScreen({
         </div>
         <BusyBtn
           busy={busy}
-          className="btn btn-ghost btn-md"
+          className={btnCls("app", "ghost", "md")}
           icon={<Icons.refresh size={18} />}
           onClick={regen}
         >
@@ -103,7 +103,7 @@ export function JoyMapScreen({
         <EmptyMarketplace />
       ) : map.length === 0 ? (
         <div
-          className="card"
+          className="bg-surface border border-line rounded-lg"
           style={{ padding: "56px 24px", textAlign: "center" }}
         >
           <div
@@ -118,7 +118,7 @@ export function JoyMapScreen({
           </p>
           <BusyBtn
             busy={busy}
-            className="btn btn-primary btn-md"
+            className={btnCls("app", "primary", "md")}
             icon={<Icons.sparkle size={17} />}
             onClick={regen}
           >
@@ -130,7 +130,7 @@ export function JoyMapScreen({
           <MoodArc map={map} byId={byId} />
           <div className="relative mt-[26px]">
             <div
-              className="no-scrollbar"
+              className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
               style={{
                 display: "flex",
                 gap: 16,
@@ -153,7 +153,7 @@ export function JoyMapScreen({
           </div>
           {days.length > 0 && (
             <div
-              className="card-fill"
+              className="bg-[linear-gradient(160deg,#5e1014,var(--maroon))] border border-[color-mix(in_srgb,var(--coral)_55%,transparent)] text-[#f3ebe0] rounded-lg"
               style={{
                 marginTop: 26,
                 padding: "22px 24px",
@@ -163,13 +163,13 @@ export function JoyMapScreen({
               }}
             >
               <div
-                className="ricon"
+                className="rounded-[99px] flex-none grid place-items-center bg-coral text-white"
                 style={{ width: 44, height: 44, borderRadius: 14 }}
               >
                 <Icons.sparkle size={22} />
               </div>
               <div>
-                <h3 className="text-[17px] mb-[6px]">
+                <h3 className="text-[17px] mb-[6px] text-[#fff3e8]">
                   {t("Why Joy built this week")}
                 </h3>
                 <p className="text-[rgba(243,235,224,.85)] text-[14.5px] leading-[1.55] max-w-[760px]">
@@ -209,7 +209,7 @@ export function JoyMapScreen({
 export function EmptyMarketplace() {
   const t = useT();
   return (
-    <div className="card" style={{ padding: "60px 24px", textAlign: "center" }}>
+    <div className="bg-surface border border-line rounded-lg" style={{ padding: "60px 24px", textAlign: "center" }}>
       <div
         className="w-[64px] h-[64px] rounded-[99px] bg-surface-2 grid mt-0 mb-[16px] mx-auto text-ink-3"
         style={{ placeItems: "center" }}
@@ -237,7 +237,7 @@ function MoodArc({
   const t = useT();
   return (
     <div
-      className="card"
+      className="bg-surface border border-line rounded-lg"
       style={{
         padding: "14px 18px",
         display: "flex",
@@ -290,7 +290,7 @@ function DayCard({
   if (d.rest || !e) {
     return (
       <div
-        className="card anim-pop"
+        className="bg-surface border border-line rounded-lg animate-anim-pop-app"
         style={{
           flex: "none",
           width: 230,
@@ -334,7 +334,7 @@ function DayCard({
   );
   return (
     <div
-      className="card anim-pop"
+      className="bg-surface border border-line rounded-lg animate-anim-pop-app"
       onClick={() => onOpen(e)}
       style={{
         flex: "none",
@@ -357,14 +357,14 @@ function DayCard({
             </span>
           )}
         </div>
-        <div className="ttl" style={{ fontSize: 18 }}>
+        <div className="absolute left-[14px] right-[14px] bottom-[12px] text-[#fff] font-display font-bold text-[18px] tracking-[-0.01em] leading-[1.1] [text-shadow:0_1px_12px_rgba(0,0,0,0.35)]" style={{ fontSize: 18 }}>
           {e.title}
         </div>
       </PhotoFrame>
       <div className="pt-[13px] pr-[15px] pb-[15px] pl-[15px] flex flex-col gap-[11px]">
         <div className="flex items-center justify-between">
           <span
-            className="mood-chip"
+            className="inline-flex items-center gap-[8px] pt-[7px] pr-[13px] pb-[7px] pl-[11px] rounded-pill text-[13px] font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid border-transparent"
             style={{
               background: m.soft,
               color: m.color,
@@ -383,7 +383,7 @@ function DayCard({
         <p className="m-0 text-[13px] text-ink-3 font-semibold">{d.note}</p>
         {booked ? (
           <div
-            className="btn btn-sm"
+            className={btnCls("app", undefined, "sm")}
             style={{
               background: "var(--m-calm-soft)",
               color: "var(--m-calm)",
@@ -397,7 +397,7 @@ function DayCard({
           </div>
         ) : (
           <button
-            className="btn btn-primary btn-sm btn-block"
+            className={btnCls("app", "primary", "sm", true)}
             onClick={(ev) => {
               ev.stopPropagation();
               onOpen(e);

@@ -56,11 +56,11 @@ export function ChatPanel({
   if (threads.length === 0) {
     return (
       <div
-        className="chat-wrap anim-fade"
+        className="grid h-[calc(100vh-150px)] min-h-[480px] bg-surface border border-line rounded-lg overflow-hidden animate-anim-fade-app"
         style={{ gridTemplateColumns: "1fr" }}
       >
         <div
-          className="chat-main"
+          className="flex flex-col min-w-0 bg-bg"
           style={{
             display: "grid",
             placeItems: "center",
@@ -88,12 +88,18 @@ export function ChatPanel({
   }
 
   return (
-    <div className={`chat-wrap anim-fade ${cur ? "has-active" : ""}`}>
-      <div className="chat-list no-scrollbar">
+    <div className="grid grid-cols-[300px_1fr] max-[760px]:grid-cols-[1fr] h-[calc(100vh-150px)] min-h-[480px] bg-surface border border-line rounded-lg overflow-hidden animate-anim-fade-app">
+      <div
+        className={`border-r border-line overflow-y-auto flex flex-col [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${cur ? "max-[760px]:hidden" : ""}`}
+      >
         {threads.map((th) => (
           <div
             key={th.id}
-            className={`chat-li ${cur === th.id ? "on" : ""}`}
+            className={`flex gap-[11px] py-[14px] px-4 cursor-pointer border-b border-line [transition:0.14s] items-center hover:bg-surface-2 ${
+              cur === th.id
+                ? "bg-[color-mix(in_srgb,var(--coral)_9%,transparent)] before:content-[''] before:absolute before:left-0 before:w-[3px] before:h-[38px] before:rounded-[9px] before:bg-coral"
+                : ""
+            }`}
             style={{ position: "relative" }}
             onClick={() => open(th.id)}
           >
@@ -138,8 +144,8 @@ export function ChatPanel({
       </div>
 
       {thread ? (
-        <div className="chat-main">
-          <div className="chat-head">
+        <div className="flex flex-col min-w-0 bg-bg">
+          <div className="flex items-center gap-[12px] py-[14px] px-[18px] border-b border-line bg-surface">
             <Avatar name={thread.who} size={40} />
             <div className="flex-1 min-w-0">
               <div className="font-extrabold text-[15px]">{thread.who}</div>
@@ -147,24 +153,33 @@ export function ChatPanel({
                 {thread.service || t("Joymap chat")}
               </div>
             </div>
-            <button className="icon-btn">
+            <button className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2">
               <Icons.phone size={17} />
             </button>
           </div>
-          <div className="chat-body no-scrollbar" ref={bodyRef}>
+          <div className="flex-1 overflow-y-auto p-5 flex flex-col gap-[12px] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" ref={bodyRef}>
             {thread.msgs.length === 0 && (
               <div className="self-center text-ink-3 text-[13px] font-semibold py-[30px] px-0">
                 {t("Say hello — messages are delivered instantly.")}
               </div>
             )}
             {thread.msgs.map((m, i) => (
-              <div key={i} className={`msg ${m.from}`}>
+              <div
+                key={i}
+                className={`max-w-[74%] py-[11px] px-[15px] rounded-[16px] text-[14px] leading-[1.5] ${
+                  m.from === "me"
+                    ? "self-end bg-coral text-[#fff] rounded-br-[5px]"
+                    : "self-start bg-surface border border-line rounded-bl-[5px] text-ink"
+                }`}
+              >
                 {m.t}
-                <span className="at">{m.at}</span>
+                <span className="block text-[10.5px] font-semibold mt-[5px] opacity-60">
+                  {m.at}
+                </span>
               </div>
             ))}
           </div>
-          <div className="chat-input">
+          <div className="flex gap-[10px] py-[14px] px-4 border-t border-line bg-surface items-center">
             <Input
               placeholder={t("Write a message…")}
               value={draft}
@@ -175,7 +190,7 @@ export function ChatPanel({
               style={{ borderRadius: "var(--r-pill)" }}
             />
             <button
-              className="icon-btn"
+              className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
               style={{
                 background: "var(--coral)",
                 color: "#fff",
@@ -185,7 +200,7 @@ export function ChatPanel({
               onClick={send}
             >
               {sending ? (
-                <span className="jm-spin" />
+                <span className="w-[17px] h-[17px] rounded-full inline-block flex-none border-[2.5px] border-solid [border-top-color:currentColor] [border-right-color:color-mix(in_srgb,currentColor_35%,transparent)] [border-bottom-color:color-mix(in_srgb,currentColor_35%,transparent)] [border-left-color:color-mix(in_srgb,currentColor_35%,transparent)] animate-jm-spin" />
               ) : (
                 <Icons.send size={18} />
               )}
@@ -194,7 +209,7 @@ export function ChatPanel({
         </div>
       ) : (
         <div
-          className="chat-main"
+          className="flex flex-col min-w-0 bg-bg"
           style={{
             display: "grid",
             placeItems: "center",

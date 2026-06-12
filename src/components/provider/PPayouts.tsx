@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { btnCls } from "@/lib/btn";
 import { Icons } from "@/components/Icons";
 import { rpc, useBusy } from "@/lib/client";
 import { money, Pill, BusyBtn } from "@/components/dash/primitives";
@@ -10,14 +11,18 @@ export function PPayouts({ fin, list }: { fin: any; list: any[] }) {
   const t = useT();
   const router = useRouter();
   const { busy, run, error } = useBusy();
+  const pTh =
+    "text-left text-[11.5px] font-extrabold tracking-[0.06em] uppercase text-ink-3 px-4 pt-0 pb-3";
+  const pTd =
+    "px-4 py-[14px] border-t border-line text-[14px] align-middle group-hover:bg-surface-2";
   return (
     <div
-      className="anim-fade grid grid-cols-[1fr_1.3fr] items-start"
+      className="animate-anim-fade-dash grid grid-cols-[1fr_1.3fr] items-start"
       style={{ gap: "var(--gap)" }}
     >
       <div className="flex flex-col" style={{ gap: "var(--gap)" }}>
         <div
-          className="card-fill"
+          className="bg-[linear-gradient(160deg,#5e1014,var(--maroon))] border border-[color-mix(in_srgb,var(--red)_55%,transparent)] text-[#f3ebe0] rounded-lg"
           style={{ padding: 26, position: "relative", overflow: "hidden" }}
         >
           <div className="text-[13.5px] opacity-[.82] font-semibold mb-[8px]">
@@ -32,7 +37,7 @@ export function PPayouts({ fin, list }: { fin: any; list: any[] }) {
           </div>
           <BusyBtn
             busy={busy}
-            className="btn btn-orange btn-md"
+            className={btnCls("dash", "orange", "md")}
             icon={<Icons.wallet size={16} />}
             disabled={fin.available <= 0}
             onClick={() =>
@@ -52,7 +57,7 @@ export function PPayouts({ fin, list }: { fin: any; list: any[] }) {
           )}
           <div className="absolute right-[-30px] bottom-[-40px] w-[150px] h-[150px] rounded-[99px] bg-[rgba(255,255,255,.05)]" />
         </div>
-        <div className="card" style={{ padding: 22 }}>
+        <div className="bg-surface border border-line rounded-lg" style={{ padding: 22 }}>
           <h3 className="text-[16px] mb-[14px]">{t("Earnings breakdown")}</h3>
           <PRow l={t("Gross bookings")} r={money(fin.gross)} />
           <PRow
@@ -77,7 +82,7 @@ export function PPayouts({ fin, list }: { fin: any; list: any[] }) {
           </div>
         </div>
       </div>
-      <div className="card" style={{ overflow: "hidden" }}>
+      <div className="bg-surface border border-line rounded-lg" style={{ overflow: "hidden" }}>
         <h3 className="text-[17px] pt-[18px] px-[20px] pb-[4px]">
           {t("Payout history")}
         </h3>
@@ -88,22 +93,27 @@ export function PPayouts({ fin, list }: { fin: any; list: any[] }) {
             )}
           </div>
         ) : (
-          <table className="tbl">
+          <table className="w-full border-collapse">
             <thead>
               <tr>
-                <th>{t("Requested")}</th>
-                <th>{t("Amount")}</th>
-                <th>{t("Due")}</th>
-                <th>{t("Status")}</th>
+                <th className={pTh}>{t("Requested")}</th>
+                <th className={pTh}>{t("Amount")}</th>
+                <th className={pTh}>{t("Due")}</th>
+                <th className={pTh}>{t("Status")}</th>
               </tr>
             </thead>
             <tbody>
               {list.map((p) => (
-                <tr key={p.id} className="row">
-                  <td className="font-bold">{p.date}</td>
-                  <td className="font-display font-bold">{money(p.amount)}</td>
-                  <td className="text-ink-2">{p.due}</td>
-                  <td>
+                <tr
+                  key={p.id}
+                  className="group [transition:0.12s] cursor-pointer"
+                >
+                  <td className={`${pTd} font-bold`}>{p.date}</td>
+                  <td className={`${pTd} font-display font-bold`}>
+                    {money(p.amount)}
+                  </td>
+                  <td className={`${pTd} text-ink-2`}>{p.due}</td>
+                  <td className={pTd}>
                     <Pill status={p.status} />
                   </td>
                 </tr>

@@ -1,12 +1,22 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Icons, Logo } from "@/components/Icons";
 import { LangSwitcher, useT } from "@/components/Language";
 import { Input } from "@/components/ui/input";
 import { rpc } from "@/lib/client";
+
+const SPIN =
+  "inline-block w-[19px] h-[19px] rounded-full border-[2.5px] border-white/40 border-t-white animate-jm-spin";
+const BODY = "flex flex-col gap-[15px] mt-5";
+const FOOT = "text-center mt-5 text-[14px] text-ink-2 font-semibold";
+const LINK =
+  "text-ink-2 text-[13.5px] font-bold cursor-pointer no-underline hover:text-coral-deep";
+const LINK_STRONG =
+  "text-coral-deep text-[13.5px] font-bold cursor-pointer no-underline hover:text-coral-deep";
 
 const ROLES: Record<string, { sub: string; icon: keyof typeof Icons }> = {
   customer: {
@@ -50,11 +60,13 @@ function Field({
 }) {
   const I = icon ? Icons[icon] : null;
   return (
-    <label className="afield">
-      <span className="afield-label">{label}</span>
-      <span className="afield-wrap">
+    <label className="block">
+      <span className="block text-[12.5px] font-bold text-ink-2 mb-[7px]">
+        {label}
+      </span>
+      <span className="relative flex items-center">
         {I && (
-          <span className="afield-icon">
+          <span className="absolute left-[14px] text-ink-3 inline-flex pointer-events-none">
             <I size={18} />
           </span>
         )}
@@ -102,7 +114,7 @@ function PwField({
         right={
           <button
             type="button"
-            className="afield-eye"
+            className="absolute right-[12px] text-[12.5px] font-bold text-coral-deep cursor-pointer p-1"
             onClick={() => setShow((s) => !s)}
             tabIndex={-1}
           >
@@ -111,9 +123,12 @@ function PwField({
         }
       />
       {meter && value.length > 0 && (
-        <div className="pwmeter">
-          <div className="pwbar">
-            <span style={{ width: `${score.pct}%`, background: score.color }} />
+        <div className="flex items-center gap-[10px] mt-2">
+          <div className="flex-1 h-[5px] rounded-full bg-line overflow-hidden">
+            <span
+              className="block h-full rounded-full [transition:0.3s]"
+              style={{ width: `${score.pct}%`, background: score.color }}
+            />
           </div>
           <span
             className="font-bold text-[12px]"
@@ -159,14 +174,14 @@ function CodeInput({
     }
   };
   return (
-    <div className="code-row" onPaste={onPaste}>
+    <div className="flex gap-[9px] justify-between" onPaste={onPaste}>
       {Array.from({ length: len }).map((_, i) => (
         <input
           key={i}
           ref={(el) => {
             refs.current[i] = el;
           }}
-          className="code-box"
+          className="flex-1 min-w-0 aspect-[1/1.15] text-center font-display font-extrabold text-[24px] text-ink bg-surface border-[1.5px] border-line-2 rounded-sm outline-none [transition:0.15s] focus:border-coral focus:shadow-[0_0_0_3px_var(--coral-soft)]"
           inputMode="numeric"
           maxLength={1}
           value={value[i] || ""}
@@ -254,13 +269,23 @@ function ResetFlow({
   return (
     <>
       {step !== "success" && (
-        <button className="auth-back" type="button" onClick={back}>
+        <button
+          className="inline-flex items-center gap-[5px] text-ink-3 text-[13px] font-bold px-[2px] py-1 mb-[14px] [transition:0.15s] hover:text-ink"
+          type="button"
+          onClick={back}
+        >
           <Icons.arrowL size={17} />
           Back
         </button>
       )}
       {(step === "sent" || step === "success") && (
-        <div className={`reset-ic ${step === "success" ? "ok" : ""}`}>
+        <div
+          className={`w-16 h-16 rounded-full mx-auto mt-1 mb-[18px] grid place-items-center animate-anim-cardin motion-reduce:animate-none ${
+            step === "success"
+              ? "bg-[color-mix(in_srgb,#1fa46e_16%,transparent)] text-[#1fa46e] shadow-[0_10px_28px_color-mix(in_srgb,#1fa46e_30%,transparent)]"
+              : "bg-coral-soft text-coral-deep"
+          }`}
+        >
           {step === "success" ? (
             <Icons.check size={34} />
           ) : (
@@ -269,20 +294,21 @@ function ResetFlow({
         </div>
       )}
       <div
-        className="auth-head"
         style={
           step === "sent" || step === "success"
             ? { textAlign: "center" }
             : undefined
         }
       >
-        <h2>{titles[step][0]}</h2>
-        <p>{titles[step][1]}</p>
+        <h2 className="text-[25px]">{titles[step][0]}</h2>
+        <p className="text-ink-2 text-[14.5px] mt-[6px] leading-[1.5]">
+          {titles[step][1]}
+        </p>
       </div>
 
       {step === "forgot" && (
         <form
-          className="auth-body"
+          className={BODY}
           onSubmit={(e) => {
             e.preventDefault();
             run("sent");
@@ -298,14 +324,14 @@ function ResetFlow({
           />
           <button
             type="submit"
-            className="btn btn-primary btn-lg btn-block"
+            className={btnCls("auth", "primary", "lg", true)}
             disabled={email.length < 3 || busy}
             style={
               email.length < 3 ? { opacity: 0.5, boxShadow: "none" } : undefined
             }
           >
             {busy ? (
-              <span className="spin" />
+              <span className={SPIN} />
             ) : (
               <>
                 Send reset code
@@ -313,9 +339,9 @@ function ResetFlow({
               </>
             )}
           </button>
-          <div className="auth-foot" style={{ marginTop: 4 }}>
+          <div className={FOOT} style={{ marginTop: 4 }}>
             Remembered it?{" "}
-            <a className="auth-link strong" onClick={onBackToLogin}>
+            <a className={LINK_STRONG} onClick={onBackToLogin}>
               Back to log in
             </a>
           </div>
@@ -324,7 +350,7 @@ function ResetFlow({
 
       {step === "sent" && (
         <form
-          className="auth-body"
+          className={BODY}
           onSubmit={(e) => {
             e.preventDefault();
             run("reset");
@@ -333,14 +359,14 @@ function ResetFlow({
           <CodeInput value={code} onChange={setCode} />
           <button
             type="submit"
-            className="btn btn-primary btn-lg btn-block"
+            className={btnCls("auth", "primary", "lg", true)}
             disabled={code.length < 6 || busy}
             style={
               code.length < 6 ? { opacity: 0.5, boxShadow: "none" } : undefined
             }
           >
             {busy ? (
-              <span className="spin" />
+              <span className={SPIN} />
             ) : (
               <>
                 Verify code
@@ -348,7 +374,7 @@ function ResetFlow({
               </>
             )}
           </button>
-          <div className="auth-foot" style={{ marginTop: 4 }}>
+          <div className={FOOT} style={{ marginTop: 4 }}>
             {resend > 0 ? (
               <span className="text-ink-3">
                 Resend code in 0:{String(resend).padStart(2, "0")}
@@ -356,7 +382,7 @@ function ResetFlow({
             ) : (
               <>
                 Didn&apos;t get it?{" "}
-                <a className="auth-link strong" onClick={() => setStep("sent")}>
+                <a className={LINK_STRONG} onClick={() => setStep("sent")}>
                   Resend code
                 </a>
               </>
@@ -367,7 +393,7 @@ function ResetFlow({
 
       {step === "reset" && (
         <form
-          className="auth-body"
+          className={BODY}
           onSubmit={(e) => {
             e.preventDefault();
             if (pwOK && matchOK) run("success");
@@ -391,7 +417,7 @@ function ResetFlow({
             />
             {pw2.length > 0 && (
               <div
-                className="match-row"
+                className="flex items-center gap-[6px] text-[12.5px] font-bold mt-2 whitespace-nowrap"
                 style={{ color: matchOK ? "#1FA46E" : "#FF4D74" }}
               >
                 {matchOK ? (
@@ -410,7 +436,7 @@ function ResetFlow({
           </div>
           <button
             type="submit"
-            className="btn btn-primary btn-lg btn-block"
+            className={btnCls("auth", "primary", "lg", true)}
             disabled={!(pwOK && matchOK) || busy}
             style={
               !(pwOK && matchOK)
@@ -419,7 +445,7 @@ function ResetFlow({
             }
           >
             {busy ? (
-              <span className="spin" />
+              <span className={SPIN} />
             ) : (
               <>
                 Update password
@@ -431,9 +457,9 @@ function ResetFlow({
       )}
 
       {step === "success" && (
-        <div className="auth-body">
+        <div className={BODY}>
           <button
-            className="btn btn-primary btn-lg btn-block"
+            className={btnCls("auth", "primary", "lg", true)}
             onClick={onBackToLogin}
           >
             Back to log in
@@ -452,15 +478,18 @@ function Social() {
     ["Google", "#4285F4", "G"],
   ];
   return (
-    <div className="social-row">
+    <div className="grid grid-cols-3 gap-[9px]">
       {items.map(([n, c, g]) => (
         <button
           key={n}
           type="button"
-          className="social-btn"
+          className="flex items-center justify-center gap-2 px-2 py-[11px] rounded-sm border border-line-2 bg-surface text-ink font-bold text-[13px] cursor-pointer [transition:0.15s] hover:border-ink-3 hover:bg-surface-2"
           title={`Continue with ${n}`}
         >
-          <span className="social-glyph" style={{ background: c }}>
+          <span
+            className="w-5 h-5 rounded-[6px] grid place-items-center text-white font-extrabold text-[11px] font-display"
+            style={{ background: c }}
+          >
             {g}
           </span>
           {n}
@@ -526,9 +555,9 @@ export default function AuthPage() {
         (role !== "provider" || biz.length > 1);
 
   return (
-    <div className="auth-wrap fx">
-      <div className="auth-form-col">
-        <div className="auth-mobilebrand">
+    <div className="auth-wrap">
+      <div className="flex flex-col items-center justify-center gap-4 px-7 py-10 relative bg-bg">
+        <div className="hidden max-[920px]:flex items-center justify-between w-full max-w-[420px] mb-1">
           <Link
             href="/"
             className="inline-flex"
@@ -544,7 +573,11 @@ export default function AuthPage() {
           <LangSwitcher />
         </div>
 
-        <div className={`auth-card ${busy ? "pointer-events-none" : ""}`}>
+        <div
+          className={`w-full max-w-[420px] bg-surface border border-line rounded-xl shadow-lg pt-[30px] px-[30px] pb-[26px] animate-anim-cardin motion-reduce:animate-none ${
+            busy ? "pointer-events-none" : ""
+          }`}
+        >
           {mode === "reset" ? (
             <ResetFlow
               initialEmail={email}
@@ -552,62 +585,81 @@ export default function AuthPage() {
             />
           ) : (
             <>
-              <div className="auth-tabs">
+              <div className="relative grid grid-cols-2 bg-surface-2 border border-line rounded-pill p-[5px] mb-[22px]">
                 <button
-                  className={mode === "login" ? "on" : ""}
+                  className={`relative z-[2] py-[9px] rounded-pill font-bold text-[14px] [transition:0.2s] ${
+                    mode === "login" ? "text-white" : "text-ink-3"
+                  }`}
                   onClick={() => setMode("login")}
                 >
                   {t("Log in")}
                 </button>
                 <button
-                  className={mode === "signup" ? "on" : ""}
+                  className={`relative z-[2] py-[9px] rounded-pill font-bold text-[14px] [transition:0.2s] ${
+                    mode === "signup" ? "text-white" : "text-ink-3"
+                  }`}
                   onClick={() => setMode("signup")}
                 >
                   {t("Sign up")}
                 </button>
                 <span
-                  className="auth-tab-ind"
+                  className="absolute z-[1] top-[5px] left-[5px] w-[calc(50%-5px)] h-[calc(100%-10px)] rounded-pill bg-coral shadow-coral [transition:transform_0.25s_cubic-bezier(0.22,1,0.36,1)]"
                   style={{
                     transform: `translateX(${mode === "login" ? 0 : 100}%)`,
                   }}
                 />
               </div>
 
-              <div className="auth-head">
-                <h2>
+              <div>
+                <h2 className="text-[25px]">
                   {mode === "login"
                     ? t("Welcome back")
                     : t("Create your account")}
                 </h2>
-                <p>
+                <p className="text-ink-2 text-[14.5px] mt-[6px] leading-[1.5]">
                   {mode === "login"
                     ? t("Pick up your week of joy where you left off.")
                     : t("A minute to set up — then your first Joy Map is on us.")}
                 </p>
               </div>
 
-              <form onSubmit={submit} className="auth-body">
+              <form onSubmit={submit} className={BODY}>
                 {mode === "signup" && !admin && (
-                  <div className="role-grid">
+                  <div className="grid grid-cols-2 gap-[10px] mb-[2px] max-[420px]:grid-cols-1">
                     {Object.entries(ROLES).map(([k, r]) => {
                       const I = Icons[r.icon];
+                      const on = role === k;
                       return (
                         <button
                           type="button"
                           key={k}
-                          className={`role-card ${role === k ? "on" : ""}`}
+                          className={`relative text-left p-[14px] rounded border-[1.5px] cursor-pointer [transition:0.16s] flex flex-col gap-1 ${
+                            on
+                              ? "border-coral bg-coral-soft"
+                              : "border-line-2 bg-surface hover:border-ink-3"
+                          }`}
                           onClick={() => setRole(k as "customer" | "provider")}
                         >
-                          <span className="role-ic">
+                          <span
+                            className={`w-9 h-9 rounded-[10px] grid place-items-center mb-1 ${
+                              on ? "bg-coral text-white" : "bg-surface-2 text-ink-2"
+                            }`}
+                          >
                             <I size={20} />
                           </span>
-                          <span className="role-t">
+                          <span className="font-extrabold font-display text-[14.5px] text-ink">
                             {k === "customer"
                               ? t("I want to explore")
                               : t("I host experiences")}
                           </span>
-                          <span className="role-s">{t(r.sub)}</span>
-                          <span className="role-check">
+                          <span className="text-[12px] text-ink-3 font-semibold leading-[1.35]">
+                            {t(r.sub)}
+                          </span>
+                          <span
+                            className={`absolute top-3 right-3 w-5 h-5 rounded-full bg-coral text-white grid place-items-center [transition:0.16s] ${
+                              on ? "opacity-100 scale-100" : "opacity-0 scale-[0.6]"
+                            }`}
+                          >
                             <Icons.check size={13} />
                           </span>
                         </button>
@@ -653,37 +705,42 @@ export default function AuthPage() {
                 />
 
                 {mode === "login" && (
-                  <div className="auth-row">
-                    <label className="check">
+                  <div className="flex items-center justify-between gap-3 -mt-[2px]">
+                    <label className="flex items-center gap-[9px] text-[13.5px] font-semibold text-ink-2 cursor-pointer whitespace-nowrap">
                       <input
                         type="checkbox"
+                        className="peer absolute opacity-0 w-0 h-0"
                         checked={remember}
                         onChange={(e) => setRemember(e.target.checked)}
                       />
-                      <span className="checkbox">
+                      <span className="w-[19px] h-[19px] rounded-[6px] border-[1.5px] border-line-2 grid place-items-center text-white flex-none [transition:0.15s] peer-checked:bg-coral peer-checked:border-coral [&_svg]:opacity-0 [&_svg]:[transition:0.15s] peer-checked:[&_svg]:opacity-100">
                         <Icons.check size={12} />
                       </span>
                       {t("Remember me")}
                     </label>
-                    <a className="auth-link" onClick={() => setMode("reset")}>
+                    <a
+                      className={`${LINK} whitespace-nowrap`}
+                      onClick={() => setMode("reset")}
+                    >
                       {t("Forgot password?")}
                     </a>
                   </div>
                 )}
 
                 {mode === "signup" && !admin && (
-                  <label className="check check-terms">
+                  <label className="flex items-start gap-[9px] text-[13.5px] font-semibold text-ink-2 cursor-pointer leading-[1.45]">
                     <input
                       type="checkbox"
+                      className="peer absolute opacity-0 w-0 h-0"
                       checked={agree}
                       onChange={(e) => setAgree(e.target.checked)}
                     />
-                    <span className="checkbox">
+                    <span className="w-[19px] h-[19px] mt-[1px] rounded-[6px] border-[1.5px] border-line-2 grid place-items-center text-white flex-none [transition:0.15s] peer-checked:bg-coral peer-checked:border-coral [&_svg]:opacity-0 [&_svg]:[transition:0.15s] peer-checked:[&_svg]:opacity-100">
                       <Icons.check size={12} />
                     </span>
                     <span>
-                      I agree to the <a className="auth-link">Terms</a> &amp;{" "}
-                      <a className="auth-link">Privacy Policy</a>.
+                      I agree to the <a className={LINK}>Terms</a> &amp;{" "}
+                      <a className={LINK}>Privacy Policy</a>.
                     </span>
                   </label>
                 )}
@@ -700,14 +757,14 @@ export default function AuthPage() {
 
                 <button
                   type="submit"
-                  className="btn btn-primary btn-lg btn-block"
+                  className={btnCls("auth", "primary", "lg", true)}
                   disabled={!canSubmit}
                   style={
                     !canSubmit ? { opacity: 0.5, boxShadow: "none" } : undefined
                   }
                 >
                   {busy ? (
-                    <span className="spin" />
+                    <span className={SPIN} />
                   ) : (
                     <>
                       {mode === "login"
@@ -722,7 +779,7 @@ export default function AuthPage() {
 
                 {!admin && (
                   <>
-                    <div className="auth-or">
+                    <div className="flex items-center gap-[14px] text-ink-3 text-[12.5px] font-semibold my-1 before:content-[''] before:flex-1 before:h-px before:bg-line after:content-[''] after:flex-1 after:h-px after:bg-line">
                       <span>{t("or continue with")}</span>
                     </div>
                     <Social />
@@ -730,24 +787,18 @@ export default function AuthPage() {
                 )}
               </form>
 
-              <div className="auth-foot">
+              <div className={FOOT}>
                 {mode === "login" ? (
                   <>
                     {t("New to Joymap?")}{" "}
-                    <a
-                      className="auth-link strong"
-                      onClick={() => setMode("signup")}
-                    >
+                    <a className={LINK_STRONG} onClick={() => setMode("signup")}>
                       {t("Create an account")}
                     </a>
                   </>
                 ) : (
                   <>
                     {t("Already have an account?")}{" "}
-                    <a
-                      className="auth-link strong"
-                      onClick={() => setMode("login")}
-                    >
+                    <a className={LINK_STRONG} onClick={() => setMode("login")}>
                       {t("Log in")}
                     </a>
                   </>
@@ -759,7 +810,7 @@ export default function AuthPage() {
 
         {mode !== "reset" && (
           <button
-            className="team-toggle"
+            className="inline-flex items-center gap-[7px] text-ink-3 text-[13px] font-bold px-[14px] py-2 rounded-full [transition:0.15s] hover:text-ink hover:bg-surface-2"
             onClick={() => {
               setAdmin((a) => !a);
               setMode("login");

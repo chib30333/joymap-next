@@ -6,9 +6,9 @@ import {
   useState,
   type ReactNode,
   type ButtonHTMLAttributes,
-  type CSSProperties,
 } from "react";
 import { statusColor } from "@/components/ui/pill";
+import { btnCls } from "@/lib/btn";
 
 export const money = (n: number) =>
   new Intl.NumberFormat("ru-RU").format(Math.round(n)) + "\u00A0₽";
@@ -30,7 +30,7 @@ export function Btn({
 }) {
   return (
     <button
-      className={`btn btn-${variant} btn-${size} ${block ? "btn-block" : ""}`}
+      className={btnCls("dash", variant, size, block)}
       {...p}
     >
       {icon}
@@ -50,7 +50,7 @@ export function Avatar({
 }) {
   return (
     <div
-      className="avatar"
+      className="grid place-items-center rounded-[99px] bg-[linear-gradient(140deg,var(--coral),var(--orange))] text-white font-extrabold font-display flex-none"
       style={{
         width: size,
         height: size,
@@ -66,8 +66,11 @@ export function Avatar({
 export function Pill({ status, label }: { status: string; label?: string }) {
   const [c, bg] = statusColor(status);
   return (
-    <span className="pill" style={{ color: c, background: bg }}>
-      <span className="pdot" style={{ background: c }} />
+    <span
+      className="inline-flex items-center gap-[6px] py-[4px] px-[11px] rounded-pill text-[12px] font-bold whitespace-nowrap"
+      style={{ color: c, background: bg }}
+    >
+      <span className="w-[6px] h-[6px] rounded-[99px]" style={{ background: c }} />
       {label || status}
     </span>
   );
@@ -90,11 +93,11 @@ export function Stat({
   accent?: string;
 }) {
   return (
-    <div className="stat anim-pop">
-      <div className="lbl">
+    <div className="bg-surface border border-line rounded-lg p-5 flex flex-col gap-[6px] animate-anim-pop-dash">
+      <div className="text-[13px] font-semibold text-ink-3 flex items-center gap-2">
         {icon && (
           <span
-            className="ricon"
+            className="grid place-items-center flex-none"
             style={{
               width: 28,
               height: 28,
@@ -110,10 +113,12 @@ export function Stat({
         )}
         {label}
       </div>
-      <div className="val">{value}</div>
+      <div className="font-display font-extrabold text-[30px] tracking-[-0.02em] leading-none whitespace-nowrap">{value}</div>
       <div className="flex items-center gap-[8px]">
         {delta != null && (
-          <span className={`delta ${deltaDir || "up"}`}>
+          <span
+            className={`inline-flex items-center gap-[3px] text-[12.5px] font-bold ${deltaDir === "down" ? "text-coral" : "text-[#1fa46e]"}`}
+          >
             {deltaDir === "down" ? "▾" : "▴"} {delta}
           </span>
         )}
@@ -134,10 +139,10 @@ export function SectionHead({
   action?: ReactNode;
 }) {
   return (
-    <div className="shead">
+    <div className="flex items-end justify-between gap-4 mb-[18px]">
       <div>
         {eyebrow && (
-          <div className="eyebrow" style={{ marginBottom: 7 }}>
+          <div className="text-[12px] font-extrabold tracking-[0.1em] uppercase text-orange" style={{ marginBottom: 7 }}>
             {eyebrow}
           </div>
         )}
@@ -182,8 +187,13 @@ export function Toggle({
   onChange: (v: boolean) => void;
 }) {
   return (
-    <div className={`switch ${on ? "on" : ""}`} onClick={() => onChange(!on)}>
-      <i />
+    <div
+      className={`w-[42px] h-[24px] rounded-[99px] relative [transition:0.18s] cursor-pointer flex-none ${on ? "bg-coral" : "bg-line-2"}`}
+      onClick={() => onChange(!on)}
+    >
+      <i
+        className={`absolute top-[3px] w-[18px] h-[18px] rounded-[99px] bg-white [transition:0.18s] shadow-[0_1px_3px_rgba(0,0,0,0.2)] ${on ? "left-[21px]" : "left-[3px]"}`}
+      />
     </div>
   );
 }
@@ -265,7 +275,7 @@ export function Bars({
             </span>
             <div
               title={d.value + unit}
-              className="bar-grow"
+              className="origin-bottom animate-[grow_0.6s_both]"
               style={{
                 width: "72%",
                 maxWidth: 34,
@@ -332,7 +342,7 @@ export function LineChart({
   const tipY = hi != null ? `${(ys(points[hi].value) / h) * 100}%` : 0;
   return (
     <div
-      className="chart-wrap"
+      className="relative"
       ref={wrapRef}
       onMouseMove={move}
       onMouseLeave={() => setHi(null)}
@@ -397,16 +407,16 @@ export function LineChart({
         ))}
       </svg>
       <div
-        className={`chart-tip ${hi != null ? "show" : ""}`}
+        className={`absolute z-30 pointer-events-none translate-x-[-50%] translate-y-[-118%] bg-ink text-bg py-2 px-[11px] rounded-[10px] shadow-lg whitespace-nowrap font-semibold text-[12.5px] [transition:opacity_0.12s] after:content-[''] after:absolute after:left-1/2 after:top-full after:translate-x-[-50%] after:border-[5px] after:border-solid after:border-transparent after:border-t-ink ${hi != null ? "opacity-100" : "opacity-0"}`}
         style={{ left: tipX, top: tipY }}
       >
         {hi != null && (
           <>
-            <div className="tt-t">
-              <span className="tt-dot" style={{ background: accent }} />
+            <div className="flex items-center gap-[6px] text-[11px] font-bold opacity-70 uppercase tracking-[0.04em] mb-[3px]">
+              <span className="w-2 h-2 rounded-[99px] flex-none" style={{ background: accent }} />
               {caption} · {points[hi].label}
             </div>
-            <div className="tt-v">{fmt(points[hi].value)}</div>
+            <div className="font-display font-extrabold text-[15px] tracking-[-0.01em]">{fmt(points[hi].value)}</div>
           </>
         )}
       </div>
@@ -466,7 +476,7 @@ export function Donut({
   const seg = hi != null ? segments[hi] : null;
   return (
     <div
-      className="chart-wrap"
+      className="relative"
       ref={wrapRef}
       style={{ width: size, height: size, flex: "none" }}
       onMouseMove={onMove}
@@ -525,16 +535,16 @@ export function Donut({
         </div>
       )}
       <div
-        className={`chart-tip ${seg ? "show" : ""}`}
+        className={`absolute z-30 pointer-events-none translate-x-[-50%] translate-y-[-118%] bg-ink text-bg py-2 px-[11px] rounded-[10px] shadow-lg whitespace-nowrap font-semibold text-[12.5px] [transition:opacity_0.12s] after:content-[''] after:absolute after:left-1/2 after:top-full after:translate-x-[-50%] after:border-[5px] after:border-solid after:border-transparent after:border-t-ink ${seg ? "opacity-100" : "opacity-0"}`}
         style={{ left: pos.x, top: pos.y }}
       >
         {seg && (
           <>
-            <div className="tt-t">
-              <span className="tt-dot" style={{ background: seg.color }} />
+            <div className="flex items-center gap-[6px] text-[11px] font-bold opacity-70 uppercase tracking-[0.04em] mb-[3px]">
+              <span className="w-2 h-2 rounded-[99px] flex-none" style={{ background: seg.color }} />
               {seg.label}
             </div>
-            <div className="tt-v">
+            <div className="font-display font-extrabold text-[15px] tracking-[-0.01em]">
               {valFmt ? valFmt(seg, total) : `${seg.value}${unit}`}
             </div>
           </>

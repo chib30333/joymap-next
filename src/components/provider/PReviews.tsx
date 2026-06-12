@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { rpc } from "@/lib/client";
@@ -14,7 +15,7 @@ export function PReviews({ list, rating }: { list: any[]; rating: any }) {
   if (list.length === 0)
     return (
       <div
-        className="card anim-fade"
+        className="bg-surface border border-line rounded-lg animate-anim-fade-dash"
         style={{
           padding: "60px 24px",
           textAlign: "center",
@@ -41,9 +42,9 @@ export function PReviews({ list, rating }: { list: any[]; rating: any }) {
       ] as [number, number],
   );
   return (
-    <div className="anim-fade">
+    <div className="animate-anim-fade-dash">
       <div
-        className="card"
+        className="bg-surface border border-line rounded-lg"
         style={{
           padding: 22,
           display: "flex",
@@ -84,7 +85,7 @@ export function PReviews({ list, rating }: { list: any[]; rating: any }) {
       </div>
       <div className="flex flex-col gap-[14px]">
         {list.map((rv) => (
-          <div key={rv.id} className="card" style={{ padding: 20 }}>
+          <div key={rv.id} className="bg-surface border border-line rounded-lg" style={{ padding: 20 }}>
             <div className="flex items-center gap-[12px] mb-[10px]">
               <Avatar name={rv.name} size={38} />
               <div className="flex-1">
@@ -111,7 +112,7 @@ export function PReviews({ list, rating }: { list: any[]; rating: any }) {
             ) : (
               <BusyBtn
                 busy={replying === rv.id}
-                className="btn btn-soft btn-sm"
+                className={btnCls("dash", "soft", "sm")}
                 icon={<Icons.send size={14} />}
                 onClick={() => {
                   setReplying(rv.id);

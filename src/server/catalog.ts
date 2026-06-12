@@ -128,7 +128,6 @@ export async function platformStats() {
   };
 }
 
-// Customer calendar sessions = provider slots, projected with remaining spots.
 export async function sessions(city?: string) {
   const slots = await prisma.slot.findMany({ include: { service: true } });
   return slots
@@ -147,7 +146,6 @@ export async function sessions(city?: string) {
     .sort((a, b) => a.day - b.day || a.time.localeCompare(b.time));
 }
 
-// Slots available for a single service from today forward (booking flow).
 export async function serviceSlots(serviceId: string) {
   return prisma.slot.findMany({
     where: { serviceId, day: { gte: TODAY } },

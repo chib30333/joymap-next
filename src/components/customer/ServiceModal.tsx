@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { useT } from "@/components/Language";
 import { Icons } from "@/components/Icons";
@@ -14,7 +15,6 @@ import {
   Modal,
   PhotoFrame,
   MoodDot,
-  MoodChip,
   Rating,
   Btn,
   BusyBtn,
@@ -91,7 +91,7 @@ export function ServiceModal({
     <div className="relative">
       <PhotoFrame exp={exp} ratio="16/8">
         <button
-          className="icon-btn"
+          className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
           style={{
             position: "absolute",
             top: 14,
@@ -105,7 +105,7 @@ export function ServiceModal({
           <Icons.close size={18} />
         </button>
         <button
-          className={`fav ${fav ? "on" : ""}`}
+          className={`absolute top-[10px] right-[10px] w-[34px] h-[34px] rounded-pill border-none bg-[rgba(255,255,255,0.85)] grid place-items-center [transition:0.15s] cursor-pointer hover:bg-[#fff] hover:scale-[1.08] ${fav ? "text-m-energy" : "text-[#241c2e]"}`}
           style={{
             position: "absolute",
             top: 14,
@@ -121,7 +121,7 @@ export function ServiceModal({
         </button>
         <div className="absolute left-[18px] bottom-[16px] right-[18px]">
           <span
-            className="mood-chip"
+            className="inline-flex items-center gap-[8px] pt-[7px] pr-[13px] pb-[7px] pl-[11px] rounded-pill text-[13px] font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid border-transparent"
             style={{
               background: "rgba(255,255,255,.92)",
               color: m.color,
@@ -158,7 +158,7 @@ export function ServiceModal({
                 <Rating value={exp.rating} reviews={exp.reviews} />
               ) : (
                 <span
-                  className="tag"
+                  className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] font-semibold bg-surface-2 text-ink-2 border border-line"
                   style={{
                     background: "var(--coral-soft)",
                     color: "var(--coral-deep)",
@@ -182,7 +182,7 @@ export function ServiceModal({
             </div>
             <div className="flex items-center gap-[12px] py-[14px] border-t border-b border-line mb-[18px]">
               <div
-                className="avatar"
+                className="w-[40px] h-[40px] rounded-pill bg-[linear-gradient(140deg,var(--red),var(--orange))] text-[#fff] grid place-items-center font-extrabold font-display flex-none"
                 style={{ background: "var(--bg-2)", color: "var(--ink-2)" }}
               >
                 {exp.provider[0]}
@@ -194,7 +194,7 @@ export function ServiceModal({
                 </div>
               </div>
               <span
-                className="tag"
+                className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] font-semibold bg-surface-2 text-ink-2 border border-line"
                 style={{
                   marginLeft: "auto",
                   background: "var(--m-calm-soft)",
@@ -211,12 +211,12 @@ export function ServiceModal({
             </p>
             <div className="flex gap-[8px] flex-wrap mb-[6px]">
               {exp.tags.map((tg) => (
-                <span key={tg} className="tag">
+                <span key={tg} className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] font-semibold bg-surface-2 text-ink-2 border border-line">
                   {tg}
                 </span>
               ))}
               <span
-                className="tag"
+                className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] font-semibold bg-surface-2 text-ink-2 border border-line"
                 style={{
                   background: "var(--coral-soft)",
                   color: "var(--coral-deep)",
@@ -231,7 +231,7 @@ export function ServiceModal({
           <Footer>
             <div>
               <div className="text-[12.5px] text-ink-3 font-semibold">{t("From")}</div>
-              <div className="price" style={{ fontSize: 22 }}>
+              <div className="font-display font-bold text-[18px] text-ink whitespace-nowrap [&_small]:font-semibold [&_small]:text-[12.5px] [&_small]:text-ink-3" style={{ fontSize: 22 }}>
                 {fmt(exp.price)}
               </div>
             </div>
@@ -252,7 +252,7 @@ export function ServiceModal({
           <div className="pt-[22px] px-[24px] pb-0">
             <Label n="1" t={t("Pick a day")} />
             <div
-              className="no-scrollbar"
+              className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
               style={{
                 display: "flex",
                 gap: 9,
@@ -306,7 +306,7 @@ export function ServiceModal({
               {timesFor(day).map((tm) => (
                 <button
                   key={tm}
-                  className={`chip ${time === tm ? "on" : ""}`}
+                  className={`inline-flex items-center gap-[7px] rounded-pill text-[13px] font-semibold border cursor-pointer [transition:0.14s] whitespace-nowrap ${time === tm ? "bg-coral text-white border-coral" : "bg-surface text-ink-2 border-line-2 hover:border-ink-3 hover:text-ink"}`}
                   style={{ padding: "10px 16px" }}
                   onClick={() => setTime(tm)}
                 >
@@ -323,7 +323,7 @@ export function ServiceModal({
             <Label n="3" t={t("How many spots?")} />
             <div className="flex items-center gap-[16px] mb-[8px]">
               <button
-                className="icon-btn"
+                className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
                 onClick={() => setSpots((s) => Math.max(1, s - 1))}
               >
                 <Icons.minus size={18} />
@@ -332,7 +332,7 @@ export function ServiceModal({
                 {spots}
               </span>
               <button
-                className="icon-btn"
+                className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
                 onClick={() => setSpots((s) => Math.min(exp.spots, s + 1))}
               >
                 <Icons.plus size={18} />
@@ -343,7 +343,7 @@ export function ServiceModal({
             </div>
           </div>
           <Footer>
-            <button className="btn btn-ghost btn-md" onClick={() => setStep(0)}>
+            <button className={btnCls("app", "ghost", "md")} onClick={() => setStep(0)}>
               <Icons.arrowL size={18} />
               {t("Back")}
             </button>
@@ -362,13 +362,13 @@ export function ServiceModal({
         <div>
           <div className="pt-[22px] px-[24px] pb-0">
             <div className="flex items-center gap-[10px] mb-[20px]">
-              <button className="icon-btn" onClick={() => setStep(1)}>
+              <button className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2" onClick={() => setStep(1)}>
                 <Icons.arrowL size={18} />
               </button>
               <h2 className="text-[22px]">{t("Confirm & pay")}</h2>
             </div>
             <div
-              className="card"
+              className="bg-surface border border-line rounded-lg"
               style={{
                 padding: 16,
                 display: "flex",
@@ -468,13 +468,13 @@ export function ServiceModal({
               <div className="text-[12.5px] text-ink-3 font-semibold">
                 {t("Total")}
               </div>
-              <div className="price" style={{ fontSize: 22 }}>
+              <div className="font-display font-bold text-[18px] text-ink whitespace-nowrap [&_small]:font-semibold [&_small]:text-[12.5px] [&_small]:text-ink-3" style={{ fontSize: 22 }}>
                 {fmt(total)}
               </div>
             </div>
             <BusyBtn
               busy={busy}
-              className="btn btn-primary btn-lg"
+              className={btnCls("app", "primary", "lg")}
               icon={<Icons.check size={19} />}
               disabled={pay === "wallet" && wallet < total}
               onClick={confirm}
@@ -488,7 +488,7 @@ export function ServiceModal({
       {step === 3 && (
         <div className="py-[30px] px-[28px] text-center">
           <div
-            className="anim-pop w-[72px] h-[72px] rounded-[99px] bg-[var(--m-calm)] grid place-items-center mt-0 mx-auto mb-[18px] text-[#fff]"
+            className="animate-anim-pop-app w-[72px] h-[72px] rounded-[99px] bg-[var(--m-calm)] grid place-items-center mt-0 mx-auto mb-[18px] text-[#fff]"
             style={{ boxShadow: "0 12px 30px rgba(63,168,155,.4)" }}
           >
             <Icons.check size={38} />
@@ -500,7 +500,7 @@ export function ServiceModal({
             {t("will confirm shortly — watch your notifications.")}
           </p>
           <div
-            className="card"
+            className="bg-surface border border-line rounded-lg"
             style={{
               padding: 22,
               maxWidth: 300,
