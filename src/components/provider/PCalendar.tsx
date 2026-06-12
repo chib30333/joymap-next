@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { rpc } from "@/lib/client";
 import { MOODS } from "@/components/customer/primitives";
-import { useT } from "@/components/i18n";
+import { useT } from "@/components/Language";
 
 const WD = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const dow = (d: number) => (d - 1) % 7;

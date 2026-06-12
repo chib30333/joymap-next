@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { rpc } from "@/lib/client";
 import { Avatar, BusyBtn } from "@/components/dash/primitives";
-import { useT } from "@/components/i18n";
+import { useT } from "@/components/Language";
 
 export function PReviews({ list, rating }: { list: any[]; rating: any }) {
   const t = useT();

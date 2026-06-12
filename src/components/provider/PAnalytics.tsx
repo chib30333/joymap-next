@@ -3,7 +3,7 @@
 import { Icons } from "@/components/Icons";
 import { Bars, LineChart } from "@/components/dash/primitives";
 import { MOODS } from "@/components/customer/primitives";
-import { useT } from "@/components/i18n";
+import { useT } from "@/components/Language";
 
 type Booking = any;
 type Svc = any;

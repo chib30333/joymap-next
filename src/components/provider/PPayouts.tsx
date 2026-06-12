@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { rpc, useBusy } from "@/lib/client";
 import { money, Pill, BusyBtn } from "@/components/dash/primitives";
-import { useT } from "@/components/i18n";
+import { useT } from "@/components/Language";
 
 export function PPayouts({ fin, list }: { fin: any; list: any[] }) {
   const t = useT();

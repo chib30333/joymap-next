@@ -1,7 +1,7 @@
 "use client";
 
 import { MOODS } from "@/lib/constants";
-import { useT } from "@/components/i18n";
+import { useT } from "@/components/Language";
 
 export function MoodChip({
   mood,

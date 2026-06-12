@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Icons } from "@/components/Icons";
 import { money, Toggle, Btn } from "@/components/dash/primitives";
-import { useT } from "@/components/i18n";
+import { useT } from "@/components/Language";
 
 const P_RULES = [
   {

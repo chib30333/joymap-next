@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { rpc } from "@/lib/client";
-import { useT } from "@/components/i18n";
+import { useT } from "@/components/Language";
 
 type N = {
   id: string;

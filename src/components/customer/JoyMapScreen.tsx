@@ -14,7 +14,7 @@ import {
 } from "./primitives";
 import { ServiceModal, type Slot } from "./ServiceModal";
 import { useFav } from "./useFav";
-import { useT } from "@/components/i18n";
+import { useT } from "@/components/Language";
 
 type Day = {
   day: number;

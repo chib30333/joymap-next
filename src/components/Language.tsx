@@ -8,7 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import { Icons } from "@/components/Icons";
-import { DICTS } from "@/lib/i18n-dict";
+import { DICTS } from "@/lib/language";
 
 export type Lang = {
   code: string;

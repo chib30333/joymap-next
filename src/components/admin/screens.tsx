@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useT } from "@/components/i18n";
+import { useT } from "@/components/Language";
 import { Icons } from "@/components/Icons";
 import { rpc, useBusy } from "@/lib/client";
 import {
