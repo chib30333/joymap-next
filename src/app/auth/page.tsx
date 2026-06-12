@@ -544,7 +544,7 @@ export default function AuthPage() {
           <LangSwitcher />
         </div>
 
-        <div className={`auth-card ${busy ? "is-busy" : ""}`}>
+        <div className={`auth-card ${busy ? "pointer-events-none" : ""}`}>
           {mode === "reset" ? (
             <ResetFlow
               initialEmail={email}
