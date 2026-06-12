@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { Icons, Logo } from "@/components/Icons";
-import { LangSwitcher, useT } from "@/components/i18n";
+import { LangSwitcher, useT } from "@/components/Language";
 import { Avatar } from "@/components/dash/primitives";
 import { rpc } from "@/lib/client";
 

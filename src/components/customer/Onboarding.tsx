@@ -6,7 +6,7 @@ import { Icons } from "@/components/Icons";
 import { rpc } from "@/lib/client";
 import { MOODS, MOOD_ORDER, Btn, MoodChip } from "./primitives";
 import { Textarea } from "@/components/ui";
-import { useT } from "@/components/i18n";
+import { useT } from "@/components/Language";
 
 export function Onboarding() {
   const t = useT();

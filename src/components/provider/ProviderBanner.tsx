@@ -1,7 +1,7 @@
 "use client";
 
 import { Icons } from "@/components/Icons";
-import { useT } from "@/components/i18n";
+import { useT } from "@/components/Language";
 
 export function ProviderBanner({
   status,

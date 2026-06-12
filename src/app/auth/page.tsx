@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Icons, Logo } from "@/components/Icons";
-import { LangSwitcher, useT } from "@/components/i18n";
+import { LangSwitcher, useT } from "@/components/Language";
 import { Input } from "@/components/ui/input";
 import { rpc } from "@/lib/client";
 

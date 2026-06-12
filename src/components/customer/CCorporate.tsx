@@ -17,7 +17,7 @@ import {
 import { Input, Select, Textarea } from "@/components/ui";
 import { ServiceModal, type Slot } from "./ServiceModal";
 import { useFav } from "./useFav";
-import { useT } from "@/components/i18n";
+import { useT } from "@/components/Language";
 
 const COMPANY = {
   name: "Acme Corp",

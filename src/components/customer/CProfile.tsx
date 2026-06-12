@@ -15,7 +15,7 @@ import {
   type Exp,
 } from "./primitives";
 import { Input } from "@/components/ui";
-import { useT } from "@/components/i18n";
+import { useT } from "@/components/Language";
 
 type B = {
   id: string;

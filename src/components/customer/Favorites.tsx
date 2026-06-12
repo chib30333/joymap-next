@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Icons } from "@/components/Icons";
-import { useT } from "@/components/i18n";
+import { useT } from "@/components/Language";
 import { ExperienceCard, type Exp } from "./primitives";
 import { ServiceModal, type Slot } from "./ServiceModal";
 import { useFav } from "./useFav";

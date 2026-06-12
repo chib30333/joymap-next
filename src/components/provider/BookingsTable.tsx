@@ -1,7 +1,7 @@
 "use client";
 
 import { Icons } from "@/components/Icons";
-import { useT } from "@/components/i18n";
+import { useT } from "@/components/Language";
 import { money, Pill, Avatar } from "@/components/dash/primitives";
 
 type Booking = any;

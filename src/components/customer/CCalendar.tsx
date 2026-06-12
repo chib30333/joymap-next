@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Icons } from "@/components/Icons";
-import { useT } from "@/components/i18n";
+import { useT } from "@/components/Language";
 import {
   MOODS,
   MOOD_ORDER,

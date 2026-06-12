@@ -7,7 +7,7 @@ import { rpc, useBusy } from "@/lib/client";
 import { money, Toggle, Modal, Btn, BusyBtn } from "@/components/dash/primitives";
 import { Input, Select, Textarea } from "@/components/ui";
 import { MOODS, MOOD_ORDER, CATS } from "@/components/customer/primitives";
-import { useT } from "@/components/i18n";
+import { useT } from "@/components/Language";
 
 type Svc = any;
 

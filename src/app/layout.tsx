@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Baloo_2, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
-import { LangProvider } from "@/components/i18n";
+import { LangProvider } from "@/components/Language";
 
 const display = Baloo_2({
   subsets: ["latin"],

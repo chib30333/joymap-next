@@ -6,7 +6,7 @@ import { Icons } from "@/components/Icons";
 import { rpc } from "@/lib/client";
 import { Avatar } from "./primitives";
 import { Input } from "@/components/ui";
-import { useT } from "@/components/i18n";
+import { useT } from "@/components/Language";
 
 type Thread = {
   id: string;

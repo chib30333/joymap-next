@@ -7,7 +7,7 @@ import { rpc, useBusy } from "@/lib/client";
 import { BusyBtn } from "@/components/dash/primitives";
 import { Input, Textarea } from "@/components/ui";
 import { P_GALLERY } from "@/components/provider/data";
-import { useT } from "@/components/i18n";
+import { useT } from "@/components/Language";
 
 type Provider = any;
 

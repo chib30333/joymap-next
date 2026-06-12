@@ -6,7 +6,7 @@ import { Icons } from "@/components/Icons";
 import { rpc } from "@/lib/client";
 import { money, Pill, Seg, Modal, Btn, Avatar } from "@/components/dash/primitives";
 import { BookingsTable } from "@/components/provider/BookingsTable";
-import { useT } from "@/components/i18n";
+import { useT } from "@/components/Language";
 
 type Booking = any;
 

@@ -14,7 +14,7 @@ import { Select } from "@/components/ui";
 import { ServiceModal, type Slot } from "./ServiceModal";
 import { EmptyMarketplace } from "./JoyMapScreen";
 import { useFav } from "./useFav";
-import { useT } from "@/components/i18n";
+import { useT } from "@/components/Language";
 
 export function Catalog({
   list: source,

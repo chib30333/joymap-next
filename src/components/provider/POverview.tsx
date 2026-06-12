@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
-import { useT } from "@/components/i18n";
+import { useT } from "@/components/Language";
 import { money, Stat, Bars } from "@/components/dash/primitives";
 import { MOODS } from "@/components/customer/primitives";
 import { BookingsTable } from "@/components/provider/BookingsTable";

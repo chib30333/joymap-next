@@ -6,7 +6,7 @@ import { Icons } from "@/components/Icons";
 import { rpc, useBusy } from "@/lib/client";
 import { fmt, Modal, BusyBtn } from "./primitives";
 import { Input } from "@/components/ui";
-import { useT } from "@/components/i18n";
+import { useT } from "@/components/Language";
 
 type Tx = { id: string; label: string; amount: number; date: string };
 
