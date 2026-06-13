@@ -603,7 +603,7 @@ export default function AuthPage() {
                   {t("Sign up")}
                 </button>
                 <span
-                  className="absolute z-[1] top-[5px] left-[5px] w-[calc(50%-5px)] h-[calc(100%-10px)] rounded-pill bg-coral shadow-coral [transition:transform_0.25s_cubic-bezier(0.22,1,0.36,1)]"
+                  className="absolute z-[1] top-[5px] left-[5px] w-[calc(50%-5px)] h-[calc(100%-10px)] rounded-pill bg-coral [transition:transform_0.25s_cubic-bezier(0.22,1,0.36,1)]"
                   style={{
                     transform: `translateX(${mode === "login" ? 0 : 100}%)`,
                   }}

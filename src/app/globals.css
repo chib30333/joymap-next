@@ -242,12 +242,10 @@ img {
 .app-top .seg button.on {
   background: var(--surface);
   color: var(--ink);
-  box-shadow: var(--sh-sm);
 }
 .app-top .seg.accent button.on {
   background: var(--coral);
   color: #fff;
-  box-shadow: var(--sh-coral);
 }
 
 .app {
@@ -299,7 +297,6 @@ img {
 .jmdash .seg button.on {
   background: var(--surface);
   color: var(--ink);
-  box-shadow: var(--sh-sm);
 }
 
 @keyframes grow {
