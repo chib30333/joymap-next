@@ -1,5 +1,5 @@
 import { flags } from "@/server/selectors";
-import { AContent } from "@/components/admin/screens";
+import { AContent } from "@/components/admin/AContent";
 
 export default async function AdminContentPage() {
   const items = (await flags()).map((f) => ({

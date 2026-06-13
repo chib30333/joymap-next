@@ -4,7 +4,7 @@ import {
   pendingServices,
   providersTable,
 } from "@/server/selectors";
-import { ADashboard } from "@/components/admin/screens";
+import { ADashboard } from "@/components/admin/ADashboard";
 
 export default async function AdminDashboardPage() {
   const [s, apps, pend, providers] = await Promise.all([

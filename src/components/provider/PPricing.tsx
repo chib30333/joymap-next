@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Icons } from "@/components/Icons";
 import { money, Toggle, Btn } from "@/components/dash/primitives";
+import { DataTable } from "@/components/ui";
 import { useT } from "@/components/Language";
 
 const P_RULES = [
@@ -47,10 +48,6 @@ export function PPricing({ svcs }: { svcs: any[] }) {
     setRules((r) =>
       r.map((x) => (x.id === id ? { ...x, active: !x.active } : x)),
     );
-  const prTh =
-    "text-left text-[11.5px] font-extrabold tracking-[0.06em] uppercase text-ink-3 px-4 pt-0 pb-3";
-  const prTd =
-    "px-4 py-[14px] border-t border-line text-[14px] align-middle group-hover:bg-surface-2";
   return (
     <div className="animate-anim-fade-dash">
       <div className="bg-surface border border-line rounded-lg" style={{ padding: 22, marginBottom: "var(--gap)" }}>
@@ -70,36 +67,32 @@ export function PPricing({ svcs }: { svcs: any[] }) {
             {t("No services yet — create one in Services.")}
           </div>
         ) : (
-          <table className="w-full border-collapse">
-            <thead>
-              <tr>
-                <th className={prTh}>{t("Service")}</th>
-                <th className={prTh}>{t("Duration")}</th>
-                <th className={prTh}>{t("Capacity")}</th>
-                <th className={prTh}>{t("Base price")}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {svcs.map((s) => (
-                <tr
-                  key={s.id}
-                  className="group [transition:0.12s] cursor-pointer"
+          <DataTable
+            head={
+              <>
+                <th>{t("Service")}</th>
+                <th>{t("Duration")}</th>
+                <th>{t("Capacity")}</th>
+                <th>{t("Base price")}</th>
+              </>
+            }
+          >
+            {svcs.map((s) => (
+              <tr key={s.id} className="[transition:0.12s] cursor-pointer">
+                <td>
+                  <b className="font-bold">{s.name}</b>
+                </td>
+                <td className="text-ink-2">{s.dur}</td>
+                <td className="text-ink-2">{s.cap}</td>
+                <td
+                  className="font-bold"
+                  style={{ fontFamily: "var(--display)" }}
                 >
-                  <td className={prTd}>
-                    <b className="font-bold">{s.name}</b>
-                  </td>
-                  <td className={`${prTd} text-ink-2`}>{s.dur}</td>
-                  <td className={`${prTd} text-ink-2`}>{s.cap}</td>
-                  <td
-                    className={`${prTd} font-bold`}
-                    style={{ fontFamily: "var(--display)" }}
-                  >
-                    {money(s.price)}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                  {money(s.price)}
+                </td>
+              </tr>
+            ))}
+          </DataTable>
         )}
       </div>
       <div className="flex items-end justify-between gap-4 mb-[18px]">

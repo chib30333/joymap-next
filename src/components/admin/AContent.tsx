@@ -1,0 +1,137 @@
+"use client";
+
+import { useState } from "react";
+import { btnCls } from "@/lib/btn";
+import { useRouter } from "next/navigation";
+import { useT } from "@/components/Language";
+import { Icons } from "@/components/Icons";
+import { rpc } from "@/lib/client";
+import { Seg, Avatar } from "@/components/dash/primitives";
+import { EmptyState, Chip } from "@/components/admin/AdminShared";
+import { Spinner } from "@/components/ui";
+import { AdminHeader } from "@/components/admin/AdminHeader";
+
+export function AContent({ items }: { items: any[] }) {
+  const t = useT();
+  const router = useRouter();
+  const [filter, setFilter] = useState("all");
+  const [acting, setActing] = useState<string | null>(null);
+  const act = (id: string) => {
+    setActing(id);
+    rpc("resolveFlag", { id }).then(() => {
+      setActing(null);
+      router.refresh();
+    });
+  };
+  const list =
+    filter === "all" ? items : items.filter((c) => c.type === filter);
+  const TYPE: Record<string, [string, string]> = {
+    review: ["Review", "#5563D6"],
+    photo: ["Photo", "#E89015"],
+    promo: ["Promo material", "#7B53F0"],
+  };
+  return (
+    <div className="animate-anim-fade-dash">
+      <AdminHeader
+        eyebrow={`${items.length} ${t("flagged items")}`}
+        title={t("Content moderation")}
+        action={
+          <Seg
+            value={filter}
+            options={[
+              { v: "all", l: t("All") },
+              { v: "review", l: t("Reviews") },
+              { v: "photo", l: t("Photos") },
+              { v: "promo", l: t("Promos") },
+            ]}
+            onChange={setFilter}
+          />
+        }
+      />
+      {list.length === 0 ? (
+        <EmptyState title={t("Nothing flagged 🎉")}>
+          {t("Reported reviews, photos and promos land here.")}
+        </EmptyState>
+      ) : (
+        <div
+          className="grid"
+          style={{
+            gridTemplateColumns: "repeat(auto-fill,minmax(340px,1fr))",
+            gap: "var(--gap)",
+          }}
+        >
+          {list.map((c) => {
+            const [tl, tc] = TYPE[c.type] || ["Item", "#9B8AA0"];
+            return (
+              <div
+                key={c.id}
+                className="bg-surface border border-line rounded-lg animate-anim-pop-dash"
+                style={{
+                  padding: 18,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 12,
+                }}
+              >
+                <div className="flex items-center gap-[10px]">
+                  <Chip bg={`color-mix(in srgb,${tc} 14%,transparent)`} color={tc}>
+                    {t(tl)}
+                  </Chip>
+                  <Chip bg="rgba(224,33,47,.1)" color="var(--coral)">
+                    <Icons.flame size={12} />
+                    {c.reason}
+                  </Chip>
+                  <span className="ml-auto text-[12px] text-ink-3 font-semibold">
+                    {c.time}
+                  </span>
+                </div>
+                {c.type === "photo" ? (
+                  <div
+                    className="h-[140px] rounded-sm"
+                    style={{
+                      background:
+                        c.grad || "linear-gradient(135deg,#9E7BF6,#5B33C9)",
+                    }}
+                  />
+                ) : (
+                  <p className="m-0 text-[14px] leading-[1.5] text-ink-2 bg-surface-2 px-[14px] py-[12px] rounded-sm italic">
+                    &quot;{c.text}&quot;
+                  </p>
+                )}
+                <div className="flex items-center gap-[8px] text-[12.5px] text-ink-3 font-semibold">
+                  <Avatar name={c.author} size={24} />
+                  {c.author}
+                  <span className="opacity-[.5]">·</span>
+                  {t("on")} {c.target}
+                </div>
+                <div className="flex gap-[8px] mt-[2px]">
+                  {acting === c.id ? (
+                    <Spinner style={{ margin: "8px auto" }} />
+                  ) : (
+                    <>
+                      <button
+                        className={btnCls("dash", "ghost", "sm", true)}
+                        onClick={() => act(c.id)}
+                      >
+                        <Icons.check size={15} />
+                        {t("Keep")}
+                      </button>
+                      <button
+                        className={btnCls("dash", undefined, "sm", true)}
+                        style={{ background: "var(--coral)", color: "#fff" }}
+                        onClick={() => act(c.id)}
+                      >
+                        <Icons.trash size={15} />
+                        {t("Remove")}
+                      </button>
+                    </>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}

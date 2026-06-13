@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Icons, Logo } from "@/components/Icons";
 import { LangSwitcher, useT } from "@/components/Language";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/Input";
 import { rpc } from "@/lib/client";
 
 const SPIN =

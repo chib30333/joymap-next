@@ -1,6 +1,6 @@
 import { platformStats } from "@/server/catalog";
 import { payoutQueue } from "@/server/selectors";
-import { AFinancials } from "@/components/admin/screens";
+import { AFinancials } from "@/components/admin/AFinancials";
 
 export default async function AdminFinancialsPage() {
   const [s, queue] = await Promise.all([platformStats(), payoutQueue()]);

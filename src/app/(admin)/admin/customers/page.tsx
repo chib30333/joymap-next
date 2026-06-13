@@ -1,5 +1,5 @@
 import { customersTable } from "@/server/selectors";
-import { ACustomers } from "@/components/admin/screens";
+import { ACustomers } from "@/components/admin/ACustomers";
 
 export default async function AdminCustomersPage() {
   const list = (await customersTable()).map((c) => ({

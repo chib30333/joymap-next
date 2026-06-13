@@ -1,0 +1,244 @@
+"use client";
+
+import { useState } from "react";
+import { btnCls } from "@/lib/btn";
+import { useT } from "@/components/Language";
+import { Icons } from "@/components/Icons";
+import { Pill, Modal, Btn } from "@/components/dash/primitives";
+import { Input, DataTable, TableCard } from "@/components/ui";
+import { downloadCSV } from "@/lib/csv";
+import { Chip } from "@/components/admin/AdminShared";
+
+const A_CAMPAIGNS = [
+  {
+    name: "Weekend in Moscow",
+    channel: "Push",
+    audience: "All users · Moscow",
+    sent: 42100,
+    ctr: "7.4%",
+    status: "active",
+  },
+  {
+    name: "First booking −20%",
+    channel: "Email",
+    audience: "New users",
+    sent: 18600,
+    ctr: "12.1%",
+    status: "active",
+  },
+  {
+    name: "Win-back: dormant 30d",
+    channel: "Push",
+    audience: "Dormant",
+    sent: 9300,
+    ctr: "4.8%",
+    status: "review",
+  },
+];
+
+export function AMarketing() {
+  const t = useT();
+  const [promo, setPromo] = useState(false);
+  return (
+    <div className="animate-anim-fade-dash">
+      <div className="flex items-end justify-between gap-[16px] mb-[18px]">
+        <div />
+        <div className="flex gap-[10px]">
+          <button
+            className={btnCls("dash", "ghost", "md")}
+            onClick={() => setPromo(true)}
+          >
+            <Icons.percent size={16} />
+            {t("Mass-create promos")}
+          </button>
+          <Btn size="md">
+            <Icons.send size={16} />
+            {t("New campaign")}
+          </Btn>
+        </div>
+      </div>
+      <TableCard style={{ marginBottom: "var(--gap)" }}>
+        <h3 className="text-[17px] pt-[18px] px-[20px] pb-[4px]">
+          {t("Campaigns")}
+        </h3>
+        <DataTable
+          head={
+            <>
+              <th>{t("Campaign")}</th>
+              <th>{t("Channel")}</th>
+              <th>{t("Audience")}</th>
+              <th>{t("Sent")}</th>
+              <th>{t("CTR")}</th>
+              <th>{t("Status")}</th>
+            </>
+          }
+        >
+          {A_CAMPAIGNS.map((c, i) => (
+            <tr
+              key={i}
+              className="[transition:0.12s] cursor-pointer hover:[&>td]:bg-surface-2"
+            >
+              <td>
+                <b className="font-bold">{t(c.name)}</b>
+              </td>
+              <td>
+                <Chip
+                  bg="var(--surface-2)"
+                  color="var(--ink-2)"
+                  border="1px solid var(--line)"
+                >
+                  {t(c.channel)}
+                </Chip>
+              </td>
+              <td className="text-ink-2">{t(c.audience)}</td>
+              <td>{c.sent.toLocaleString("ru-RU")}</td>
+              <td className="font-bold">{c.ctr}</td>
+              <td>
+                <Pill
+                  status={c.status === "active" ? "active" : "review"}
+                  label={c.status === "active" ? t("Active") : t("Scheduled")}
+                />
+              </td>
+            </tr>
+          ))}
+        </DataTable>
+      </TableCard>
+      {promo && <PromoMassModal onClose={() => setPromo(false)} />}
+    </div>
+  );
+}
+
+function PromoMassModal({ onClose }: { onClose: () => void }) {
+  const t = useT();
+  const [prefix, setPrefix] = useState("SUMMER");
+  const [count, setCount] = useState(50);
+  const [disc, setDisc] = useState("20");
+  const [done, setDone] = useState(false);
+  const sample = Array.from(
+    { length: 3 },
+    () => `${prefix}-${1000 + Math.floor(Math.random() * 9000)}`,
+  );
+  return (
+    <Modal onClose={onClose} maxWidth={460}>
+      <div className="px-[26px] py-[24px]">
+        {!done ? (
+          <>
+            <h3 className="text-[20px] mb-[6px]">
+              {t("Mass-create promo codes")}
+            </h3>
+            <p className="text-ink-2 text-[14px] mt-0 mx-0 mb-[18px]">
+              {t("Generate a batch of unique single-use codes for a campaign.")}
+            </p>
+            <div className="flex flex-col gap-[14px]">
+              <div className="flex gap-[12px]">
+                <div className="flex-1">
+                  <div className="text-[12.5px] font-bold text-ink-2 mb-[7px]">
+                    {t("Code prefix")}
+                  </div>
+                  <Input
+                    value={prefix}
+                    onChange={(e) => setPrefix(e.target.value.toUpperCase())}
+                    style={{ fontFamily: "var(--display)", fontWeight: 700 }}
+                  />
+                </div>
+                <div className="w-[120px]">
+                  <div className="text-[12.5px] font-bold text-ink-2 mb-[7px]">
+                    {t("How many")}
+                  </div>
+                  <Input
+                    type="number"
+                    value={count}
+                    onChange={(e) => setCount(+e.target.value)}
+                  />
+                </div>
+              </div>
+              <div>
+                <div className="text-[12.5px] font-bold text-ink-2 mb-[7px]">
+                  {t("Discount (%)")}
+                </div>
+                <Input value={disc} onChange={(e) => setDisc(e.target.value)} />
+              </div>
+              <div
+                className="bg-surface border border-line rounded-lg"
+                style={{ padding: 14, background: "var(--surface-2)" }}
+              >
+                <div className="text-[12px] font-bold text-ink-3 mb-[8px]">
+                  {t("PREVIEW")}
+                </div>
+                <div className="flex gap-[8px] flex-wrap">
+                  {sample.map((sm, i) => (
+                    <span
+                      key={i}
+                      className="font-display font-bold text-[13px] px-[10px] py-[4px] rounded-[7px] bg-surface"
+                      style={{ border: "1px dashed var(--line-2)" }}
+                    >
+                      {sm}
+                    </span>
+                  ))}
+                  <span
+                    className="text-[13px] text-ink-3 font-semibold"
+                    style={{ alignSelf: "center" }}
+                  >
+                    +{Math.max(count - 3, 0)} {t("more")}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-[10px] mt-[22px]">
+              <button
+                className={btnCls("dash", "ghost", "md", true)}
+                onClick={onClose}
+              >
+                {t("Cancel")}
+              </button>
+              <Btn size="md" block onClick={() => setDone(true)}>
+                <Icons.sparkle size={16} />
+                {t("Generate")} {count} {t("codes")}
+              </Btn>
+            </div>
+          </>
+        ) : (
+          <div className="text-center px-0 py-[10px]">
+            <div
+              className="w-[60px] h-[60px] rounded-[99px] bg-[rgba(31,164,110,.14)] text-[#1FA46E] grid mt-0 mx-auto mb-[16px]"
+              style={{ placeItems: "center" }}
+            >
+              <Icons.check size={32} />
+            </div>
+            <h3 className="text-[20px] mb-[6px]">
+              {count} {t("codes created")}
+            </h3>
+            <p className="text-ink-2 text-[14px] mt-0 mx-0 mb-[20px]">
+              {t("Download the batch as CSV to share with your campaign.")}
+            </p>
+            <div className="flex gap-[10px]">
+              <button
+                className={btnCls("dash", "ghost", "md", true)}
+                onClick={onClose}
+              >
+                {t("Close")}
+              </button>
+              <Btn
+                size="md"
+                block
+                onClick={() => {
+                  downloadCSV(`${prefix}-codes.csv`, [
+                    [t("Code"), t("Discount")],
+                    ...Array.from({ length: count }, (_, i) => [
+                      `${prefix}-${1000 + i}`,
+                      disc + "%",
+                    ]),
+                  ]);
+                  onClose();
+                }}
+              >
+                <Icons.download size={16} />
+                {t("Download CSV")}
+              </Btn>
+            </div>
+          </div>
+        )}
+      </div>
+    </Modal>
+  );
+}
