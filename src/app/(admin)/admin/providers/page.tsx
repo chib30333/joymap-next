@@ -1,5 +1,5 @@
 import { providersTable } from "@/server/selectors";
-import { AProviders } from "@/components/admin/screens";
+import { AProviders } from "@/components/admin/AProviders";
 
 export default async function AdminProvidersPage() {
   const rows = (await providersTable()).map((p) => ({

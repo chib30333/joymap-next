@@ -1,5 +1,5 @@
 import { applications, pendingServices } from "@/server/selectors";
-import { AModeration } from "@/components/admin/screens";
+import { AModeration } from "@/components/admin/AModeration";
 
 export default async function AdminModerationPage() {
   const [apps, svcs] = await Promise.all([applications(), pendingServices()]);

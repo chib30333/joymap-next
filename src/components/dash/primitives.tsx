@@ -7,7 +7,7 @@ import {
   type ReactNode,
   type ButtonHTMLAttributes,
 } from "react";
-import { statusColor } from "@/components/ui/pill";
+import { statusColor } from "@/components/ui/Pill";
 import { btnCls } from "@/lib/btn";
 
 export const money = (n: number) =>
@@ -554,4 +554,4 @@ export function Donut({
   );
 }
 
-export { BusyBtn } from "@/components/ui/busy-btn";
+export { BusyBtn } from "@/components/ui/BusyBtn";

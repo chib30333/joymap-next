@@ -370,4 +370,4 @@ export function QR() {
   );
 }
 
-export { BusyBtn } from "@/components/ui/busy-btn";
+export { BusyBtn } from "@/components/ui/BusyBtn";
