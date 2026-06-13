@@ -1,48 +1,19 @@
-import Link from "next/link";
 import { Reveal } from "@/components/landing/Reveal";
 import { btnCls } from "@/lib/btn";
-import Logo from "@/components/landing/Logo";
+import Link from "next/link";
+import { Header } from "@/components/landing/Header";
+import { Footer } from "@/components/landing/Footer";
+import { Testimonials } from "@/components/landing/Testimonials";
 
 export default function Landing() {
   return (
     <div>
-      <header className="sticky top-0 z-50 bg-[color-mix(in_srgb,var(--bg)_80%,transparent)] backdrop-blur-[16px] border-b border-line">
-        <div className="max-w-[1200px] mx-auto px-[28px] flex items-center gap-[26px] h-[68px]">
-          <Link className="flex items-center gap-[9px]" href="/">
-            <Logo />
-            <b className="font-display font-extrabold text-[22px] tracking-[-0.03em]">joymap</b>
-            <span className="inline-flex items-center gap-[5px] bg-[color-mix(in_srgb,var(--orange)_16%,transparent)] text-[var(--orange-deep)] px-[9px] py-[3px] rounded-[99px] text-[10px] font-extrabold font-display">
-              <i className="w-[6px] h-[6px] rounded-[99px] bg-[var(--orange)] inline-block animate-[pulse_1.8s_infinite]" />
-              Live now!
-            </span>
-          </Link>
-          <nav className="flex gap-6 ms-2 max-[760px]:hidden">
-            <Link className="font-semibold text-base text-ink-2 [transition:0.14s] hover:text-coral-deep" href="#experiences">Experiences</Link>
-            <Link className="font-semibold text-base text-ink-2 [transition:0.14s] hover:text-coral-deep" href="#partners">For partners</Link>
-            <Link className="font-semibold text-base text-ink-2 [transition:0.14s] hover:text-coral-deep" href="#corporate">Corporate</Link>
-          </nav>
-          <div className="flex-1" />
-          <Link
-            className={btnCls("lp", "ghost")}
-            href="/auth"
-            style={{ padding: "11px 20px", fontSize: 14 }}
-          >
-            Sign in
-          </Link>
-          <Link
-            className={btnCls("lp", "primary")}
-            href="/auth"
-            style={{ padding: "12px 22px", fontSize: 14 }}
-          >
-            Get started
-          </Link>
-        </div>
-      </header>
+      <Header />
 
       <section className="relative min-h-[88vh] flex items-center overflow-hidden text-white">
         <div className="absolute inset-0 bg-[url('/images/hero-bg.jpg')] bg-cover bg-[center_40%]" />
         <div className="absolute inset-0 [background:linear-gradient(95deg,rgba(20,8,10,0.86)_0%,rgba(28,10,12,0.66)_42%,rgba(28,10,12,0.28)_100%),linear-gradient(0deg,rgba(20,8,10,0.7)_0%,transparent_38%)]" />
-        <div className="relative max-w-[1200px] mx-auto px-[28px] py-[60px] w-full">
+        <div className="relative max-w-7xl mx-auto px-6 py-[60px] w-full">
           <div
             className="text-sm font-extrabold tracking-[0.16em] uppercase text-orange"
             style={{ color: "var(--orange)", marginBottom: 18 }}
@@ -83,7 +54,7 @@ export default function Landing() {
       </section>
 
       <section className="py-[96px]" id="experiences">
-        <div className="max-w-[1200px] mx-auto px-[28px]">
+        <div className="max-w-7xl mx-auto px-6">
           <Reveal className="max-w-[680px] mx-auto mb-[52px] text-center">
             <div className="text-[12.5px] font-extrabold tracking-[0.16em] uppercase text-orange">Discover by feeling</div>
             <h2 className="text-[clamp(28px,3.6vw,46px)] leading-[1.04] mt-[14px]">Pick a mood. We&apos;ll map the week.</h2>
@@ -136,7 +107,7 @@ export default function Landing() {
       </section>
 
       <section className="py-[96px]" style={{ paddingTop: 0 }}>
-        <div className="max-w-[1200px] mx-auto px-[28px]">
+        <div className="max-w-7xl mx-auto px-6">
           <Reveal className="grid grid-cols-2 gap-[56px] items-center max-[880px]:grid-cols-1 max-[880px]:gap-[32px]">
             <div className="rounded-xl overflow-hidden aspect-[4/3] shadow-lg relative">
               <img
@@ -176,7 +147,7 @@ export default function Landing() {
       </section>
 
       <section className="py-[96px]" id="partners" style={{ paddingTop: 0 }}>
-        <div className="max-w-[1200px] mx-auto px-[28px]">
+        <div className="max-w-7xl mx-auto px-6">
           <Reveal className="relative overflow-hidden rounded-xl min-h-[420px] flex items-center text-white">
             <div
               className="absolute inset-0 bg-cover bg-center"
@@ -215,7 +186,7 @@ export default function Landing() {
       </section>
 
       <section className="py-[96px]" id="corporate" style={{ paddingTop: 0 }}>
-        <div className="max-w-[1200px] mx-auto px-[28px]">
+        <div className="max-w-7xl mx-auto px-6">
           <Reveal className="relative overflow-hidden rounded-xl min-h-[420px] flex items-center text-white">
             <div
               className="absolute inset-0 bg-cover bg-center"
@@ -254,8 +225,10 @@ export default function Landing() {
         </div>
       </section>
 
+      <Testimonials />
+
       <section className="text-center py-[100px]">
-        <div className="max-w-[1200px] mx-auto px-[28px]">
+        <div className="max-w-7xl mx-auto px-6">
           <Reveal>
             <div className="text-[12.5px] font-extrabold tracking-[0.16em] uppercase text-orange" style={{ marginBottom: 14 }}>
               Live now in Moscow
@@ -277,7 +250,7 @@ export default function Landing() {
         </div>
       </section>
 
-      <footer className="border-t border-line py-[40px] flex items-center justify-between gap-[20px] flex-wrap text-ink-3 text-[13.5px] font-semibold max-w-[1200px] mx-auto px-[28px]">
+      <footer className="border-t border-line py-[40px] flex items-center justify-between gap-[20px] flex-wrap text-ink-3 text-[13.5px] font-semibold max-w-7xl mx-auto px-6">
         <div className="flex items-center gap-[9px]">
           <b className="font-display font-extrabold text-[18px]">joymap</b>
           <span className="inline-flex items-center gap-[5px] bg-[color-mix(in_srgb,var(--orange)_16%,transparent)] text-[var(--orange-deep)] px-[9px] py-[3px] rounded-[99px] text-[10px] font-extrabold font-display">

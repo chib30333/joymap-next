@@ -486,7 +486,7 @@ export function ServiceModal({
       )}
 
       {step === 3 && (
-        <div className="py-[30px] px-[28px] text-center">
+        <div className="py-[30px] px-6 text-center">
           <div
             className="animate-anim-pop-app w-[72px] h-[72px] rounded-[99px] bg-[var(--m-calm)] grid place-items-center mt-0 mx-auto mb-[18px] text-[#fff]"
             style={{ boxShadow: "0 12px 30px rgba(63,168,155,.4)" }}
