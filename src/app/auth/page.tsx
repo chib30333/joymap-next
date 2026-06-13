@@ -557,7 +557,7 @@ export default function AuthPage() {
   return (
     <div className="auth-wrap">
       <div className="flex flex-col items-center justify-center gap-4 px-7 py-10 relative bg-bg">
-        <div className="hidden max-[920px]:flex items-center justify-between w-full max-w-[420px] mb-1">
+        <div className="flex items-center justify-between w-full max-w-[420px] mb-1">
           <Link
             href="/"
             className="inline-flex"

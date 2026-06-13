@@ -655,7 +655,7 @@ function QuoteModal({ onClose }: { onClose: () => void }) {
   return (
     <Modal onClose={onClose} maxWidth={500}>
       {step === 0 ? (
-        <div className="py-[26px] px-[28px]">
+        <div className="py-[26px] px-6">
           <div
             className="text-[12px] font-extrabold tracking-[0.18em] uppercase text-[var(--gold)]"
             style={{ marginBottom: 8, color: "var(--coral-deep)" }}
@@ -779,7 +779,7 @@ function GiftModal({ onClose }: { onClose: () => void }) {
   return (
     <Modal onClose={onClose} maxWidth={460}>
       {!sent ? (
-        <div className="py-[26px] px-[28px]">
+        <div className="py-[26px] px-6">
           <div
             className="text-[12px] font-extrabold tracking-[0.18em] uppercase text-[var(--gold)]"
             style={{ marginBottom: 8, color: "#B97714" }}
