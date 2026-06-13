@@ -300,8 +300,8 @@ function Seg({
             className={`py-[8px] px-4 rounded-pill font-bold text-[13px] text-ink-3 border-none bg-transparent cursor-pointer [transition:0.16s] whitespace-nowrap inline-flex items-center gap-[6px] ${
               on
                 ? accent
-                  ? "bg-coral text-[#fff] shadow-coral"
-                  : "bg-surface text-ink shadow-sm"
+                  ? "bg-coral text-[#fff]"
+                  : "bg-surface text-ink"
                 : ""
             }`}
             onClick={() => onChange(o.v)}

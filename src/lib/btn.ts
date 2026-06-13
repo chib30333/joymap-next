@@ -49,27 +49,27 @@ function padding(ctx: BtnCtx, size?: BtnSize) {
 const VARIANT: Record<BtnCtx, Partial<Record<BtnVariant, string>>> = {
   lp: {
     primary:
-      "bg-coral text-white shadow-coral hover:bg-coral-deep hover:[transform:translateY(-2px)] hover:shadow-[0_14px_32px_rgba(224,33,47,0.42)]",
+      "bg-coral text-white hover:bg-coral-deep hover:[transform:translateY(-2px)]",
     light:
-      "bg-white text-[#241016] hover:[transform:translateY(-2px)] hover:shadow-[0_14px_32px_rgba(0,0,0,0.18)]",
+      "bg-white text-[#241016] hover:[transform:translateY(-2px)]",
     glass:
       "bg-white/[0.14] text-white backdrop-blur-[6px] border border-white/25 hover:bg-white/[0.24]",
     ghost: "bg-surface text-ink border border-line-2 hover:border-ink-3",
   },
   auth: {
     primary:
-      "bg-coral text-white shadow-coral enabled:hover:bg-coral-deep enabled:hover:[transform:translateY(-1px)] enabled:hover:shadow-[0_12px_30px_rgba(224,33,47,0.42)] disabled:cursor-not-allowed",
+      "bg-coral text-white enabled:hover:bg-coral-deep enabled:hover:[transform:translateY(-1px)] disabled:cursor-not-allowed",
   },
   app: {
     primary:
-      "bg-coral text-white shadow-coral hover:bg-coral-deep hover:shadow-[0_12px_30px_rgba(240,83,45,0.4)] hover:[transform:translateY(-1px)]",
+      "bg-coral text-white hover:bg-coral-deep hover:[transform:translateY(-1px)]",
     ghost:
       "bg-surface text-ink border border-line-2 hover:border-ink-3 hover:bg-surface-2",
     soft: "bg-[color-mix(in_srgb,var(--red)_16%,transparent)] text-coral hover:bg-[color-mix(in_srgb,var(--red)_26%,transparent)]",
   },
   dash: {
     primary:
-      "bg-coral text-white shadow-coral hover:bg-coral-deep hover:[transform:translateY(-1px)]",
+      "bg-coral text-white hover:bg-coral-deep hover:[transform:translateY(-1px)]",
     orange: "bg-orange text-[#1a0a04] hover:bg-orange-deep",
     ghost:
       "bg-surface text-ink border border-line-2 hover:border-ink-3 hover:bg-surface-2",

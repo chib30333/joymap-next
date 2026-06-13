@@ -237,7 +237,6 @@ export function Onboarding() {
                     flex: "none",
                     width: 48,
                     height: 48,
-                    boxShadow: "var(--sh-coral)",
                   }}
                   onClick={submitText}
                 >
