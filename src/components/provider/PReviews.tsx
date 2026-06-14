@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { rpc } from "@/lib/client";
-import { Avatar, BusyBtn } from "@/components/dash/primitives";
+import { Avatar } from "@/components/dash/primitives";
+import { Button } from "@/components/ui";
 import { useT } from "@/components/Language";
 
 export function PReviews({ list, rating }: { list: any[]; rating: any }) {
@@ -14,15 +14,7 @@ export function PReviews({ list, rating }: { list: any[]; rating: any }) {
   const [replying, setReplying] = useState<string | null>(null);
   if (list.length === 0)
     return (
-      <div
-        className="bg-surface border border-line rounded-lg animate-anim-fade-dash"
-        style={{
-          padding: "60px 24px",
-          textAlign: "center",
-          color: "var(--ink-3)",
-          maxWidth: 760,
-        }}
-      >
+      <div className="bg-surface border border-line rounded-lg animate-anim-fade-dash py-[60px] px-[24px] text-center text-ink-3 max-w-[760px]">
         <Icons.star size={36} />
         <h3 className="text-ink mt-[12px] text-[19px]">{t("No reviews yet")}</h3>
         <p className="max-w-[380px] mt-[8px] mx-auto mb-0 font-semibold text-[14px]">
@@ -43,16 +35,7 @@ export function PReviews({ list, rating }: { list: any[]; rating: any }) {
   );
   return (
     <div className="animate-anim-fade-dash">
-      <div
-        className="bg-surface border border-line rounded-lg"
-        style={{
-          padding: 22,
-          display: "flex",
-          alignItems: "center",
-          gap: 24,
-          marginBottom: "var(--gap)",
-        }}
-      >
+      <div className="bg-surface border border-line rounded-lg p-[22px] flex items-center gap-[24px] mb-[var(--gap)]">
         <div className="text-center">
           <div className="font-display font-extrabold text-[44px] leading-[1]">
             {rating.rating || "—"}
@@ -68,12 +51,8 @@ export function PReviews({ list, rating }: { list: any[]; rating: any }) {
               <span className="text-[12px] font-bold w-[10px]">{st}</span>
               <div className="flex-1 h-[7px] rounded-[99px] bg-surface-2 overflow-hidden">
                 <div
-                  style={{
-                    height: "100%",
-                    width: p + "%",
-                    background: "var(--m-joy)",
-                    borderRadius: 99,
-                  }}
+                  className="h-full w-[var(--w)] bg-[var(--m-joy)] rounded-[99px]"
+                  style={{ ["--w"]: p + "%" } as React.CSSProperties}
                 />
               </div>
               <span className="text-[12px] text-ink-3 font-semibold w-[30px]">
@@ -85,7 +64,7 @@ export function PReviews({ list, rating }: { list: any[]; rating: any }) {
       </div>
       <div className="flex flex-col gap-[14px]">
         {list.map((rv) => (
-          <div key={rv.id} className="bg-surface border border-line rounded-lg" style={{ padding: 20 }}>
+          <div key={rv.id} className="bg-surface border border-line rounded-lg p-[20px]">
             <div className="flex items-center gap-[12px] mb-[10px]">
               <Avatar name={rv.name} size={38} />
               <div className="flex-1">
@@ -110,9 +89,11 @@ export function PReviews({ list, rating }: { list: any[]; rating: any }) {
                 {t("You replied")}
               </div>
             ) : (
-              <BusyBtn
+              <Button
                 busy={replying === rv.id}
-                className={btnCls("dash", "soft", "sm")}
+                ctx="dash"
+                variant="soft"
+                size="sm"
                 icon={<Icons.send size={14} />}
                 onClick={() => {
                   setReplying(rv.id);
@@ -123,7 +104,7 @@ export function PReviews({ list, rating }: { list: any[]; rating: any }) {
                 }}
               >
                 {t("Reply")}
-              </BusyBtn>
+              </Button>
             )}
           </div>
         ))}

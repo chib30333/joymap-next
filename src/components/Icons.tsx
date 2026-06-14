@@ -6,6 +6,7 @@ type IcProps = {
   fill?: boolean;
   vb?: number;
   style?: CSSProperties;
+  className?: string;
 };
 
 function Ic({
@@ -14,6 +15,7 @@ function Ic({
   fill = false,
   vb = 24,
   style,
+  className,
   children,
 }: IcProps & { children: ReactNode }) {
   return (
@@ -27,6 +29,7 @@ function Ic({
       strokeLinecap="round"
       strokeLinejoin="round"
       style={style}
+      className={className}
     >
       {children}
     </svg>

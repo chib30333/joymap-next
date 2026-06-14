@@ -1,44 +1,11 @@
 "use client";
 
-import {
-  useEffect,
-  useRef,
-  useState,
-  type ReactNode,
-  type ButtonHTMLAttributes,
-} from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { statusColor } from "@/components/ui/Pill";
-import { btnCls } from "@/lib/btn";
 
 export const money = (n: number) =>
   new Intl.NumberFormat("ru-RU").format(Math.round(n)) + "\u00A0₽";
 
-export function Btn({
-  variant = "primary",
-  size = "md",
-  block,
-  icon,
-  iconR,
-  children,
-  ...p
-}: ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "primary" | "ghost" | "soft" | "orange";
-  size?: "lg" | "md" | "sm";
-  block?: boolean;
-  icon?: ReactNode;
-  iconR?: ReactNode;
-}) {
-  return (
-    <button
-      className={btnCls("dash", variant, size, block)}
-      {...p}
-    >
-      {icon}
-      {children}
-      {iconR}
-    </button>
-  );
-}
 export function Avatar({
   name,
   size = 40,
@@ -50,13 +17,14 @@ export function Avatar({
 }) {
   return (
     <div
-      className="grid place-items-center rounded-[99px] bg-[linear-gradient(140deg,var(--coral),var(--orange))] text-white font-extrabold font-display flex-none"
-      style={{
-        width: size,
-        height: size,
-        fontSize: size * 0.4,
-        ...(grad ? { background: grad } : {}),
-      }}
+      className="grid place-items-center rounded-[99px] [background:var(--av-bg,linear-gradient(140deg,var(--coral),var(--orange)))] text-white font-extrabold font-display flex-none w-[var(--av-s)] h-[var(--av-s)] text-[length:var(--av-fs)]"
+      style={
+        {
+          "--av-s": size + "px",
+          "--av-fs": size * 0.4 + "px",
+          "--av-bg": grad || undefined,
+        } as React.CSSProperties
+      }
     >
       {(name || "?")[0]}
     </div>
@@ -67,10 +35,10 @@ export function Pill({ status, label }: { status: string; label?: string }) {
   const [c, bg] = statusColor(status);
   return (
     <span
-      className="inline-flex items-center gap-[6px] py-[4px] px-[11px] rounded-pill text-[12px] font-bold whitespace-nowrap"
-      style={{ color: c, background: bg }}
+      className="inline-flex items-center gap-[6px] py-[4px] px-[11px] rounded-pill text-[12px] font-bold whitespace-nowrap text-[var(--pill-c)] bg-[var(--pill-bg)]"
+      style={{ "--pill-c": c, "--pill-bg": bg } as React.CSSProperties}
     >
-      <span className="w-[6px] h-[6px] rounded-[99px]" style={{ background: c }} />
+      <span className="w-[6px] h-[6px] rounded-[99px] bg-[var(--pill-c)]" />
       {label || status}
     </span>
   );
@@ -97,16 +65,15 @@ export function Stat({
       <div className="text-[13px] font-semibold text-ink-3 flex items-center gap-2">
         {icon && (
           <span
-            className="grid place-items-center flex-none"
-            style={{
-              width: 28,
-              height: 28,
-              borderRadius: 9,
-              background: accent
-                ? `color-mix(in srgb,${accent} 14%,transparent)`
-                : undefined,
-              color: accent,
-            }}
+            className="grid place-items-center flex-none w-[28px] h-[28px] rounded-[9px] [background:var(--ic-bg)] text-[color:var(--ic-fg)]"
+            style={
+              {
+                "--ic-bg": accent
+                  ? `color-mix(in srgb,${accent} 14%,transparent)`
+                  : undefined,
+                "--ic-fg": accent,
+              } as React.CSSProperties
+            }
           >
             {icon}
           </span>
@@ -142,7 +109,7 @@ export function SectionHead({
     <div className="flex items-end justify-between gap-4 mb-[18px]">
       <div>
         {eyebrow && (
-          <div className="text-[12px] font-extrabold tracking-[0.1em] uppercase text-orange" style={{ marginBottom: 7 }}>
+          <div className="text-[12px] font-extrabold tracking-[0.1em] uppercase text-orange mb-[7px]">
             {eyebrow}
           </div>
         )}
@@ -220,8 +187,8 @@ export function Modal({
   return (
     <div className="scrim" onClick={onClose}>
       <div
-        className="sheet"
-        style={maxWidth ? { maxWidth } : undefined}
+        className={maxWidth ? "sheet max-w-[var(--mw)]" : "sheet"}
+        style={maxWidth ? ({ "--mw": maxWidth + "px" } as React.CSSProperties) : undefined}
         onClick={(e) => e.stopPropagation()}
       >
         {children}
@@ -244,52 +211,37 @@ export function Bars({
   const max = Math.max(...data.map((d) => d.value)) || 1;
   return (
     <div
-      style={{
-        display: "flex",
-        alignItems: "flex-end",
-        gap: 10,
-        height: h,
-        paddingTop: 18,
-      }}
+      className="flex items-end gap-[10px] pt-[18px] h-[var(--bars-h)]"
+      style={{ "--bars-h": h + "px" } as React.CSSProperties}
     >
       {data.map((d, i) => {
         const pct = d.value / max;
         return (
           <div
             key={i}
-            style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 8,
-              height: "100%",
-              justifyContent: "flex-end",
-            }}
+            className="flex-1 flex flex-col items-center gap-[8px] h-full justify-end"
           >
             <span
-              style={{ fontSize: 11.5, fontWeight: 700, color: "var(--ink-2)" }}
+              className="text-[11.5px] font-bold text-[color:var(--ink-2)]"
             >
               {d.short ||
                 (unit === "₽" ? Math.round(d.value / 1000) + "k" : d.value)}
             </span>
             <div
               title={d.value + unit}
-              className="origin-bottom animate-[grow_0.6s_both]"
-              style={{
-                width: "72%",
-                maxWidth: 34,
-                borderRadius: "7px 7px 3px 3px",
-                background: d.hot
-                  ? accent
-                  : "color-mix(in srgb,var(--coral) 26%,transparent)",
-                height: `${Math.max(pct * 100, 4)}%`,
-                transition: ".3s",
-                animationDelay: `${i * 0.05}s`,
-              }}
+              className="origin-bottom animate-[grow_0.6s_both] w-[72%] max-w-[34px] [border-radius:7px_7px_3px_3px] [transition:.3s] [background:var(--bar-bg)] h-[var(--bar-h)] [animation-delay:var(--bar-delay)]"
+              style={
+                {
+                  "--bar-bg": d.hot
+                    ? accent
+                    : "color-mix(in srgb,var(--coral) 26%,transparent)",
+                  "--bar-h": `${Math.max(pct * 100, 4)}%`,
+                  "--bar-delay": `${i * 0.05}s`,
+                } as React.CSSProperties
+              }
             />
             <span
-              style={{ fontSize: 11.5, fontWeight: 700, color: "var(--ink-3)" }}
+              className="text-[11.5px] font-bold text-[color:var(--ink-3)]"
             >
               {d.label}
             </span>
@@ -352,7 +304,7 @@ export function LineChart({
         width="100%"
         height={h}
         preserveAspectRatio="none"
-        style={{ overflow: "visible", display: "block" }}
+        className="overflow-visible block"
       >
         <defs>
           <linearGradient id="lg" x1="0" y1="0" x2="0" y2="1">
@@ -390,7 +342,7 @@ export function LineChart({
               fill={hi === i ? accent : "var(--surface)"}
               stroke={accent}
               strokeWidth="2.5"
-              style={{ transition: "r .12s" }}
+              className="[transition:r_.12s]"
             />
             <text
               x={xs(i)}
@@ -407,13 +359,18 @@ export function LineChart({
         ))}
       </svg>
       <div
-        className={`absolute z-30 pointer-events-none translate-x-[-50%] translate-y-[-118%] bg-ink text-bg py-2 px-[11px] rounded-[10px] shadow-lg whitespace-nowrap font-semibold text-[12.5px] [transition:opacity_0.12s] after:content-[''] after:absolute after:left-1/2 after:top-full after:translate-x-[-50%] after:border-[5px] after:border-solid after:border-transparent after:border-t-ink ${hi != null ? "opacity-100" : "opacity-0"}`}
-        style={{ left: tipX, top: tipY }}
+        className={`absolute z-30 pointer-events-none translate-x-[-50%] translate-y-[-118%] bg-ink text-bg py-2 px-[11px] rounded-[10px] shadow-lg whitespace-nowrap font-semibold text-[12.5px] [transition:opacity_0.12s] after:content-[''] after:absolute after:left-1/2 after:top-full after:translate-x-[-50%] after:border-[5px] after:border-solid after:border-transparent after:border-t-ink left-[var(--tip-l)] top-[var(--tip-t)] ${hi != null ? "opacity-100" : "opacity-0"}`}
+        style={
+          {
+            "--tip-l": typeof tipX === "number" ? tipX + "px" : tipX,
+            "--tip-t": typeof tipY === "number" ? tipY + "px" : tipY,
+          } as React.CSSProperties
+        }
       >
         {hi != null && (
           <>
             <div className="flex items-center gap-[6px] text-[11px] font-bold opacity-70 uppercase tracking-[0.04em] mb-[3px]">
-              <span className="w-2 h-2 rounded-[99px] flex-none" style={{ background: accent }} />
+              <span className="w-2 h-2 rounded-[99px] flex-none [background:var(--dot-bg)]" style={{ "--dot-bg": accent } as React.CSSProperties} />
               {caption} · {points[hi].label}
             </div>
             <div className="font-display font-extrabold text-[15px] tracking-[-0.01em]">{fmt(points[hi].value)}</div>
@@ -476,13 +433,13 @@ export function Donut({
   const seg = hi != null ? segments[hi] : null;
   return (
     <div
-      className="relative"
+      className="relative flex-none w-[var(--dn-s)] h-[var(--dn-s)]"
       ref={wrapRef}
-      style={{ width: size, height: size, flex: "none" }}
+      style={{ "--dn-s": size + "px" } as React.CSSProperties}
       onMouseMove={onMove}
       onMouseLeave={() => setHi(null)}
     >
-      <svg width={size} height={size} style={{ transform: "rotate(-90deg)" }}>
+      <svg width={size} height={size} className="[transform:rotate(-90deg)]">
         {segments.map((s, i) => {
           const len = (s.value / total) * circ;
           const el = (
@@ -498,7 +455,7 @@ export function Donut({
               strokeDashoffset={-acc}
               strokeLinecap="butt"
               opacity={hi == null || hi === i ? 1 : 0.4}
-              style={{ transition: "stroke-width .12s, opacity .12s" }}
+              className="[transition:stroke-width_.12s,opacity_.12s]"
             />
           );
           acc += len;
@@ -507,27 +464,16 @@ export function Donut({
       </svg>
       {center && (
         <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            display: "grid",
-            placeItems: "center",
-            textAlign: "center",
-          }}
+          className="absolute inset-0 grid place-items-center text-center"
         >
           <div>
             <div
-              style={{
-                fontFamily: "var(--display)",
-                fontWeight: 800,
-                fontSize: 22,
-                lineHeight: 1,
-              }}
+              className="[font-family:var(--display)] font-extrabold text-[22px] leading-[1]"
             >
               {seg ? `${Math.round((seg.value / total) * 100)}%` : center.v}
             </div>
             <div
-              style={{ fontSize: 11.5, color: "var(--ink-3)", fontWeight: 600 }}
+              className="text-[11.5px] text-[color:var(--ink-3)] font-semibold"
             >
               {seg ? seg.label : center.l}
             </div>
@@ -535,13 +481,13 @@ export function Donut({
         </div>
       )}
       <div
-        className={`absolute z-30 pointer-events-none translate-x-[-50%] translate-y-[-118%] bg-ink text-bg py-2 px-[11px] rounded-[10px] shadow-lg whitespace-nowrap font-semibold text-[12.5px] [transition:opacity_0.12s] after:content-[''] after:absolute after:left-1/2 after:top-full after:translate-x-[-50%] after:border-[5px] after:border-solid after:border-transparent after:border-t-ink ${seg ? "opacity-100" : "opacity-0"}`}
-        style={{ left: pos.x, top: pos.y }}
+        className={`absolute z-30 pointer-events-none translate-x-[-50%] translate-y-[-118%] bg-ink text-bg py-2 px-[11px] rounded-[10px] shadow-lg whitespace-nowrap font-semibold text-[12.5px] [transition:opacity_0.12s] after:content-[''] after:absolute after:left-1/2 after:top-full after:translate-x-[-50%] after:border-[5px] after:border-solid after:border-transparent after:border-t-ink left-[var(--tip-l)] top-[var(--tip-t)] ${seg ? "opacity-100" : "opacity-0"}`}
+        style={{ "--tip-l": pos.x + "px", "--tip-t": pos.y + "px" } as React.CSSProperties}
       >
         {seg && (
           <>
             <div className="flex items-center gap-[6px] text-[11px] font-bold opacity-70 uppercase tracking-[0.04em] mb-[3px]">
-              <span className="w-2 h-2 rounded-[99px] flex-none" style={{ background: seg.color }} />
+              <span className="w-2 h-2 rounded-[99px] flex-none [background:var(--dot-bg)]" style={{ "--dot-bg": seg.color } as React.CSSProperties} />
               {seg.label}
             </div>
             <div className="font-display font-extrabold text-[15px] tracking-[-0.01em]">
@@ -553,5 +499,3 @@ export function Donut({
     </div>
   );
 }
-
-export { BusyBtn } from "@/components/ui/BusyBtn";

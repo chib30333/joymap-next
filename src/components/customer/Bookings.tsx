@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
-import { rpc, useBusy } from "@/lib/client";
+import { rpc } from "@/lib/client";
+import { useBusy } from "@/hooks";
 import {
   MOODS,
   fmt,
@@ -14,11 +14,10 @@ import {
   Modal,
   MoodDot,
   Rating,
-  BusyBtn,
   QR,
   type Exp,
 } from "./primitives";
-import { Textarea } from "@/components/ui";
+import { Button, Textarea } from "@/components/ui";
 import { useT } from "@/components/Language";
 
 type B = {
@@ -50,22 +49,19 @@ export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
             ["past", t("Past")],
           ] as const
         ).map(([k, l]) => (
-          <button
+          <Button
             key={k}
-            className={btnCls("app", undefined, "sm")}
+            ctx="app"
+            size="sm"
             onClick={() => setTab(k)}
-            style={
+            className={
               tab === k
-                ? {
-                    background: "var(--surface)",
-                    color: "var(--ink)",
-                    boxShadow: "var(--sh-sm)",
-                  }
-                : { color: "var(--ink-3)" }
+                ? "bg-[var(--surface)] text-[var(--ink)] [box-shadow:var(--sh-sm)]"
+                : "text-[var(--ink-3)]"
             }
           >
             {l}
-          </button>
+          </Button>
         ))}
       </div>
 
@@ -96,38 +92,24 @@ export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
             return (
               <div
                 key={b.id}
-                className="bg-surface border border-line rounded-lg animate-anim-pop-app"
-                style={{
-                  display: "flex",
-                  gap: 0,
-                  overflow: "hidden",
-                  animationDelay: `${i * 0.05}s`,
-                }}
+                className="bg-surface border border-line rounded-lg animate-anim-pop-app flex gap-0 overflow-hidden [animation-delay:var(--ad)]"
+                style={{ "--ad": `${i * 0.05}s` } as React.CSSProperties}
               >
                 <div
-                  style={{
-                    width: 150,
-                    flex: "none",
-                    background: bg(e),
-                    position: "relative",
-                  }}
+                  className="w-[150px] flex-none relative [background:var(--cell-bg)]"
+                  style={{ "--cell-bg": bg(e) } as React.CSSProperties}
                 >
                   <div
-                    className="absolute inset-0 opacity-[0.16] mix-blend-overlay bg-[radial-gradient(rgba(255,255,255,0.9)_0.6px,transparent_0.6px)] bg-[length:7px_7px]"
-                    style={{ position: "absolute", inset: 0, opacity: 0.15 }}
+                    className="absolute inset-0 mix-blend-overlay bg-[radial-gradient(rgba(255,255,255,0.9)_0.6px,transparent_0.6px)] bg-[length:7px_7px] opacity-[0.15]"
                   />
                 </div>
                 <div className="flex-1 py-[18px] px-[22px] flex items-center gap-[20px] flex-wrap">
                   <div className="flex-1 min-w-[180px]">
                     <span
-                      className="inline-flex items-center gap-[8px] pt-[7px] pr-[13px] pb-[7px] pl-[11px] rounded-pill text-[13px] font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid border-transparent"
-                      style={{
-                        background: m.soft,
-                        color: m.color,
-                        padding: "4px 10px 4px 8px",
-                        fontSize: 11.5,
-                        marginBottom: 8,
-                      }}
+                      className="inline-flex items-center gap-[8px] rounded-pill font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid border-transparent p-[4px_10px_4px_8px] text-[11.5px] mb-[8px] [background:var(--chip-bg)] text-[var(--chip-c)]"
+                      style={
+                        { "--chip-bg": m.soft, "--chip-c": m.color } as React.CSSProperties
+                      }
                     >
                       <MoodDot mood={e.mood} size={6} />
                       {t(m.label)}
@@ -152,27 +134,33 @@ export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
                     <div className="flex flex-col gap-[8px] items-end">
                       <BookingPill status={b.status} />
                       <div className="flex gap-[6px]">
-                        <button
-                          className={btnCls("app", "ghost", "sm")}
+                        <Button
+                          ctx="app"
+                          variant="ghost"
+                          size="sm"
                           onClick={() => setModal({ kind: "qr", b })}
                         >
                           <Icons.qr size={16} />
                           {t("QR")}
-                        </button>
-                        <button
-                          className={btnCls("app", "ghost", "sm")}
+                        </Button>
+                        <Button
+                          ctx="app"
+                          variant="ghost"
+                          size="sm"
                           onClick={() => setModal({ kind: "move", b })}
                         >
                           <Icons.clock size={15} />
                           {t("Move")}
-                        </button>
-                        <button
-                          className={btnCls("app", "ghost", "sm")}
-                          style={{ color: "var(--coral)" }}
+                        </Button>
+                        <Button
+                          ctx="app"
+                          variant="ghost"
+                          size="sm"
+                          className="text-[var(--coral)]"
                           onClick={() => setModal({ kind: "cancel", b })}
                         >
                           {t("Cancel")}
-                        </button>
+                        </Button>
                       </div>
                       <span className="text-[12px] text-ink-3 font-semibold">
                         {b.code}
@@ -185,12 +173,14 @@ export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
                       ) : b.rated ? (
                         <Rating value={b.rated} />
                       ) : (
-                        <button
-                          className={btnCls("app", "soft", "sm")}
+                        <Button
+                          ctx="app"
+                          variant="soft"
+                          size="sm"
                           onClick={() => setModal({ kind: "rate", b })}
                         >
                           {t("Rate it")}
-                        </button>
+                        </Button>
                       )}
                     </div>
                   )}
@@ -239,10 +229,10 @@ export function BookingPill({ status }: { status: string }) {
   const I = Icons[ic];
   return (
     <span
-      className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] font-semibold bg-surface-2 text-ink-2 border border-line"
-      style={{ background: bgc, color: c, border: "none", fontWeight: 700 }}
+      className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] border-none font-bold [background:var(--pill-bg)] text-[var(--pill-c)]"
+      style={{ "--pill-bg": bgc, "--pill-c": c } as React.CSSProperties}
     >
-      <I size={13} style={{ marginRight: 4 }} />
+      <I size={13} className="mr-[4px]" />
       {t(l)}
     </span>
   );
@@ -258,8 +248,7 @@ function QRModal({ b, onClose }: { b: B; onClose: () => void }) {
           {b.date} · {b.time}
         </div>
         <div
-          className="bg-surface border border-line rounded-lg"
-          style={{ padding: 22, background: "var(--surface-2)" }}
+          className="border border-line rounded-lg p-[22px] bg-surface-2"
         >
           <QR />
           <div className="mt-[14px] [font-family:var(--display)] font-extrabold tracking-[.12em] text-[18px]">
@@ -269,13 +258,16 @@ function QRModal({ b, onClose }: { b: B; onClose: () => void }) {
             {t("Show this at the door")}
           </div>
         </div>
-        <button
-          className={btnCls("app", "ghost", "md", true)}
-          style={{ marginTop: 16 }}
+        <Button
+          ctx="app"
+          variant="ghost"
+          size="md"
+          block
+          className="mt-[16px]"
           onClick={onClose}
         >
           {t("Close")}
-        </button>
+        </Button>
       </div>
     </Modal>
   );
@@ -299,14 +291,10 @@ function RateModal({ b, onClose }: { b: B; onClose: () => void }) {
             <button
               key={s}
               onClick={() => setStars(s)}
-              style={{
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                fontSize: 32,
-                color: s <= stars ? "var(--m-joy)" : "var(--line-2)",
-                transition: ".12s",
-              }}
+              className="[background:none] border-none cursor-pointer text-[32px] [transition:.12s] [color:var(--star-c)]"
+              style={
+                { "--star-c": s <= stars ? "var(--m-joy)" : "var(--line-2)" } as React.CSSProperties
+              }
             >
               ★
             </button>
@@ -317,15 +305,18 @@ function RateModal({ b, onClose }: { b: B; onClose: () => void }) {
           placeholder={t("Tell others what you loved (optional)…")}
           value={text}
           onChange={(e) => setText(e.target.value)}
-          style={{ resize: "vertical", marginBottom: 18 }}
+          className="resize-y mb-[18px]"
         />
         <div className="flex gap-[10px]">
-          <button className={btnCls("app", "ghost", "md", true)} onClick={onClose}>
+          <Button ctx="app" variant="ghost" size="md" block onClick={onClose}>
             {t("Cancel")}
-          </button>
-          <BusyBtn
+          </Button>
+          <Button
             busy={busy}
-            className={btnCls("app", "primary", "md", true)}
+            ctx="app"
+            variant="primary"
+            size="md"
+            block
             icon={<Icons.star size={16} />}
             onClick={() =>
               run(
@@ -338,7 +329,7 @@ function RateModal({ b, onClose }: { b: B; onClose: () => void }) {
             }
           >
             {t("Submit review")}
-          </BusyBtn>
+          </Button>
         </div>
       </div>
     </Modal>
@@ -373,44 +364,33 @@ function MoveModal({ b, onClose }: { b: B; onClose: () => void }) {
         </div>
         <div className="font-bold text-[14px] mb-[10px]">{t("New day")}</div>
         <div
-          className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          style={{
-            display: "flex",
-            gap: 8,
-            overflowX: "auto",
-            marginBottom: 18,
-          }}
+          className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden flex gap-[8px] overflow-x-auto mb-[18px]"
         >
           {days.map((d) => (
             <button
               key={d}
               onClick={() => setDay(d)}
-              style={{
-                flex: "none",
-                width: 60,
-                padding: "10px 0",
-                borderRadius: "var(--r-sm)",
-                cursor: "pointer",
-                border: `1.5px solid ${day === d ? "var(--coral)" : "var(--line-2)"}`,
-                background: day === d ? "var(--coral-soft)" : "var(--surface)",
-              }}
+              className="flex-none w-[60px] p-[10px_0] rounded-[var(--r-sm)] cursor-pointer [border:var(--day-bd)] [background:var(--day-bg)]"
+              style={
+                {
+                  "--day-bd": `1.5px solid ${day === d ? "var(--coral)" : "var(--line-2)"}`,
+                  "--day-bg": day === d ? "var(--coral-soft)" : "var(--surface)",
+                } as React.CSSProperties
+              }
             >
               <div
-                style={{
-                  fontSize: 11.5,
-                  fontWeight: 700,
-                  color: day === d ? "var(--coral-deep)" : "var(--ink-3)",
-                }}
+                className="text-[11.5px] font-bold [color:var(--day-c)]"
+                style={
+                  { "--day-c": day === d ? "var(--coral-deep)" : "var(--ink-3)" } as React.CSSProperties
+                }
               >
                 {t(WD[dow(d)])}
               </div>
               <div
-                style={{
-                  fontFamily: "var(--display)",
-                  fontWeight: 800,
-                  fontSize: 18,
-                  color: day === d ? "var(--coral-deep)" : "var(--ink)",
-                }}
+                className="[font-family:var(--display)] font-extrabold text-[18px] [color:var(--day-c2)]"
+                style={
+                  { "--day-c2": day === d ? "var(--coral-deep)" : "var(--ink)" } as React.CSSProperties
+                }
               >
                 {d}
               </div>
@@ -430,12 +410,15 @@ function MoveModal({ b, onClose }: { b: B; onClose: () => void }) {
           ))}
         </div>
         <div className="flex gap-[10px]">
-          <button className={btnCls("app", "ghost", "md", true)} onClick={onClose}>
+          <Button ctx="app" variant="ghost" size="md" block onClick={onClose}>
             {t("Cancel")}
-          </button>
-          <BusyBtn
+          </Button>
+          <Button
             busy={busy}
-            className={btnCls("app", "primary", "md", true)}
+            ctx="app"
+            variant="primary"
+            size="md"
+            block
             icon={<Icons.check size={16} />}
             onClick={() =>
               run(
@@ -448,7 +431,7 @@ function MoveModal({ b, onClose }: { b: B; onClose: () => void }) {
             }
           >
             {t("Move booking")}
-          </BusyBtn>
+          </Button>
         </div>
       </div>
     </Modal>
@@ -475,13 +458,15 @@ function CancelModal({ b, onClose }: { b: B; onClose: () => void }) {
             : t("Free cancellation up to 12h before the start.")}
         </p>
         <div className="flex gap-[10px]">
-          <button className={btnCls("app", "ghost", "md", true)} onClick={onClose}>
+          <Button ctx="app" variant="ghost" size="md" block onClick={onClose}>
             {t("Keep it")}
-          </button>
-          <BusyBtn
+          </Button>
+          <Button
             busy={busy}
-            className={btnCls("app", undefined, "md", true)}
-            style={{ background: "var(--coral)", color: "#fff" }}
+            ctx="app"
+            size="md"
+            block
+            className="bg-[var(--coral)] text-[#fff]"
             onClick={() =>
               run(
                 () => rpc("cancelBooking", { id: b.id }),
@@ -493,7 +478,7 @@ function CancelModal({ b, onClose }: { b: B; onClose: () => void }) {
             }
           >
             {t("Cancel booking")}
-          </BusyBtn>
+          </Button>
         </div>
       </div>
     </Modal>

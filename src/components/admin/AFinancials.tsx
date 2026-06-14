@@ -1,13 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { useT } from "@/components/Language";
 import { Icons } from "@/components/Icons";
 import { rpc } from "@/lib/client";
 import { money, Stat, Pill, Avatar } from "@/components/dash/primitives";
-import { DataTable, TableCard, Spinner, ExportButton } from "@/components/ui";
+import { DataTable, TableCard, Spinner, Button } from "@/components/ui";
 import { downloadCSV } from "@/lib/csv";
 
 export function AFinancials({ s, queue }: { s: any; queue: any[] }) {
@@ -28,14 +27,7 @@ export function AFinancials({ s, queue }: { s: any; queue: any[] }) {
     ]);
   return (
     <div className="animate-anim-fade-dash">
-      <div
-        className="grid"
-        style={{
-          gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))",
-          gap: "var(--gap)",
-          marginBottom: "var(--gap)",
-        }}
-      >
+      <div className="grid [grid-template-columns:repeat(auto-fit,minmax(200px,1fr))] gap-[var(--gap)] mb-[var(--gap)]">
         <Stat
           label={t("GMV · June")}
           value={money(s.gmv)}
@@ -70,7 +62,15 @@ export function AFinancials({ s, queue }: { s: any; queue: any[] }) {
       <TableCard>
         <div className="flex items-center justify-between px-[20px] py-[18px]">
           <h3 className="text-[17px]">{t("Payouts queue")}</h3>
-          <ExportButton label={t("Export CSV")} onClick={exportCsv} size="sm" />
+          <Button
+            ctx="dash"
+            variant="ghost"
+            size="sm"
+            icon={<Icons.download size={15} />}
+            onClick={exportCsv}
+          >
+            {t("Export CSV")}
+          </Button>
         </div>
         {queue.length === 0 ? (
           <div className="px-[20px] py-[34px] text-ink-3 font-semibold text-[13.5px] border-t border-line">
@@ -111,12 +111,14 @@ export function AFinancials({ s, queue }: { s: any; queue: any[] }) {
                     (releasing === p.id ? (
                       <Spinner />
                     ) : (
-                      <button
-                        className={btnCls("dash", "soft", "sm")}
+                      <Button
+                        ctx="dash"
+                        variant="soft"
+                        size="sm"
                         onClick={() => release(p.id)}
                       >
                         {t("Release")}
-                      </button>
+                      </Button>
                     ))}
                 </td>
               </tr>

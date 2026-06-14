@@ -1,23 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { btnCls } from "@/lib/btn";
 import { Icons, Logo } from "@/components/Icons";
 import {
   MOODS,
   MOOD_ORDER,
   fmt,
   Avatar,
-  Btn,
   MoodChip,
   MoodDot,
   SectionHead,
   Modal,
   type Exp,
 } from "./primitives";
-import { Input, Select, Textarea } from "@/components/ui";
+import { Button, Input, Select, Textarea } from "@/components/ui";
 import { ServiceModal, type Slot } from "./ServiceModal";
-import { useFav } from "./useFav";
+import { useFav } from "@/hooks";
 import { useT } from "@/components/Language";
 
 const COMPANY = {
@@ -162,55 +160,40 @@ export function CCorporate({
       <div className="relative overflow-hidden rounded-xl text-[#f4e9d8] min-h-[430px] flex items-end [background-image:linear-gradient(95deg,rgba(24,5,7,0.98)_0%,rgba(40,8,11,0.95)_40%,rgba(40,8,11,0.72)_64%,rgba(40,8,11,0.5)_100%),url('/images/corporate-hero.jpg')] bg-cover [background-position:right_28%] py-10 px-[44px] before:content-[''] before:absolute before:inset-0 before:opacity-30 before:[mix-blend-mode:overlay] before:[background-image:radial-gradient(rgba(255,255,255,0.5)_0.6px,transparent_0.6px)] before:[background-size:10px_10px] before:pointer-events-none [&_h1]:[text-shadow:0_2px_18px_rgba(20,4,6,0.5)] [&_p]:[text-shadow:0_2px_18px_rgba(20,4,6,0.5)]">
         <div className="relative flex gap-[30px] items-center flex-wrap">
           <div className="flex-1 min-w-[280px] max-w-[560px]">
-            <div className="text-[12px] font-extrabold tracking-[0.18em] uppercase text-[var(--gold)]" style={{ marginBottom: 16 }}>
+            <div className="text-[12px] font-extrabold tracking-[0.18em] uppercase text-[var(--gold)] mb-[16px]">
               {t("Corporate wellbeing")}
             </div>
-            <div
-              className="inline-flex items-center gap-[14px]"
-              style={{ marginBottom: 18 }}
-            >
+            <div className="inline-flex items-center gap-[14px] mb-[18px]">
               <span className="w-[46px] h-[46px] rounded-[13px] [background:linear-gradient(140deg,#fff,#f4e9d8)] text-[#5e1014] grid place-items-center font-display font-extrabold text-[24px] flex-none">
                 {COMPANY.letter}
               </span>
               <span className="text-[18px] opacity-50 font-light">×</span>
               <Logo size={30} mono />
             </div>
-            <h1
-              className="text-[#FFF3E4] leading-[1.05]"
-              style={{ fontSize: "clamp(28px,3.4vw,40px)", maxWidth: "14ch" }}
-            >
+            <h1 className="text-[#FFF3E4] leading-[1.05] [font-size:clamp(28px,3.4vw,40px)] max-w-[14ch]">
               {t("Your wellbeing, on the house.")}
             </h1>
-            <p
-              className="text-[rgba(244,233,216,.8)] text-[15.5px] leading-[1.6] mt-[14px]"
-              style={{ maxWidth: "52ch" }}
-            >
+            <p className="text-[rgba(244,233,216,.8)] text-[15.5px] leading-[1.6] mt-[14px] max-w-[52ch]">
               {COMPANY.name} {t("sponsors your Joymap experiences. Spend your monthly credit on anything that brings you joy — no receipts, no approvals.")}
             </p>
             <div className="flex gap-[10px] mt-[24px] flex-wrap">
-              <button
-                className={btnCls("app", undefined, "lg")}
-                style={{
-                  background: "var(--gold)",
-                  color: "#3a0a0d",
-                  fontWeight: 800,
-                }}
+              <Button
+                ctx="app"
+                size="lg"
+                className="[background:var(--gold)] text-[#3a0a0d] font-extrabold"
                 onClick={() => openExp("e1")}
               >
                 {t("Spend my credit")}
                 <Icons.arrowR size={18} />
-              </button>
-              <button
-                className={btnCls("app", undefined, "lg")}
-                style={{
-                  background: "rgba(255,255,255,.1)",
-                  color: "#F4E9D8",
-                  backdropFilter: "blur(4px)",
-                }}
+              </Button>
+              <Button
+                ctx="app"
+                size="lg"
+                className="bg-[rgba(255,255,255,.1)] text-[#F4E9D8] [backdrop-filter:blur(4px)]"
                 onClick={() => setModal("quote")}
               >
                 {t("Plan a team event")}
-              </button>
+              </Button>
             </div>
           </div>
           <div className="flex flex-col items-center gap-[14px]">
@@ -254,27 +237,19 @@ export function CCorporate({
             >
               <div className="flex items-start justify-between mb-[16px]">
                 <span
-                  style={{
-                    width: 46,
-                    height: 46,
-                    borderRadius: 13,
-                    display: "grid",
-                    placeItems: "center",
-                    background: `color-mix(in srgb,${p.accent} 15%,transparent)`,
-                    color: p.accent,
-                  }}
+                  className="w-[46px] h-[46px] rounded-[13px] grid place-items-center [background:var(--accent-bg)] [color:var(--accent)]"
+                  style={
+                    {
+                      "--accent-bg": `color-mix(in srgb,${p.accent} 15%,transparent)`,
+                      "--accent": p.accent,
+                    } as React.CSSProperties
+                  }
                 >
                   <I size={23} />
                 </span>
                 {p.tag && (
                   <span
-                    className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] font-semibold bg-surface-2 text-ink-2 border border-line"
-                    style={{
-                      background:
-                        "color-mix(in srgb,var(--gold) 16%,transparent)",
-                      color: "#B97714",
-                      border: "none",
-                    }}
+                    className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] font-semibold bg-surface-2 text-ink-2 border border-line [background:color-mix(in_srgb,var(--gold)_16%,transparent)] text-[#B97714] border-none"
                   >
                     {t(p.tag)}
                   </span>
@@ -285,16 +260,12 @@ export function CCorporate({
                 {t(p.desc)}
               </p>
               <div
-                className="inline-flex items-center gap-[6px] font-extrabold font-display text-[15px]"
-                style={{ color: p.accent }}
+                className="inline-flex items-center gap-[6px] font-extrabold font-display text-[15px] [color:var(--accent)]"
+                style={{ ["--accent"]: p.accent } as React.CSSProperties}
               >
                 <span
-                  style={{
-                    width: 7,
-                    height: 7,
-                    borderRadius: 99,
-                    background: p.accent,
-                  }}
+                  className="w-[7px] h-[7px] rounded-[99px] [background:var(--accent)]"
+                  style={{ ["--accent"]: p.accent } as React.CSSProperties}
                 />
                 {t(p.value)}
               </div>
@@ -308,14 +279,15 @@ export function CCorporate({
           eyebrow={t("With your colleagues")}
           title={t("Team-building events")}
           action={
-            <Btn
+            <Button
+              ctx="app"
               variant="ghost"
               size="md"
               onClick={() => openExp("e9")}
               iconR={<Icons.arrowR size={17} />}
             >
               {t("Browse team experiences")}
-            </Btn>
+            </Button>
           }
         />
       </div>
@@ -332,21 +304,15 @@ export function CCorporate({
         >
           <div className="relative flex flex-col h-full">
             <div className="flex items-center justify-between mb-[18px]">
-              <span className="text-[12px] font-extrabold tracking-[0.18em] uppercase text-[var(--gold)]" style={{ color: "var(--gold)" }}>
+              <span className="text-[12px] font-extrabold tracking-[0.18em] uppercase text-[var(--gold)]">
                 {t("Joymap gift card")}
               </span>
-              <Icons.gift size={26} style={{ color: "var(--gold)" }} />
+              <Icons.gift size={26} className="text-[var(--gold)]" />
             </div>
-            <h3
-              className="text-[24px] text-[#FFF3E4] mb-[8px]"
-              style={{ maxWidth: "16ch" }}
-            >
+            <h3 className="text-[24px] text-[#FFF3E4] mb-[8px] max-w-[16ch]">
               {t("Share the joy with a colleague.")}
             </h3>
-            <p
-              className="text-[rgba(244,233,216,.78)] text-[14px] leading-[1.55] mb-[20px]"
-              style={{ maxWidth: "46ch" }}
-            >
+            <p className="text-[rgba(244,233,216,.78)] text-[14px] leading-[1.55] mb-[20px] max-w-[46ch]">
               {t("Send an experience gift card by email — they pick what brings them joy.")}
             </p>
             <div className="flex gap-[8px] mt-auto flex-wrap">
@@ -361,16 +327,7 @@ export function CCorporate({
             </div>
           </div>
         </div>
-        <div
-          className="bg-surface border border-line rounded-lg p-[22px] [transition:0.18s]"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            gap: 14,
-            background: "var(--surface-2)",
-          }}
-        >
+        <div className="border border-line rounded-lg p-[22px] [transition:0.18s] flex flex-col justify-center gap-[14px] bg-[var(--surface-2)]">
           <span className="w-[48px] h-[48px] rounded-[13px] grid place-items-center bg-surface shadow-[var(--sh-sm)] text-coral-deep">
             <Icons.sparkle size={24} />
           </span>
@@ -382,48 +339,40 @@ export function CCorporate({
               {t("Off-sites, launches, away-days — our team curates a custom experience for any group size.")}
             </p>
           </div>
-          <Btn
+          <Button
+            ctx="app"
+            variant="primary"
             size="md"
             onClick={() => setModal("quote")}
             icon={<Icons.briefcase size={17} />}
           >
             {t("Request a quote")}
-          </Btn>
+          </Button>
         </div>
       </div>
 
       <div
-        className="relative overflow-hidden rounded-xl min-h-[340px] flex items-end text-[#fff] [background-image:linear-gradient(0deg,rgba(20,8,6,0.82)_0%,rgba(20,8,6,0.25)_55%,rgba(20,8,6,0.45)_100%),url('/images/corporate-team-strategy.jpg')] bg-cover [background-position:center_32%] py-[34px] px-[38px]"
-        style={{ marginTop: "calc(var(--gap) + 16px)" }}
+        className="relative overflow-hidden rounded-xl min-h-[340px] flex items-end text-[#fff] [background-image:linear-gradient(0deg,rgba(20,8,6,0.82)_0%,rgba(20,8,6,0.25)_55%,rgba(20,8,6,0.45)_100%),url('/images/corporate-team-strategy.jpg')] bg-cover [background-position:center_32%] py-[34px] px-[38px] [margin-top:calc(var(--gap)_+_16px)]"
       >
         <div className="relative max-w-[560px]">
-          <div className="text-[12px] font-extrabold tracking-[0.18em] uppercase text-[var(--gold)]" style={{ marginBottom: 12 }}>
+          <div className="text-[12px] font-extrabold tracking-[0.18em] uppercase text-[var(--gold)] mb-[12px]">
             {t("Off-sites & away-days")}
           </div>
-          <h2
-            className="text-[#fff] leading-[1.06] mb-[12px]"
-            style={{ fontSize: "clamp(24px,3vw,34px)" }}
-          >
+          <h2 className="text-[#fff] leading-[1.06] mb-[12px] [font-size:clamp(24px,3vw,34px)]">
             {t("Bring the whole team together.")}
           </h2>
-          <p
-            className="text-[rgba(255,255,255,.85)] text-[15px] leading-[1.6] mb-[20px]"
-            style={{ maxWidth: "48ch" }}
-          >
+          <p className="text-[rgba(255,255,255,.85)] text-[15px] leading-[1.6] mb-[20px] max-w-[48ch]">
             {t("From strategy days to celebration nights, our events team curates a custom experience for any group size — fully handled, beautifully run.")}
           </p>
-          <button
-            className={btnCls("app", undefined, "lg")}
-            style={{
-              background: "var(--gold)",
-              color: "#3a0a0d",
-              fontWeight: 800,
-            }}
+          <Button
+            ctx="app"
+            size="lg"
+            className="[background:var(--gold)] text-[#3a0a0d] font-extrabold"
             onClick={() => setModal("quote")}
           >
             <Icons.briefcase size={18} />
             {t("Plan a team event")}
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -436,17 +385,7 @@ export function CCorporate({
       <div className="grid grid-cols-[1fr_1.25fr] gap-[var(--gap)] items-start">
         <div className="bg-surface border border-line rounded-lg p-[22px] [transition:0.18s]">
           <div className="flex items-center gap-[12px] mb-[18px]">
-            <span
-              className="grid place-items-center font-display font-extrabold flex-none"
-              style={{
-                width: 42,
-                height: 42,
-                fontSize: 20,
-                background: "linear-gradient(140deg,var(--red),var(--orange))",
-                color: "#fff",
-                borderRadius: 12,
-              }}
-            >
+            <span className="grid place-items-center font-display font-extrabold flex-none w-[42px] h-[42px] text-[20px] [background:linear-gradient(140deg,var(--red),var(--orange))] text-[#fff] rounded-[12px]">
               {COMPANY.letter}
             </span>
             <div>
@@ -466,27 +405,24 @@ export function CCorporate({
           </div>
           <div className="h-[8px] rounded-[99px] bg-surface-2 overflow-hidden mb-[18px]">
             <div
-              style={{
-                height: "100%",
-                width: `${(COMPANY.seatsUsed / COMPANY.seats) * 100}%`,
-                background: "linear-gradient(90deg,var(--coral),var(--orange))",
-                borderRadius: 99,
-              }}
+              className="h-full [width:var(--w)] [background:linear-gradient(90deg,var(--coral),var(--orange))] rounded-[99px]"
+              style={
+                {
+                  ["--w"]: `${(COMPANY.seatsUsed / COMPANY.seats) * 100}%`,
+                } as React.CSSProperties
+              }
             />
           </div>
           <div className="flex items-center gap-[9px] py-[12px] px-[14px] rounded-sm bg-surface-2 text-[12.5px] text-ink-2 font-semibold">
-            <Icons.building size={16} style={{ color: "var(--ink-3)" }} />
+            <Icons.building size={16} className="text-ink-3" />
             {t("Managed by")} {COMPANY.hr}.{" "}
             {t("Need a seat changed? Contact your admin.")}
           </div>
         </div>
-        <div className="bg-surface border border-line rounded-lg p-[22px] [transition:0.18s]" style={{ padding: 0, overflow: "hidden" }}>
+        <div className="bg-surface border border-line rounded-lg [transition:0.18s] p-0 overflow-hidden">
           <div className="flex items-center justify-between py-[18px] px-[22px]">
             <h3 className="text-[16px]">{t("Billing & invoices")}</h3>
-            <span
-              className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] font-semibold bg-surface-2 text-ink-2 border border-line"
-              style={{ background: "var(--surface-2)", color: "var(--ink-3)" }}
-            >
+            <span className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] font-semibold border border-line bg-[var(--surface-2)] text-[var(--ink-3)]">
               {t("View only")}
             </span>
           </div>
@@ -496,15 +432,17 @@ export function CCorporate({
               className="flex items-center gap-[14px] py-[14px] px-[22px] border-t border-line"
             >
               <span
-                className="w-[38px] h-[38px] rounded-[11px] flex-none grid place-items-center"
-                style={{
-                  background:
-                    inv.status === "paid"
-                      ? "color-mix(in srgb,#1FA46E 13%,transparent)"
-                      : "color-mix(in srgb,var(--orange) 14%,transparent)",
-                  color:
-                    inv.status === "paid" ? "#1FA46E" : "var(--orange-deep)",
-                }}
+                className="w-[38px] h-[38px] rounded-[11px] flex-none grid place-items-center [background:var(--ic-bg)] [color:var(--ic-fg)]"
+                style={
+                  {
+                    "--ic-bg":
+                      inv.status === "paid"
+                        ? "color-mix(in srgb,#1FA46E 13%,transparent)"
+                        : "color-mix(in srgb,var(--orange) 14%,transparent)",
+                    "--ic-fg":
+                      inv.status === "paid" ? "#1FA46E" : "var(--orange-deep)",
+                  } as React.CSSProperties
+                }
               >
                 <Icons.wallet size={18} />
               </span>
@@ -519,16 +457,18 @@ export function CCorporate({
                   {fmt(inv.amount)}
                 </div>
                 <span
-                  className="text-[11.5px] font-extrabold uppercase tracking-[.04em]"
-                  style={{
-                    color:
-                      inv.status === "paid" ? "#1FA46E" : "var(--orange-deep)",
-                  }}
+                  className="text-[11.5px] font-extrabold uppercase tracking-[.04em] [color:var(--st-fg)]"
+                  style={
+                    {
+                      "--st-fg":
+                        inv.status === "paid" ? "#1FA46E" : "var(--orange-deep)",
+                    } as React.CSSProperties
+                  }
                 >
                   {t(inv.status)}
                 </span>
               </div>
-              <button className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2" style={{ width: 34, height: 34 }}>
+              <button className="rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2 w-[34px] h-[34px]">
                 <Icons.download size={15} />
               </button>
             </div>
@@ -567,38 +507,30 @@ function TeamEventCard({
   if (!e) return null;
   const m = MOODS[e.mood];
   return (
-    <div className="bg-surface border border-line rounded-lg" style={{ overflow: "hidden" }}>
-      <div className="relative h-[120px]" style={{ background: e.gradient }}>
+    <div className="bg-surface border border-line rounded-lg overflow-hidden">
+      <div
+        className="relative h-[120px] [background:var(--bg)]"
+        style={{ ["--bg"]: e.gradient } as React.CSSProperties}
+      >
         <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,.4))]" />
         <div className="absolute top-[12px] left-[12px] flex gap-[7px]">
           <span className="bg-[rgba(255,255,255,.92)] text-[#241C2E] py-[5px] px-[11px] rounded-[99px] text-[11.5px] font-extrabold">
             {t(CAL_WD[calDow(ev.day)])} {ev.day} {t("Jun")} · {ev.time}
           </span>
         </div>
-        <span
-          className="absolute bottom-[12px] left-[14px] text-[#fff] font-display font-extrabold text-[18px]"
-          style={{ textShadow: "0 1px 10px rgba(0,0,0,.4)" }}
-        >
+        <span className="absolute bottom-[12px] left-[14px] text-[#fff] font-display font-extrabold text-[18px] [text-shadow:0_1px_10px_rgba(0,0,0,.4)]">
           {t(ev.title)}
         </span>
       </div>
       <div className="py-[15px] px-[17px]">
         <div className="flex items-center gap-[8px] mb-[12px]">
-          <span
-            className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] font-semibold bg-surface-2 text-ink-2 border border-line"
-            style={{ background: "var(--surface-2)", color: "var(--ink-2)" }}
-          >
-            <Icons.briefcase size={12} style={{ marginRight: 4 }} />
+          <span className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] font-semibold border border-line bg-[var(--surface-2)] text-[var(--ink-2)]">
+            <Icons.briefcase size={12} className="mr-[4px]" />
             {t(ev.team)}
           </span>
           <span
-            className="inline-flex items-center gap-[8px] pt-[7px] pr-[13px] pb-[7px] pl-[11px] rounded-pill text-[13px] font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid border-transparent"
-            style={{
-              background: m.soft,
-              color: m.color,
-              padding: "4px 10px 4px 8px",
-              fontSize: 11,
-            }}
+            className="inline-flex items-center gap-[8px] rounded-pill font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid border-transparent [background:var(--bg)] [color:var(--fg)] p-[4px_10px_4px_8px] text-[11px]"
+            style={{ ["--bg"]: m.soft, ["--fg"]: m.color } as React.CSSProperties}
           >
             <MoodDot mood={e.mood} size={6} />
             {t(m.label)}
@@ -616,9 +548,11 @@ function TeamEventCard({
           <span className="text-[12.5px] text-ink-3 font-bold">
             {ev.going.length + ev.extra}/{ev.cap} {t("going")}
           </span>
-          <button
-            className={btnCls("app", joined ? "soft" : "primary", "sm")}
-            style={{ marginLeft: "auto" }}
+          <Button
+            ctx="app"
+            variant={joined ? "soft" : "primary"}
+            size="sm"
+            className="ml-auto"
             onClick={() => setJoined((j) => !j)}
           >
             {joined ? (
@@ -629,7 +563,7 @@ function TeamEventCard({
             ) : (
               t("Join")
             )}
-          </button>
+          </Button>
         </div>
       </div>
     </div>
@@ -656,10 +590,7 @@ function QuoteModal({ onClose }: { onClose: () => void }) {
     <Modal onClose={onClose} maxWidth={500}>
       {step === 0 ? (
         <div className="py-[26px] px-6">
-          <div
-            className="text-[12px] font-extrabold tracking-[0.18em] uppercase text-[var(--gold)]"
-            style={{ marginBottom: 8, color: "var(--coral-deep)" }}
-          >
+          <div className="text-[12px] font-extrabold tracking-[0.18em] uppercase mb-[8px] text-[var(--coral-deep)]">
             {t("Custom team event")}
           </div>
           <h2 className="text-[23px] mb-[6px]">{t("Tell us your vision")}</h2>
@@ -680,8 +611,7 @@ function QuoteModal({ onClose }: { onClose: () => void }) {
                 max={80}
                 value={size}
                 onChange={(e) => setSize(+e.target.value)}
-                className="w-full"
-                style={{ accentColor: "var(--coral)" }}
+                className="w-full [accent-color:var(--coral)]"
               />
             </div>
             <div>
@@ -708,11 +638,11 @@ function QuoteModal({ onClose }: { onClose: () => void }) {
               </div>
               <div className="flex-1">
                 <Lbl>{t("Budget / person")}</Lbl>
-                <div className="relative" style={{ display: "block" }}>
+                <div className="relative block">
                   <Select
                     value={budget}
                     onChange={(e) => setBudget(e.target.value)}
-                    style={{ appearance: "none" }}
+                    className="appearance-none"
                   >
                     <option value="low">{t("Up to 2 000 ₽")}</option>
                     <option value="mid">{t("2 000–5 000 ₽")}</option>
@@ -728,21 +658,24 @@ function QuoteModal({ onClose }: { onClose: () => void }) {
                 placeholder={t("Dietary needs, accessibility, the occasion…")}
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
-                style={{ resize: "vertical" }}
+                className="resize-y"
               />
             </div>
           </div>
           <div className="flex gap-[10px] mt-[22px]">
-            <button
-              className={btnCls("app", "ghost", "md", true)}
+            <Button
+              ctx="app"
+              variant="ghost"
+              size="md"
+              block
               onClick={onClose}
             >
               {t("Cancel")}
-            </button>
-            <Btn size="md" block onClick={() => setStep(1)}>
+            </Button>
+            <Button ctx="app" variant="primary" size="md" block onClick={() => setStep(1)}>
               {t("Send request")}
               <Icons.send size={16} />
-            </Btn>
+            </Button>
           </div>
         </div>
       ) : (
@@ -751,19 +684,16 @@ function QuoteModal({ onClose }: { onClose: () => void }) {
             <Icons.check size={34} />
           </div>
           <h2 className="text-[23px] mb-[8px]">{t("Request sent ✦")}</h2>
-          <p
-            className="text-ink-2 text-[14.5px] mt-0 mx-auto mb-[22px] leading-[1.55]"
-            style={{ maxWidth: "36ch" }}
-          >
+          <p className="text-ink-2 text-[14.5px] mt-0 mx-auto mb-[22px] leading-[1.55] max-w-[36ch]">
             {t("Our events team will email you a tailored plan for")}{" "}
             <b>
               {size} {t("people")}
             </b>{" "}
             {t("within one business day.")}
           </p>
-          <Btn size="md" onClick={onClose}>
+          <Button ctx="app" variant="primary" size="md" onClick={onClose}>
             {t("Done")}
-          </Btn>
+          </Button>
         </div>
       )}
     </Modal>
@@ -780,17 +710,11 @@ function GiftModal({ onClose }: { onClose: () => void }) {
     <Modal onClose={onClose} maxWidth={460}>
       {!sent ? (
         <div className="py-[26px] px-6">
-          <div
-            className="text-[12px] font-extrabold tracking-[0.18em] uppercase text-[var(--gold)]"
-            style={{ marginBottom: 8, color: "#B97714" }}
-          >
+          <div className="text-[12px] font-extrabold tracking-[0.18em] uppercase mb-[8px] text-[#B97714]">
             {t("Joymap gift card")}
           </div>
           <h2 className="text-[23px] mb-[18px]">{t("Send the joy")}</h2>
-          <div
-            className="relative overflow-hidden rounded-lg text-[#f4e9d8] [background:linear-gradient(135deg,#5e1014,#2a0709)] border border-[color-mix(in_srgb,#e6a23c_40%,transparent)] p-5"
-            style={{ marginBottom: 20, cursor: "default" }}
-          >
+          <div className="relative overflow-hidden rounded-lg text-[#f4e9d8] [background:linear-gradient(135deg,#5e1014,#2a0709)] border border-[color-mix(in_srgb,#e6a23c_40%,transparent)] p-5 mb-[20px] cursor-default">
             <div className="relative flex items-center justify-between">
               <div>
                 <div className="text-[11.5px] tracking-[.1em] opacity-[.7] font-bold">
@@ -800,7 +724,7 @@ function GiftModal({ onClose }: { onClose: () => void }) {
                   {fmt(amt)}
                 </div>
               </div>
-              <Icons.gift size={34} style={{ color: "var(--gold)" }} />
+              <Icons.gift size={34} className="text-[var(--gold)]" />
             </div>
           </div>
           <Lbl>{t("Amount")}</Lbl>
@@ -827,7 +751,7 @@ function GiftModal({ onClose }: { onClose: () => void }) {
             placeholder="name@acme.com"
             value={to}
             onChange={(e) => setTo(e.target.value)}
-            style={{ marginBottom: 14 }}
+            className="mb-[14px]"
           />
           <Lbl>{t("Message (optional)")}</Lbl>
           <Textarea
@@ -835,24 +759,29 @@ function GiftModal({ onClose }: { onClose: () => void }) {
             placeholder={t("Thanks for everything — enjoy! 🎉")}
             value={msg}
             onChange={(e) => setMsg(e.target.value)}
-            style={{ resize: "vertical", marginBottom: 20 }}
+            className="resize-y mb-[20px]"
           />
           <div className="flex gap-[10px]">
-            <button
-              className={btnCls("app", "ghost", "md", true)}
+            <Button
+              ctx="app"
+              variant="ghost"
+              size="md"
+              block
               onClick={onClose}
             >
               {t("Cancel")}
-            </button>
-            <Btn
+            </Button>
+            <Button
+              ctx="app"
+              variant="primary"
               size="md"
               block
               onClick={() => setSent(true)}
-              style={!to ? { opacity: 0.5 } : undefined}
+              className={!to ? "opacity-[0.5]" : undefined}
             >
               <Icons.gift size={16} />
               {t("Send")} {fmt(amt)}
-            </Btn>
+            </Button>
           </div>
         </div>
       ) : (
@@ -861,16 +790,13 @@ function GiftModal({ onClose }: { onClose: () => void }) {
             <Icons.gift size={32} />
           </div>
           <h2 className="text-[23px] mb-[8px]">{t("Gift on its way 🎁")}</h2>
-          <p
-            className="text-ink-2 text-[14.5px] mt-0 mx-auto mb-[22px] leading-[1.55]"
-            style={{ maxWidth: "34ch" }}
-          >
+          <p className="text-ink-2 text-[14.5px] mt-0 mx-auto mb-[22px] leading-[1.55] max-w-[34ch]">
             {t("A Joymap gift card of")} <b>{fmt(amt)}</b> {t("is heading to")}{" "}
             {to || t("your colleague")}.
           </p>
-          <Btn size="md" onClick={onClose}>
+          <Button ctx="app" variant="primary" size="md" onClick={onClose}>
             {t("Done")}
-          </Btn>
+          </Button>
         </div>
       )}
     </Modal>

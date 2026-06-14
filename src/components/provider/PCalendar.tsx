@@ -106,7 +106,7 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
     <div className="animate-anim-fade-dash">
       <div className="flex items-end justify-between gap-4 mb-[18px]">
         <div>
-          <div className="text-[12px] font-extrabold tracking-[0.1em] uppercase text-orange" style={{ marginBottom: 6 }}>
+          <div className="text-[12px] font-extrabold tracking-[0.1em] uppercase text-orange mb-[6px]">
             {t("Week of")} {TODAY}–{Math.min(TODAY + 6, 30)} {t("Jun")} · {total}{" "}
             {t("sessions")}
           </div>
@@ -133,9 +133,9 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
             return (
               <div
                 key={svc.id}
-                className={`flex items-center gap-[10px] py-[10px] px-[11px] rounded border border-line border-l-4 bg-surface-2 cursor-grab [transition:0.14s] select-none hover:shadow hover:-translate-y-px active:cursor-grabbing ${dragId === "svc:" + svc.id ? "opacity-[0.38]" : ""}`}
+                className={`flex items-center gap-[10px] py-[10px] px-[11px] rounded border border-line border-l-4 bg-surface-2 cursor-grab [transition:0.14s] select-none hover:shadow hover:-translate-y-px active:cursor-grabbing [border-left-color:var(--blc)] ${dragId === "svc:" + svc.id ? "opacity-[0.38]" : ""}`}
                 draggable
-                style={{ borderLeftColor: m.color }}
+                style={{ ["--blc"]: m.color } as React.CSSProperties}
                 onDragStart={(e) => startSvc(svc.id, e)}
                 onDragEnd={endDrag}
               >
@@ -148,16 +148,13 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
                   <i />
                 </span>
                 <div className="flex-1 min-w-0">
-                  <div
-                    className="font-bold text-[13px] leading-[1.2] whitespace-nowrap overflow-hidden"
-                    style={{ textOverflow: "ellipsis" }}
-                  >
+                  <div className="font-bold text-[13px] leading-[1.2] whitespace-nowrap overflow-hidden text-ellipsis">
                     {svc.name}
                   </div>
                   <div className="flex items-center gap-[7px] mt-[4px]">
                     <span
-                      className="w-[7px] h-[7px] rounded-[99px]"
-                      style={{ background: m.color }}
+                      className="w-[7px] h-[7px] rounded-[99px] [background:var(--bg)]"
+                      style={{ ["--bg"]: m.color } as React.CSSProperties}
                     />
                     <span className="text-[11px] text-ink-3 font-semibold">
                       {svc.dur} · {svc.cap} {t("cap")}
@@ -180,7 +177,7 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
           <div className="flex gap-[8px] items-start mt-[4px] p-[10px] rounded-sm bg-surface-2 text-ink-2 text-[11.5px] font-semibold leading-[1.4]">
             <Icons.sparkle
               size={15}
-              style={{ color: "var(--coral)", flex: "none", marginTop: 1 }}
+              className="text-coral flex-none mt-px"
             />
             {t("Slots feed the customer calendar and booking flow instantly.")}
           </div>
@@ -251,12 +248,14 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
                       return (
                         <div
                           key={slot.id}
-                          className={`group/slot rounded-[11px] pt-2 px-[9px] pb-[9px] cursor-grab relative border-l-[3px] border-solid [transition:0.14s] select-none hover:shadow-sm active:cursor-grabbing ${dragId === "slot:" + slot.id ? "opacity-[0.38]" : ""}`}
+                          className={`group/slot rounded-[11px] pt-2 px-[9px] pb-[9px] cursor-grab relative border-l-[3px] border-solid [transition:0.14s] select-none hover:shadow-sm active:cursor-grabbing [background:var(--bg)] [border-left-color:var(--blc)] ${dragId === "slot:" + slot.id ? "opacity-[0.38]" : ""}`}
                           draggable
-                          style={{
-                            background: m.soft,
-                            borderLeftColor: m.color,
-                          }}
+                          style={
+                            {
+                              ["--bg"]: m.soft,
+                              ["--blc"]: m.color,
+                            } as React.CSSProperties
+                          }
                           onDragStart={(e) => startSlot(slot, e)}
                           onDragEnd={endDrag}
                         >
@@ -268,8 +267,8 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
                             <Icons.close size={12} />
                           </button>
                           <button
-                            className="font-display font-extrabold text-[12.5px] bg-none border-none cursor-pointer p-0 inline-flex items-center gap-1"
-                            style={{ color: m.color }}
+                            className="font-display font-extrabold text-[12.5px] bg-none border-none cursor-pointer p-0 inline-flex items-center gap-1 [color:var(--c)]"
+                            style={{ ["--c"]: m.color } as React.CSSProperties}
                             onClick={() =>
                               setEditing((e) =>
                                 e === slot.id ? null : slot.id,

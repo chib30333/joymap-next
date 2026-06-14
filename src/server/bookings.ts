@@ -2,7 +2,7 @@ import { prisma } from "@/lib/db";
 import { requireUser, ApiError } from "@/lib/session";
 import { ledger, notify } from "./notify";
 import { ensureThread } from "./chat";
-import { dateLabel } from "@/lib/constants";
+import { dateLabel } from "@/constants";
 import { bookingCode } from "@/lib/format";
 
 export async function createBooking(input: {

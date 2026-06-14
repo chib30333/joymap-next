@@ -1,5 +1,5 @@
 import { Prisma, PrismaClient } from "@prisma/client";
-import { dateLabel, TODAY } from "@/lib/constants";
+import { dateLabel, TODAY } from "@/constants";
 
 type Tx = Prisma.TransactionClient | PrismaClient;
 

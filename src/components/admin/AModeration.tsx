@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { useT } from "@/components/Language";
 import { Icons } from "@/components/Icons";
-import { rpc, useBusy } from "@/lib/client";
-import { money, Pill, Modal, Btn, Avatar, BusyBtn } from "@/components/dash/primitives";
-import { Select } from "@/components/ui";
+import { rpc } from "@/lib/client";
+import { useBusy } from "@/hooks";
+import { money, Pill, Modal, Avatar } from "@/components/dash/primitives";
+import { Select, Button } from "@/components/ui";
 import { MOODS } from "@/components/customer/primitives";
 import { AdminHeader } from "./AdminHeader";
 import { EmptyState } from "@/components/admin/AdminShared";
@@ -41,16 +41,9 @@ export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
           <h3 className="text-[16px] mt-[4px] mx-0 mb-[14px]">
             {t("Provider applications")}
           </h3>
-          <div
-            className="grid"
-            style={{
-              gridTemplateColumns: "repeat(auto-fill,minmax(320px,1fr))",
-              gap: "var(--gap)",
-              marginBottom: "var(--gap)",
-            }}
-          >
+          <div className="grid [grid-template-columns:repeat(auto-fill,minmax(320px,1fr))] gap-[var(--gap)] mb-[var(--gap)]">
             {apps.map((m) => (
-              <div key={m.id} className="bg-surface border border-line rounded-lg animate-anim-pop-dash" style={{ padding: 20 }}>
+              <div key={m.id} className="bg-surface border border-line rounded-lg animate-anim-pop-dash p-[20px]">
                 <div className="flex items-center gap-[12px] mb-[14px]">
                   <Avatar
                     name={m.name}
@@ -76,7 +69,9 @@ export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
                   </span>
                 </div>
                 <div className="flex gap-[9px]">
-                  <Btn
+                  <Button
+                    ctx="dash"
+                    variant="primary"
                     size="sm"
                     block
                     onClick={() =>
@@ -85,15 +80,18 @@ export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
                   >
                     <Icons.check size={15} />
                     {t("Approve")}
-                  </Btn>
-                  <button
-                    className={btnCls("dash", "ghost", "sm", true)}
+                  </Button>
+                  <Button
+                    ctx="dash"
+                    variant="ghost"
+                    size="sm"
+                    block
                     onClick={() =>
                       setSel({ kind: "provider", item: m, mode: "reject" })
                     }
                   >
                     {t("Reject")}
-                  </button>
+                  </Button>
                 </div>
               </div>
             ))}
@@ -105,27 +103,22 @@ export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
           <h3 className="text-[16px] mt-[4px] mx-0 mb-[14px]">
             {t("Service submissions")}
           </h3>
-          <div
-            className="grid"
-            style={{
-              gridTemplateColumns: "repeat(auto-fill,minmax(320px,1fr))",
-              gap: "var(--gap)",
-            }}
-          >
+          <div className="grid [grid-template-columns:repeat(auto-fill,minmax(320px,1fr))] gap-[var(--gap)]">
             {svcs.map((s) => {
               const m = MOODS[s.mood] || MOODS.calm;
               return (
                 <div
                   key={s.id}
-                  className="bg-surface border border-line rounded-lg animate-anim-pop-dash"
-                  style={{ padding: 20 }}
+                  className="bg-surface border border-line rounded-lg animate-anim-pop-dash p-[20px]"
                 >
                   <div className="flex items-center gap-[12px] mb-[12px]">
                     <span
-                      className="w-[42px] h-[42px] rounded-sm flex-none"
-                      style={{
-                        background: `linear-gradient(135deg,${m.color},color-mix(in srgb,${m.color} 60%,#000))`,
-                      }}
+                      className="w-[42px] h-[42px] rounded-sm flex-none [background:var(--sw-bg)]"
+                      style={
+                        {
+                          "--sw-bg": `linear-gradient(135deg,${m.color},color-mix(in srgb,${m.color} 60%,#000))`,
+                        } as React.CSSProperties
+                      }
                     />
                     <div className="flex-1">
                       <div className="font-extrabold text-[16px]">{s.name}</div>
@@ -142,7 +135,9 @@ export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
                     </p>
                   )}
                   <div className="flex gap-[9px]">
-                    <Btn
+                    <Button
+                      ctx="dash"
+                      variant="primary"
                       size="sm"
                       block
                       onClick={() =>
@@ -151,15 +146,18 @@ export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
                     >
                       <Icons.check size={15} />
                       {t("Approve & publish")}
-                    </Btn>
-                    <button
-                      className={btnCls("dash", "ghost", "sm", true)}
+                    </Button>
+                    <Button
+                      ctx="dash"
+                      variant="ghost"
+                      size="sm"
+                      block
                       onClick={() =>
                         setSel({ kind: "service", item: s, mode: "reject" })
                       }
                     >
                       {t("Reject")}
-                    </button>
+                    </Button>
                   </div>
                 </div>
               );
@@ -211,14 +209,7 @@ function ModerationModal({ sel, onClose }: { sel: any; onClose: () => void }) {
           </div>
         </div>
         {sel.kind === "provider" && (
-          <div
-            className="bg-surface border border-line rounded-lg"
-            style={{
-              padding: 14,
-              background: "var(--surface-2)",
-              marginBottom: 18,
-            }}
-          >
+          <div className="bg-[var(--surface-2)] border border-line rounded-lg p-[14px] mb-[18px]">
             {[
               "Business license",
               "Identity verification",
@@ -230,7 +221,7 @@ function ModerationModal({ sel, onClose }: { sel: any; onClose: () => void }) {
                   key={i}
                   className="flex items-center gap-[10px] px-0 py-[7px] text-[13.5px] font-semibold"
                 >
-                  <Icons.checkCirc size={17} style={{ color: "#1FA46E" }} />
+                  <Icons.checkCirc size={17} className="text-[#1FA46E]" />
                   {t(d)}
                   <span className="ml-auto text-[12px] text-ink-3">
                     {t("Verified")}
@@ -268,27 +259,32 @@ function ModerationModal({ sel, onClose }: { sel: any; onClose: () => void }) {
           </p>
         )}
         <div className="flex gap-[10px]">
-          <button className={btnCls("dash", "ghost", "md", true)} onClick={onClose}>
+          <Button ctx="dash" variant="ghost" size="md" block onClick={onClose}>
             {t("Cancel")}
-          </button>
+          </Button>
           {reject ? (
-            <BusyBtn
+            <Button
               busy={busy}
-              className={btnCls("dash", undefined, "md", true)}
-              style={{ background: "var(--coral)", color: "#fff" }}
+              ctx="dash"
+              size="md"
+              block
+              className="bg-coral text-white"
               onClick={decide}
             >
               {t("Reject")}
-            </BusyBtn>
+            </Button>
           ) : (
-            <BusyBtn
+            <Button
               busy={busy}
-              className={btnCls("dash", "primary", "md", true)}
+              ctx="dash"
+              variant="primary"
+              size="md"
+              block
               icon={<Icons.check size={16} />}
               onClick={decide}
             >
               {t("Approve")}
-            </BusyBtn>
+            </Button>
           )}
         </div>
       </div>

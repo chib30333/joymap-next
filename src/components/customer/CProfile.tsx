@@ -1,21 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
-import { rpc, useBusy } from "@/lib/client";
+import { rpc } from "@/lib/client";
+import { useBusy } from "@/hooks";
 import {
   MOODS,
   MOOD_ORDER,
   fmt,
   bg,
   Avatar,
-  BusyBtn,
   MoodChip,
   type Exp,
 } from "./primitives";
-import { Input } from "@/components/ui";
+import { Button, Input } from "@/components/ui";
 import { useT } from "@/components/Language";
 
 type B = {
@@ -77,31 +76,11 @@ export function CProfile({
 
   return (
     <div className="animate-anim-fade-app">
-      <div
-        className="bg-surface border border-line rounded-lg"
-        style={{
-          padding: 24,
-          display: "flex",
-          gap: 18,
-          alignItems: "center",
-          marginBottom: 18,
-          flexWrap: "wrap",
-        }}
-      >
+      <div className="bg-surface border border-line rounded-lg p-[24px] flex gap-[18px] items-center mb-[18px] flex-wrap">
         <div className="relative">
           <Avatar name={form.name || "?"} size={72} />
           <button
-            className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
-            style={{
-              position: "absolute",
-              bottom: -4,
-              right: -4,
-              width: 30,
-              height: 30,
-              background: "var(--coral)",
-              color: "#fff",
-              border: "2px solid var(--surface)",
-            }}
+            className="rounded-pill grid place-items-center [transition:0.15s] cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2 absolute bottom-[-4px] right-[-4px] w-[30px] h-[30px] [background:var(--coral)] text-[#fff] [border:2px_solid_var(--surface)]"
           >
             <Icons.camera size={15} />
           </button>
@@ -137,37 +116,45 @@ export function CProfile({
             ["moods", t("Moods")],
           ] as const
         ).map(([k, l]) => (
-          <button
+          <Button
             key={k}
-            className={btnCls("app", undefined, "sm")}
+            ctx="app"
+            size="sm"
             onClick={() => setTab(k as any)}
+            className="[background:var(--btn-bg)] [color:var(--btn-fg)] [box-shadow:var(--btn-sh)]"
             style={
-              tab === k
+              (tab === k
                 ? {
-                    background: "var(--surface)",
-                    color: "var(--ink)",
-                    boxShadow: "var(--sh-sm)",
+                    ["--btn-bg"]: "var(--surface)",
+                    ["--btn-fg"]: "var(--ink)",
+                    ["--btn-sh"]: "var(--sh-sm)",
                   }
-                : { color: "var(--ink-3)" }
+                : {
+                    ["--btn-bg"]: "transparent",
+                    ["--btn-fg"]: "var(--ink-3)",
+                    ["--btn-sh"]: "none",
+                  }) as React.CSSProperties
             }
           >
             {l}
-          </button>
+          </Button>
         ))}
       </div>
 
       {tab === "account" && (
-        <div className="bg-surface border border-line rounded-lg" style={{ padding: 24 }}>
+        <div className="bg-surface border border-line rounded-lg p-[24px]">
           <div className="flex items-center justify-between mb-[18px]">
             <h3 className="text-[17px]">{t("Personal data")}</h3>
-            <BusyBtn
+            <Button
               busy={busy}
-              className={btnCls("app", "ghost", "sm")}
+              ctx="app"
+              variant="ghost"
+              size="sm"
               icon={edit ? <Icons.check size={15} /> : <Icons.edit size={15} />}
               onClick={saveOrEdit}
             >
               {edit ? t("Save") : t("Edit")}
-            </BusyBtn>
+            </Button>
           </div>
           <div className="grid grid-cols-2 gap-[16px]">
             {(
@@ -182,7 +169,8 @@ export function CProfile({
               return (
                 <div
                   key={k}
-                  style={{ gridColumn: k === "name" ? "1 / -1" : "auto" }}
+                  className="[grid-column:var(--gc)]"
+                  style={{ ["--gc"]: k === "name" ? "1 / -1" : "auto" } as React.CSSProperties}
                 >
                   <div className="text-[12.5px] font-bold text-ink-3 mb-[7px]">
                     {l}
@@ -206,20 +194,9 @@ export function CProfile({
               );
             })}
           </div>
-          <hr className="h-px bg-line border-0" style={{ margin: "22px 0" }} />
+          <hr className="h-px bg-line border-0 m-[22px_0]" />
           <div className="flex items-center gap-[12px]">
-            <span
-              style={{
-                width: 38,
-                height: 38,
-                borderRadius: 11,
-                display: "grid",
-                placeItems: "center",
-                background: "color-mix(in srgb,#1FA46E 14%,transparent)",
-                color: "#1FA46E",
-                flex: "none",
-              }}
-            >
+            <span className="w-[38px] h-[38px] rounded-[11px] grid place-items-center [background:color-mix(in_srgb,#1FA46E_14%,transparent)] text-[#1FA46E] flex-none">
               <Icons.shield size={19} />
             </span>
             <div className="flex-1">
@@ -228,12 +205,14 @@ export function CProfile({
                 {t("Signed in as")} {user.email}
               </div>
             </div>
-            <button
-              className={btnCls("app", "ghost", "sm")}
+            <Button
+              ctx="app"
+              variant="ghost"
+              size="sm"
               onClick={() => rpc("logout").then(() => router.push("/auth"))}
             >
               {t("Log out")}
-            </button>
+            </Button>
           </div>
         </div>
       )}
@@ -246,44 +225,23 @@ export function CProfile({
             </span>
           </div>
           {past.length === 0 ? (
-            <div
-              className="bg-surface border border-line rounded-lg"
-              style={{
-                padding: "40px 20px",
-                textAlign: "center",
-                color: "var(--ink-3)",
-                fontWeight: 600,
-                fontSize: 14,
-              }}
-            >
+            <div className="bg-surface border border-line rounded-lg p-[40px_20px] text-center text-ink-3 font-semibold text-[14px]">
               {t("Your completed experiences will appear here.")}
             </div>
           ) : (
-            <div className="bg-surface border border-line rounded-lg" style={{ overflow: "hidden" }}>
+            <div className="bg-surface border border-line rounded-lg overflow-hidden">
               {past.map((h, i) => {
                 const e = h.exp;
                 const m = e ? MOODS[e.mood] : MOODS.calm;
                 return (
                   <div
                     key={h.id}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 14,
-                      padding: "15px 18px",
-                      borderTop: i ? "1px solid var(--line)" : "none",
-                    }}
+                    className="flex items-center gap-[14px] p-[15px_18px] [border-top:var(--bt)]"
+                    style={{ ["--bt"]: i ? "1px solid var(--line)" : "none" } as React.CSSProperties}
                   >
                     <div
-                      style={{
-                        width: 44,
-                        height: 44,
-                        borderRadius: 12,
-                        background: e ? bg(e) : m.color,
-                        backgroundSize: "cover",
-                        flex: "none",
-                        opacity: 0.95,
-                      }}
+                      className="w-[44px] h-[44px] rounded-[12px] [background:var(--bg)] bg-cover flex-none opacity-[0.95]"
+                      style={{ ["--bg"]: e ? bg(e) : m.color } as React.CSSProperties}
                     />
                     <div className="flex-1 min-w-0">
                       <div className="font-bold text-[14.5px]">
@@ -316,7 +274,7 @@ export function CProfile({
       )}
 
       {tab === "moods" && (
-        <div className="bg-surface border border-line rounded-lg" style={{ padding: 24 }}>
+        <div className="bg-surface border border-line rounded-lg p-[24px]">
           <h3 className="text-[17px] mb-[8px]">{t("Your moods")}</h3>
           <p className="text-ink-2 text-[14px] mb-[16px]">
             {t(

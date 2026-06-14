@@ -1,35 +1,21 @@
 "use client";
 
-import {
-  useEffect,
-  type ReactNode,
-  type ButtonHTMLAttributes,
-} from "react";
+import { useEffect, type ReactNode } from "react";
 import { Icons } from "@/components/Icons";
 import { useT } from "@/components/Language";
-import { MOODS, type Mood } from "@/lib/constants";
-import { btnCls } from "@/lib/btn";
+import {
+  MOODS,
+  MOOD_ORDER,
+  CITIES,
+  CATS,
+  WD,
+  dow,
+  type Mood,
+} from "@/constants";
 
-export { MOODS, type Mood };
-export const MOOD_ORDER = [
-  "calm",
-  "joy",
-  "energy",
-  "focus",
-  "adventure",
-  "connect",
-];
-export const CITIES = ["Moscow", "Saint Petersburg", "Kazan"];
-export const CATS = [
-  "Wellness",
-  "Movement",
-  "Creative",
-  "Thrill",
-  "Mind",
-  "Adventure",
-];
-export const WD = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-export const dow = (day: number) => (day - 1) % 7;
+// Re-exported from the single source of truth in src/constants so existing
+// customer-area imports (`from "./primitives"`) keep working.
+export { MOODS, MOOD_ORDER, CITIES, CATS, WD, dow, type Mood };
 
 export const fmt = (n: number) =>
   new Intl.NumberFormat("ru-RU").format(n) + " ₽";
@@ -57,39 +43,12 @@ export type Exp = {
 export const bg = (e: Exp) =>
   e && e.img ? `center/cover no-repeat url('${e.img}')` : e?.gradient || "";
 
-export function Btn({
-  variant = "primary",
-  size = "md",
-  block,
-  icon,
-  iconR,
-  children,
-  ...p
-}: ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "primary" | "ghost" | "soft";
-  size?: "lg" | "md" | "sm";
-  block?: boolean;
-  icon?: ReactNode;
-  iconR?: ReactNode;
-}) {
-  return (
-    <button
-      className={btnCls("app", variant, size, block)}
-      {...p}
-    >
-      {icon}
-      {children}
-      {iconR}
-    </button>
-  );
-}
-
 export function MoodDot({ mood, size = 9 }: { mood: string; size?: number }) {
   const m = MOODS[mood];
   return (
     <span
-      className="rounded-pill flex-none"
-      style={{ width: size, height: size, background: m.color }}
+      className="rounded-pill flex-none [width:var(--s)] [height:var(--s)] [background:var(--bg)]"
+      style={{ ["--s"]: size + "px", ["--bg"]: m.color } as React.CSSProperties}
     />
   );
 }
@@ -107,17 +66,17 @@ export function MoodChip({
   const m = MOODS[mood];
   return (
     <button
-      className="inline-flex items-center gap-[8px] pt-[7px] pr-[13px] pb-[7px] pl-[11px] rounded-pill text-[13px] font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid border-transparent"
+      className="inline-flex items-center gap-[8px] pt-[7px] pr-[13px] pb-[7px] pl-[11px] rounded-pill text-[13px] font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid [background:var(--bg)] [color:var(--fg)] [border-color:var(--bd)]"
       onClick={onClick}
       style={
-        active
-          ? { background: m.color, color: "#fff", borderColor: m.color }
-          : { background: m.soft, color: m.color, borderColor: "transparent" }
+        (active
+          ? { ["--bg"]: m.color, ["--fg"]: "#fff", ["--bd"]: m.color }
+          : { ["--bg"]: m.soft, ["--fg"]: m.color, ["--bd"]: "transparent" }) as React.CSSProperties
       }
     >
       <span
-        className="rounded-pill flex-none"
-        style={{ width: 9, height: 9, background: active ? "#fff" : m.color }}
+        className="rounded-pill flex-none w-[9px] h-[9px] [background:var(--dot)]"
+        style={{ ["--dot"]: active ? "#fff" : m.color } as React.CSSProperties}
       />
       {t(m.label)}
     </button>
@@ -145,8 +104,8 @@ export function Rating({
 export function Avatar({ name, size = 40 }: { name: string; size?: number }) {
   return (
     <div
-      className="rounded-pill bg-[linear-gradient(140deg,var(--red),var(--orange))] text-[#fff] grid place-items-center font-extrabold font-display flex-none"
-      style={{ width: size, height: size, fontSize: size * 0.42 }}
+      className="rounded-pill bg-[linear-gradient(140deg,var(--red),var(--orange))] text-[#fff] grid place-items-center font-extrabold font-display flex-none [width:var(--s)] [height:var(--s)] [font-size:var(--fs)]"
+      style={{ ["--s"]: size + "px", ["--fs"]: size * 0.42 + "px" } as React.CSSProperties}
     >
       {(name || "?")[0]}
     </div>
@@ -164,8 +123,8 @@ export function PhotoFrame({
 }) {
   return (
     <div
-      className="relative aspect-[4/3] overflow-hidden"
-      style={{ background: bg(exp), ...(ratio ? { aspectRatio: ratio } : {}) }}
+      className="relative aspect-[var(--ar,4/3)] overflow-hidden [background:var(--bg)]"
+      style={{ ["--bg"]: bg(exp), ...(ratio ? { ["--ar"]: ratio } : {}) } as React.CSSProperties}
     >
       <div className="absolute inset-0 opacity-[0.16] mix-blend-overlay bg-[radial-gradient(rgba(255,255,255,0.9)_0.6px,transparent_0.6px)] bg-[length:7px_7px]" />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_40%,rgba(0,0,0,0.42))]" />
@@ -212,13 +171,8 @@ export function ExperienceCard({
       <div className="px-[16px] pt-[14px] pb-[16px] flex flex-col gap-[10px]">
         <div className="flex items-center justify-between gap-[8px]">
           <span
-            className="inline-flex items-center gap-[8px] rounded-pill font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid border-transparent"
-            style={{
-              background: m.soft,
-              color: m.color,
-              padding: "5px 11px 5px 9px",
-              fontSize: 12,
-            }}
+            className="inline-flex items-center gap-[8px] rounded-pill font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid border-transparent p-[5px_11px_5px_9px] text-[12px] [background:var(--bg)] [color:var(--fg)]"
+            style={{ ["--bg"]: m.soft, ["--fg"]: m.color } as React.CSSProperties}
           >
             <MoodDot mood={exp.mood} size={7} />
             {t(m.label)}
@@ -226,15 +180,7 @@ export function ExperienceCard({
           {exp.rating ? (
             <Rating value={exp.rating} reviews={exp.reviews} />
           ) : (
-            <span
-              className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] font-semibold bg-surface-2 text-ink-2 border border-line"
-              style={{
-                background: "var(--coral-soft)",
-                color: "var(--coral-deep)",
-                border: "none",
-                fontWeight: 700,
-              }}
-            >
+            <span className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] [background:var(--coral-soft)] [color:var(--coral-deep)] [border:none] font-bold">
               {t("New")}
             </span>
           )}
@@ -275,7 +221,7 @@ export function SectionHead({
     <div className="flex items-end justify-between gap-[16px] mb-[18px]">
       <div>
         {eyebrow && (
-          <div className="text-[12.5px] font-bold tracking-[0.1em] uppercase text-orange" style={{ marginBottom: 7 }}>
+          <div className="text-[12.5px] font-bold tracking-[0.1em] uppercase text-orange mb-[7px]">
             {eyebrow}
           </div>
         )}
@@ -312,8 +258,8 @@ export function Modal({
       onClick={onClose}
     >
       <div
-        className="bg-bg w-full max-w-[560px] rounded-t-xl max-h-[92vh] overflow-auto min-[760px]:rounded-xl animate-anim-slideup motion-reduce:animate-none"
-        style={maxWidth ? { maxWidth } : undefined}
+        className="bg-bg w-full max-w-[var(--mw,560px)] rounded-t-xl max-h-[92vh] overflow-auto min-[760px]:rounded-xl animate-anim-slideup motion-reduce:animate-none"
+        style={maxWidth ? ({ ["--mw"]: maxWidth + "px" } as React.CSSProperties) : undefined}
         onClick={(e) => e.stopPropagation()}
       >
         {children}
@@ -369,5 +315,3 @@ export function QR() {
     </svg>
   );
 }
-
-export { BusyBtn } from "@/components/ui/BusyBtn";

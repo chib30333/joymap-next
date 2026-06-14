@@ -55,18 +55,8 @@ export function ChatPanel({
 
   if (threads.length === 0) {
     return (
-      <div
-        className="grid h-[calc(100vh-150px)] min-h-[480px] bg-surface border border-line rounded-lg overflow-hidden animate-anim-fade-app"
-        style={{ gridTemplateColumns: "1fr" }}
-      >
-        <div
-          className="flex flex-col min-w-0 bg-bg"
-          style={{
-            display: "grid",
-            placeItems: "center",
-            color: "var(--ink-3)",
-          }}
-        >
+      <div className="grid grid-cols-[1fr] h-[calc(100vh-150px)] min-h-[480px] bg-surface border border-line rounded-lg overflow-hidden animate-anim-fade-app">
+        <div className="min-w-0 bg-bg grid place-items-center text-[var(--ink-3)]">
           <div className="text-center max-w-[340px] p-[20px]">
             <Icons.chat size={40} />
             <h3 className="text-ink mt-[12px] text-[18px]">
@@ -99,8 +89,7 @@ export function ChatPanel({
               cur === th.id
                 ? "bg-[color-mix(in_srgb,var(--coral)_9%,transparent)] before:content-[''] before:absolute before:left-0 before:w-[3px] before:h-[38px] before:rounded-[9px] before:bg-coral"
                 : ""
-            }`}
-            style={{ position: "relative" }}
+            } relative`}
             onClick={() => open(th.id)}
           >
             <div className="relative">
@@ -108,10 +97,7 @@ export function ChatPanel({
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-[6px]">
-                <span
-                  className="font-bold text-[14px] whitespace-nowrap overflow-hidden flex-1"
-                  style={{ textOverflow: "ellipsis" }}
-                >
+                <span className="font-bold text-[14px] whitespace-nowrap overflow-hidden flex-1 text-ellipsis">
                   {th.who}
                 </span>
                 <span className="text-[11px] text-ink-3 font-semibold flex-none">
@@ -123,12 +109,13 @@ export function ChatPanel({
               </div>
               <div className="flex items-center gap-[6px]">
                 <span
-                  className="text-[12.5px] whitespace-nowrap overflow-hidden flex-1"
-                  style={{
-                    color: th.unread ? "var(--ink)" : "var(--ink-3)",
-                    fontWeight: th.unread ? 700 : 500,
-                    textOverflow: "ellipsis",
-                  }}
+                  className="text-[12.5px] whitespace-nowrap overflow-hidden flex-1 text-ellipsis [color:var(--last-c)] [font-weight:var(--last-fw)]"
+                  style={
+                    {
+                      ["--last-c"]: th.unread ? "var(--ink)" : "var(--ink-3)",
+                      ["--last-fw"]: th.unread ? 700 : 500,
+                    } as React.CSSProperties
+                  }
                 >
                   {th.last}
                 </span>
@@ -187,16 +174,10 @@ export function ChatPanel({
               onKeyDown={(e) => {
                 if (e.key === "Enter") send();
               }}
-              style={{ borderRadius: "var(--r-pill)" }}
+              className="[border-radius:var(--r-pill)]"
             />
             <button
-              className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
-              style={{
-                background: "var(--coral)",
-                color: "#fff",
-                border: "none",
-                flex: "none",
-              }}
+              className="w-[42px] h-[42px] rounded-pill grid place-items-center [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2 [background:var(--coral)] text-[#fff] [border:none] flex-none"
               onClick={send}
             >
               {sending ? (
@@ -208,14 +189,7 @@ export function ChatPanel({
           </div>
         </div>
       ) : (
-        <div
-          className="flex flex-col min-w-0 bg-bg"
-          style={{
-            display: "grid",
-            placeItems: "center",
-            color: "var(--ink-3)",
-          }}
-        >
+        <div className="min-w-0 bg-bg grid place-items-center text-[var(--ink-3)]">
           <div className="text-center">
             <Icons.chat size={40} />
             <p className="mt-[10px] font-semibold">{t("Select a conversation")}</p>

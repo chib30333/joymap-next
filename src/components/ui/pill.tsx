@@ -17,10 +17,10 @@ export function Pill({ status, label }: { status: string; label?: string }) {
   const [c, bg] = statusColor(status);
   return (
     <span
-      className="inline-flex items-center gap-1.5 rounded-pill px-2.5 py-1 text-xs font-bold"
-      style={{ color: c, background: bg }}
+      className="inline-flex items-center gap-1.5 rounded-pill px-2.5 py-1 text-xs font-bold text-[var(--pill-c)] bg-[var(--pill-bg)]"
+      style={{ "--pill-c": c, "--pill-bg": bg } as React.CSSProperties}
     >
-      <span className="h-1.5 w-1.5 rounded-full" style={{ background: c }} />
+      <span className="h-1.5 w-1.5 rounded-full bg-[var(--pill-c)]" />
       {label ?? status}
     </span>
   );

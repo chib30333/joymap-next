@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { Icons } from "@/components/Icons";
-import { money, Toggle, Btn } from "@/components/dash/primitives";
-import { DataTable } from "@/components/ui";
+import { money, Toggle } from "@/components/dash/primitives";
+import { Button, DataTable } from "@/components/ui";
 import { useT } from "@/components/Language";
 
 const P_RULES = [
@@ -50,11 +50,8 @@ export function PPricing({ svcs }: { svcs: any[] }) {
     );
   return (
     <div className="animate-anim-fade-dash">
-      <div className="bg-surface border border-line rounded-lg" style={{ padding: 22, marginBottom: "var(--gap)" }}>
-        <div
-          className="flex items-end justify-between gap-4"
-          style={{ marginBottom: 14 }}
-        >
+      <div className="bg-surface border border-line rounded-lg p-[22px] mb-[var(--gap)]">
+        <div className="flex items-end justify-between gap-4 mb-[14px]">
           <div>
             <h3 className="text-[17px]">{t("Base prices")}</h3>
             <div className="text-[13px] text-ink-3 font-semibold">
@@ -84,10 +81,7 @@ export function PPricing({ svcs }: { svcs: any[] }) {
                 </td>
                 <td className="text-ink-2">{s.dur}</td>
                 <td className="text-ink-2">{s.cap}</td>
-                <td
-                  className="font-bold"
-                  style={{ fontFamily: "var(--display)" }}
-                >
+                <td className="font-bold [font-family:var(--display)]">
                   {money(s.price)}
                 </td>
               </tr>
@@ -102,33 +96,28 @@ export function PPricing({ svcs }: { svcs: any[] }) {
             {t("Automatically adjust prices to fill capacity")}
           </div>
         </div>
-        <Btn size="md" icon={<Icons.plus size={16} />}>
+        <Button ctx="dash" variant="primary" size="md" icon={<Icons.plus size={16} />}>
           {t("New rule")}
-        </Btn>
+        </Button>
       </div>
       <div className="flex flex-col gap-[12px]">
         {rules.map((r) => (
           <div
             key={r.id}
-            className="bg-surface border border-line rounded-lg"
-            style={{
-              padding: "16px 20px",
-              display: "flex",
-              alignItems: "center",
-              gap: 16,
-              opacity: r.active ? 1 : 0.6,
-            }}
+            className="bg-surface border border-line rounded-lg py-[16px] px-[20px] flex items-center gap-[16px] [opacity:var(--op)]"
+            style={{ ["--op"]: r.active ? 1 : 0.6 } as React.CSSProperties}
           >
             <span
-              className="w-[42px] h-[42px] rounded-sm flex-none grid"
-              style={{
-                placeItems: "center",
-                background:
-                  r.type === "up"
-                    ? "rgba(224,33,47,.12)"
-                    : "rgba(31,164,110,.13)",
-                color: r.type === "up" ? "var(--coral)" : "#1FA46E",
-              }}
+              className="w-[42px] h-[42px] rounded-sm flex-none grid place-items-center [background:var(--bg)] [color:var(--c)]"
+              style={
+                {
+                  ["--bg"]:
+                    r.type === "up"
+                      ? "rgba(224,33,47,.12)"
+                      : "rgba(31,164,110,.13)",
+                  ["--c"]: r.type === "up" ? "var(--coral)" : "#1FA46E",
+                } as React.CSSProperties
+              }
             >
               <Icons.percent size={20} />
             </span>
@@ -139,11 +128,12 @@ export function PPricing({ svcs }: { svcs: any[] }) {
               </div>
             </div>
             <span
-              className="font-extrabold text-[18px]"
-              style={{
-                fontFamily: "var(--display)",
-                color: r.type === "up" ? "var(--coral)" : "#1FA46E",
-              }}
+              className="font-extrabold text-[18px] [font-family:var(--display)] [color:var(--c)]"
+              style={
+                {
+                  ["--c"]: r.type === "up" ? "var(--coral)" : "#1FA46E",
+                } as React.CSSProperties
+              }
             >
               {r.adj}
             </span>

@@ -1,12 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
-import { rpc, useBusy } from "@/lib/client";
-import { BusyBtn } from "@/components/dash/primitives";
-import { Input, Textarea } from "@/components/ui";
+import { rpc } from "@/lib/client";
+import { useBusy } from "@/hooks";
+import { Button, Input, Textarea } from "@/components/ui";
 import { P_GALLERY } from "@/components/provider/data";
 import { useT } from "@/components/Language";
 
@@ -56,28 +55,23 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
   };
   return (
     <div className="animate-anim-fade-dash">
-      <div
-        className="bg-surface border border-line rounded-lg"
-        style={{ overflow: "hidden", marginBottom: "var(--gap)" }}
-      >
-        <div className="h-[150px] relative" style={{ background: cover.g }}>
-          <button
-            className={btnCls("dash", "ghost", "sm")}
-            style={{ position: "absolute", right: 14, top: 14 }}
+      <div className="bg-surface border border-line rounded-lg overflow-hidden mb-[var(--gap)]">
+        <div
+          className="h-[150px] relative [background:var(--cover-bg)]"
+          style={{ ["--cover-bg"]: cover.g } as React.CSSProperties}
+        >
+          <Button
+            ctx="dash"
+            variant="ghost"
+            size="sm"
+            className="absolute right-[14px] top-[14px]"
           >
             <Icons.camera size={15} />
             {t("Change cover")}
-          </button>
+          </Button>
         </div>
         <div className="pt-0 px-[24px] pb-[22px] flex gap-[18px] items-end mt-[-36px] flex-wrap relative z-[1]">
-          <div
-            className="w-[84px] h-[84px] rounded-[22px] bg-[linear-gradient(140deg,var(--m-calm),#2E8C80)] grid text-[#fff] font-extrabold text-[34px] flex-none"
-            style={{
-              border: "4px solid var(--surface)",
-              placeItems: "center",
-              fontFamily: "var(--display)",
-            }}
-          >
+          <div className="w-[84px] h-[84px] rounded-[22px] bg-[linear-gradient(140deg,var(--m-calm),#2E8C80)] grid text-[#fff] font-extrabold text-[34px] flex-none [border:4px_solid_var(--surface)] place-items-center [font-family:var(--display)]">
             {(f.name || "?")[0]}
           </div>
           <div className="flex-1 min-w-[200px] pb-[4px]">
@@ -88,7 +82,7 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
                   placeholder={t("A short tagline customers see")}
                   value={f.tagline}
                   onChange={(e) => set("tagline", e.target.value)}
-                  style={{ marginTop: 6 }}
+                  className="mt-[6px]"
                 />
               ) : (
                 f.tagline || t("Add a tagline so customers know your vibe")
@@ -97,36 +91,32 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
           </div>
           <div className="flex gap-[8px] pb-[4px]">
             {p.status === "active" ? (
-              <span
-                className="inline-flex items-center gap-[6px] py-1 px-[11px] rounded-pill text-[12px] font-bold whitespace-nowrap"
-                style={{ color: "#1FA46E", background: "rgba(31,164,110,.13)" }}
-              >
+              <span className="inline-flex items-center gap-[6px] py-1 px-[11px] rounded-pill text-[12px] font-bold whitespace-nowrap text-[#1FA46E] bg-[rgba(31,164,110,.13)]">
                 <Icons.shield size={13} />
                 {t("Verified")}
               </span>
             ) : (
-              <span
-                className="inline-flex items-center gap-[6px] py-1 px-[11px] rounded-pill text-[12px] font-bold whitespace-nowrap"
-                style={{ color: "#E89015", background: "rgba(232,144,21,.14)" }}
-              >
+              <span className="inline-flex items-center gap-[6px] py-1 px-[11px] rounded-pill text-[12px] font-bold whitespace-nowrap text-[#E89015] bg-[rgba(232,144,21,.14)]">
                 <Icons.clock size={13} />
                 {t("In review")}
               </span>
             )}
-            <BusyBtn
+            <Button
               busy={busy}
-              className={btnCls("dash", "ghost", "sm")}
+              ctx="dash"
+              variant="ghost"
+              size="sm"
               icon={edit ? <Icons.check size={15} /> : <Icons.edit size={15} />}
               onClick={saveOrEdit}
             >
               {edit ? t("Save") : t("Edit")}
-            </BusyBtn>
+            </Button>
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-[1.4fr_1fr] gap-[var(--gap)] items-start">
-        <div className="bg-surface border border-line rounded-lg" style={{ padding: 24 }}>
+        <div className="bg-surface border border-line rounded-lg p-[24px]">
           <h3 className="text-[17px] mb-[14px]">{t("About the business")}</h3>
           {edit ? (
             <Textarea
@@ -134,7 +124,7 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
               value={f.about}
               onChange={(e) => set("about", e.target.value)}
               placeholder={t("Tell customers your story…")}
-              style={{ resize: "vertical", lineHeight: 1.5 }}
+              className="[resize:vertical] leading-[1.5]"
             />
           ) : (
             <p className="text-ink-2 text-[14.5px] leading-[1.6] m-0">
@@ -158,7 +148,12 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
               return (
                 <div
                   key={k}
-                  style={{ gridColumn: k === "address" ? "1 / -1" : "auto" }}
+                  className="[grid-column:var(--gc)]"
+                  style={
+                    {
+                      ["--gc"]: k === "address" ? "1 / -1" : "auto",
+                    } as React.CSSProperties
+                  }
                 >
                   <div className="text-[12px] font-bold text-ink-3 mb-[6px]">
                     {t(l)}
@@ -183,27 +178,19 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
         </div>
 
         <div className="flex flex-col gap-[var(--gap)]">
-          <div className="bg-surface border border-line rounded-lg" style={{ padding: 22 }}>
+          <div className="bg-surface border border-line rounded-lg p-[22px]">
             <h3 className="text-[16px] mb-[14px]">{t("Categories")}</h3>
             <div className="flex flex-wrap gap-[8px]">
               {f.cats.map((c: string) => (
                 <span
                   key={c}
-                  className="inline-flex items-center gap-[5px] py-1 px-[10px] rounded-pill text-[12px] font-bold whitespace-nowrap"
-                  style={{
-                    background: "var(--surface-2)",
-                    color: "var(--ink-2)",
-                    border: "1px solid var(--line)",
-                  }}
+                  className="inline-flex items-center gap-[5px] py-1 px-[10px] rounded-pill text-[12px] font-bold whitespace-nowrap bg-surface-2 text-ink-2 [border:1px_solid_var(--line)]"
                 >
                   {c}
                 </span>
               ))}
               {edit && (
-                <button
-                  className="inline-flex items-center gap-[7px] rounded-pill text-[13px] font-semibold border border-line-2 bg-surface text-ink-2 cursor-pointer [transition:0.14s] whitespace-nowrap hover:border-ink-3 hover:text-ink"
-                  style={{ padding: "4px 12px" }}
-                >
+                <button className="inline-flex items-center gap-[7px] rounded-pill text-[13px] font-semibold border border-line-2 bg-surface text-ink-2 cursor-pointer [transition:0.14s] whitespace-nowrap hover:border-ink-3 hover:text-ink py-[4px] px-[12px]">
                   <Icons.plus size={13} />
                   {t("Add")}
                 </button>
@@ -233,7 +220,7 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
               </div>
             </div>
           </div>
-          <div className="bg-surface border border-line rounded-lg" style={{ padding: 22 }}>
+          <div className="bg-surface border border-line rounded-lg p-[22px]">
             <div className="flex items-center justify-between mb-[6px]">
               <h3 className="text-[16px]">{t("Gallery")}</h3>
               <span className="text-[12.5px] text-ink-3 font-semibold">
@@ -244,8 +231,8 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
               {P_GALLERY.slice(0, 6).map((g) => (
                 <div
                   key={g.id}
-                  className="rounded-xs"
-                  style={{ aspectRatio: "1", background: g.g }}
+                  className="rounded-xs [aspect-ratio:1] [background:var(--g-bg)]"
+                  style={{ ["--g-bg"]: g.g } as React.CSSProperties}
                 />
               ))}
             </div>

@@ -1,11 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { btnCls } from "@/lib/btn";
 import { useT } from "@/components/Language";
 import { Icons } from "@/components/Icons";
-import { Pill, Modal, Btn } from "@/components/dash/primitives";
-import { Input, DataTable, TableCard } from "@/components/ui";
+import { Pill, Modal } from "@/components/dash/primitives";
+import { Input, DataTable, TableCard, Button } from "@/components/ui";
 import { downloadCSV } from "@/lib/csv";
 import { Chip } from "@/components/admin/AdminShared";
 
@@ -44,20 +43,22 @@ export function AMarketing() {
       <div className="flex items-end justify-between gap-[16px] mb-[18px]">
         <div />
         <div className="flex gap-[10px]">
-          <button
-            className={btnCls("dash", "ghost", "md")}
+          <Button
+            ctx="dash"
+            variant="ghost"
+            size="md"
             onClick={() => setPromo(true)}
           >
             <Icons.percent size={16} />
             {t("Mass-create promos")}
-          </button>
-          <Btn size="md">
+          </Button>
+          <Button ctx="dash" variant="primary" size="md">
             <Icons.send size={16} />
             {t("New campaign")}
-          </Btn>
+          </Button>
         </div>
       </div>
-      <TableCard style={{ marginBottom: "var(--gap)" }}>
+      <TableCard className="mb-[var(--gap)]">
         <h3 className="text-[17px] pt-[18px] px-[20px] pb-[4px]">
           {t("Campaigns")}
         </h3>
@@ -138,7 +139,7 @@ function PromoMassModal({ onClose }: { onClose: () => void }) {
                   <Input
                     value={prefix}
                     onChange={(e) => setPrefix(e.target.value.toUpperCase())}
-                    style={{ fontFamily: "var(--display)", fontWeight: 700 }}
+                    className="[font-family:var(--display)] font-bold"
                   />
                 </div>
                 <div className="w-[120px]">
@@ -158,10 +159,7 @@ function PromoMassModal({ onClose }: { onClose: () => void }) {
                 </div>
                 <Input value={disc} onChange={(e) => setDisc(e.target.value)} />
               </div>
-              <div
-                className="bg-surface border border-line rounded-lg"
-                style={{ padding: 14, background: "var(--surface-2)" }}
-              >
+              <div className="bg-[var(--surface-2)] border border-line rounded-lg p-[14px]">
                 <div className="text-[12px] font-bold text-ink-3 mb-[8px]">
                   {t("PREVIEW")}
                 </div>
@@ -169,40 +167,36 @@ function PromoMassModal({ onClose }: { onClose: () => void }) {
                   {sample.map((sm, i) => (
                     <span
                       key={i}
-                      className="font-display font-bold text-[13px] px-[10px] py-[4px] rounded-[7px] bg-surface"
-                      style={{ border: "1px dashed var(--line-2)" }}
+                      className="font-display font-bold text-[13px] px-[10px] py-[4px] rounded-[7px] bg-surface [border:1px_dashed_var(--line-2)]"
                     >
                       {sm}
                     </span>
                   ))}
-                  <span
-                    className="text-[13px] text-ink-3 font-semibold"
-                    style={{ alignSelf: "center" }}
-                  >
+                  <span className="text-[13px] text-ink-3 font-semibold self-center">
                     +{Math.max(count - 3, 0)} {t("more")}
                   </span>
                 </div>
               </div>
             </div>
             <div className="flex gap-[10px] mt-[22px]">
-              <button
-                className={btnCls("dash", "ghost", "md", true)}
+              <Button
+                ctx="dash"
+                variant="ghost"
+                size="md"
+                block
                 onClick={onClose}
               >
                 {t("Cancel")}
-              </button>
-              <Btn size="md" block onClick={() => setDone(true)}>
+              </Button>
+              <Button ctx="dash" variant="primary" size="md" block onClick={() => setDone(true)}>
                 <Icons.sparkle size={16} />
                 {t("Generate")} {count} {t("codes")}
-              </Btn>
+              </Button>
             </div>
           </>
         ) : (
           <div className="text-center px-0 py-[10px]">
-            <div
-              className="w-[60px] h-[60px] rounded-[99px] bg-[rgba(31,164,110,.14)] text-[#1FA46E] grid mt-0 mx-auto mb-[16px]"
-              style={{ placeItems: "center" }}
-            >
+            <div className="w-[60px] h-[60px] rounded-[99px] bg-[rgba(31,164,110,.14)] text-[#1FA46E] grid place-items-center mt-0 mx-auto mb-[16px]">
               <Icons.check size={32} />
             </div>
             <h3 className="text-[20px] mb-[6px]">
@@ -212,13 +206,18 @@ function PromoMassModal({ onClose }: { onClose: () => void }) {
               {t("Download the batch as CSV to share with your campaign.")}
             </p>
             <div className="flex gap-[10px]">
-              <button
-                className={btnCls("dash", "ghost", "md", true)}
+              <Button
+                ctx="dash"
+                variant="ghost"
+                size="md"
+                block
                 onClick={onClose}
               >
                 {t("Close")}
-              </button>
-              <Btn
+              </Button>
+              <Button
+                ctx="dash"
+                variant="primary"
                 size="md"
                 block
                 onClick={() => {
@@ -234,7 +233,7 @@ function PromoMassModal({ onClose }: { onClose: () => void }) {
               >
                 <Icons.download size={16} />
                 {t("Download CSV")}
-              </Btn>
+              </Button>
             </div>
           </div>
         )}

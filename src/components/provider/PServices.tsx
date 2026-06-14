@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
-import { rpc, useBusy } from "@/lib/client";
-import { money, Toggle, Modal, Btn, BusyBtn } from "@/components/dash/primitives";
-import { Input, Select, Textarea } from "@/components/ui";
+import { rpc } from "@/lib/client";
+import { useBusy } from "@/hooks";
+import { money, Toggle, Modal } from "@/components/dash/primitives";
+import { Button, Input, Select, Textarea } from "@/components/ui";
 import { MOODS, MOOD_ORDER, CATS } from "@/components/customer/primitives";
 import { useT } from "@/components/Language";
 
@@ -22,19 +22,18 @@ export function PServices({ svcs }: { svcs: Svc[] }) {
     <div className="animate-anim-fade-dash">
       <div className="flex items-end justify-between gap-4 mb-[18px]">
         <div />
-        <Btn
+        <Button
+          ctx="dash"
+          variant="primary"
           size="md"
           icon={<Icons.plus size={17} />}
           onClick={() => setModal("new")}
         >
           {t("New service")}
-        </Btn>
+        </Button>
       </div>
       {svcs.length === 0 ? (
-        <div
-          className="bg-surface border border-line rounded-lg"
-          style={{ padding: "60px 24px", textAlign: "center" }}
-        >
+        <div className="bg-surface border border-line rounded-lg py-[60px] px-[24px] text-center">
           <div className="w-[60px] h-[60px] rounded-[99px] bg-coral-soft text-coral-deep grid place-items-center mt-0 mx-auto mb-[14px]">
             <Icons.compass size={26} />
           </div>
@@ -44,52 +43,48 @@ export function PServices({ svcs }: { svcs: Svc[] }) {
               "Create a service, send it for review, and once the platform team approves it customers can book it.",
             )}
           </p>
-          <Btn
+          <Button
+            ctx="dash"
+            variant="primary"
             size="md"
             icon={<Icons.plus size={16} />}
             onClick={() => setModal("new")}
           >
             {t("Create a service")}
-          </Btn>
+          </Button>
         </div>
       ) : (
-        <div
-          className="grid"
-          style={{
-            gridTemplateColumns: "repeat(auto-fill,minmax(300px,1fr))",
-            gap: "var(--gap)",
-          }}
-        >
+        <div className="grid [grid-template-columns:repeat(auto-fill,minmax(300px,1fr))] gap-[var(--gap)]">
           {svcs.map((s) => {
             const m = MOODS[s.mood];
             return (
               <div
                 key={s.id}
-                className="bg-surface border border-line rounded-lg animate-anim-pop-dash"
-                style={{
-                  padding: 0,
-                  overflow: "hidden",
-                  opacity: s.active !== false ? 1 : 0.62,
-                }}
+                className="bg-surface border border-line rounded-lg animate-anim-pop-dash p-0 overflow-hidden opacity-[var(--op)]"
+                style={
+                  { ["--op"]: s.active !== false ? 1 : 0.62 } as React.CSSProperties
+                }
               >
                 <div
-                  className="relative h-[128px]"
-                  style={{
-                    background: s.img
-                      ? `center/cover no-repeat url('${s.img}')`
-                      : `linear-gradient(135deg,${m.color},color-mix(in srgb,${m.color} 68%,#000))`,
-                  }}
+                  className="relative h-[128px] [background:var(--card-bg)]"
+                  style={
+                    {
+                      ["--card-bg"]: s.img
+                        ? `center/cover no-repeat url('${s.img}')`
+                        : `linear-gradient(135deg,${m.color},color-mix(in srgb,${m.color} 68%,#000))`,
+                    } as React.CSSProperties
+                  }
                 >
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.5))]" />
                   <div className="absolute top-[12px] left-[12px] right-[12px] flex justify-between items-start">
                     <div className="flex gap-[6px]">
                       <span
-                        className="bg-[rgba(255,255,255,.92)] py-[4px] px-[10px] rounded-[99px] text-[11.5px] font-extrabold inline-flex items-center gap-[5px]"
-                        style={{ color: m.color }}
+                        className="bg-[rgba(255,255,255,.92)] py-[4px] px-[10px] rounded-[99px] text-[11.5px] font-extrabold inline-flex items-center gap-[5px] text-[var(--mood)]"
+                        style={{ ["--mood"]: m.color } as React.CSSProperties}
                       >
                         <span
-                          className="w-[7px] h-[7px] rounded-[99px]"
-                          style={{ background: m.color }}
+                          className="w-[7px] h-[7px] rounded-[99px] [background:var(--mood)]"
+                          style={{ ["--mood"]: m.color } as React.CSSProperties}
                         />
                         {m.label}
                       </span>
@@ -109,10 +104,7 @@ export function PServices({ svcs }: { svcs: Svc[] }) {
                       onChange={() => toggle(s.id)}
                     />
                   </div>
-                  <h3
-                    className="absolute left-[14px] bottom-[11px] right-[14px] text-[#fff] text-[18px]"
-                    style={{ textShadow: "0 1px 10px rgba(0,0,0,.4)" }}
-                  >
+                  <h3 className="absolute left-[14px] bottom-[11px] right-[14px] text-[#fff] text-[18px] [text-shadow:0_1px_10px_rgba(0,0,0,.4)]">
                     {s.name}
                   </h3>
                 </div>
@@ -140,13 +132,15 @@ export function PServices({ svcs }: { svcs: Svc[] }) {
                         {s.booked} {t("booked all-time")}
                       </div>
                     </div>
-                    <button
-                      className={btnCls("dash", "ghost", "sm")}
+                    <Button
+                      ctx="dash"
+                      variant="ghost"
+                      size="sm"
                       onClick={() => setModal(s)}
                     >
                       <Icons.settings size={15} />
                       {t("Edit")}
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -315,7 +309,7 @@ function ServiceFormModal({
               value={f.about}
               onChange={(e) => set("about", e.target.value)}
               placeholder={t("What makes this experience special?")}
-              style={{ resize: "vertical" }}
+              className="[resize:vertical]"
             />
           </div>
         </div>
@@ -325,18 +319,21 @@ function ServiceFormModal({
           </div>
         )}
         <div className="flex gap-[10px] mt-[20px]">
-          <button className={btnCls("dash", "ghost", "md", true)} onClick={onClose}>
+          <Button ctx="dash" variant="ghost" size="md" block onClick={onClose}>
             {t("Cancel")}
-          </button>
-          <BusyBtn
+          </Button>
+          <Button
             busy={busy}
-            className={btnCls("dash", "primary", "md", true)}
+            ctx="dash"
+            variant="primary"
+            size="md"
+            block
             disabled={!ok}
             icon={<Icons.check size={16} />}
             onClick={save}
           >
             {isNew ? t("Submit for review") : t("Save changes")}
-          </BusyBtn>
+          </Button>
         </div>
       </div>
     </Modal>

@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { rpc } from "@/lib/client";
-import { money, Pill, Seg, Modal, Btn, Avatar } from "@/components/dash/primitives";
+import { money, Pill, Seg, Modal, Avatar } from "@/components/dash/primitives";
+import { Button } from "@/components/ui";
 import { BookingsTable } from "@/components/provider/BookingsTable";
 import { useT } from "@/components/Language";
 
@@ -42,21 +42,13 @@ export function PBookings({ rows }: { rows: Booking[] }) {
         />
       </div>
       {list.length === 0 ? (
-        <div
-          className="bg-surface border border-line rounded-lg"
-          style={{
-            padding: "56px 20px",
-            textAlign: "center",
-            color: "var(--ink-3)",
-            fontWeight: 600,
-          }}
-        >
+        <div className="bg-surface border border-line rounded-lg py-[56px] px-[20px] text-center text-ink-3 font-semibold">
           {t("No")} {f === "all" ? "" : t(f) + " "}
           {t("bookings yet.")}
         </div>
       ) : (
-        <div className="bg-surface border border-line rounded-lg" style={{ overflow: "hidden" }}>
-          <div style={{ overflowX: "auto" }}>
+        <div className="bg-surface border border-line rounded-lg overflow-hidden">
+          <div className="overflow-x-auto">
             <BookingsTable
               rows={list}
               onAct={act}
@@ -101,14 +93,7 @@ function BookingDetailModal({
           </div>
           <Pill status={b.status} />
         </div>
-        <div
-          className="bg-surface border border-line rounded-lg"
-          style={{
-            padding: 16,
-            background: "var(--surface-2)",
-            marginBottom: 18,
-          }}
-        >
+        <div className="bg-surface-2 border border-line rounded-lg p-[16px] mb-[18px]">
           <Row l={t("Date")} r={b.date} />
           <Row l={t("Time")} r={b.time} />
           <Row l={t("People")} r={String(b.people)} />
@@ -116,11 +101,13 @@ function BookingDetailModal({
           <Row l={t("Code")} r={b.code} />
         </div>
         <div className="flex gap-[10px]">
-          <button className={btnCls("dash", "ghost", "md", true)} onClick={onClose}>
+          <Button ctx="dash" variant="ghost" size="md" block onClick={onClose}>
             {t("Close")}
-          </button>
+          </Button>
           {b.status === "pending" ? (
-            <Btn
+            <Button
+              ctx="dash"
+              variant="primary"
               size="md"
               block
               onClick={() => {
@@ -130,9 +117,11 @@ function BookingDetailModal({
             >
               <Icons.check size={16} />
               {t("Confirm booking")}
-            </Btn>
+            </Button>
           ) : b.status === "confirmed" ? (
-            <Btn
+            <Button
+              ctx="dash"
+              variant="primary"
               size="md"
               block
               onClick={() => {
@@ -142,11 +131,11 @@ function BookingDetailModal({
             >
               <Icons.sparkle size={16} />
               {t("Mark completed")}
-            </Btn>
+            </Button>
           ) : (
-            <Btn size="md" block onClick={onClose}>
+            <Button ctx="dash" variant="primary" size="md" block onClick={onClose}>
               {t("Done")}
-            </Btn>
+            </Button>
           )}
         </div>
       </div>

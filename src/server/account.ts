@@ -3,7 +3,7 @@ import { requireUser } from "@/lib/session";
 import { ledger, notify } from "./notify";
 import { catalog } from "./catalog";
 import { money } from "@/lib/format";
-import { TODAY, MONTH_DAYS, WD, dow } from "@/lib/constants";
+import { TODAY, MONTH_DAYS, WD, dow } from "@/constants";
 
 export async function toggleFavorite(serviceId: string) {
   const u = await requireUser();

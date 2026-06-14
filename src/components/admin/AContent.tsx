@@ -1,14 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { useT } from "@/components/Language";
 import { Icons } from "@/components/Icons";
 import { rpc } from "@/lib/client";
 import { Seg, Avatar } from "@/components/dash/primitives";
 import { EmptyState, Chip } from "@/components/admin/AdminShared";
-import { Spinner } from "@/components/ui";
+import { Spinner, Button } from "@/components/ui";
 import { AdminHeader } from "@/components/admin/AdminHeader";
 
 export function AContent({ items }: { items: any[] }) {
@@ -53,25 +52,13 @@ export function AContent({ items }: { items: any[] }) {
           {t("Reported reviews, photos and promos land here.")}
         </EmptyState>
       ) : (
-        <div
-          className="grid"
-          style={{
-            gridTemplateColumns: "repeat(auto-fill,minmax(340px,1fr))",
-            gap: "var(--gap)",
-          }}
-        >
+        <div className="grid [grid-template-columns:repeat(auto-fill,minmax(340px,1fr))] gap-[var(--gap)]">
           {list.map((c) => {
             const [tl, tc] = TYPE[c.type] || ["Item", "#9B8AA0"];
             return (
               <div
                 key={c.id}
-                className="bg-surface border border-line rounded-lg animate-anim-pop-dash"
-                style={{
-                  padding: 18,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 12,
-                }}
+                className="bg-surface border border-line rounded-lg animate-anim-pop-dash p-[18px] flex flex-col gap-[12px]"
               >
                 <div className="flex items-center gap-[10px]">
                   <Chip bg={`color-mix(in srgb,${tc} 14%,transparent)`} color={tc}>
@@ -87,11 +74,13 @@ export function AContent({ items }: { items: any[] }) {
                 </div>
                 {c.type === "photo" ? (
                   <div
-                    className="h-[140px] rounded-sm"
-                    style={{
-                      background:
-                        c.grad || "linear-gradient(135deg,#9E7BF6,#5B33C9)",
-                    }}
+                    className="h-[140px] rounded-sm [background:var(--card-bg)]"
+                    style={
+                      {
+                        "--card-bg":
+                          c.grad || "linear-gradient(135deg,#9E7BF6,#5B33C9)",
+                      } as React.CSSProperties
+                    }
                   />
                 ) : (
                   <p className="m-0 text-[14px] leading-[1.5] text-ink-2 bg-surface-2 px-[14px] py-[12px] rounded-sm italic">
@@ -106,24 +95,29 @@ export function AContent({ items }: { items: any[] }) {
                 </div>
                 <div className="flex gap-[8px] mt-[2px]">
                   {acting === c.id ? (
-                    <Spinner style={{ margin: "8px auto" }} />
+                    <Spinner className="mx-auto my-[8px]" />
                   ) : (
                     <>
-                      <button
-                        className={btnCls("dash", "ghost", "sm", true)}
+                      <Button
+                        ctx="dash"
+                        variant="ghost"
+                        size="sm"
+                        block
                         onClick={() => act(c.id)}
                       >
                         <Icons.check size={15} />
                         {t("Keep")}
-                      </button>
-                      <button
-                        className={btnCls("dash", undefined, "sm", true)}
-                        style={{ background: "var(--coral)", color: "#fff" }}
+                      </Button>
+                      <Button
+                        ctx="dash"
+                        size="sm"
+                        block
+                        className="bg-coral text-white"
                         onClick={() => act(c.id)}
                       >
                         <Icons.trash size={15} />
                         {t("Remove")}
-                      </button>
+                      </Button>
                     </>
                   )}
                 </div>

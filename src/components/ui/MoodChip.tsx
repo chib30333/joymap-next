@@ -1,6 +1,6 @@
 "use client";
 
-import { MOODS } from "@/lib/constants";
+import { MOODS } from "@/constants";
 import { useT } from "@/components/Language";
 
 export function MoodChip({
@@ -18,20 +18,20 @@ export function MoodChip({
   return (
     <button
       onClick={onClick}
-      className="inline-flex items-center gap-2 rounded-pill border px-3 py-1.5 text-[13px] font-bold transition"
+      className="inline-flex items-center gap-2 rounded-pill border px-3 py-1.5 text-[13px] font-bold transition bg-[var(--mc-bg)] text-[var(--mc-fg)] border-[var(--mc-bd)]"
       style={
-        active
-          ? { background: m.hex, color: "#fff", borderColor: m.hex }
+        (active
+          ? { "--mc-bg": m.hex, "--mc-fg": "#fff", "--mc-bd": m.hex }
           : {
-              background: `color-mix(in srgb,${m.hex} 14%,transparent)`,
-              color: m.hex,
-              borderColor: "transparent",
-            }
+              "--mc-bg": `color-mix(in srgb,${m.hex} 14%,transparent)`,
+              "--mc-fg": m.hex,
+              "--mc-bd": "transparent",
+            }) as React.CSSProperties
       }
     >
       <span
-        className="h-2 w-2 rounded-full"
-        style={{ background: active ? "#fff" : m.hex }}
+        className="h-2 w-2 rounded-full bg-[var(--mc-dot)]"
+        style={{ "--mc-dot": active ? "#fff" : m.hex } as React.CSSProperties}
       />
       {t(m.label)}
     </button>

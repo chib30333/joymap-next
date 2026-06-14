@@ -1,11 +1,11 @@
 "use client";
 
-import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { useT } from "@/components/Language";
 import { Icons } from "@/components/Icons";
 import { money, Stat, Bars, LineChart, Donut, Pill, Avatar } from "@/components/dash/primitives";
 import { Chip } from "@/components/admin/AdminShared";
+import { Button } from "@/components/ui";
 
 const CAT_COLORS: Record<string, string> = {
   Wellness: "#3FA89B",
@@ -56,14 +56,7 @@ export function ADashboard({
   ];
   return (
     <div className="animate-anim-fade-dash">
-      <div
-        className="grid"
-        style={{
-          gridTemplateColumns: "repeat(auto-fit,minmax(210px,1fr))",
-          gap: "var(--gap)",
-          marginBottom: "var(--gap)",
-        }}
-      >
+      <div className="grid [grid-template-columns:repeat(auto-fit,minmax(210px,1fr))] gap-[var(--gap)] mb-[var(--gap)]">
         <Stat
           label={t("GMV · June")}
           value={money(s.gmv)}
@@ -93,15 +86,8 @@ export function ADashboard({
           sub={`${s.customers} ${t("customers")}`}
         />
       </div>
-      <div
-        className="grid"
-        style={{
-          gridTemplateColumns: "1.6fr 1fr",
-          gap: "var(--gap)",
-          marginBottom: "var(--gap)",
-        }}
-      >
-        <div className="bg-surface border border-line rounded-lg" style={{ padding: 22 }}>
+      <div className="grid [grid-template-columns:1.6fr_1fr] gap-[var(--gap)] mb-[var(--gap)]">
+        <div className="bg-surface border border-line rounded-lg p-[22px]">
           <div className="flex items-end justify-between gap-[16px] mb-[8px]">
             <div>
               <h3 className="text-[17px]">{t("Gross merchandise value")}</h3>
@@ -125,34 +111,17 @@ export function ADashboard({
           ) : gmvPts.length === 1 ? (
             <Bars data={gmvPts} unit="₽" />
           ) : (
-            <div
-              className="h-[210px] grid text-ink-3 font-semibold text-[13.5px]"
-              style={{ placeItems: "center" }}
-            >
+            <div className="h-[210px] grid place-items-center text-ink-3 font-semibold text-[13.5px]">
               {t("GMV charts light up once bookings are confirmed.")}
             </div>
           )}
         </div>
-        <div
-          className="bg-surface border border-line rounded-lg"
-          style={{
-            padding: 22,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <h3
-            className="text-[17px] mb-[16px]"
-            style={{ alignSelf: "flex-start" }}
-          >
+        <div className="bg-surface border border-line rounded-lg p-[22px] flex flex-col items-center">
+          <h3 className="text-[17px] mb-[16px] self-start">
             {t("GMV by category")}
           </h3>
           {cats.length === 0 ? (
-            <div
-              className="flex-1 grid text-ink-3 font-semibold text-[13.5px] text-center"
-              style={{ placeItems: "center" }}
-            >
+            <div className="flex-1 grid place-items-center text-ink-3 font-semibold text-[13.5px] text-center">
               {t("No category data yet.")}
             </div>
           ) : (
@@ -165,18 +134,15 @@ export function ADashboard({
                   `${Math.round((seg.value / total) * 100)}% · ${money(seg.value)}`
                 }
               />
-              <div
-                className="grid mt-[18px] w-full"
-                style={{ gridTemplateColumns: "1fr 1fr", gap: "8px 14px" }}
-              >
+              <div className="grid mt-[18px] w-full [grid-template-columns:1fr_1fr] gap-[8px_14px]">
                 {cats.map((c) => (
                   <span
                     key={c.label}
                     className="inline-flex items-center gap-[7px] text-[12.5px] font-bold text-ink-2"
                   >
                     <span
-                      className="w-[9px] h-[9px] rounded-[99px]"
-                      style={{ background: c.color }}
+                      className="w-[9px] h-[9px] rounded-[99px] [background:var(--seg-c)]"
+                      style={{ ["--seg-c"]: c.color } as React.CSSProperties}
                     />
                     {t(c.label)}
                     <span className="ml-auto text-ink-3">
@@ -189,19 +155,18 @@ export function ADashboard({
           )}
         </div>
       </div>
-      <div
-        className="grid"
-        style={{ gridTemplateColumns: "1fr 1fr", gap: "var(--gap)" }}
-      >
-        <div className="bg-surface border border-line rounded-lg" style={{ overflow: "hidden" }}>
+      <div className="grid [grid-template-columns:1fr_1fr] gap-[var(--gap)]">
+        <div className="bg-surface border border-line rounded-lg overflow-hidden">
           <div className="flex items-center justify-between px-[20px] py-[18px]">
             <h3 className="text-[16px]">{t("Moderation queue")}</h3>
-            <button
-              className={btnCls("dash", "ghost", "sm")}
+            <Button
+              ctx="dash"
+              variant="ghost"
+              size="sm"
               onClick={() => router.push("/admin/moderation")}
             >
               {t("Review")} <Icons.arrowR size={15} />
-            </button>
+            </Button>
           </div>
           {queue.length === 0 && (
             <div className="px-[20px] py-[18px] border-t border-line text-ink-3 font-semibold text-[13.5px]">
@@ -228,15 +193,17 @@ export function ADashboard({
             </div>
           ))}
         </div>
-        <div className="bg-surface border border-line rounded-lg" style={{ overflow: "hidden" }}>
+        <div className="bg-surface border border-line rounded-lg overflow-hidden">
           <div className="flex items-center justify-between px-[20px] py-[18px]">
             <h3 className="text-[16px]">{t("Top providers by GMV")}</h3>
-            <button
-              className={btnCls("dash", "ghost", "sm")}
+            <Button
+              ctx="dash"
+              variant="ghost"
+              size="sm"
               onClick={() => router.push("/admin/providers")}
             >
               {t("All")} <Icons.arrowR size={15} />
-            </button>
+            </Button>
           </div>
           {top.length === 0 && (
             <div className="px-[20px] py-[18px] border-t border-line text-ink-3 font-semibold text-[13.5px]">

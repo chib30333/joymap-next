@@ -1,6 +1,5 @@
 import { Reveal } from "@/components/landing/Reveal";
-import { btnCls } from "@/lib/btn";
-import Link from "next/link";
+import { Button } from "@/components/ui";
 import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
 import { Testimonials } from "@/components/landing/Testimonials";
@@ -13,11 +12,8 @@ export default function Landing() {
       <section className="relative min-h-[88vh] flex items-center overflow-hidden text-white">
         <div className="absolute inset-0 bg-[url('/images/hero-bg.jpg')] bg-cover bg-[center_40%]" />
         <div className="absolute inset-0 [background:linear-gradient(95deg,rgba(20,8,10,0.86)_0%,rgba(28,10,12,0.66)_42%,rgba(28,10,12,0.28)_100%),linear-gradient(0deg,rgba(20,8,10,0.7)_0%,transparent_38%)]" />
-        <div className="relative max-w-7xl mx-auto px-6 py-[60px] w-full">
-          <div
-            className="text-sm font-extrabold tracking-[0.16em] uppercase text-orange"
-            style={{ color: "var(--orange)", marginBottom: 18 }}
-          >
+        <div className="relative max-w-7xl mx-auto px-6 py-14 w-full">
+          <div className="text-sm font-extrabold tracking-[0.16em] uppercase text-orange mb-[18px]">
             Moscow · marketplace of real-life experiences
           </div>
           <h1 className="text-[clamp(38px,6vw,76px)] leading-[0.98] tracking-[-0.02em] text-white max-w-[15ch]">
@@ -29,12 +25,12 @@ export default function Landing() {
             One subscription, infinite joy.
           </p>
           <div className="flex gap-3 flex-wrap mt-[34px]">
-            <Link className={btnCls("lp", "primary")} href="/auth">
+            <Button ctx="lp" variant="primary" href="/auth">
               Start exploring →
-            </Link>
-            <Link className={btnCls("lp", "glass")} href="#experiences">
+            </Button>
+            <Button ctx="lp" variant="glass" href="#experiences">
               See how it works
-            </Link>
+            </Button>
           </div>
           <div className="flex gap-[40px] mt-[48px] flex-wrap">
             <div>
@@ -96,7 +92,7 @@ export default function Landing() {
                 "Together with others",
               ],
             ].map(([bg, title, sub]) => (
-              <div className="rounded-lg px-[18px] py-[22px] text-white min-h-[150px] flex flex-col justify-end relative overflow-hidden [transition:0.2s] cursor-default hover:[transform:translateY(-5px)] hover:shadow-lg" key={title} style={{ background: bg }}>
+              <div className="rounded-lg px-[18px] py-[22px] text-white min-h-[150px] flex flex-col justify-end relative overflow-hidden [transition:0.2s] cursor-default hover:[transform:translateY(-5px)] hover:shadow-lg [background:var(--card-bg)]" key={title} style={{ "--card-bg": bg } as React.CSSProperties}>
                 <span className="w-[12px] h-[12px] rounded-pill bg-white/90 absolute top-[18px] left-[18px]" />
                 <h4 className="text-[18px] text-white">{title}</h4>
                 <span className="text-[12.5px] text-white/85 font-semibold mt-[3px]">{sub}</span>
@@ -106,7 +102,7 @@ export default function Landing() {
         </div>
       </section>
 
-      <section className="py-[96px]" style={{ paddingTop: 0 }}>
+      <section className="pb-[96px]">
         <div className="max-w-7xl mx-auto px-6">
           <Reveal className="grid grid-cols-2 gap-[56px] items-center max-[880px]:grid-cols-1 max-[880px]:gap-[32px]">
             <div className="rounded-xl overflow-hidden aspect-[4/3] shadow-lg relative">
@@ -138,31 +134,19 @@ export default function Landing() {
                   before
                 </li>
               </ul>
-              <Link className={btnCls("lp", "primary")} href="/auth">
+              <Button ctx="lp" variant="primary" href="/auth">
                 Build my Joy Map →
-              </Link>
+              </Button>
             </div>
           </Reveal>
         </div>
       </section>
 
-      <section className="py-[96px]" id="partners" style={{ paddingTop: 0 }}>
+      <section className="pb-[96px]" id="partners">
         <div className="max-w-7xl mx-auto px-6">
           <Reveal className="relative overflow-hidden rounded-xl min-h-[420px] flex items-center text-white">
-            <div
-              className="absolute inset-0 bg-cover bg-center"
-              style={{
-                backgroundImage: "url('/images/corporate-team-strategy.jpg')",
-                backgroundPosition: "center 35%",
-              }}
-            />
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(90deg, rgba(20,8,10,.9) 0%, rgba(28,10,12,.7) 50%, rgba(28,10,12,.2) 100%)",
-              }}
-            />
+            <div className="absolute inset-0 bg-cover bg-[center_35%] bg-[url('/images/corporate-team-strategy.jpg')]" />
+            <div className="absolute inset-0 [background:linear-gradient(90deg,rgba(20,8,10,.9)_0%,rgba(28,10,12,.7)_50%,rgba(28,10,12,.2)_100%)]" />
             <div className="relative p-[56px] max-w-[600px]">
               <div className="text-[12.5px] font-extrabold tracking-[0.16em] uppercase text-orange">For service providers</div>
               <h2 className="text-[clamp(28px,3.4vw,44px)] leading-[1.04] text-white">Fill every session. Grow your studio.</h2>
@@ -173,39 +157,24 @@ export default function Landing() {
                 dashboard.
               </p>
               <div className="flex gap-[12px] flex-wrap">
-                <Link className={btnCls("lp", "light")} href="/auth">
+                <Button ctx="lp" variant="light" href="/auth">
                   Become a partner
-                </Link>
-                <Link className={btnCls("lp", "glass")} href="/provider">
+                </Button>
+                <Button ctx="lp" variant="glass" href="/provider">
                   Preview the dashboard
-                </Link>
+                </Button>
               </div>
             </div>
           </Reveal>
         </div>
       </section>
 
-      <section className="py-[96px]" id="corporate" style={{ paddingTop: 0 }}>
+      <section className="pb-[96px]" id="corporate">
         <div className="max-w-7xl mx-auto px-6">
           <Reveal className="relative overflow-hidden rounded-xl min-h-[420px] flex items-center text-white">
-            <div
-              className="absolute inset-0 bg-cover bg-center"
-              style={{
-                backgroundImage: "url('/images/corporate-hero.jpg')",
-                backgroundPosition: "center 25%",
-              }}
-            />
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(90deg, rgba(40,9,12,.55) 0%, rgba(40,9,12,.7) 55%, rgba(28,6,8,.94) 100%)",
-              }}
-            />
-            <div
-              className="relative p-[56px] max-w-[600px]"
-              style={{ marginInlineStart: "auto", textAlign: "right" }}
-            >
+            <div className="absolute inset-0 bg-cover bg-[center_25%] bg-[url('/images/corporate-hero.jpg')]" />
+            <div className="absolute inset-0 [background:linear-gradient(90deg,rgba(40,9,12,.55)_0%,rgba(40,9,12,.7)_55%,rgba(28,6,8,.94)_100%)]" />
+            <div className="relative p-[56px] max-w-[600px] ms-auto text-right">
               <div className="text-[12.5px] font-extrabold tracking-[0.16em] uppercase text-orange">For teams</div>
               <h2 className="text-[clamp(28px,3.4vw,44px)] leading-[1.04] text-white">Wellbeing your team will actually use.</h2>
               <p className="text-[17px] text-white/[0.86] leading-[1.6] mt-[18px] mb-[28px]">
@@ -213,13 +182,14 @@ export default function Landing() {
                 and gift the joy — with seats, budgets and invoices handled in
                 one place. Happier teams, zero admin.
               </p>
-              <Link
-                className={btnCls("lp", "light")}
+              <Button
+                ctx="lp"
+                variant="light"
                 href="/auth"
-                style={{ background: "var(--orange)", color: "#3a0a0d" }}
+                className="[background:var(--orange)] text-[#3a0a0d]"
               >
                 Explore Joymap for Teams
-              </Link>
+              </Button>
             </div>
           </Reveal>
         </div>
@@ -230,7 +200,7 @@ export default function Landing() {
       <section className="text-center py-[100px]">
         <div className="max-w-7xl mx-auto px-6">
           <Reveal>
-            <div className="text-[12.5px] font-extrabold tracking-[0.16em] uppercase text-orange" style={{ marginBottom: 14 }}>
+            <div className="text-[12.5px] font-extrabold tracking-[0.16em] uppercase text-orange mb-[14px]">
               Live now in Moscow
             </div>
             <h2 className="text-[clamp(30px,4vw,52px)] leading-[1.02] max-w-[18ch] mx-auto mb-[20px]">Turn this week into a week worth remembering.</h2>
@@ -239,27 +209,18 @@ export default function Landing() {
               experience at a time.
             </p>
             <div className="flex gap-[13px] justify-center flex-wrap">
-              <Link className={btnCls("lp", "primary")} href="/auth">
+              <Button ctx="lp" variant="primary" href="/auth">
                 Get started — 499 ₽/mo
-              </Link>
-              <Link className={btnCls("lp", "ghost")} href="#partners">
+              </Button>
+              <Button ctx="lp" variant="ghost" href="#partners">
                 I&apos;m a provider
-              </Link>
+              </Button>
             </div>
           </Reveal>
         </div>
       </section>
 
-      <footer className="border-t border-line py-[40px] flex items-center justify-between gap-[20px] flex-wrap text-ink-3 text-[13.5px] font-semibold max-w-7xl mx-auto px-6">
-        <div className="flex items-center gap-[9px]">
-          <b className="font-display font-extrabold text-[18px]">joymap</b>
-          <span className="inline-flex items-center gap-[5px] bg-[color-mix(in_srgb,var(--orange)_16%,transparent)] text-[var(--orange-deep)] px-[9px] py-[3px] rounded-[99px] text-[10px] font-extrabold font-display">
-            <i className="w-[6px] h-[6px] rounded-[99px] bg-[var(--orange)] inline-block animate-[pulse_1.8s_infinite]" />
-            Live now!
-          </span>
-        </div>
-        <div>© 2026 Joymap · Moscow · Made for real-life joy</div>
-      </footer>
+      <Footer />
     </div>
   );
 }

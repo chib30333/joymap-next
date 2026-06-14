@@ -61,18 +61,8 @@ export function TopNav({
             Live now!
           </span>
         </div>
-        <div
-          className="flex-1 max-w-[460px] relative"
-          style={{ marginInline: 8 }}
-        >
-          <span
-            className="absolute text-ink-3"
-            style={{
-              insetInlineStart: 15,
-              top: "50%",
-              transform: "translateY(-50%)",
-            }}
-          >
+        <div className="flex-1 max-w-[460px] relative mx-[8px]">
+          <span className="absolute text-ink-3 start-[15px] top-1/2 [transform:translateY(-50%)]">
             <Icons.search size={18} />
           </span>
           <Input
@@ -85,11 +75,7 @@ export function TopNav({
             onFocus={() => {
               if (pathname !== "/discover") router.push("/discover");
             }}
-            style={{
-              paddingInlineStart: 44,
-              borderRadius: "var(--r-pill)",
-              background: "var(--surface)",
-            }}
+            className="[padding-inline-start:44px] [border-radius:var(--r-pill)] [background:var(--surface)]"
           />
         </div>
         <div className="flex-1" />
@@ -148,19 +134,18 @@ function CityMenu({ city }: { city: string }) {
   return (
     <div ref={ref} className="relative">
       <button
-        className="inline-flex items-center gap-[7px] rounded-pill text-[13px] font-semibold border border-line-2 bg-surface text-ink-2 cursor-pointer [transition:0.14s] whitespace-nowrap hover:border-ink-3 hover:text-ink"
+        className="inline-flex items-center gap-[7px] rounded-pill text-[13px] font-semibold border border-line-2 bg-surface text-ink-2 cursor-pointer [transition:0.14s] whitespace-nowrap hover:border-ink-3 hover:text-ink p-[10px_14px]"
         onClick={() => setOpen((o) => !o)}
-        style={{ padding: "10px 14px" }}
       >
         <Icons.pin size={16} />
         {t(city)}
         <Icons.chevR
           size={14}
-          style={{ transform: "rotate(90deg)", opacity: 0.6 }}
+          className="[transform:rotate(90deg)] opacity-[0.6]"
         />
       </button>
       {open && (
-        <div className="absolute end-0 top-[54px] min-w-[248px] bg-surface border border-line rounded shadow-lg p-2 z-[60] animate-anim-pop-app" style={{ minWidth: 180 }}>
+        <div className="absolute end-0 top-[54px] bg-surface border border-line rounded shadow-lg p-2 z-[60] animate-anim-pop-app min-w-[180px]">
           {CITIES.map((c) => (
             <button
               key={c}
@@ -170,10 +155,7 @@ function CityMenu({ city }: { city: string }) {
               <Icons.pin size={16} />
               {t(c)}
               {c === city && (
-                <span
-                  className="text-coral"
-                  style={{ marginInlineStart: "auto" }}
-                >
+                <span className="text-coral ms-auto">
                   <Icons.check size={16} />
                 </span>
               )}
@@ -208,7 +190,7 @@ function AccountMenu({ user }: { user: { name: string; plan: string } }) {
         <Avatar name={user.name} size={38} />
         <Icons.chevR
           size={15}
-          style={{ transform: "rotate(90deg)", color: "var(--ink-3)" }}
+          className="[transform:rotate(90deg)] text-[var(--ink-3)]"
         />
       </div>
       {open && (
@@ -257,8 +239,7 @@ function AccountMenu({ user }: { user: { name: string; plan: string } }) {
           </button>
           <div className="h-px bg-line my-[6px] mx-[4px]" />
           <button
-            className="flex items-center gap-[11px] w-full py-[10px] px-[11px] rounded-sm text-[14px] font-semibold text-ink-2 cursor-pointer [transition:0.12s] text-left hover:bg-surface-2 hover:text-ink"
-            style={{ color: "var(--ink-3)" }}
+            className="flex items-center gap-[11px] w-full py-[10px] px-[11px] rounded-sm text-[14px] font-semibold cursor-pointer [transition:0.12s] text-left hover:bg-surface-2 hover:text-ink text-[var(--ink-3)]"
             onClick={logout}
           >
             <Icons.logout size={18} />

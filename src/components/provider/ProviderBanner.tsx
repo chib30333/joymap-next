@@ -14,28 +14,28 @@ export function ProviderBanner({
   const rejected = status === "rejected";
   return (
     <div
-      className="bg-surface border border-line rounded-lg"
-      style={{
-        margin: "0 0 var(--gap)",
-        padding: "14px 18px",
-        display: "flex",
-        gap: 13,
-        alignItems: "center",
-        background: rejected
-          ? "color-mix(in srgb,#E0212F 8%,var(--surface))"
-          : "color-mix(in srgb,#E89015 9%,var(--surface))",
-        borderColor: rejected
-          ? "color-mix(in srgb,#E0212F 35%,transparent)"
-          : "color-mix(in srgb,#E89015 35%,transparent)",
-      }}
+      className="border rounded-lg m-0 mb-[var(--gap)] py-[14px] px-[18px] flex gap-[13px] items-center [background:var(--bg)] [border-color:var(--bc)]"
+      style={
+        {
+          ["--bg"]: rejected
+            ? "color-mix(in srgb,#E0212F 8%,var(--surface))"
+            : "color-mix(in srgb,#E89015 9%,var(--surface))",
+          ["--bc"]: rejected
+            ? "color-mix(in srgb,#E0212F 35%,transparent)"
+            : "color-mix(in srgb,#E89015 35%,transparent)",
+        } as React.CSSProperties
+      }
     >
       <span
-        className="w-[38px] h-[38px] rounded-[11px] flex-none grid"
-        style={{
-          placeItems: "center",
-          background: rejected ? "rgba(224,33,47,.14)" : "rgba(232,144,21,.16)",
-          color: rejected ? "#E0212F" : "#E89015",
-        }}
+        className="w-[38px] h-[38px] rounded-[11px] flex-none grid place-items-center [background:var(--bg)] [color:var(--c)]"
+        style={
+          {
+            ["--bg"]: rejected
+              ? "rgba(224,33,47,.14)"
+              : "rgba(232,144,21,.16)",
+            ["--c"]: rejected ? "#E0212F" : "#E89015",
+          } as React.CSSProperties
+        }
       >
         {rejected ? <Icons.close size={19} /> : <Icons.clock size={19} />}
       </span>

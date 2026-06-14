@@ -1,19 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
-import { rpc, useBusy } from "@/lib/client";
+import { rpc } from "@/lib/client";
+import { useBusy } from "@/hooks";
 import {
   MOODS,
   PhotoFrame,
   MoodDot,
-  BusyBtn,
   type Exp,
 } from "./primitives";
+import { Button } from "@/components/ui";
 import { ServiceModal, type Slot } from "./ServiceModal";
-import { useFav } from "./useFav";
+import { useFav } from "@/hooks";
 import { useT } from "@/components/Language";
 
 type Day = {
@@ -71,12 +71,11 @@ export function JoyMapScreen({
     <div className="animate-anim-fade-app">
       <div className="flex items-end justify-between gap-[20px] flex-wrap mt-[6px] mb-[22px]">
         <div>
-          <div className="text-[12.5px] font-bold tracking-[0.1em] uppercase text-orange" style={{ marginBottom: 9 }}>
+          <div className="text-[12.5px] font-bold tracking-[0.1em] uppercase text-orange mb-[9px]">
             {t("This week")} · {weekLabel}
           </div>
           <h1
-            className="max-w-[560px] leading-[1.02]"
-            style={{ fontSize: "clamp(30px,4vw,44px)" }}
+            className="max-w-[560px] leading-[1.02] text-[clamp(30px,4vw,44px)]"
           >
             {greet}, {userName}.{" "}
             <span className="text-[var(--orange)]">
@@ -89,26 +88,26 @@ export function JoyMapScreen({
             )}
           </p>
         </div>
-        <BusyBtn
+        <Button
           busy={busy}
-          className={btnCls("app", "ghost", "md")}
+          ctx="app"
+          variant="ghost"
+          size="md"
           icon={<Icons.refresh size={18} />}
           onClick={regen}
         >
           {t("Regenerate")}
-        </BusyBtn>
+        </Button>
       </div>
 
       {catalog.length === 0 ? (
         <EmptyMarketplace />
       ) : map.length === 0 ? (
         <div
-          className="bg-surface border border-line rounded-lg"
-          style={{ padding: "56px 24px", textAlign: "center" }}
+          className="bg-surface border border-line rounded-lg p-[56px_24px] text-center"
         >
           <div
-            className="w-[60px] h-[60px] rounded-[99px] bg-coral-soft text-coral-deep grid mt-0 mb-[14px] mx-auto"
-            style={{ placeItems: "center" }}
+            className="w-[60px] h-[60px] rounded-[99px] bg-coral-soft text-coral-deep grid mt-0 mb-[14px] mx-auto place-items-center"
           >
             <Icons.sparkle size={26} />
           </div>
@@ -116,28 +115,23 @@ export function JoyMapScreen({
           <p className="text-ink-2 text-[14.5px] mt-[8px] mb-[18px] mx-auto max-w-[380px]">
             {t("Let Joy compose a week of experiences around your moods.")}
           </p>
-          <BusyBtn
+          <Button
             busy={busy}
-            className={btnCls("app", "primary", "md")}
+            ctx="app"
+            variant="primary"
+            size="md"
             icon={<Icons.sparkle size={17} />}
             onClick={regen}
           >
             {t("Build my week")}
-          </BusyBtn>
+          </Button>
         </div>
       ) : (
         <>
           <MoodArc map={map} byId={byId} />
           <div className="relative mt-[26px]">
             <div
-              className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-              style={{
-                display: "flex",
-                gap: 16,
-                overflowX: "auto",
-                paddingBottom: 10,
-                scrollSnapType: "x proximity",
-              }}
+              className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden flex gap-[16px] overflow-x-auto pb-[10px] [scroll-snap-type:x_proximity]"
             >
               {map.map((d, i) => (
                 <DayCard
@@ -153,18 +147,10 @@ export function JoyMapScreen({
           </div>
           {days.length > 0 && (
             <div
-              className="bg-[linear-gradient(160deg,#5e1014,var(--maroon))] border border-[color-mix(in_srgb,var(--coral)_55%,transparent)] text-[#f3ebe0] rounded-lg"
-              style={{
-                marginTop: 26,
-                padding: "22px 24px",
-                display: "flex",
-                gap: 18,
-                alignItems: "flex-start",
-              }}
+              className="bg-[linear-gradient(160deg,#5e1014,var(--maroon))] border border-[color-mix(in_srgb,var(--coral)_55%,transparent)] text-[#f3ebe0] rounded-lg mt-[26px] p-[22px_24px] flex gap-[18px] items-start"
             >
               <div
-                className="rounded-[99px] flex-none grid place-items-center bg-coral text-white"
-                style={{ width: 44, height: 44, borderRadius: 14 }}
+                className="flex-none grid place-items-center bg-coral text-white w-[44px] h-[44px] rounded-[14px]"
               >
                 <Icons.sparkle size={22} />
               </div>
@@ -209,10 +195,9 @@ export function JoyMapScreen({
 export function EmptyMarketplace() {
   const t = useT();
   return (
-    <div className="bg-surface border border-line rounded-lg" style={{ padding: "60px 24px", textAlign: "center" }}>
+    <div className="bg-surface border border-line rounded-lg p-[60px_24px] text-center">
       <div
-        className="w-[64px] h-[64px] rounded-[99px] bg-surface-2 grid mt-0 mb-[16px] mx-auto text-ink-3"
-        style={{ placeItems: "center" }}
+        className="w-[64px] h-[64px] rounded-[99px] bg-surface-2 grid mt-0 mb-[16px] mx-auto text-ink-3 place-items-center"
       >
         <Icons.compass size={30} />
       </div>
@@ -237,14 +222,7 @@ function MoodArc({
   const t = useT();
   return (
     <div
-      className="bg-surface border border-line rounded-lg"
-      style={{
-        padding: "14px 18px",
-        display: "flex",
-        alignItems: "center",
-        gap: 14,
-        overflowX: "auto",
-      }}
+      className="bg-surface border border-line rounded-lg p-[14px_18px] flex items-center gap-[14px] overflow-x-auto"
     >
       <span className="text-[12.5px] font-bold text-ink-3 tracking-[.04em] uppercase flex-none">
         {t("Your emotional arc")}
@@ -256,11 +234,13 @@ function MoodArc({
           return (
             <div key={d.day} className="text-center flex-1">
               <div
-                className="h-[8px] rounded-[99px] mb-[6px]"
-                style={{
-                  background: m ? m.color : "var(--line-2)",
-                  boxShadow: m ? `0 2px 8px ${m.color}55` : "none",
-                }}
+                className="h-[8px] rounded-[99px] mb-[6px] [background:var(--bar-bg)] [box-shadow:var(--bar-sh)]"
+                style={
+                  {
+                    "--bar-bg": m ? m.color : "var(--line-2)",
+                    "--bar-sh": m ? `0 2px 8px ${m.color}55` : "none",
+                  } as React.CSSProperties
+                }
               />
               <span className="text-[11.5px] font-bold text-ink-3">{d.wd}</span>
             </div>
@@ -290,18 +270,8 @@ function DayCard({
   if (d.rest || !e) {
     return (
       <div
-        className="bg-surface border border-line rounded-lg animate-anim-pop-app"
-        style={{
-          flex: "none",
-          width: 230,
-          scrollSnapAlign: "start",
-          padding: 20,
-          display: "flex",
-          flexDirection: "column",
-          background: "var(--surface-2)",
-          borderStyle: "dashed",
-          animationDelay: `${i * 0.06}s`,
-        }}
+        className="border border-line rounded-lg animate-anim-pop-app flex-none w-[230px] [scroll-snap-align:start] p-[20px] flex flex-col bg-surface-2 [border-style:dashed] [animation-delay:var(--ad)]"
+        style={{ "--ad": `${i * 0.06}s` } as React.CSSProperties}
       >
         <div className="flex items-center justify-between">
           <span className="font-display font-extrabold text-[15px]">
@@ -315,8 +285,7 @@ function DayCard({
         </div>
         <div className="flex-1 flex flex-col justify-center items-center text-center gap-[10px] pt-[18px] pb-[18px] pl-0 pr-0">
           <div
-            className="w-[48px] h-[48px] rounded-[99px] bg-[var(--m-calm-soft)] grid text-[var(--m-calm)]"
-            style={{ placeItems: "center" }}
+            className="w-[48px] h-[48px] rounded-[99px] bg-[var(--m-calm-soft)] grid text-[var(--m-calm)] place-items-center"
           >
             <Icons.heart size={24} />
           </div>
@@ -334,17 +303,9 @@ function DayCard({
   );
   return (
     <div
-      className="bg-surface border border-line rounded-lg animate-anim-pop-app"
+      className="bg-surface border border-line rounded-lg animate-anim-pop-app flex-none w-[268px] [scroll-snap-align:start] overflow-hidden cursor-pointer [transition:.2s] [animation-delay:var(--ad)]"
       onClick={() => onOpen(e)}
-      style={{
-        flex: "none",
-        width: 268,
-        scrollSnapAlign: "start",
-        overflow: "hidden",
-        cursor: "pointer",
-        transition: ".2s",
-        animationDelay: `${i * 0.06}s`,
-      }}
+      style={{ "--ad": `${i * 0.06}s` } as React.CSSProperties}
     >
       <PhotoFrame exp={e} ratio="16/11">
         <div className="absolute top-[12px] left-[12px] right-[12px] flex justify-between items-start">
@@ -357,20 +318,17 @@ function DayCard({
             </span>
           )}
         </div>
-        <div className="absolute left-[14px] right-[14px] bottom-[12px] text-[#fff] font-display font-bold text-[18px] tracking-[-0.01em] leading-[1.1] [text-shadow:0_1px_12px_rgba(0,0,0,0.35)]" style={{ fontSize: 18 }}>
+        <div className="absolute left-[14px] right-[14px] bottom-[12px] text-[#fff] font-display font-bold text-[18px] tracking-[-0.01em] leading-[1.1] [text-shadow:0_1px_12px_rgba(0,0,0,0.35)]">
           {e.title}
         </div>
       </PhotoFrame>
       <div className="pt-[13px] pr-[15px] pb-[15px] pl-[15px] flex flex-col gap-[11px]">
         <div className="flex items-center justify-between">
           <span
-            className="inline-flex items-center gap-[8px] pt-[7px] pr-[13px] pb-[7px] pl-[11px] rounded-pill text-[13px] font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid border-transparent"
-            style={{
-              background: m.soft,
-              color: m.color,
-              padding: "5px 11px 5px 9px",
-              fontSize: 12,
-            }}
+            className="inline-flex items-center gap-[8px] rounded-pill font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid border-transparent p-[5px_11px_5px_9px] text-[12px] [background:var(--chip-bg)] text-[var(--chip-c)]"
+            style={
+              { "--chip-bg": m.soft, "--chip-c": m.color } as React.CSSProperties
+            }
           >
             <MoodDot mood={e.mood} size={7} />
             {t(m.label)}
@@ -383,28 +341,25 @@ function DayCard({
         <p className="m-0 text-[13px] text-ink-3 font-semibold">{d.note}</p>
         {booked ? (
           <div
-            className={btnCls("app", undefined, "sm")}
-            style={{
-              background: "var(--m-calm-soft)",
-              color: "var(--m-calm)",
-              fontWeight: 700,
-              cursor: "default",
-            }}
+            className="inline-flex items-center justify-center font-bold rounded-pill whitespace-nowrap leading-none [transition:0.16s] active:[transform:translateY(1px)_scale(0.99)] gap-2 py-2 px-4 text-sm bg-[var(--m-calm-soft)] text-[var(--m-calm)] cursor-default"
           >
             <Icons.check size={16} />
             {booked.status === "pending" ? t("Requested") : t("Booked")} ·{" "}
             {booked.time}
           </div>
         ) : (
-          <button
-            className={btnCls("app", "primary", "sm", true)}
+          <Button
+            ctx="app"
+            variant="primary"
+            size="sm"
+            block
             onClick={(ev) => {
               ev.stopPropagation();
               onOpen(e);
             }}
           >
             {t("Book this day")}
-          </button>
+          </Button>
         )}
       </div>
     </div>

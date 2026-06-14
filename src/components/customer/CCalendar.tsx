@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { btnCls } from "@/lib/btn";
 import { Icons } from "@/components/Icons";
 import { useT } from "@/components/Language";
 import {
@@ -13,11 +12,11 @@ import {
   MoodChip,
   MoodDot,
   Rating,
-  Btn,
   type Exp,
 } from "./primitives";
+import { Button } from "@/components/ui";
 import { ServiceModal, type Slot } from "./ServiceModal";
-import { useFav } from "./useFav";
+import { useFav } from "@/hooks";
 
 const CAL_MONTH = { label: "June 2026", days: 30, firstDow: 0, today: 10 };
 const CAL_WD = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -139,8 +138,7 @@ export function CCalendar({
         />
         <div className="flex items-center gap-[4px]">
           <button
-            className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
-            style={{ width: 38, height: 38 }}
+            className="w-[38px] h-[38px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
             onClick={() => setCursor((c) => Math.max(1, c - 7))}
             disabled={view === "month"}
           >
@@ -158,8 +156,7 @@ export function CCalendar({
             )}
           </b>
           <button
-            className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
-            style={{ width: 38, height: 38 }}
+            className="w-[38px] h-[38px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
             onClick={() => setCursor((c) => Math.min(CAL_MONTH.days, c + 7))}
             disabled={view === "month"}
           >
@@ -167,22 +164,23 @@ export function CCalendar({
           </button>
         </div>
         <div className="flex-1" />
-        <button
-          className={btnCls("app", "soft", "sm")}
+        <Button
+          ctx="app"
+          variant="soft"
+          size="sm"
           onClick={() => {
             setCursor(CAL_MONTH.today);
             setSel(CAL_MONTH.today);
           }}
         >
           {t("Today")}
-        </button>
+        </Button>
       </div>
 
       <div className="flex flex-col gap-[12px] mb-5">
         <div className="flex gap-[9px] overflow-x-auto pb-[3px]">
           <button
-            className={`inline-flex items-center gap-[7px] py-[7px] px-[13px] rounded-pill text-[13px] font-semibold border cursor-pointer [transition:0.15s] ${!f.mood ? "bg-coral text-white border-coral" : "border-line-2 bg-surface hover:border-ink-3 hover:text-ink"}`}
-            style={{ padding: "9px 16px" }}
+            className={`inline-flex items-center gap-[7px] p-[9px_16px] rounded-pill text-[13px] font-semibold border cursor-pointer [transition:0.15s] ${!f.mood ? "bg-coral text-white border-coral" : "border-line-2 bg-surface hover:border-ink-3 hover:text-ink"}`}
             onClick={() => setFilter("mood", null)}
           >
             {t("All moods")}
@@ -227,11 +225,11 @@ export function CCalendar({
             ))}
           </Sel>
           {activeFilters > 0 && (
-            <button className={btnCls("app", "ghost", "sm")} onClick={clear}>
+            <Button ctx="app" variant="ghost" size="sm" onClick={clear}>
               <Icons.close size={14} />
               {t("Clear")}
               {` (${activeFilters})`}
-            </button>
+            </Button>
           )}
           <span className="ml-auto text-ink-3 text-[13px] font-bold">
             {sessions.length} {t("sessions")}
@@ -333,7 +331,7 @@ function Sel({
         {children}
       </select>
       <span className="absolute right-[13px] top-1/2 -translate-y-1/2 pointer-events-none text-ink-3">
-        <Icons.chevR size={14} style={{ transform: "rotate(90deg)" }} />
+        <Icons.chevR size={14} className="[transform:rotate(90deg)]" />
       </span>
     </span>
   );
@@ -400,8 +398,8 @@ function MonthGrid({
             return (
               <span
                 key={s.id}
-                className="flex items-center gap-[6px] py-[3px] px-[8px] rounded-[7px] text-[11px] font-bold leading-[1.3] overflow-hidden whitespace-nowrap text-ellipsis"
-                style={{ background: m.soft, color: m.color }}
+                className="flex items-center gap-[6px] py-[3px] px-[8px] rounded-[7px] text-[11px] font-bold leading-[1.3] overflow-hidden whitespace-nowrap text-ellipsis [background:var(--pill-bg)] text-[var(--pill-c)]"
+                style={{ "--pill-bg": m.soft, "--pill-c": m.color } as React.CSSProperties}
                 onClick={(ev) => {
                   ev.stopPropagation();
                   onOpen(e);
@@ -456,8 +454,7 @@ function DayPanel({
     <div className="mt-[18px] border border-line rounded-lg overflow-hidden bg-surface">
       <div className="flex items-center gap-[12px] py-[18px] px-[22px] [background:linear-gradient(120deg,var(--coral-soft),var(--surface)_75%)] border-b border-line">
         <div
-          className="w-[46px] h-[46px] rounded-[13px] bg-surface grid place-items-center flex-none"
-          style={{ boxShadow: "var(--sh-sm)" }}
+          className="w-[46px] h-[46px] rounded-[13px] bg-surface grid place-items-center flex-none [box-shadow:var(--sh-sm)]"
         >
           <span className="font-display font-extrabold text-[20px] text-coral-deep">
             {day}
@@ -474,12 +471,7 @@ function DayPanel({
         </div>
         {day === CAL_MONTH.today && (
           <span
-            className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] font-semibold bg-surface-2 text-ink-2 border border-line"
-            style={{
-              background: "var(--coral)",
-              color: "#fff",
-              border: "none",
-            }}
+            className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] font-semibold bg-[var(--coral)] text-[#fff] border-none"
           >
             {t("Today")}
           </span>
@@ -507,19 +499,16 @@ function DayPanel({
                 {s.time}
               </span>
               <div
-                className="w-[54px] h-[54px] rounded-sm flex-none"
-                style={{ background: bg(e) }}
+                className="w-[54px] h-[54px] rounded-sm flex-none [background:var(--sw-bg)]"
+                style={{ "--sw-bg": bg(e) } as React.CSSProperties}
               />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-[8px] mb-[4px]">
                   <span
-                    className="inline-flex items-center gap-[8px] pt-[7px] pr-[13px] pb-[7px] pl-[11px] rounded-pill text-[13px] font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid border-transparent"
-                    style={{
-                      background: m.soft,
-                      color: m.color,
-                      padding: "3px 9px 3px 8px",
-                      fontSize: 11,
-                    }}
+                    className="inline-flex items-center gap-[8px] rounded-pill font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid border-transparent p-[3px_9px_3px_8px] text-[11px] [background:var(--chip-bg)] text-[var(--chip-c)]"
+                    style={
+                      { "--chip-bg": m.soft, "--chip-c": m.color } as React.CSSProperties
+                    }
                   >
                     <MoodDot mood={e.mood} size={6} />
                     {t(m.label)}
@@ -544,12 +533,13 @@ function DayPanel({
               </div>
               <div className="text-right flex-none">
                 <div
-                  className="font-display font-bold text-[18px] text-ink whitespace-nowrap [&_small]:font-semibold [&_small]:text-[12.5px] [&_small]:text-ink-3"
-                  style={{ fontSize: 17, marginBottom: 7 }}
+                  className="font-display font-bold text-ink whitespace-nowrap [&_small]:font-semibold [&_small]:text-[12.5px] [&_small]:text-ink-3 text-[17px] mb-[7px]"
                 >
                   {fmt(e.price)}
                 </div>
-                <Btn
+                <Button
+                  ctx="app"
+                  variant="primary"
                   size="sm"
                   onClick={(ev) => {
                     ev.stopPropagation();
@@ -557,7 +547,7 @@ function DayPanel({
                   }}
                 >
                   {t("Book")}
-                </Btn>
+                </Button>
               </div>
             </div>
           );
@@ -597,8 +587,8 @@ function WeekView({
               }`}
             >
               <div
-                className="text-[11px] font-extrabold tracking-[.05em] uppercase"
-                style={{ opacity: today ? 0.9 : 0.6 }}
+                className="text-[11px] font-extrabold tracking-[.05em] uppercase opacity-[var(--op)]"
+                style={{ "--op": today ? 0.9 : 0.6 } as React.CSSProperties}
               >
                 {t(CAL_WD[calDow(d)])}
               </div>
@@ -617,8 +607,8 @@ function WeekView({
                   return (
                     <div
                       key={s.id}
-                      className="rounded-[12px] py-[10px] px-[11px] cursor-pointer text-[#fff] relative overflow-hidden [transition:0.16s] hover:-translate-y-[2px] hover:shadow"
-                      style={{ background: bg(e) }}
+                      className="rounded-[12px] py-[10px] px-[11px] cursor-pointer text-[#fff] relative overflow-hidden [transition:0.16s] hover:-translate-y-[2px] hover:shadow [background:var(--card-bg)]"
+                      style={{ "--card-bg": bg(e) } as React.CSSProperties}
                       onClick={() => onOpen(e)}
                     >
                       <div className="absolute inset-0 bg-[rgba(0,0,0,.18)]" />
@@ -627,15 +617,13 @@ function WeekView({
                           {s.time}
                         </div>
                         <div
-                          className="text-[12.5px] font-bold leading-[1.25] mt-[2px]"
-                          style={{ textShadow: "0 1px 6px rgba(0,0,0,.3)" }}
+                          className="text-[12.5px] font-bold leading-[1.25] mt-[2px] [text-shadow:0_1px_6px_rgba(0,0,0,.3)]"
                         >
                           {e.title}
                         </div>
                         <div className="flex items-center justify-between mt-[7px] text-[11.5px] font-bold">
                           <span
-                            className="bg-[rgba(255,255,255,.25)] py-[2px] px-[7px] rounded-[99px]"
-                            style={{ backdropFilter: "blur(4px)" }}
+                            className="bg-[rgba(255,255,255,.25)] py-[2px] px-[7px] rounded-[99px] [backdrop-filter:blur(4px)]"
                           >
                             {t(m.label)}
                           </span>

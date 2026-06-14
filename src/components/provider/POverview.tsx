@@ -1,9 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { btnCls } from "@/lib/btn";
 import { Icons } from "@/components/Icons";
 import { useT } from "@/components/Language";
+import { Button } from "@/components/ui";
 import { money, Stat, Bars } from "@/components/dash/primitives";
 import { MOODS } from "@/components/customer/primitives";
 import { BookingsTable } from "@/components/provider/BookingsTable";
@@ -75,14 +75,7 @@ export function POverview({
   ];
   return (
     <div className="animate-anim-fade-dash">
-      <div
-        className="grid"
-        style={{
-          gridTemplateColumns: "repeat(auto-fit,minmax(210px,1fr))",
-          gap: "var(--gap)",
-          marginBottom: "var(--gap)",
-        }}
-      >
+      <div className="grid [grid-template-columns:repeat(auto-fit,minmax(210px,1fr))] gap-[var(--gap)] mb-[var(--gap)]">
         {kpis.map((k, i) => {
           const I = Icons[k.icon];
           return (
@@ -97,15 +90,9 @@ export function POverview({
           );
         })}
       </div>
-      <div
-        className="grid grid-cols-[1.5fr_1fr]"
-        style={{ gap: "var(--gap)", marginBottom: "var(--gap)" }}
-      >
-        <div className="bg-surface border border-line rounded-lg" style={{ padding: 22 }}>
-          <div
-            className="flex items-end justify-between gap-4"
-            style={{ marginBottom: 8 }}
-          >
+      <div className="grid grid-cols-[1.5fr_1fr] gap-[var(--gap)] mb-[var(--gap)]">
+        <div className="bg-surface border border-line rounded-lg p-[22px]">
+          <div className="flex items-end justify-between gap-4 mb-[8px]">
             <div>
               <h3 className="text-[17px]">{t("Revenue this week")}</h3>
               <div className="text-[13px] text-ink-3 font-semibold">
@@ -126,7 +113,7 @@ export function POverview({
             </div>
           )}
         </div>
-        <div className="bg-surface border border-line rounded-lg" style={{ padding: 22 }}>
+        <div className="bg-surface border border-line rounded-lg p-[22px]">
           <h3 className="text-[17px] mb-[4px]">{t("Today's schedule")}</h3>
           <div className="text-[13px] text-ink-3 font-semibold mb-[16px]">
             {t(WD[dow(TODAY)])} {TODAY} {t("Jun")} · {todaySlots.length}{" "}
@@ -162,14 +149,15 @@ export function POverview({
                         {s.time}
                       </div>
                       <div
-                        className="w-[3px] self-stretch rounded-[9px]"
-                        style={{ background: MOODS[sv.mood].color }}
+                        className="w-[3px] self-stretch rounded-[9px] [background:var(--mood-bg)]"
+                        style={
+                          {
+                            ["--mood-bg"]: MOODS[sv.mood].color,
+                          } as React.CSSProperties
+                        }
                       />
                       <div className="flex-1 min-w-0">
-                        <div
-                          className="font-bold text-[14px] whitespace-nowrap overflow-hidden"
-                          style={{ textOverflow: "ellipsis" }}
-                        >
+                        <div className="font-bold text-[14px] whitespace-nowrap overflow-hidden text-ellipsis">
                           {sv.name}
                         </div>
                         <div className="text-[12.5px] text-ink-3 font-semibold">
@@ -183,15 +171,17 @@ export function POverview({
           )}
         </div>
       </div>
-      <div className="bg-surface border border-line rounded-lg" style={{ overflow: "hidden" }}>
+      <div className="bg-surface border border-line rounded-lg overflow-hidden">
         <div className="flex items-center justify-between py-[18px] px-[20px]">
           <h3 className="text-[17px]">{t("Recent bookings")}</h3>
-          <button
-            className={btnCls("dash", "ghost", "sm")}
+          <Button
+            ctx="dash"
+            variant="ghost"
+            size="sm"
             onClick={() => router.push("/provider/bookings")}
           >
             {t("View all")} <Icons.arrowR size={15} />
-          </button>
+          </Button>
         </div>
         {bookings.length === 0 ? (
           <div className="py-[26px] px-[20px] text-ink-3 font-semibold text-[13.5px] border-t border-line">
@@ -200,7 +190,7 @@ export function POverview({
             )}
           </div>
         ) : (
-          <div style={{ overflowX: "auto" }}>
+          <div className="overflow-x-auto">
             <BookingsTable rows={bookings.slice(0, 4)} compact />
           </div>
         )}
