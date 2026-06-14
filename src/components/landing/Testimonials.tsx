@@ -40,7 +40,7 @@ function initials(name: string) {
 
 export function Testimonials() {
   return (
-    <section className="py-[96px]" style={{ paddingTop: 0 }} id="stories">
+    <section className="pb-[96px] pt-0" id="stories">
       <div className="max-w-7xl mx-auto px-6">
         <Reveal className="max-w-[680px] mx-auto mb-[52px] text-center">
           <div className="text-[12.5px] font-extrabold tracking-[0.16em] uppercase text-orange">Loved in the city</div>
@@ -64,8 +64,8 @@ export function Testimonials() {
               </blockquote>
               <figcaption className="flex items-center gap-[12px] mt-[22px]">
                 <span
-                  className="w-[44px] h-[44px] rounded-pill grid place-items-center text-white font-extrabold font-display text-[15px] flex-none"
-                  style={{ background: it.grad }}
+                  className="w-[44px] h-[44px] rounded-pill grid place-items-center text-white font-extrabold font-display text-[15px] flex-none [background:var(--av-bg)]"
+                  style={{ "--av-bg": it.grad } as React.CSSProperties}
                 >
                   {initials(it.name)}
                 </span>

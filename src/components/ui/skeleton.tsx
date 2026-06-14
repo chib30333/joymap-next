@@ -14,10 +14,16 @@ export function Skeleton({
   return (
     <span
       className={clsx(
-        "relative overflow-hidden block bg-[color-mix(in_srgb,var(--ink)_8%,transparent)] after:content-[''] after:absolute after:inset-0 after:-translate-x-full after:bg-[linear-gradient(90deg,transparent,color-mix(in_srgb,var(--surface)_75%,transparent),transparent)] after:animate-sweep motion-reduce:after:animate-none",
+        "relative overflow-hidden block bg-[color-mix(in_srgb,var(--ink)_8%,transparent)] after:content-[''] after:absolute after:inset-0 after:-translate-x-full after:bg-[linear-gradient(90deg,transparent,color-mix(in_srgb,var(--surface)_75%,transparent),transparent)] after:animate-sweep motion-reduce:after:animate-none w-[var(--sk-w)] h-[var(--sk-h)] rounded-[var(--sk-r)]",
         className,
       )}
-      style={{ width: w, height: h, borderRadius: r }}
+      style={
+        {
+          "--sk-w": typeof w === "number" ? w + "px" : w,
+          "--sk-h": h + "px",
+          "--sk-r": r + "px",
+        } as React.CSSProperties
+      }
     />
   );
 }

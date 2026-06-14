@@ -1,9 +1,8 @@
 "use client";
 
 import { Icons } from "@/components/Icons";
-import { btnCls } from "@/lib/btn";
 import { useT } from "@/components/Language";
-import { DataTable } from "@/components/ui";
+import { Button, DataTable } from "@/components/ui";
 import { money, Pill, Avatar } from "@/components/dash/primitives";
 
 type Booking = any;
@@ -61,26 +60,24 @@ export function BookingsTable({
             <td>
               <div className="flex gap-[6px] justify-end items-center">
                 {actingId === b.id ? (
-                  <span
-                    className="w-[17px] h-[17px] rounded-full inline-block flex-none border-[2.5px] border-solid [border-top-color:currentColor] [border-right-color:color-mix(in_srgb,currentColor_35%,transparent)] [border-bottom-color:color-mix(in_srgb,currentColor_35%,transparent)] [border-left-color:color-mix(in_srgb,currentColor_35%,transparent)] animate-jm-spin"
-                    style={{ color: "var(--ink-3)" }}
-                  />
+                  <span className="w-[17px] h-[17px] rounded-full inline-block flex-none border-[2.5px] border-solid [border-top-color:currentColor] [border-right-color:color-mix(in_srgb,currentColor_35%,transparent)] [border-bottom-color:color-mix(in_srgb,currentColor_35%,transparent)] [border-left-color:color-mix(in_srgb,currentColor_35%,transparent)] animate-jm-spin text-ink-3" />
                 ) : (
                   <>
                     {b.status === "pending" && (
                       <>
-                        <button
-                          className={btnCls("dash", "primary", "sm")}
+                        <Button
+                          ctx="dash"
+                          variant="primary"
+                          size="sm"
                           onClick={(e) => {
                             e.stopPropagation();
                             onAct(b.id, "confirmed");
                           }}
                         >
                           {t("Confirm")}
-                        </button>
+                        </Button>
                         <button
-                          className="w-10 h-10 rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
-                          style={{ width: 34, height: 34 }}
+                          className="w-[34px] h-[34px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
                           title={t("Decline")}
                           onClick={(e) => {
                             e.stopPropagation();
@@ -93,24 +90,28 @@ export function BookingsTable({
                     )}
                     {b.status === "confirmed" && (
                       <>
-                        <button
-                          className={btnCls("dash", "soft", "sm")}
+                        <Button
+                          ctx="dash"
+                          variant="soft"
+                          size="sm"
                           onClick={(e) => {
                             e.stopPropagation();
                             onAct(b.id, "completed");
                           }}
                         >
                           {t("Complete")}
-                        </button>
-                        <button
-                          className={btnCls("dash", "ghost", "sm")}
+                        </Button>
+                        <Button
+                          ctx="dash"
+                          variant="ghost"
+                          size="sm"
                           onClick={(e) => {
                             e.stopPropagation();
                             onAct(b.id, "cancelled");
                           }}
                         >
                           {t("Cancel")}
-                        </button>
+                        </Button>
                       </>
                     )}
                   </>

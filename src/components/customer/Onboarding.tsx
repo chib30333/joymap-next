@@ -1,12 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { rpc } from "@/lib/client";
-import { MOODS, MOOD_ORDER, Btn, MoodChip } from "./primitives";
-import { Textarea } from "@/components/ui";
+import { MOODS, MOOD_ORDER, MoodChip } from "./primitives";
+import { Button, Textarea } from "@/components/ui";
 import { useT } from "@/components/Language";
 
 export function Onboarding() {
@@ -111,41 +110,20 @@ export function Onboarding() {
 
   return (
     <div
-      style={{
-        minHeight: "calc(100vh - 130px)",
-        display: "grid",
-        placeItems: "center",
-        padding: "28px 16px",
-        background:
-          "radial-gradient(1000px 560px at 82% -12%, color-mix(in srgb,var(--red) 24%,transparent), transparent 60%), radial-gradient(820px 480px at -8% 112%, color-mix(in srgb,var(--orange) 16%,transparent), transparent 56%), var(--bg)",
-      }}
+      className="min-h-[calc(100vh-130px)] grid place-items-center p-[28px_16px] [background:radial-gradient(1000px_560px_at_82%_-12%,color-mix(in_srgb,var(--red)_24%,transparent),transparent_60%),radial-gradient(820px_480px_at_-8%_112%,color-mix(in_srgb,var(--orange)_16%,transparent),transparent_56%),var(--bg)]"
     >
       <div
-        className="bg-surface border border-line rounded-lg animate-anim-pop-app"
-        style={{
-          width: "100%",
-          maxWidth: 560,
-          boxShadow: "var(--sh-lg)",
-          overflow: "hidden",
-          display: "flex",
-          flexDirection: "column",
-          height: "min(86vh,720px)",
-        }}
+        className="bg-surface border border-line rounded-lg animate-anim-pop-app w-full max-w-[560px] [box-shadow:var(--sh-lg)] overflow-hidden flex flex-col h-[min(86vh,720px)]"
       >
         <div className="flex items-center gap-[12px] py-[18px] px-[22px] border-b border-line">
           <div className="relative">
             <div
-              className="w-[40px] h-[40px] rounded-pill bg-[linear-gradient(140deg,var(--red),var(--orange))] text-[#fff] grid place-items-center font-extrabold font-display flex-none"
-              style={{
-                background: "linear-gradient(140deg,var(--orange),var(--red))",
-                animation: "float 4s ease-in-out infinite",
-              }}
+              className="w-[40px] h-[40px] rounded-pill text-[#fff] grid place-items-center font-extrabold font-display flex-none bg-[linear-gradient(140deg,var(--orange),var(--red))] [animation:float_4s_ease-in-out_infinite]"
             >
               <Icons.sparkle size={20} />
             </div>
             <span
-              className="absolute bottom-0 right-0 w-[11px] h-[11px] rounded-[99px] bg-[var(--m-calm)]"
-              style={{ border: "2px solid var(--surface)" }}
+              className="absolute bottom-0 right-0 w-[11px] h-[11px] rounded-[99px] bg-[var(--m-calm)] [border:2px_solid_var(--surface)]"
             />
           </div>
           <div>
@@ -154,19 +132,20 @@ export function Onboarding() {
               {t("Building your map · step")} {Math.max(1, Math.min(step, 2))} {t("of 2")}
             </div>
           </div>
-          <button
-            className={btnCls("app", "ghost", "sm")}
-            style={{ marginLeft: "auto" }}
+          <Button
+            ctx="app"
+            variant="ghost"
+            size="sm"
+            className="ms-auto"
             onClick={() => complete(["calm", "joy", "focus"])}
           >
             {t("Skip")}
-          </button>
+          </Button>
         </div>
 
         <div
           ref={scroll}
-          className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden flex-1 p-[22px] flex flex-col gap-[14px]"
-          style={{ overflow: "auto" }}
+          className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden flex-1 p-[22px] flex flex-col gap-[14px] overflow-auto"
         >
           {msgs.map((m, i) => (
             <Bubble key={i} from={m.from}>
@@ -195,22 +174,22 @@ export function Onboarding() {
                     />
                   ))}
                 </div>
-                <Btn
+                <Button
+                  ctx="app"
+                  variant="primary"
                   block
                   size="lg"
                   onClick={submitMoods}
                   disabled={!picked.length}
                   iconR={<Icons.arrowR size={19} />}
-                  style={
-                    !picked.length
-                      ? { opacity: 0.5, boxShadow: "none" }
-                      : undefined
+                  className={
+                    !picked.length ? "opacity-[0.5] [box-shadow:none]" : undefined
                   }
                 >
                   {picked.length
                     ? `${t("Continue with")} ${picked.length} ${picked.length > 1 ? t("moods") : t("mood")}`
                     : t("Pick at least one")}
-                </Btn>
+                </Button>
               </>
             )}
             {step === 2 && (
@@ -226,18 +205,10 @@ export function Onboarding() {
                     }
                   }}
                   placeholder={t("e.g. A fun date idea under 3000 ₽…")}
-                  style={{ resize: "none", minHeight: 48 }}
+                  className="resize-none min-h-[48px]"
                 />
                 <button
-                  className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
-                  style={{
-                    background: "var(--coral)",
-                    color: "#fff",
-                    border: "none",
-                    flex: "none",
-                    width: 48,
-                    height: 48,
-                  }}
+                  className="rounded-pill grid place-items-center [transition:0.15s] relative cursor-pointer bg-[var(--coral)] text-[#fff] border-none flex-none w-[48px] h-[48px]"
                   onClick={submitText}
                 >
                   <Icons.send size={20} />
@@ -280,18 +251,18 @@ function Bubble({
   const me = from === "me";
   return (
     <div
-      className="animate-anim-pop-app max-w-[82%]"
-      style={{ alignSelf: me ? "flex-end" : "flex-start" }}
+      className={`animate-anim-pop-app max-w-[82%] ${me ? "self-end" : "self-start"}`}
     >
       <div
-        className="py-[12px] px-[16px] text-[14.5px] leading-[1.5]"
-        style={{
-          borderRadius: me ? "18px 18px 6px 18px" : "18px 18px 18px 6px",
-          background: me ? "var(--coral)" : "var(--surface-2)",
-          color: me ? "#fff" : "var(--ink)",
-          border: me ? "none" : "1px solid var(--line)",
-          boxShadow: "var(--sh-sm)",
-        }}
+        className="py-[12px] px-[16px] text-[14.5px] leading-[1.5] [border-radius:var(--bbl-r)] [background:var(--bbl-bg)] [color:var(--bbl-c)] [border:var(--bbl-bd)] [box-shadow:var(--sh-sm)]"
+        style={
+          {
+            "--bbl-r": me ? "18px 18px 6px 18px" : "18px 18px 18px 6px",
+            "--bbl-bg": me ? "var(--coral)" : "var(--surface-2)",
+            "--bbl-c": me ? "#fff" : "var(--ink)",
+            "--bbl-bd": me ? "none" : "1px solid var(--line)",
+          } as React.CSSProperties
+        }
       >
         {children}
       </div>
@@ -304,13 +275,10 @@ function Typing() {
       {[0, 1, 2].map((i) => (
         <span
           key={i}
-          style={{
-            width: 7,
-            height: 7,
-            borderRadius: 99,
-            background: "var(--ink-3)",
-            animation: `float 1s ease-in-out ${i * 0.15}s infinite`,
-          }}
+          className="w-[7px] h-[7px] rounded-[99px] bg-[var(--ink-3)] [animation:var(--anim)]"
+          style={
+            { "--anim": `float 1s ease-in-out ${i * 0.15}s infinite` } as React.CSSProperties
+          }
         />
       ))}
     </div>
@@ -334,15 +302,10 @@ function BuildingMap() {
   }, []);
   return (
     <div
-      className="animate-anim-pop-app bg-surface border border-line rounded-lg"
-      style={{
-        padding: 20,
-        background: "var(--surface-2)",
-        alignSelf: "stretch",
-      }}
+      className="animate-anim-pop-app border border-line rounded-lg p-[20px] bg-surface-2 self-stretch"
     >
       <div className="flex items-center gap-[10px] mb-[14px]">
-        <Icons.sparkle size={20} style={{ color: "var(--coral)" }} />
+        <Icons.sparkle size={20} className="text-[var(--coral)]" />
         <span className="font-display font-bold text-[16px]">
           {t("Composing your Joy Map…")}
         </span>
@@ -351,39 +314,29 @@ function BuildingMap() {
         {steps.map((s, k) => (
           <div
             key={k}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              fontSize: 13.5,
-              fontWeight: 600,
-              color: k <= i ? "var(--ink)" : "var(--ink-3)",
-              transition: ".3s",
-            }}
+            className="flex items-center gap-[10px] text-[13.5px] font-semibold [transition:.3s] [color:var(--step-c)]"
+            style={
+              { "--step-c": k <= i ? "var(--ink)" : "var(--ink-3)" } as React.CSSProperties
+            }
           >
             <span
-              style={{
-                width: 18,
-                height: 18,
-                borderRadius: 99,
-                display: "grid",
-                placeItems: "center",
-                flex: "none",
-                background:
-                  k < i
-                    ? "var(--m-calm)"
-                    : k === i
-                      ? "var(--coral)"
-                      : "var(--line-2)",
-                color: "#fff",
-              }}
+              className="w-[18px] h-[18px] rounded-[99px] grid place-items-center flex-none text-[#fff] [background:var(--badge-bg)]"
+              style={
+                {
+                  "--badge-bg":
+                    k < i
+                      ? "var(--m-calm)"
+                      : k === i
+                        ? "var(--coral)"
+                        : "var(--line-2)",
+                } as React.CSSProperties
+              }
             >
               {k < i ? (
                 <Icons.check size={12} />
               ) : k === i ? (
                 <span
-                  className="w-[6px] h-[6px] rounded-[99px] bg-[#fff]"
-                  style={{ animation: "float .8s infinite" }}
+                  className="w-[6px] h-[6px] rounded-[99px] bg-[#fff] [animation:float_.8s_infinite]"
                 />
               ) : (
                 ""

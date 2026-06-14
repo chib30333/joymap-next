@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/db";
-import { moodGradient, TODAY, COMMISSION } from "@/lib/constants";
+import { moodGradient, TODAY, COMMISSION } from "@/constants";
 import type { Service } from "@prisma/client";
 
 export type Experience = {

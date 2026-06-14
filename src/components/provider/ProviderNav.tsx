@@ -123,10 +123,9 @@ export function ProviderNav({
     <header className="sticky top-0 z-40 bg-[color-mix(in_srgb,var(--bg)_82%,transparent)] [backdrop-filter:blur(16px)] [-webkit-backdrop-filter:blur(16px)] border-b border-line">
       <div className="flex items-center gap-4 py-[13px] px-[var(--pad)]">
         <div
-          className="flex items-center gap-[9px] flex-none"
+          className="flex items-center gap-[9px] flex-none cursor-pointer"
           role="button"
           tabIndex={0}
-          style={{ cursor: "pointer" }}
           onClick={() => router.push("/provider/overview")}
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.key === " ") {
@@ -142,13 +141,10 @@ export function ProviderNav({
             {t("Partner")}
           </span>
         </div>
-        <div className="min-w-0" style={{ marginInlineStart: 6 }}>
+        <div className="min-w-0 ms-[6px]">
           <h1 className="text-[18px] leading-[1.1]">{t(title)}</h1>
           {sub && (
-            <div
-              className="text-[12.5px] text-ink-3 font-semibold mt-[1px] whitespace-nowrap overflow-hidden"
-              style={{ textOverflow: "ellipsis" }}
-            >
+            <div className="text-[12.5px] text-ink-3 font-semibold mt-[1px] whitespace-nowrap overflow-hidden text-ellipsis">
               {t(sub)}
             </div>
           )}
@@ -216,7 +212,7 @@ function AccountMenu({ name }: { name: string }) {
         <Avatar name={name} size={38} grad={grad} />
         <Icons.chevR
           size={15}
-          style={{ transform: "rotate(90deg)", color: "var(--ink-3)" }}
+          className="[transform:rotate(90deg)] text-ink-3"
         />
       </div>
       {open && (
@@ -234,8 +230,7 @@ function AccountMenu({ name }: { name: string }) {
           </div>
           <div className="h-px bg-line my-[6px] mx-[4px]" />
           <button
-            className="flex items-center gap-[11px] w-full py-[10px] px-[11px] rounded-sm text-[14px] font-semibold text-ink-2 cursor-pointer [transition:0.12s] text-left hover:bg-surface-2 hover:text-ink"
-            style={{ color: "var(--ink-3)" }}
+            className="flex items-center gap-[11px] w-full py-[10px] px-[11px] rounded-sm text-[14px] font-semibold text-ink-2 cursor-pointer [transition:0.12s] text-left hover:bg-surface-2 hover:text-ink !text-ink-3"
             onClick={logout}
           >
             <Icons.logout size={18} />

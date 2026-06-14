@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/db";
 import { ApiError, createSession, clearSession } from "@/lib/session";
 import { notifyAdmins } from "./notify";
-import { COMMISSION } from "@/lib/constants";
+import { COMMISSION } from "@/constants";
 
 export async function signup(input: {
   name: string;

@@ -3,7 +3,7 @@
 import { useT } from "@/components/Language";
 import { Icons } from "@/components/Icons";
 import { money, Stat, Pill, Avatar } from "@/components/dash/primitives";
-import { DataTable, ExportButton, TableCard } from "@/components/ui";
+import { DataTable, TableCard, Button } from "@/components/ui";
 import { downloadCSV } from "@/lib/csv";
 import { EmptyCard } from "@/components/admin/AdminShared";
 
@@ -19,21 +19,19 @@ export function ACustomers({ list }: { list: any[] }) {
     ]);
   return (
     <div className="animate-anim-fade-dash">
-      <div
-        className="flex items-end justify-between gap-[16px]"
-        style={{ marginBottom: "var(--gap)" }}
-      >
+      <div className="flex items-end justify-between gap-[16px] mb-[var(--gap)]">
         <div />
-        <ExportButton label={t("Export LTV")} onClick={exportCsv} />
+        <Button
+          ctx="dash"
+          variant="ghost"
+          size="md"
+          icon={<Icons.download size={16} />}
+          onClick={exportCsv}
+        >
+          {t("Export LTV")}
+        </Button>
       </div>
-      <div
-        className="grid"
-        style={{
-          gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))",
-          gap: "var(--gap)",
-          marginBottom: "var(--gap)",
-        }}
-      >
+      <div className="grid [grid-template-columns:repeat(auto-fit,minmax(200px,1fr))] gap-[var(--gap)] mb-[var(--gap)]">
         <Stat
           label={t("Customers")}
           value={String(list.length)}

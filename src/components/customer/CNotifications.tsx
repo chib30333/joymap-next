@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import { rpc } from "@/lib/client";
+import { Button } from "@/components/ui";
 import { useT } from "@/components/Language";
 
 type N = {
@@ -37,29 +37,35 @@ export function CNotifications({ items }: { items: N[] }) {
               ["unread", `${t("Unread")}${unread ? ` · ${unread}` : ""}`],
             ] as const
           ).map(([k, l]) => (
-            <button
+            <Button
               key={k}
-              className={btnCls("app", undefined, "sm")}
+              ctx="app"
+              size="sm"
               onClick={() => setFilter(k as "all" | "unread")}
+              className="[background:var(--btn-bg)] [color:var(--btn-fg)] [box-shadow:var(--btn-sh)]"
               style={
-                filter === k
+                (filter === k
                   ? {
-                      background: "var(--surface)",
-                      color: "var(--ink)",
-                      boxShadow: "var(--sh-sm)",
+                      ["--btn-bg"]: "var(--surface)",
+                      ["--btn-fg"]: "var(--ink)",
+                      ["--btn-sh"]: "var(--sh-sm)",
                     }
-                  : { color: "var(--ink-3)" }
+                  : {
+                      ["--btn-bg"]: "transparent",
+                      ["--btn-fg"]: "var(--ink-3)",
+                      ["--btn-sh"]: "none",
+                    }) as React.CSSProperties
               }
             >
               {l}
-            </button>
+            </Button>
           ))}
         </div>
         <div className="flex-1" />
-        <button className={btnCls("app", "ghost", "sm")} onClick={markAll}>
+        <Button ctx="app" variant="ghost" size="sm" onClick={markAll}>
           <Icons.checkCirc size={15} />
           {t("Mark all read")}
-        </button>
+        </Button>
       </div>
       <div className="flex flex-col gap-2.5">
         {list.map((n) => {
@@ -67,24 +73,24 @@ export function CNotifications({ items }: { items: N[] }) {
           return (
             <div
               key={n.id}
-              className="bg-surface border border-line rounded-lg"
+              className="bg-surface border rounded-lg p-[15px_17px] flex gap-[13px] cursor-pointer [border-color:var(--bc)]"
               onClick={() => mark(n.id)}
-              style={{
-                padding: "15px 17px",
-                display: "flex",
-                gap: 13,
-                cursor: "pointer",
-                borderColor: n.unread
-                  ? "color-mix(in srgb,var(--coral) 32%,transparent)"
-                  : "var(--line)",
-              }}
+              style={
+                {
+                  ["--bc"]: n.unread
+                    ? "color-mix(in srgb,var(--coral) 32%,transparent)"
+                    : "var(--line)",
+                } as React.CSSProperties
+              }
             >
               <span
-                className="w-10 h-10 rounded-sm flex-none grid place-items-center"
-                style={{
-                  background: `color-mix(in srgb,${n.accent} 15%,transparent)`,
-                  color: n.accent,
-                }}
+                className="w-10 h-10 rounded-sm flex-none grid place-items-center [background:var(--ic-bg)] [color:var(--ic-c)]"
+                style={
+                  {
+                    ["--ic-bg"]: `color-mix(in srgb,${n.accent} 15%,transparent)`,
+                    ["--ic-c"]: n.accent,
+                  } as React.CSSProperties
+                }
               >
                 <I size={19} />
               </span>

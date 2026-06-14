@@ -13,10 +13,7 @@ export function AdminHeader({
     <div className="flex items-end justify-between gap-[16px] mb-[18px]">
       <div>
         {eyebrow != null && (
-          <div
-            className="text-[12px] font-extrabold tracking-[0.1em] uppercase text-orange"
-            style={{ marginBottom: 6 }}
-          >
+          <div className="text-[12px] font-extrabold tracking-[0.1em] uppercase text-orange mb-[6px]">
             {eyebrow}
           </div>
         )}

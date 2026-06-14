@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { btnCls } from "@/lib/btn";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Icons, Logo } from "@/components/Icons";
 import { LangSwitcher, useT } from "@/components/Language";
+import { Button } from "@/components/ui";
 import { Input } from "@/components/ui/Input";
 import { rpc } from "@/lib/client";
 
@@ -76,7 +76,10 @@ function Field({
           name={name}
           autoComplete={autoComplete}
           onChange={(e) => onChange(e.target.value)}
-          style={{ paddingLeft: I ? 44 : 16, paddingRight: right ? 46 : 16 }}
+          className="[padding-left:var(--pl)] [padding-right:var(--pr)]"
+          style={
+            { "--pl": I ? "44px" : "16px", "--pr": right ? "46px" : "16px" } as React.CSSProperties
+          }
         />
         {right}
       </span>
@@ -126,13 +129,13 @@ function PwField({
         <div className="flex items-center gap-[10px] mt-2">
           <div className="flex-1 h-[5px] rounded-full bg-line overflow-hidden">
             <span
-              className="block h-full rounded-full [transition:0.3s]"
-              style={{ width: `${score.pct}%`, background: score.color }}
+              className="block h-full rounded-full [transition:0.3s] w-[var(--pw-w)] [background:var(--pw-bg)]"
+              style={{ "--pw-w": `${score.pct}%`, "--pw-bg": score.color } as React.CSSProperties}
             />
           </div>
           <span
-            className="font-bold text-[12px]"
-            style={{ color: score.color }}
+            className="font-bold text-[12px] text-[var(--pw-c)]"
+            style={{ "--pw-c": score.color } as React.CSSProperties}
           >
             {score.label}
           </span>
@@ -294,11 +297,7 @@ function ResetFlow({
         </div>
       )}
       <div
-        style={
-          step === "sent" || step === "success"
-            ? { textAlign: "center" }
-            : undefined
-        }
+        className={step === "sent" || step === "success" ? "text-center" : ""}
       >
         <h2 className="text-[25px]">{titles[step][0]}</h2>
         <p className="text-ink-2 text-[14.5px] mt-[6px] leading-[1.5]">
@@ -322,13 +321,14 @@ function ResetFlow({
             onChange={setEmail}
             autoComplete="email"
           />
-          <button
+          <Button
+            ctx="auth"
+            variant="primary"
+            size="lg"
+            block
             type="submit"
-            className={btnCls("auth", "primary", "lg", true)}
             disabled={email.length < 3 || busy}
-            style={
-              email.length < 3 ? { opacity: 0.5, boxShadow: "none" } : undefined
-            }
+            className={email.length < 3 ? "opacity-[0.5] shadow-none" : ""}
           >
             {busy ? (
               <span className={SPIN} />
@@ -338,8 +338,8 @@ function ResetFlow({
                 <Icons.arrowR size={19} />
               </>
             )}
-          </button>
-          <div className={FOOT} style={{ marginTop: 4 }}>
+          </Button>
+          <div className={`${FOOT} [margin-top:4px]`}>
             Remembered it?{" "}
             <a className={LINK_STRONG} onClick={onBackToLogin}>
               Back to log in
@@ -357,13 +357,14 @@ function ResetFlow({
           }}
         >
           <CodeInput value={code} onChange={setCode} />
-          <button
+          <Button
+            ctx="auth"
+            variant="primary"
+            size="lg"
+            block
             type="submit"
-            className={btnCls("auth", "primary", "lg", true)}
             disabled={code.length < 6 || busy}
-            style={
-              code.length < 6 ? { opacity: 0.5, boxShadow: "none" } : undefined
-            }
+            className={code.length < 6 ? "opacity-[0.5] shadow-none" : ""}
           >
             {busy ? (
               <span className={SPIN} />
@@ -373,8 +374,8 @@ function ResetFlow({
                 <Icons.arrowR size={19} />
               </>
             )}
-          </button>
-          <div className={FOOT} style={{ marginTop: 4 }}>
+          </Button>
+          <div className={`${FOOT} [margin-top:4px]`}>
             {resend > 0 ? (
               <span className="text-ink-3">
                 Resend code in 0:{String(resend).padStart(2, "0")}
@@ -417,8 +418,8 @@ function ResetFlow({
             />
             {pw2.length > 0 && (
               <div
-                className="flex items-center gap-[6px] text-[12.5px] font-bold mt-2 whitespace-nowrap"
-                style={{ color: matchOK ? "#1FA46E" : "#FF4D74" }}
+                className="flex items-center gap-[6px] text-[12.5px] font-bold mt-2 whitespace-nowrap text-[var(--match-c)]"
+                style={{ "--match-c": matchOK ? "#1FA46E" : "#FF4D74" } as React.CSSProperties}
               >
                 {matchOK ? (
                   <>
@@ -434,15 +435,14 @@ function ResetFlow({
               </div>
             )}
           </div>
-          <button
+          <Button
+            ctx="auth"
+            variant="primary"
+            size="lg"
+            block
             type="submit"
-            className={btnCls("auth", "primary", "lg", true)}
             disabled={!(pwOK && matchOK) || busy}
-            style={
-              !(pwOK && matchOK)
-                ? { opacity: 0.5, boxShadow: "none" }
-                : undefined
-            }
+            className={!(pwOK && matchOK) ? "opacity-[0.5] shadow-none" : ""}
           >
             {busy ? (
               <span className={SPIN} />
@@ -452,19 +452,22 @@ function ResetFlow({
                 <Icons.check size={19} />
               </>
             )}
-          </button>
+          </Button>
         </form>
       )}
 
       {step === "success" && (
         <div className={BODY}>
-          <button
-            className={btnCls("auth", "primary", "lg", true)}
+          <Button
+            ctx="auth"
+            variant="primary"
+            size="lg"
+            block
             onClick={onBackToLogin}
           >
             Back to log in
             <Icons.arrowR size={19} />
-          </button>
+          </Button>
         </div>
       )}
     </>
@@ -487,8 +490,8 @@ function Social() {
           title={`Continue with ${n}`}
         >
           <span
-            className="w-5 h-5 rounded-[6px] grid place-items-center text-white font-extrabold text-[11px] font-display"
-            style={{ background: c }}
+            className="w-5 h-5 rounded-[6px] grid place-items-center text-white font-extrabold text-[11px] font-display [background:var(--soc-bg)]"
+            style={{ "--soc-bg": c } as React.CSSProperties}
           >
             {g}
           </span>
@@ -560,15 +563,13 @@ export default function AuthPage() {
         <div className="flex items-center justify-between w-full max-w-[420px] mb-1">
           <Link
             href="/"
-            className="inline-flex"
-            style={{ textDecoration: "none" }}
+            className="inline-flex no-underline"
           >
             <Logo size={26} />
           </Link>
         </div>
         <div
-          className="absolute top-[18px]"
-          style={{ insetInlineEnd: 24, zIndex: 5 }}
+          className="absolute top-[18px] [inset-inline-end:24px] z-[5]"
         >
           <LangSwitcher />
         </div>
@@ -603,10 +604,10 @@ export default function AuthPage() {
                   {t("Sign up")}
                 </button>
                 <span
-                  className="absolute z-[1] top-[5px] left-[5px] w-[calc(50%-5px)] h-[calc(100%-10px)] rounded-pill bg-coral [transition:transform_0.25s_cubic-bezier(0.22,1,0.36,1)]"
+                  className="absolute z-[1] top-[5px] left-[5px] w-[calc(50%-5px)] h-[calc(100%-10px)] rounded-pill bg-coral [transition:transform_0.25s_cubic-bezier(0.22,1,0.36,1)] [transform:var(--seg-x)]"
                   style={{
-                    transform: `translateX(${mode === "login" ? 0 : 100}%)`,
-                  }}
+                    "--seg-x": `translateX(${mode === "login" ? 0 : 100}%)`,
+                  } as React.CSSProperties}
                 />
               </div>
 
@@ -749,19 +750,20 @@ export default function AuthPage() {
                   <div className="flex gap-[9px] items-start px-[14px] py-[11px] rounded-sm bg-[color-mix(in_srgb,#E0212F_10%,transparent)] text-coral-deep font-bold text-[13.5px] leading-[1.4]">
                     <Icons.flame
                       size={16}
-                      style={{ flex: "none", marginTop: 1 }}
+                      className="flex-none mt-px"
                     />
                     {err}
                   </div>
                 )}
 
-                <button
+                <Button
+                  ctx="auth"
+                  variant="primary"
+                  size="lg"
+                  block
                   type="submit"
-                  className={btnCls("auth", "primary", "lg", true)}
                   disabled={!canSubmit}
-                  style={
-                    !canSubmit ? { opacity: 0.5, boxShadow: "none" } : undefined
-                  }
+                  className={!canSubmit ? "opacity-[0.5] shadow-none" : ""}
                 >
                   {busy ? (
                     <span className={SPIN} />
@@ -775,7 +777,7 @@ export default function AuthPage() {
                       <Icons.arrowR size={19} />
                     </>
                   )}
-                </button>
+                </Button>
 
                 {!admin && (
                   <>

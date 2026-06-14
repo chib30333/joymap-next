@@ -5,5 +5,7 @@ import { rpc } from "@/lib/client";
 
 export function useFav() {
   const router = useRouter();
-  return (id: string) => { rpc("toggleFav", { serviceId: id }).then(() => router.refresh()); };
+  return (id: string) => {
+    rpc("toggleFav", { serviceId: id }).then(() => router.refresh());
+  };
 }

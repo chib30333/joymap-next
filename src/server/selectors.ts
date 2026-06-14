@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/db";
 import { currentUser } from "@/lib/session";
 import { expById, providerRating, providerFinance, ratingOf } from "./catalog";
-import { TODAY } from "@/lib/constants";
+import { TODAY } from "@/constants";
 
 export async function myBookings() {
   const u = await currentUser();

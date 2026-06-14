@@ -2,7 +2,7 @@
 // Run: npm run db:seed   (wipes & repopulates all tables)
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
-import { TODAY, MONTH_DAYS, WD, dow, COMMISSION } from "../src/lib/constants";
+import { TODAY, MONTH_DAYS, WD, dow, COMMISSION } from "../src/constants";
 
 const prisma = new PrismaClient();
 const dateLabel = (d: number) => `${WD[dow(Math.max(Math.min(d, MONTH_DAYS), 1))]} ${d} Jun`;

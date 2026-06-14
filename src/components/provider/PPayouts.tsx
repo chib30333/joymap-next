@@ -1,11 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { btnCls } from "@/lib/btn";
 import { Icons } from "@/components/Icons";
-import { rpc, useBusy } from "@/lib/client";
-import { money, Pill, BusyBtn } from "@/components/dash/primitives";
-import { DataTable } from "@/components/ui";
+import { rpc } from "@/lib/client";
+import { useBusy } from "@/hooks";
+import { money, Pill } from "@/components/dash/primitives";
+import { Button, DataTable } from "@/components/ui";
 import { useT } from "@/components/Language";
 
 export function PPayouts({ fin, list }: { fin: any; list: any[] }) {
@@ -13,15 +13,9 @@ export function PPayouts({ fin, list }: { fin: any; list: any[] }) {
   const router = useRouter();
   const { busy, run, error } = useBusy();
   return (
-    <div
-      className="animate-anim-fade-dash grid grid-cols-[1fr_1.3fr] items-start"
-      style={{ gap: "var(--gap)" }}
-    >
-      <div className="flex flex-col" style={{ gap: "var(--gap)" }}>
-        <div
-          className="bg-[linear-gradient(160deg,#5e1014,var(--maroon))] border border-[color-mix(in_srgb,var(--red)_55%,transparent)] text-[#f3ebe0] rounded-lg"
-          style={{ padding: 26, position: "relative", overflow: "hidden" }}
-        >
+    <div className="animate-anim-fade-dash grid grid-cols-[1fr_1.3fr] items-start gap-[var(--gap)]">
+      <div className="flex flex-col gap-[var(--gap)]">
+        <div className="bg-[linear-gradient(160deg,#5e1014,var(--maroon))] border border-[color-mix(in_srgb,var(--red)_55%,transparent)] text-[#f3ebe0] rounded-lg p-[26px] relative overflow-hidden">
           <div className="text-[13.5px] opacity-[.82] font-semibold mb-[8px]">
             {t("Available balance")}
           </div>
@@ -32,9 +26,11 @@ export function PPayouts({ fin, list }: { fin: any; list: any[] }) {
             {t("Net of")} {fin.commission}
             {t("% platform commission")}
           </div>
-          <BusyBtn
+          <Button
             busy={busy}
-            className={btnCls("dash", "orange", "md")}
+            ctx="dash"
+            variant="orange"
+            size="md"
             icon={<Icons.wallet size={16} />}
             disabled={fin.available <= 0}
             onClick={() =>
@@ -43,10 +39,10 @@ export function PPayouts({ fin, list }: { fin: any; list: any[] }) {
                 () => router.refresh(),
               )
             }
-            style={{ marginTop: 18 }}
+            className="mt-[18px]"
           >
             {t("Withdraw")} {fin.available > 0 ? money(fin.available) : ""}
-          </BusyBtn>
+          </Button>
           {error && (
             <div className="mt-[10px] text-[13px] font-bold text-[#FFC58A]">
               {error}
@@ -54,7 +50,7 @@ export function PPayouts({ fin, list }: { fin: any; list: any[] }) {
           )}
           <div className="absolute right-[-30px] bottom-[-40px] w-[150px] h-[150px] rounded-[99px] bg-[rgba(255,255,255,.05)]" />
         </div>
-        <div className="bg-surface border border-line rounded-lg" style={{ padding: 22 }}>
+        <div className="bg-surface border border-line rounded-lg p-[22px]">
           <h3 className="text-[16px] mb-[14px]">{t("Earnings breakdown")}</h3>
           <PRow l={t("Gross bookings")} r={money(fin.gross)} />
           <PRow
@@ -79,7 +75,7 @@ export function PPayouts({ fin, list }: { fin: any; list: any[] }) {
           </div>
         </div>
       </div>
-      <div className="bg-surface border border-line rounded-lg" style={{ overflow: "hidden" }}>
+      <div className="bg-surface border border-line rounded-lg overflow-hidden">
         <h3 className="text-[17px] pt-[18px] px-[20px] pb-[4px]">
           {t("Payout history")}
         </h3>
@@ -130,8 +126,10 @@ function PRow({
     <div className="flex justify-between py-[7px] px-0 text-[14px]">
       <span className="text-ink-2 font-semibold">{l}</span>
       <span
-        className="font-bold"
-        style={{ color: neg ? "var(--coral)" : "var(--ink)" }}
+        className="font-bold text-[var(--c)]"
+        style={
+          { ["--c"]: neg ? "var(--coral)" : "var(--ink)" } as React.CSSProperties
+        }
       >
         {r}
       </span>

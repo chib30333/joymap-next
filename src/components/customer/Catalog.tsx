@@ -13,7 +13,7 @@ import {
 import { Select } from "@/components/ui";
 import { ServiceModal, type Slot } from "./ServiceModal";
 import { EmptyMarketplace } from "./JoyMapScreen";
-import { useFav } from "./useFav";
+import { useFav } from "@/hooks";
 import { useT } from "@/components/Language";
 
 export function Catalog({
@@ -60,21 +60,12 @@ export function Catalog({
   return (
     <div className="animate-anim-fade-app">
       <div className="mb-[18px]">
-        <div className="text-[12.5px] font-bold tracking-[0.1em] uppercase text-orange" style={{ marginBottom: 12 }}>
+        <div className="text-[12.5px] font-bold tracking-[0.1em] uppercase text-orange mb-[12px]">
           {t("Browse by how you want to feel")}
         </div>
-        <div
-          className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          style={{
-            display: "flex",
-            gap: 10,
-            overflowX: "auto",
-            paddingBottom: 4,
-          }}
-        >
+        <div className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden flex gap-[10px] overflow-x-auto pb-[4px]">
           <button
-            className={`inline-flex items-center gap-[7px] rounded-pill text-[13px] font-semibold border cursor-pointer [transition:0.14s] whitespace-nowrap ${!mood ? "bg-coral text-white border-coral" : "bg-surface text-ink-2 border-line-2 hover:border-ink-3 hover:text-ink"}`}
-            style={{ padding: "9px 16px" }}
+            className={`inline-flex items-center gap-[7px] rounded-pill text-[13px] font-semibold border cursor-pointer [transition:0.14s] whitespace-nowrap p-[9px_16px] ${!mood ? "bg-coral text-white border-coral" : "bg-surface text-ink-2 border-line-2 hover:border-ink-3 hover:text-ink"}`}
             onClick={() => setMood(null)}
           >
             {t("All moods")}
@@ -105,13 +96,7 @@ export function Catalog({
           <Icons.filter size={16} />
           {t("Sort")}
           <Select
-            style={{
-              width: "auto",
-              padding: "8px 12px",
-              borderRadius: "var(--r-pill)",
-              fontWeight: 700,
-              fontSize: 13.5,
-            }}
+            className="[width:auto] [padding:8px_12px] [border-radius:var(--r-pill)] [font-weight:700] [font-size:13.5px]"
             value={sort}
             onChange={(e) => setSort(e.target.value)}
           >
@@ -145,8 +130,8 @@ export function Catalog({
           {list.map((e, i) => (
             <div
               key={e.id}
-              className="animate-anim-pop-app"
-              style={{ animationDelay: `${Math.min(i * 0.04, 0.4)}s` }}
+              className="animate-anim-pop-app [animation-delay:var(--ad)]"
+              style={{ ["--ad"]: `${Math.min(i * 0.04, 0.4)}s` } as React.CSSProperties}
             >
               <ExperienceCard
                 exp={e}

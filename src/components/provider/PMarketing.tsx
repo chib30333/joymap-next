@@ -1,10 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { btnCls } from "@/lib/btn";
 import { Icons } from "@/components/Icons";
-import { Pill, Seg, Modal, Btn } from "@/components/dash/primitives";
-import { Input } from "@/components/ui";
+import { Pill, Seg, Modal } from "@/components/dash/primitives";
+import { Button, Input } from "@/components/ui";
 import { useT } from "@/components/Language";
 
 const P_PROMOS = [
@@ -51,26 +50,21 @@ export function PMarketing() {
             {t("Drive bookings with limited-time offers")}
           </div>
         </div>
-        <Btn
+        <Button
+          ctx="dash"
+          variant="primary"
           size="md"
           icon={<Icons.plus size={16} />}
           onClick={() => setModal(true)}
         >
           {t("Create code")}
-        </Btn>
+        </Button>
       </div>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-[var(--gap)]">
         {promos.map((p, i) => (
-          <div key={i} className="bg-surface border border-line rounded-lg animate-anim-pop-dash" style={{ padding: 20 }}>
+          <div key={i} className="bg-surface border border-line rounded-lg animate-anim-pop-dash p-[20px]">
             <div className="flex items-center justify-between mb-[12px]">
-              <span
-                className="font-extrabold text-[18px] tracking-[.04em] py-[5px] px-[12px] rounded-xs bg-[color-mix(in_srgb,var(--orange)_14%,transparent)] text-[var(--orange-deep)]"
-                style={{
-                  fontFamily: "var(--display)",
-                  border:
-                    "1px dashed color-mix(in srgb,var(--orange) 45%,transparent)",
-                }}
-              >
+              <span className="font-extrabold text-[18px] tracking-[.04em] py-[5px] px-[12px] rounded-xs bg-[color-mix(in_srgb,var(--orange)_14%,transparent)] text-[var(--orange-deep)] [font-family:var(--display)] [border:1px_dashed_color-mix(in_srgb,var(--orange)_45%,transparent)]">
                 {p.code}
               </span>
               <Pill
@@ -89,11 +83,14 @@ export function PMarketing() {
             </p>
             <div className="h-[7px] rounded-[99px] bg-surface-2 overflow-hidden mb-[8px]">
               <div
-                className="h-full rounded-[99px]"
-                style={{
-                  width: `${Math.min((p.uses / p.cap) * 100, 100)}%`,
-                  background: p.uses >= p.cap ? "var(--ink-3)" : "var(--coral)",
-                }}
+                className="h-full rounded-[99px] w-[var(--w)] [background:var(--bg)]"
+                style={
+                  {
+                    ["--w"]: `${Math.min((p.uses / p.cap) * 100, 100)}%`,
+                    ["--bg"]:
+                      p.uses >= p.cap ? "var(--ink-3)" : "var(--coral)",
+                  } as React.CSSProperties
+                }
               />
             </div>
             <div className="flex justify-between text-[12.5px] text-ink-3 font-semibold">
@@ -138,11 +135,7 @@ function PromoModal({
               placeholder="SUMMER20"
               value={code}
               onChange={(e) => setCode(e.target.value.toUpperCase())}
-              style={{
-                fontFamily: "var(--display)",
-                fontWeight: 700,
-                letterSpacing: ".05em",
-              }}
+              className="[font-family:var(--display)] font-bold tracking-[.05em]"
             />
           </div>
           <div>
@@ -164,7 +157,7 @@ function PromoModal({
                 <Input
                   value={amt}
                   onChange={(e) => setAmt(e.target.value)}
-                  style={{ flex: 1 }}
+                  className="flex-1"
                 />
                 <Seg
                   value={unit}
@@ -185,10 +178,12 @@ function PromoModal({
           </div>
         </div>
         <div className="flex gap-[10px] mt-[22px]">
-          <button className={btnCls("dash", "ghost", "md", true)} onClick={onClose}>
+          <Button ctx="dash" variant="ghost" size="md" block onClick={onClose}>
             {t("Cancel")}
-          </button>
-          <Btn
+          </Button>
+          <Button
+            ctx="dash"
+            variant="primary"
             size="md"
             block
             onClick={() =>
@@ -202,7 +197,7 @@ function PromoModal({
           >
             <Icons.check size={16} />
             {t("Create code")}
-          </Btn>
+          </Button>
         </div>
       </div>
     </Modal>

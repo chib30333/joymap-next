@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { btnCls } from "@/lib/btn";
+import { Button } from "@/components/ui";
 import { Logo } from "@/components/Icons";
 
 export function Header() {
@@ -15,20 +15,22 @@ export function Header() {
           <Link className="font-semibold text-base text-ink-2 [transition:0.14s] hover:text-coral-deep" href="#corporate">Corporate</Link>
         </nav>
         <div className="flex-1" />
-        <Link
-          className={btnCls("lp", "ghost")}
+        <Button
+          ctx="lp"
+          variant="ghost"
           href="/auth"
-          style={{ padding: "11px 20px", fontSize: 14 }}
+          className="[padding:11px_20px] text-[14px]"
         >
           Sign in
-        </Link>
-        <Link
-          className={btnCls("lp", "primary")}
+        </Button>
+        <Button
+          ctx="lp"
+          variant="primary"
           href="/auth"
-          style={{ padding: "12px 22px", fontSize: 14 }}
+          className="[padding:12px_22px] text-[14px]"
         >
           Get started
-        </Link>
+        </Button>
       </div>
     </header>
   );

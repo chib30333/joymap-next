@@ -1,20 +1,24 @@
-import { type ReactNode, type CSSProperties } from "react";
+import { type ReactNode } from "react";
 
 export function TableCard({
   scroll,
-  style,
+  className,
   children,
 }: {
   scroll?: boolean;
-  style?: CSSProperties;
+  className?: string;
   children: ReactNode;
 }) {
   return (
     <div
-      className="bg-surface border border-line rounded-lg"
-      style={{ overflow: "hidden", ...style }}
+      className={[
+        "bg-surface border border-line rounded-lg overflow-hidden",
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
     >
-      {scroll ? <div style={{ overflowX: "auto" }}>{children}</div> : children}
+      {scroll ? <div className="overflow-x-auto">{children}</div> : children}
     </div>
   );
 }

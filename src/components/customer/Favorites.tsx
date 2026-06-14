@@ -5,7 +5,7 @@ import { Icons } from "@/components/Icons";
 import { useT } from "@/components/Language";
 import { ExperienceCard, type Exp } from "./primitives";
 import { ServiceModal, type Slot } from "./ServiceModal";
-import { useFav } from "./useFav";
+import { useFav } from "@/hooks";
 
 export function Favorites({
   list,

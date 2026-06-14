@@ -3,7 +3,7 @@ import { currentProvider, requireRole, ApiError } from "@/lib/session";
 import { notify, notifyAdmins } from "./notify";
 import { providerFinance } from "./catalog";
 import { money } from "@/lib/format";
-import { dateLabel, TODAY, MONTH_DAYS } from "@/lib/constants";
+import { dateLabel, TODAY, MONTH_DAYS } from "@/constants";
 
 export async function requestPayout() {
   const p = await currentProvider();

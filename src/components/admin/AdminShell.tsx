@@ -66,15 +66,7 @@ export function AdminSidebar({
   };
   return (
     <aside className="sticky top-0 h-screen bg-surface border-r border-line flex flex-col p-[20px_14px] gap-[5px] z-20">
-      <div
-        className="pt-[6px] px-[10px] pb-[16px]"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 9,
-          flexWrap: "wrap",
-        }}
-      >
+      <div className="pt-[6px] px-[10px] pb-[16px] flex items-center gap-[9px] flex-wrap">
         <Logo size={25} />
         <span className="inline-flex items-center gap-[5px] whitespace-nowrap bg-[color-mix(in_srgb,var(--orange)_18%,transparent)] text-[var(--orange)] px-[9px] py-[3px] rounded-[99px] text-[10px] font-extrabold font-display">
           Admin
@@ -117,8 +109,7 @@ export function AdminSidebar({
       </nav>
       <div className="mt-auto pt-[10px]">
         <button
-          className="flex items-center gap-[12px] py-[10px] px-[13px] rounded-sm font-semibold text-[14px] [transition:0.15s] cursor-pointer bg-none border-none w-full text-left hover:bg-surface-2 hover:text-ink"
-          style={{ color: "var(--ink-3)" }}
+          className="flex items-center gap-[12px] py-[10px] px-[13px] rounded-sm font-semibold text-[14px] [transition:0.15s] cursor-pointer bg-none border-none w-full text-left hover:bg-surface-2 hover:text-ink text-[var(--ink-3)]"
           onClick={logout}
         >
           <Icons.logout size={19} />
