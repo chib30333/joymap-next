@@ -1,12 +1,45 @@
 "use client";
 
+import { type ReactNode } from "react";
 import { Icons } from "@/components/Icons";
 import { Bars, LineChart } from "@/components/dash/primitives";
 import { MOODS } from "@/components/customer/primitives";
 import { useT } from "@/components/Language";
 
-type Booking = any;
-type Svc = any;
+type Booking = {
+  id: string;
+  day: number;
+  time: string;
+  total: number;
+  status: string;
+};
+
+type Svc = {
+  id: string;
+  name: string;
+  mood: string;
+  booked: number;
+};
+
+function ChartCard({
+  title,
+  caption,
+  children,
+}: {
+  title: string;
+  caption: string;
+  children: ReactNode;
+}) {
+  return (
+    <div className="bg-surface border border-line rounded-lg p-[22px]">
+      <h3 className="text-[17px] mb-[4px]">{title}</h3>
+      <div className="text-[13px] text-ink-3 font-semibold mb-[8px]">
+        {caption}
+      </div>
+      {children}
+    </div>
+  );
+}
 
 export function PAnalytics({
   bookings,
@@ -55,29 +88,22 @@ export function PAnalytics({
   return (
     <div className="animate-anim-fade-dash">
       <div className="grid grid-cols-[1fr_1fr] gap-[var(--gap)] mb-[var(--gap)]">
-        <div className="bg-surface border border-line rounded-lg p-[22px]">
-          <h3 className="text-[17px] mb-[4px]">{t("Revenue by day")}</h3>
-          <div className="text-[13px] text-ink-3 font-semibold mb-[8px]">
-            {t("June 2026 · live")}
-          </div>
+        <ChartCard title={t("Revenue by day")} caption={t("June 2026 · live")}>
           {trend.length > 1 ? (
             <LineChart points={trend} />
           ) : (
             <Bars data={trend} unit="₽" />
           )}
-        </div>
-        <div className="bg-surface border border-line rounded-lg p-[22px]">
-          <h3 className="text-[17px] mb-[4px]">
-            {t("Bookings by start time")}
-          </h3>
-          <div className="text-[13px] text-ink-3 font-semibold mb-[8px]">
-            {t("Across all services")}
-          </div>
+        </ChartCard>
+        <ChartCard
+          title={t("Bookings by start time")}
+          caption={t("Across all services")}
+        >
           <Bars
             data={peak.map((p) => ({ ...p, hot: p.value === maxPeak }))}
             accent="var(--orange)"
           />
-        </div>
+        </ChartCard>
       </div>
       <div className="bg-surface border border-line rounded-lg p-[22px] max-w-[640px]">
         <h3 className="text-[17px] mb-[16px]">{t("Top services")}</h3>

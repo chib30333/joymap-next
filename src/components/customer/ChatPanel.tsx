@@ -8,6 +8,8 @@ import { Avatar } from "./primitives";
 import { Input } from "@/components/ui";
 import { useT } from "@/components/Language";
 
+type Message = { from: string; t: string; at: string };
+
 type Thread = {
   id: string;
   who: string;
@@ -15,7 +17,7 @@ type Thread = {
   last: string;
   time: string;
   unread: number;
-  msgs: { from: string; t: string; at: string }[];
+  msgs: Message[];
 };
 
 export function ChatPanel({
@@ -32,7 +34,7 @@ export function ChatPanel({
   const [sending, setSending] = useState(false);
   const bodyRef = useRef<HTMLDivElement>(null);
   const cur = active || (threads[0] ? threads[0].id : null);
-  const thread = threads.find((t) => t.id === cur);
+  const thread = threads.find((th) => th.id === cur);
 
   useEffect(() => {
     bodyRef.current?.scrollTo({ top: 9e9 });

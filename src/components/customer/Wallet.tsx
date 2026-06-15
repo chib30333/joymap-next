@@ -11,6 +11,8 @@ import { useT } from "@/components/Language";
 
 type Tx = { id: string; label: string; amount: number; date: string };
 
+const TOP_UP_AMOUNTS: readonly number[] = [1000, 3000, 5000, 10000];
+
 export function Wallet({ wallet, tx }: { wallet: number; tx: Tx[] }) {
   const t = useT();
   const [topup, setTopup] = useState(false);
@@ -83,7 +85,7 @@ function TopUpModal({ onClose }: { onClose: () => void }) {
       <div className="p-[26px]">
         <h3 className="text-[20px] mb-[16px]">{t("Top up balance")}</h3>
         <div className="flex gap-[8px] flex-wrap mb-[14px]">
-          {[1000, 3000, 5000, 10000].map((v) => (
+          {TOP_UP_AMOUNTS.map((v) => (
             <button
               key={v}
               className={`inline-flex items-center gap-[7px] py-[7px] px-[13px] rounded-pill text-[13px] font-semibold border cursor-pointer [transition:0.14s] whitespace-nowrap ${amt === v ? "bg-coral text-white border-coral" : "bg-surface text-ink-2 border-line-2 hover:border-ink-3 hover:text-ink"}`}

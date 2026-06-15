@@ -6,7 +6,26 @@ import { money, Toggle } from "@/components/dash/primitives";
 import { Button, DataTable } from "@/components/ui";
 import { useT } from "@/components/Language";
 
-const P_RULES = [
+type RuleType = "up" | "down";
+
+interface PricingRule {
+  id: string;
+  name: string;
+  cond: string;
+  adj: string;
+  type: RuleType;
+  active: boolean;
+}
+
+interface PricingService {
+  id: string;
+  name: string;
+  dur: string;
+  cap: string;
+  price: number;
+}
+
+const P_RULES: PricingRule[] = [
   {
     id: "r1",
     name: "Peak weekend surge",
@@ -41,7 +60,10 @@ const P_RULES = [
   },
 ];
 
-export function PPricing({ svcs }: { svcs: any[] }) {
+const ruleColor = (type: RuleType) =>
+  type === "up" ? "var(--coral)" : "#1FA46E";
+
+export function PPricing({ svcs }: { svcs: PricingService[] }) {
   const t = useT();
   const [rules, setRules] = useState(P_RULES);
   const toggle = (id: string) =>
@@ -115,7 +137,7 @@ export function PPricing({ svcs }: { svcs: any[] }) {
                     r.type === "up"
                       ? "rgba(224,33,47,.12)"
                       : "rgba(31,164,110,.13)",
-                  ["--c"]: r.type === "up" ? "var(--coral)" : "#1FA46E",
+                  ["--c"]: ruleColor(r.type),
                 } as React.CSSProperties
               }
             >
@@ -131,7 +153,7 @@ export function PPricing({ svcs }: { svcs: any[] }) {
               className="font-extrabold text-[18px] [font-family:var(--display)] [color:var(--c)]"
               style={
                 {
-                  ["--c"]: r.type === "up" ? "var(--coral)" : "#1FA46E",
+                  ["--c"]: ruleColor(r.type),
                 } as React.CSSProperties
               }
             >

@@ -6,15 +6,25 @@ import { Icons } from "@/components/Icons";
 import { rpc } from "@/lib/client";
 import { money, Pill, Seg, Modal, Avatar } from "@/components/dash/primitives";
 import { Button } from "@/components/ui";
-import { BookingsTable } from "@/components/provider/BookingsTable";
+import { BookingsTable, type Booking } from "@/components/provider/BookingsTable";
 import { useT } from "@/components/Language";
 
-type Booking = any;
+type BookingStatus = "pending" | "confirmed" | "completed" | "cancelled";
+
+type StatusFilter = "all" | BookingStatus;
+
+const STATUS_FILTERS: readonly { value: StatusFilter; labelKey: string }[] = [
+  { value: "all", labelKey: "All" },
+  { value: "pending", labelKey: "Pending" },
+  { value: "confirmed", labelKey: "Confirmed" },
+  { value: "completed", labelKey: "Completed" },
+  { value: "cancelled", labelKey: "Cancelled" },
+];
 
 export function PBookings({ rows }: { rows: Booking[] }) {
   const t = useT();
   const router = useRouter();
-  const [f, setF] = useState("all");
+  const [f, setF] = useState<StatusFilter>("all");
   const [sel, setSel] = useState<Booking | null>(null);
   const [actingId, setActing] = useState<string | null>(null);
   const act = (id: string, st: string) => {
@@ -31,14 +41,8 @@ export function PBookings({ rows }: { rows: Booking[] }) {
         <div />
         <Seg
           value={f}
-          options={[
-            { v: "all", l: t("All") },
-            { v: "pending", l: t("Pending") },
-            { v: "confirmed", l: t("Confirmed") },
-            { v: "completed", l: t("Completed") },
-            { v: "cancelled", l: t("Cancelled") },
-          ]}
-          onChange={setF}
+          options={STATUS_FILTERS.map((o) => ({ v: o.value, l: t(o.labelKey) }))}
+          onChange={(v) => setF(v as StatusFilter)}
         />
       </div>
       {list.length === 0 ? (
@@ -80,6 +84,13 @@ function BookingDetailModal({
 }) {
   const t = useT();
   const b = booking;
+  const detailRows: { label: string; value: string }[] = [
+    { label: t("Date"), value: b.date },
+    { label: t("Time"), value: b.time },
+    { label: t("People"), value: String(b.people) },
+    { label: t("Total"), value: money(b.total) },
+    { label: t("Code"), value: b.code },
+  ];
   return (
     <Modal onClose={onClose} maxWidth={460}>
       <div className="py-[24px] px-[26px]">
@@ -94,11 +105,9 @@ function BookingDetailModal({
           <Pill status={b.status} />
         </div>
         <div className="bg-surface-2 border border-line rounded-lg p-[16px] mb-[18px]">
-          <Row l={t("Date")} r={b.date} />
-          <Row l={t("Time")} r={b.time} />
-          <Row l={t("People")} r={String(b.people)} />
-          <Row l={t("Total")} r={money(b.total)} />
-          <Row l={t("Code")} r={b.code} />
+          {detailRows.map((row) => (
+            <Row key={row.label} l={row.label} r={row.value} />
+          ))}
         </div>
         <div className="flex gap-[10px]">
           <Button ctx="dash" variant="ghost" size="md" block onClick={onClose}>

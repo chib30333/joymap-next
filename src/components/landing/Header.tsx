@@ -2,6 +2,17 @@ import Link from "next/link";
 import { Button } from "@/components/ui";
 import { Logo } from "@/components/Icons";
 
+type NavLink = {
+  href: string;
+  label: string;
+};
+
+const NAV_LINKS: NavLink[] = [
+  { href: "#experiences", label: "Experiences" },
+  { href: "#partners", label: "For partners" },
+  { href: "#corporate", label: "Corporate" },
+];
+
 export function Header() {
   return (
     <header className="sticky top-0 z-50 bg-[color-mix(in_srgb,var(--bg)_80%,transparent)] backdrop-blur-[16px] border-b border-line">
@@ -10,9 +21,15 @@ export function Header() {
           <Logo />
         </Link>
         <nav className="flex gap-6 ms-2 max-[760px]:hidden">
-          <Link className="font-semibold text-base text-ink-2 [transition:0.14s] hover:text-coral-deep" href="#experiences">Experiences</Link>
-          <Link className="font-semibold text-base text-ink-2 [transition:0.14s] hover:text-coral-deep" href="#partners">For partners</Link>
-          <Link className="font-semibold text-base text-ink-2 [transition:0.14s] hover:text-coral-deep" href="#corporate">Corporate</Link>
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.href}
+              className="font-semibold text-base text-ink-2 [transition:0.14s] hover:text-coral-deep"
+              href={link.href}
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
         <div className="flex-1" />
         <Button

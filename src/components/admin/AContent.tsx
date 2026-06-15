@@ -10,7 +10,20 @@ import { EmptyState, Chip } from "@/components/admin/AdminShared";
 import { Spinner, Button } from "@/components/ui";
 import { AdminHeader } from "@/components/admin/AdminHeader";
 
-export function AContent({ items }: { items: any[] }) {
+type FlagItem = {
+  id: string;
+  type: string;
+  author: string;
+  target: string;
+  text: string | null;
+  grad: string | null;
+  reason: string;
+  time: string;
+};
+
+type TypeMeta = { label: string; color: string };
+
+export function AContent({ items }: { items: FlagItem[] }) {
   const t = useT();
   const router = useRouter();
   const [filter, setFilter] = useState("all");
@@ -24,10 +37,10 @@ export function AContent({ items }: { items: any[] }) {
   };
   const list =
     filter === "all" ? items : items.filter((c) => c.type === filter);
-  const TYPE: Record<string, [string, string]> = {
-    review: ["Review", "#5563D6"],
-    photo: ["Photo", "#E89015"],
-    promo: ["Promo material", "#7B53F0"],
+  const TYPE: Record<string, TypeMeta> = {
+    review: { label: "Review", color: "#5563D6" },
+    photo: { label: "Photo", color: "#E89015" },
+    promo: { label: "Promo material", color: "#7B53F0" },
   };
   return (
     <div className="animate-anim-fade-dash">
@@ -54,7 +67,10 @@ export function AContent({ items }: { items: any[] }) {
       ) : (
         <div className="grid [grid-template-columns:repeat(auto-fill,minmax(340px,1fr))] gap-[var(--gap)]">
           {list.map((c) => {
-            const [tl, tc] = TYPE[c.type] || ["Item", "#9B8AA0"];
+            const { label: tl, color: tc } = TYPE[c.type] || {
+              label: "Item",
+              color: "#9B8AA0",
+            };
             return (
               <div
                 key={c.id}

@@ -9,7 +9,49 @@ import { Button, Input, Textarea } from "@/components/ui";
 import { P_GALLERY } from "@/components/provider/data";
 import { useT } from "@/components/Language";
 
-type Provider = any;
+type Provider = {
+  name?: string;
+  tagline?: string;
+  about?: string;
+  email?: string;
+  phone?: string;
+  site?: string;
+  address?: string;
+  area?: string;
+  city?: string;
+  cats?: string[];
+  cat?: string;
+  founded?: string;
+  team?: number;
+  status?: string;
+  joined?: string;
+};
+
+type Form = {
+  name: string;
+  tagline: string;
+  about: string;
+  email: string;
+  phone: string;
+  site: string;
+  address: string;
+  cats: string[];
+  founded: string;
+  team: number;
+};
+
+type ContactField = {
+  key: "email" | "phone" | "site" | "address";
+  label: string;
+  icon: keyof typeof Icons;
+};
+
+const CONTACT_FIELDS: ContactField[] = [
+  { key: "email", label: "Email", icon: "mail" },
+  { key: "phone", label: "Phone", icon: "phone" },
+  { key: "site", label: "Website", icon: "compass" },
+  { key: "address", label: "Address", icon: "pin" },
+];
 
 export function PBusinessProfile({ provider }: { provider: Provider }) {
   const t = useT();
@@ -17,7 +59,7 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
   const [edit, setEdit] = useState(false);
   const { busy, run } = useBusy();
   const p = provider || {};
-  const [f, setF] = useState({
+  const [f, setF] = useState<Form>({
     name: p.name || "",
     tagline: p.tagline || "",
     about: p.about || "",
@@ -30,7 +72,8 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
     team: p.team || 1,
   });
   const cover = P_GALLERY.find((g) => g.cover) || P_GALLERY[0];
-  const set = (k: string, v: any) => setF((prev) => ({ ...prev, [k]: v }));
+  const set = <K extends keyof Form>(k: K, v: Form[K]) =>
+    setF((prev) => ({ ...prev, [k]: v }));
   const saveOrEdit = () => {
     if (!edit) {
       setEdit(true);
@@ -136,39 +179,32 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
           )}
           <hr className="h-px bg-line border-0 my-5" />
           <div className="grid grid-cols-[1fr_1fr] gap-[16px]">
-            {(
-              [
-                ["email", "Email", "mail"],
-                ["phone", "Phone", "phone"],
-                ["site", "Website", "compass"],
-                ["address", "Address", "pin"],
-              ] as const
-            ).map(([k, l, ic]) => {
-              const I = Icons[ic];
+            {CONTACT_FIELDS.map(({ key, label, icon }) => {
+              const I = Icons[icon];
               return (
                 <div
-                  key={k}
+                  key={key}
                   className="[grid-column:var(--gc)]"
                   style={
                     {
-                      ["--gc"]: k === "address" ? "1 / -1" : "auto",
+                      ["--gc"]: key === "address" ? "1 / -1" : "auto",
                     } as React.CSSProperties
                   }
                 >
                   <div className="text-[12px] font-bold text-ink-3 mb-[6px]">
-                    {t(l)}
+                    {t(label)}
                   </div>
                   {edit ? (
                     <Input
-                      value={(f as any)[k]}
-                      onChange={(e) => set(k, e.target.value)}
+                      value={f[key]}
+                      onChange={(e) => set(key, e.target.value)}
                     />
                   ) : (
                     <div className="flex gap-[8px] items-center font-semibold text-[14px]">
                       <span className="text-ink-3">
                         <I size={16} />
                       </span>
-                      {(f as any)[k] || "—"}
+                      {f[key] || "—"}
                     </div>
                   )}
                 </div>
@@ -181,7 +217,7 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
           <div className="bg-surface border border-line rounded-lg p-[22px]">
             <h3 className="text-[16px] mb-[14px]">{t("Categories")}</h3>
             <div className="flex flex-wrap gap-[8px]">
-              {f.cats.map((c: string) => (
+              {f.cats.map((c) => (
                 <span
                   key={c}
                   className="inline-flex items-center gap-[5px] py-1 px-[10px] rounded-pill text-[12px] font-bold whitespace-nowrap bg-surface-2 text-ink-2 [border:1px_solid_var(--line)]"

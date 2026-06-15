@@ -8,10 +8,54 @@ import { money, Pill } from "@/components/dash/primitives";
 import { Button, DataTable } from "@/components/ui";
 import { useT } from "@/components/Language";
 
-export function PPayouts({ fin, list }: { fin: any; list: any[] }) {
+type PayoutFinance = {
+  available: number;
+  commission: number;
+  gross: number;
+  net: number;
+  withdrawn: number;
+};
+
+type PayoutRow = {
+  id: string | number;
+  date: React.ReactNode;
+  amount: number;
+  due: React.ReactNode;
+  status: React.ComponentProps<typeof Pill>["status"];
+};
+
+export function PPayouts({
+  fin,
+  list,
+}: {
+  fin: PayoutFinance;
+  list: PayoutRow[];
+}) {
   const t = useT();
   const router = useRouter();
   const { busy, run, error } = useBusy();
+
+  const breakdown: { l: React.ReactNode; r: React.ReactNode; neg?: boolean }[] =
+    [
+      { l: t("Gross bookings"), r: money(fin.gross) },
+      {
+        l: `${t("Platform commission")} (${fin.commission}%)`,
+        r: "− " + money(fin.gross - fin.net),
+        neg: true,
+      },
+      {
+        l: t("Already withdrawn / pending"),
+        r: "− " + money(fin.withdrawn),
+        neg: true,
+      },
+    ];
+
+  const columns = [
+    t("Requested"),
+    t("Amount"),
+    t("Due"),
+    t("Status"),
+  ];
   return (
     <div className="animate-anim-fade-dash grid grid-cols-[1fr_1.3fr] items-start gap-[var(--gap)]">
       <div className="flex flex-col gap-[var(--gap)]">
@@ -52,17 +96,9 @@ export function PPayouts({ fin, list }: { fin: any; list: any[] }) {
         </div>
         <div className="bg-surface border border-line rounded-lg p-[22px]">
           <h3 className="text-[16px] mb-[14px]">{t("Earnings breakdown")}</h3>
-          <PRow l={t("Gross bookings")} r={money(fin.gross)} />
-          <PRow
-            l={`${t("Platform commission")} (${fin.commission}%)`}
-            r={"− " + money(fin.gross - fin.net)}
-            neg
-          />
-          <PRow
-            l={t("Already withdrawn / pending")}
-            r={"− " + money(fin.withdrawn)}
-            neg
-          />
+          {breakdown.map((row, i) => (
+            <PRow key={i} l={row.l} r={row.r} neg={row.neg} />
+          ))}
           <div className="border-t border-line mt-[8px] pt-[12px]">
             <PRow
               l={<b>{t("Available")}</b>}
@@ -89,10 +125,9 @@ export function PPayouts({ fin, list }: { fin: any; list: any[] }) {
           <DataTable
             head={
               <>
-                <th>{t("Requested")}</th>
-                <th>{t("Amount")}</th>
-                <th>{t("Due")}</th>
-                <th>{t("Status")}</th>
+                {columns.map((c) => (
+                  <th key={c}>{c}</th>
+                ))}
               </>
             }
           >

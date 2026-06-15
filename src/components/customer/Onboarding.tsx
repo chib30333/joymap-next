@@ -8,6 +8,15 @@ import { MOODS, MOOD_ORDER, MoodChip } from "./primitives";
 import { Button, Textarea } from "@/components/ui";
 import { useT } from "@/components/Language";
 
+type Suggestion = { key: string };
+
+const SUGGESTIONS: Suggestion[] = [
+  { key: "Fun date idea" },
+  { key: "Something calm after work" },
+  { key: "A thrill this weekend" },
+  { key: "Meet new people" },
+];
+
 export function Onboarding() {
   const t = useT();
   const router = useRouter();
@@ -217,14 +226,9 @@ export function Onboarding() {
             )}
             {step === 2 && (
               <div className="flex gap-[7px] flex-wrap mt-[12px]">
-                {[
-                  "Fun date idea",
-                  "Something calm after work",
-                  "A thrill this weekend",
-                  "Meet new people",
-                ].map((s) => (
-                  <button key={s} className="inline-flex items-center gap-[7px] py-[7px] px-[13px] rounded-pill text-[13px] font-semibold border border-line-2 bg-surface text-ink-2 cursor-pointer [transition:0.14s] whitespace-nowrap hover:border-ink-3 hover:text-ink" onClick={() => setText(t(s))}>
-                    {t(s)}
+                {SUGGESTIONS.map(({ key }) => (
+                  <button key={key} className="inline-flex items-center gap-[7px] py-[7px] px-[13px] rounded-pill text-[13px] font-semibold border border-line-2 bg-surface text-ink-2 cursor-pointer [transition:0.14s] whitespace-nowrap hover:border-ink-3 hover:text-ink" onClick={() => setText(t(key))}>
+                    {t(key)}
                   </button>
                 ))}
               </div>

@@ -21,10 +21,12 @@ import {
 } from "./primitives";
 import { Button } from "@/components/ui";
 
-const PAY_METHODS: [string, string, string | null][] = [
-  ["card", "Bank card", "•••• 4291"],
-  ["sber", "Sber Pay", "Linked"],
-  ["wallet", "Joymap balance", null],
+type PayMethod = { key: string; label: string; detail: string | null };
+
+const PAY_METHODS: PayMethod[] = [
+  { key: "card", label: "Bank card", detail: "•••• 4291" },
+  { key: "sber", label: "Sber Pay", detail: "Linked" },
+  { key: "wallet", label: "Joymap balance", detail: null },
 ];
 const dateLabel = (d: number) => `${WD[dow(d)]} ${d} Jun`;
 
@@ -330,7 +332,7 @@ export function ServiceModal({
             </div>
             <Label n="" t={t("Payment method")} />
             <div className="flex flex-col gap-[9px] mb-[20px]">
-              {PAY_METHODS.map(([k, l, s]) => (
+              {PAY_METHODS.map(({ key: k, label: l, detail: s }) => (
                 <button
                   key={k}
                   onClick={() => {

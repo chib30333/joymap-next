@@ -5,7 +5,102 @@ import { useT } from "@/components/Language";
 import { Button, DataTable } from "@/components/ui";
 import { money, Pill, Avatar } from "@/components/dash/primitives";
 
-type Booking = any;
+export interface Booking {
+  id: string;
+  customer: string;
+  service: string;
+  day: number;
+  date: string;
+  time: string;
+  people: number;
+  total: number;
+  status: string;
+  code: string;
+}
+
+type Translate = ReturnType<typeof useT>;
+
+type ActHandler = (id: string, st: string) => void;
+
+interface ColumnHeader {
+  /** Translation key for the header label; omit for action column. */
+  label?: string;
+  /** Hidden when the table is rendered in compact mode. */
+  compactHidden?: boolean;
+  /** Rendered only when an action handler is provided. */
+  actionOnly?: boolean;
+}
+
+const COLUMNS: ColumnHeader[] = [
+  { label: "Customer" },
+  { label: "Service" },
+  { label: "Date", compactHidden: true },
+  { label: "Time" },
+  { label: "People" },
+  { label: "Total" },
+  { label: "Status" },
+  { actionOnly: true },
+];
+
+/** A primary/secondary action pair offered for a given booking status. */
+interface StatusAction {
+  /** Button label translation key. */
+  label: string;
+  /** Status the booking transitions to when clicked. */
+  to: string;
+  /** Visual treatment for the button (action-row buttons only). */
+  variant: "primary" | "soft" | "ghost";
+}
+
+const STATUS_ACTIONS: Record<string, StatusAction[]> = {
+  pending: [{ label: "Confirm", to: "confirmed", variant: "primary" }],
+  confirmed: [
+    { label: "Complete", to: "completed", variant: "soft" },
+    { label: "Cancel", to: "cancelled", variant: "ghost" },
+  ],
+};
+
+function ActionButtons({
+  booking,
+  onAct,
+  t,
+}: {
+  booking: Booking;
+  onAct: ActHandler;
+  t: Translate;
+}) {
+  const actions = STATUS_ACTIONS[booking.status] ?? [];
+  return (
+    <>
+      {actions.map((action) => (
+        <Button
+          key={action.to}
+          ctx="dash"
+          variant={action.variant}
+          size="sm"
+          onClick={(e) => {
+            e.stopPropagation();
+            onAct(booking.id, action.to);
+          }}
+        >
+          {t(action.label)}
+        </Button>
+      ))}
+      {booking.status === "pending" && (
+        <button
+          className="w-[34px] h-[34px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
+          title={t("Decline")}
+          onClick={(e) => {
+            e.stopPropagation();
+            onAct(booking.id, "cancelled");
+          }}
+        >
+          <Icons.close size={16} />
+        </button>
+      )}
+    </>
+  );
+}
 
 export function BookingsTable({
   rows,
@@ -25,14 +120,11 @@ export function BookingsTable({
     <DataTable
       head={
         <>
-          <th>{t("Customer")}</th>
-          <th>{t("Service")}</th>
-          {!compact && <th>{t("Date")}</th>}
-          <th>{t("Time")}</th>
-          <th>{t("People")}</th>
-          <th>{t("Total")}</th>
-          <th>{t("Status")}</th>
-          {onAct && <th />}
+          {COLUMNS.map((col, i) => {
+            if (col.compactHidden && compact) return null;
+            if (col.actionOnly) return onAct ? <th key="actions" /> : null;
+            return <th key={col.label ?? i}>{t(col.label!)}</th>;
+          })}
         </>
       }
     >
@@ -62,59 +154,7 @@ export function BookingsTable({
                 {actingId === b.id ? (
                   <span className="w-[17px] h-[17px] rounded-full inline-block flex-none border-[2.5px] border-solid [border-top-color:currentColor] [border-right-color:color-mix(in_srgb,currentColor_35%,transparent)] [border-bottom-color:color-mix(in_srgb,currentColor_35%,transparent)] [border-left-color:color-mix(in_srgb,currentColor_35%,transparent)] animate-jm-spin text-ink-3" />
                 ) : (
-                  <>
-                    {b.status === "pending" && (
-                      <>
-                        <Button
-                          ctx="dash"
-                          variant="primary"
-                          size="sm"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onAct(b.id, "confirmed");
-                          }}
-                        >
-                          {t("Confirm")}
-                        </Button>
-                        <button
-                          className="w-[34px] h-[34px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
-                          title={t("Decline")}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onAct(b.id, "cancelled");
-                          }}
-                        >
-                          <Icons.close size={16} />
-                        </button>
-                      </>
-                    )}
-                    {b.status === "confirmed" && (
-                      <>
-                        <Button
-                          ctx="dash"
-                          variant="soft"
-                          size="sm"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onAct(b.id, "completed");
-                          }}
-                        >
-                          {t("Complete")}
-                        </Button>
-                        <Button
-                          ctx="dash"
-                          variant="ghost"
-                          size="sm"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onAct(b.id, "cancelled");
-                          }}
-                        >
-                          {t("Cancel")}
-                        </Button>
-                      </>
-                    )}
-                  </>
+                  <ActionButtons booking={b} onAct={onAct} t={t} />
                 )}
               </div>
             </td>

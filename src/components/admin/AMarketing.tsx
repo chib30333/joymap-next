@@ -8,7 +8,18 @@ import { Input, DataTable, TableCard, Button } from "@/components/ui";
 import { downloadCSV } from "@/lib/csv";
 import { Chip } from "@/components/admin/AdminShared";
 
-const A_CAMPAIGNS = [
+type CampaignStatus = "active" | "review";
+
+interface Campaign {
+  name: string;
+  channel: string;
+  audience: string;
+  sent: number;
+  ctr: string;
+  status: CampaignStatus;
+}
+
+const A_CAMPAIGNS: Campaign[] = [
   {
     name: "Weekend in Moscow",
     channel: "Push",

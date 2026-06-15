@@ -8,11 +8,26 @@ import { Input, DataTable, TableCard, Button } from "@/components/ui";
 import { downloadCSV } from "@/lib/csv";
 import { EmptyCard } from "@/components/admin/AdminShared";
 
-export function AProviders({ rows }: { rows: any[] }) {
+type ProviderStatus = "active" | "review" | "rejected";
+
+interface Provider {
+  id: string;
+  name: string;
+  cat: string;
+  city: string;
+  bookings: number;
+  gmv: number;
+  rating: number | null;
+  status: ProviderStatus | string;
+  commission?: number;
+  joined?: string | null;
+}
+
+export function AProviders({ rows }: { rows: Provider[] }) {
   const t = useT();
   const [q, setQ] = useState("");
   const [st, setSt] = useState("all");
-  const [sel, setSel] = useState<any>(null);
+  const [sel, setSel] = useState<Provider | null>(null);
   const list = rows.filter(
     (p) =>
       (st === "all" || p.status === st) &&
@@ -123,16 +138,7 @@ export function AProviders({ rows }: { rows: any[] }) {
                   )}
                 </td>
                 <td>
-                  <Pill
-                    status={p.status}
-                    label={
-                      p.status === "review"
-                        ? t("In review")
-                        : p.status === "rejected"
-                          ? t("Rejected")
-                          : t("Active")
-                    }
-                  />
+                  <StatusPill status={p.status} />
                 </td>
               </tr>
             ))}
@@ -144,9 +150,25 @@ export function AProviders({ rows }: { rows: any[] }) {
   );
 }
 
-function ProviderDrawer({ p, onClose }: { p: any; onClose: () => void }) {
+function StatusPill({ status }: { status: Provider["status"] }) {
+  const t = useT();
+  const label =
+    status === "review"
+      ? t("In review")
+      : status === "rejected"
+        ? t("Rejected")
+        : t("Active");
+  return <Pill status={status} label={label} />;
+}
+
+function ProviderDrawer({ p, onClose }: { p: Provider; onClose: () => void }) {
   const t = useT();
   const comm = Math.round(p.gmv * ((p.commission || 15) / 100));
+  const financials: { label: string; value: string }[] = [
+    { label: t("GMV"), value: money(p.gmv) },
+    { label: t("Commission (15%)"), value: money(comm) },
+    { label: t("Bookings"), value: String(p.bookings) },
+  ];
   return (
     <Modal onClose={onClose} maxWidth={520}>
       <div>
@@ -171,35 +193,22 @@ function ProviderDrawer({ p, onClose }: { p: any; onClose: () => void }) {
                 {p.cat} · {p.city} · {t("joined")} {p.joined || "Jun 2026"}
               </div>
             </div>
-            <Pill
-              status={p.status}
-              label={
-                p.status === "review"
-                  ? t("In review")
-                  : p.status === "rejected"
-                    ? t("Rejected")
-                    : t("Active")
-              }
-            />
+            <StatusPill status={p.status} />
           </div>
           <div className="text-[12px] font-extrabold tracking-[.06em] uppercase text-ink-3 mb-[10px]">
             {t("Financials")}
           </div>
           <div className="grid gap-[10px] mb-[20px] [grid-template-columns:1fr_1fr_1fr]">
-            {[
-              [t("GMV"), money(p.gmv)],
-              [t("Commission (15%)"), money(comm)],
-              [t("Bookings"), String(p.bookings)],
-            ].map(([l, v]) => (
+            {financials.map(({ label, value }) => (
               <div
-                key={l}
+                key={label}
                 className="bg-[var(--surface-2)] border border-line rounded-lg p-[13px_14px]"
               >
                 <div className="text-[11.5px] text-ink-3 font-semibold mb-[4px]">
-                  {l}
+                  {label}
                 </div>
                 <div className="font-display font-extrabold text-[17px]">
-                  {v}
+                  {value}
                 </div>
               </div>
             ))}

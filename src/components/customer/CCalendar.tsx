@@ -97,7 +97,7 @@ export function CCalendar({
   });
   const [open, setOpen] = useState<Exp | null>(null);
   const onFav = useFav();
-  const setFilter = (k: keyof Filters, v: any) =>
+  const setFilter = (k: keyof Filters, v: Filters[keyof Filters]) =>
     setF((p) => ({ ...p, [k]: v }));
   const clear = () =>
     setF({ mood: null, cat: "All", area: "All", tod: "any", price: "any" });
@@ -130,7 +130,7 @@ export function CCalendar({
         <Seg
           accent
           value={view}
-          onChange={(v) => setView(v as any)}
+          onChange={(v) => setView(v as "month" | "week")}
           options={[
             { v: "month", l: t("Month"), icon: <Icons.grid size={15} /> },
             { v: "week", l: t("Week"), icon: <Icons.list size={15} /> },

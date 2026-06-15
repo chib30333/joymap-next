@@ -25,6 +25,16 @@ type Day = {
   time?: string;
   note: string;
 };
+
+type Booking = {
+  serviceId: string;
+  day: number;
+  time: string;
+  status: string;
+};
+
+type ByIdFn = (id: string | null) => Exp | null;
+
 const TODAY = 10;
 
 export function JoyMapScreen({
@@ -38,7 +48,7 @@ export function JoyMapScreen({
   wallet,
 }: {
   map: Day[];
-  bookings: any[];
+  bookings: Booking[];
   catalog: Exp[];
   favs: string[];
   userName: string;
@@ -51,7 +61,7 @@ export function JoyMapScreen({
   const { busy, run } = useBusy();
   const [open, setOpen] = useState<Exp | null>(null);
   const onFav = useFav();
-  const byId = (id: string | null) => catalog.find((e) => e.id === id) || null;
+  const byId: ByIdFn = (id) => catalog.find((e) => e.id === id) || null;
   const hour = new Date().getHours();
   const greet =
     hour < 12
@@ -217,7 +227,7 @@ function MoodArc({
   byId,
 }: {
   map: Day[];
-  byId: (id: string | null) => Exp | null;
+  byId: ByIdFn;
 }) {
   const t = useT();
   return (
@@ -260,9 +270,9 @@ function DayCard({
 }: {
   d: Day;
   i: number;
-  byId: (id: string | null) => Exp | null;
+  byId: ByIdFn;
   onOpen: (e: Exp) => void;
-  bookings: any[];
+  bookings: Booking[];
 }) {
   const t = useT();
   const today = d.day === TODAY;

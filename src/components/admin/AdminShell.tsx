@@ -120,6 +120,30 @@ export function AdminSidebar({
   );
 }
 
+type PageTitle = { title: string; sub: string };
+const DEFAULT_PAGE_TITLE: PageTitle = {
+  title: "Dashboard",
+  sub: "Platform health at a glance",
+};
+const PAGE_TITLES: Record<string, PageTitle> = {
+  "/admin": DEFAULT_PAGE_TITLE,
+  "/admin/providers": { title: "Providers", sub: "Manage marketplace partners" },
+  "/admin/moderation": {
+    title: "Moderation",
+    sub: "Review providers & new services",
+  },
+  "/admin/content": { title: "Content", sub: "Moderate reviews, photos & promos" },
+  "/admin/customers": { title: "Customers", sub: "LTV & retention" },
+  "/admin/financials": {
+    title: "Financials",
+    sub: "Revenue, commission & payouts",
+  },
+  "/admin/marketing": {
+    title: "Marketing",
+    sub: "Campaigns, promos & experiments",
+  },
+};
+
 export function AdminTopbar({
   name,
   unread,
@@ -129,19 +153,7 @@ export function AdminTopbar({
 }) {
   const pathname = usePathname();
   const t = useT();
-  const TITLES: Record<string, [string, string]> = {
-    "/admin": ["Dashboard", "Platform health at a glance"],
-    "/admin/providers": ["Providers", "Manage marketplace partners"],
-    "/admin/moderation": ["Moderation", "Review providers & new services"],
-    "/admin/content": ["Content", "Moderate reviews, photos & promos"],
-    "/admin/customers": ["Customers", "LTV & retention"],
-    "/admin/financials": ["Financials", "Revenue, commission & payouts"],
-    "/admin/marketing": ["Marketing", "Campaigns, promos & experiments"],
-  };
-  const [title, sub] = TITLES[pathname] || [
-    "Dashboard",
-    "Platform health at a glance",
-  ];
+  const { title, sub } = PAGE_TITLES[pathname] ?? DEFAULT_PAGE_TITLE;
   return (
     <div className="sticky top-0 bg-[color-mix(in_srgb,var(--bg)_80%,transparent)] [backdrop-filter:blur(12px)] [-webkit-backdrop-filter:blur(12px)] z-[15] flex items-center gap-[14px] py-[16px] px-[var(--pad)] border-b border-line">
       <div className="flex-1 min-w-0">

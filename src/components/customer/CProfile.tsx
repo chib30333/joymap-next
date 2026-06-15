@@ -26,6 +26,12 @@ type B = {
   exp: Exp | null;
 };
 
+type Tab = "account" | "history" | "moods";
+type FormKey = "name" | "email" | "phone" | "city";
+
+type TabDef = { key: Tab; label: string };
+type FieldDef = { key: FormKey; label: string; icon: keyof typeof Icons };
+
 export function CProfile({
   user,
   bookings,
@@ -42,7 +48,7 @@ export function CProfile({
 }) {
   const t = useT();
   const router = useRouter();
-  const [tab, setTab] = useState<"account" | "history" | "moods">("account");
+  const [tab, setTab] = useState<Tab>("account");
   const [edit, setEdit] = useState(false);
   const [form, setForm] = useState({
     name: user.name || "",
@@ -73,6 +79,19 @@ export function CProfile({
       },
     );
   };
+
+  const tabs: TabDef[] = [
+    { key: "account", label: t("Personal data") },
+    { key: "history", label: t("Activity history") },
+    { key: "moods", label: t("Moods") },
+  ];
+
+  const fields: FieldDef[] = [
+    { key: "name", label: t("Full name"), icon: "user" },
+    { key: "email", label: t("Email"), icon: "mail" },
+    { key: "phone", label: t("Phone"), icon: "phone" },
+    { key: "city", label: t("City"), icon: "pin" },
+  ];
 
   return (
     <div className="animate-anim-fade-app">
@@ -109,21 +128,15 @@ export function CProfile({
       </div>
 
       <div className="flex gap-[6px] mb-[20px] bg-surface-2 p-[5px] rounded-pill w-fit border border-line">
-        {(
-          [
-            ["account", t("Personal data")],
-            ["history", t("Activity history")],
-            ["moods", t("Moods")],
-          ] as const
-        ).map(([k, l]) => (
+        {tabs.map(({ key, label }) => (
           <Button
-            key={k}
+            key={key}
             ctx="app"
             size="sm"
-            onClick={() => setTab(k as any)}
+            onClick={() => setTab(key)}
             className="[background:var(--btn-bg)] [color:var(--btn-fg)] [box-shadow:var(--btn-sh)]"
             style={
-              (tab === k
+              (tab === key
                 ? {
                     ["--btn-bg"]: "var(--surface)",
                     ["--btn-fg"]: "var(--ink)",
@@ -136,7 +149,7 @@ export function CProfile({
                   }) as React.CSSProperties
             }
           >
-            {l}
+            {label}
           </Button>
         ))}
       </div>
@@ -157,29 +170,22 @@ export function CProfile({
             </Button>
           </div>
           <div className="grid grid-cols-2 gap-[16px]">
-            {(
-              [
-                ["name", t("Full name"), "user"],
-                ["email", t("Email"), "mail"],
-                ["phone", t("Phone"), "phone"],
-                ["city", t("City"), "pin"],
-              ] as const
-            ).map(([k, l, ic]) => {
-              const I = Icons[ic];
+            {fields.map(({ key, label, icon }) => {
+              const I = Icons[icon];
               return (
                 <div
-                  key={k}
+                  key={key}
                   className="[grid-column:var(--gc)]"
-                  style={{ ["--gc"]: k === "name" ? "1 / -1" : "auto" } as React.CSSProperties}
+                  style={{ ["--gc"]: key === "name" ? "1 / -1" : "auto" } as React.CSSProperties}
                 >
                   <div className="text-[12.5px] font-bold text-ink-3 mb-[7px]">
-                    {l}
+                    {label}
                   </div>
                   {edit ? (
                     <Input
-                      value={(form as any)[k]}
+                      value={form[key]}
                       onChange={(e) =>
-                        setForm((f) => ({ ...f, [k]: e.target.value }))
+                        setForm((f) => ({ ...f, [key]: e.target.value }))
                       }
                     />
                   ) : (
@@ -187,7 +193,7 @@ export function CProfile({
                       <span className="text-ink-3">
                         <I size={17} />
                       </span>
-                      {(form as any)[k]}
+                      {form[key]}
                     </div>
                   )}
                 </div>

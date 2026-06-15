@@ -16,6 +16,29 @@ import { EmptyMarketplace } from "./JoyMapScreen";
 import { useFav } from "@/hooks";
 import { useT } from "@/components/Language";
 
+const SORT_OPTIONS = ["Recommended", "Price", "Rating"] as const;
+
+function PillButton({
+  active,
+  paddingClass,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  paddingClass: string;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      className={`inline-flex items-center gap-[7px] ${paddingClass} rounded-pill text-[13px] font-semibold border cursor-pointer [transition:0.14s] whitespace-nowrap ${active ? "bg-coral text-white border-coral" : "bg-surface text-ink-2 border-line-2 hover:border-ink-3 hover:text-ink"}`}
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  );
+}
+
 export function Catalog({
   list: source,
   favs,
@@ -64,12 +87,13 @@ export function Catalog({
           {t("Browse by how you want to feel")}
         </div>
         <div className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden flex gap-[10px] overflow-x-auto pb-[4px]">
-          <button
-            className={`inline-flex items-center gap-[7px] rounded-pill text-[13px] font-semibold border cursor-pointer [transition:0.14s] whitespace-nowrap p-[9px_16px] ${!mood ? "bg-coral text-white border-coral" : "bg-surface text-ink-2 border-line-2 hover:border-ink-3 hover:text-ink"}`}
+          <PillButton
+            active={!mood}
+            paddingClass="p-[9px_16px]"
             onClick={() => setMood(null)}
           >
             {t("All moods")}
-          </button>
+          </PillButton>
           {MOOD_ORDER.map((k) => (
             <MoodChip
               key={k}
@@ -83,13 +107,14 @@ export function Catalog({
 
       <div className="flex items-center gap-[10px] flex-wrap mb-[22px]">
         {["All", ...CATS].map((c) => (
-          <button
+          <PillButton
             key={c}
-            className={`inline-flex items-center gap-[7px] py-[7px] px-[13px] rounded-pill text-[13px] font-semibold border cursor-pointer [transition:0.14s] whitespace-nowrap ${cat === c ? "bg-coral text-white border-coral" : "bg-surface text-ink-2 border-line-2 hover:border-ink-3 hover:text-ink"}`}
+            active={cat === c}
+            paddingClass="py-[7px] px-[13px]"
             onClick={() => setCat(c)}
           >
             {t(c)}
-          </button>
+          </PillButton>
         ))}
         <div className="flex-1" />
         <div className="flex items-center gap-[8px] text-ink-3 text-[13.5px] font-semibold">
@@ -100,7 +125,7 @@ export function Catalog({
             value={sort}
             onChange={(e) => setSort(e.target.value)}
           >
-            {["Recommended", "Price", "Rating"].map((s) => (
+            {SORT_OPTIONS.map((s) => (
               <option key={s} value={s}>
                 {t(s)}
               </option>
