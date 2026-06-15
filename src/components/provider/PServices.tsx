@@ -87,10 +87,7 @@ export function PServices({ svcs }: { svcs: Svc[] }) {
             return (
               <div
                 key={s.id}
-                className="bg-surface border border-line rounded-lg animate-anim-pop-dash p-0 overflow-hidden opacity-[var(--op)]"
-                style={
-                  { ["--op"]: s.active !== false ? 1 : 0.62 } as React.CSSProperties
-                }
+                className={`bg-surface border border-line rounded-lg animate-anim-pop-dash p-0 overflow-hidden ${s.active !== false ? "opacity-100" : "opacity-[0.62]"}`}
               >
                 <div
                   className="relative h-[128px] [background:var(--card-bg)]"

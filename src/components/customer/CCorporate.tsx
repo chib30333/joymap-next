@@ -153,10 +153,7 @@ export function CCorporate({
   };
 
   return (
-    <div
-      className="animate-anim-fade-app"
-      style={{ ["--gold"]: "#e6a23c" } as React.CSSProperties}
-    >
+    <div className="animate-anim-fade-app [--gold:#e6a23c]">
       <div className="relative overflow-hidden rounded-xl text-[#f4e9d8] min-h-[430px] flex items-end [background-image:linear-gradient(95deg,rgba(24,5,7,0.98)_0%,rgba(40,8,11,0.95)_40%,rgba(40,8,11,0.72)_64%,rgba(40,8,11,0.5)_100%),url('/images/corporate-hero.jpg')] bg-cover [background-position:right_28%] py-10 px-[44px] before:content-[''] before:absolute before:inset-0 before:opacity-30 before:[mix-blend-mode:overlay] before:[background-image:radial-gradient(rgba(255,255,255,0.5)_0.6px,transparent_0.6px)] before:[background-size:10px_10px] before:pointer-events-none [&_h1]:[text-shadow:0_2px_18px_rgba(20,4,6,0.5)] [&_p]:[text-shadow:0_2px_18px_rgba(20,4,6,0.5)]">
         <div className="relative flex gap-[30px] items-center flex-wrap">
           <div className="flex-1 min-w-[280px] max-w-[560px]">
@@ -432,17 +429,11 @@ export function CCorporate({
               className="flex items-center gap-[14px] py-[14px] px-[22px] border-t border-line"
             >
               <span
-                className="w-[38px] h-[38px] rounded-[11px] flex-none grid place-items-center [background:var(--ic-bg)] [color:var(--ic-fg)]"
-                style={
-                  {
-                    "--ic-bg":
-                      inv.status === "paid"
-                        ? "color-mix(in srgb,#1FA46E 13%,transparent)"
-                        : "color-mix(in srgb,var(--orange) 14%,transparent)",
-                    "--ic-fg":
-                      inv.status === "paid" ? "#1FA46E" : "var(--orange-deep)",
-                  } as React.CSSProperties
-                }
+                className={`w-[38px] h-[38px] rounded-[11px] flex-none grid place-items-center ${
+                  inv.status === "paid"
+                    ? "[background:color-mix(in_srgb,#1FA46E_13%,transparent)] text-[#1FA46E]"
+                    : "[background:color-mix(in_srgb,var(--orange)_14%,transparent)] text-[var(--orange-deep)]"
+                }`}
               >
                 <Icons.wallet size={18} />
               </span>
@@ -457,13 +448,11 @@ export function CCorporate({
                   {fmt(inv.amount)}
                 </div>
                 <span
-                  className="text-[11.5px] font-extrabold uppercase tracking-[.04em] [color:var(--st-fg)]"
-                  style={
-                    {
-                      "--st-fg":
-                        inv.status === "paid" ? "#1FA46E" : "var(--orange-deep)",
-                    } as React.CSSProperties
-                  }
+                  className={`text-[11.5px] font-extrabold uppercase tracking-[.04em] ${
+                    inv.status === "paid"
+                      ? "text-[#1FA46E]"
+                      : "text-[var(--orange-deep)]"
+                  }`}
                 >
                   {t(inv.status)}
                 </span>

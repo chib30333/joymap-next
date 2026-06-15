@@ -134,19 +134,10 @@ export function CProfile({
             ctx="app"
             size="sm"
             onClick={() => setTab(key)}
-            className="[background:var(--btn-bg)] [color:var(--btn-fg)] [box-shadow:var(--btn-sh)]"
-            style={
-              (tab === key
-                ? {
-                    ["--btn-bg"]: "var(--surface)",
-                    ["--btn-fg"]: "var(--ink)",
-                    ["--btn-sh"]: "var(--sh-sm)",
-                  }
-                : {
-                    ["--btn-bg"]: "transparent",
-                    ["--btn-fg"]: "var(--ink-3)",
-                    ["--btn-sh"]: "none",
-                  }) as React.CSSProperties
+            className={
+              tab === key
+                ? "bg-surface text-ink shadow-sm"
+                : "bg-transparent text-ink-3 shadow-none"
             }
           >
             {label}
@@ -175,8 +166,9 @@ export function CProfile({
               return (
                 <div
                   key={key}
-                  className="[grid-column:var(--gc)]"
-                  style={{ ["--gc"]: key === "name" ? "1 / -1" : "auto" } as React.CSSProperties}
+                  className={
+                    key === "name" ? "[grid-column:1/-1]" : "[grid-column:auto]"
+                  }
                 >
                   <div className="text-[12.5px] font-bold text-ink-3 mb-[7px]">
                     {label}
@@ -242,8 +234,7 @@ export function CProfile({
                 return (
                   <div
                     key={h.id}
-                    className="flex items-center gap-[14px] p-[15px_18px] [border-top:var(--bt)]"
-                    style={{ ["--bt"]: i ? "1px solid var(--line)" : "none" } as React.CSSProperties}
+                    className={`flex items-center gap-[14px] p-[15px_18px] ${i ? "border-t border-line" : ""}`}
                   >
                     <div
                       className="w-[44px] h-[44px] rounded-[12px] [background:var(--bg)] bg-cover flex-none opacity-[0.95]"

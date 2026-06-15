@@ -34,15 +34,8 @@ function NotificationRow({
   const Icon = Icons[item.icon] || Icons.bell;
   return (
     <div
-      className="bg-surface border rounded-lg p-[15px_17px] flex gap-[13px] cursor-pointer [border-color:var(--bc)]"
+      className={`bg-surface border rounded-lg p-[15px_17px] flex gap-[13px] cursor-pointer ${item.unread ? "[border-color:color-mix(in_srgb,var(--coral)_32%,transparent)]" : "border-line"}`}
       onClick={() => onMark(item.id)}
-      style={
-        {
-          ["--bc"]: item.unread
-            ? "color-mix(in srgb,var(--coral) 32%,transparent)"
-            : "var(--line)",
-        } as React.CSSProperties
-      }
     >
       <span
         className="w-10 h-10 rounded-sm flex-none grid place-items-center [background:var(--ic-bg)] [color:var(--ic-c)]"
@@ -98,19 +91,10 @@ export function CNotifications({ items }: { items: Notification[] }) {
               ctx="app"
               size="sm"
               onClick={() => setFilter(key)}
-              className="[background:var(--btn-bg)] [color:var(--btn-fg)] [box-shadow:var(--btn-sh)]"
-              style={
-                (filter === key
-                  ? {
-                      ["--btn-bg"]: "var(--surface)",
-                      ["--btn-fg"]: "var(--ink)",
-                      ["--btn-sh"]: "var(--sh-sm)",
-                    }
-                  : {
-                      ["--btn-bg"]: "transparent",
-                      ["--btn-fg"]: "var(--ink-3)",
-                      ["--btn-sh"]: "none",
-                    }) as React.CSSProperties
+              className={
+                filter === key
+                  ? "bg-surface text-ink shadow-sm"
+                  : "bg-transparent text-ink-3 shadow-none"
               }
             >
               {label}

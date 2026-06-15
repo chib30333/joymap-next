@@ -126,8 +126,7 @@ export function PPricing({ svcs }: { svcs: PricingService[] }) {
         {rules.map((r) => (
           <div
             key={r.id}
-            className="bg-surface border border-line rounded-lg py-[16px] px-[20px] flex items-center gap-[16px] [opacity:var(--op)]"
-            style={{ ["--op"]: r.active ? 1 : 0.6 } as React.CSSProperties}
+            className={`bg-surface border border-line rounded-lg py-[16px] px-[20px] flex items-center gap-[16px] ${r.active ? "opacity-100" : "opacity-[0.6]"}`}
           >
             <span
               className="w-[42px] h-[42px] rounded-sm flex-none grid place-items-center [background:var(--bg)] [color:var(--c)]"

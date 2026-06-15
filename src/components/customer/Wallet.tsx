@@ -50,8 +50,7 @@ export function Wallet({ wallet, tx }: { wallet: number; tx: Tx[] }) {
           {tx.map((t, i) => (
             <div
               key={t.id}
-              className="flex items-center justify-between pt-[15px] pb-[15px] pl-[20px] pr-[20px] [border-top:var(--bt)]"
-              style={{ ["--bt"]: i ? "1px solid var(--line)" : "none" } as React.CSSProperties}
+              className={`flex items-center justify-between pt-[15px] pb-[15px] pl-[20px] pr-[20px] ${i ? "border-t border-line" : ""}`}
             >
               <div>
                 <div className="font-bold text-[14.5px]">{t.label}</div>
@@ -60,8 +59,7 @@ export function Wallet({ wallet, tx }: { wallet: number; tx: Tx[] }) {
                 </div>
               </div>
               <span
-                className="font-extrabold font-display [color:var(--amt)]"
-                style={{ ["--amt"]: t.amount > 0 ? "var(--m-calm)" : "var(--ink)" } as React.CSSProperties}
+                className={`font-extrabold font-display ${t.amount > 0 ? "text-m-calm" : "text-ink"}`}
               >
                 {t.amount > 0 ? "+" : "−"}
                 {fmt(Math.abs(t.amount))}

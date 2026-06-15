@@ -160,12 +160,7 @@ function PRow({
   return (
     <div className="flex justify-between py-[7px] px-0 text-[14px]">
       <span className="text-ink-2 font-semibold">{l}</span>
-      <span
-        className="font-bold text-[var(--c)]"
-        style={
-          { ["--c"]: neg ? "var(--coral)" : "var(--ink)" } as React.CSSProperties
-        }
-      >
+      <span className={`font-bold ${neg ? "text-coral" : "text-ink"}`}>
         {r}
       </span>
     </div>

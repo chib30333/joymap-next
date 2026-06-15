@@ -184,12 +184,7 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
               return (
                 <div
                   key={key}
-                  className="[grid-column:var(--gc)]"
-                  style={
-                    {
-                      ["--gc"]: key === "address" ? "1 / -1" : "auto",
-                    } as React.CSSProperties
-                  }
+                  className={key === "address" ? "[grid-column:1/-1]" : "[grid-column:auto]"}
                 >
                   <div className="text-[12px] font-bold text-ink-3 mb-[6px]">
                     {t(label)}

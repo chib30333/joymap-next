@@ -309,10 +309,7 @@ function RateModal({ b, onClose }: { b: B; onClose: () => void }) {
             <button
               key={s}
               onClick={() => setStars(s)}
-              className="[background:none] border-none cursor-pointer text-[32px] [transition:.12s] [color:var(--star-c)]"
-              style={
-                { "--star-c": s <= stars ? "var(--m-joy)" : "var(--line-2)" } as React.CSSProperties
-              }
+              className={`[background:none] border-none cursor-pointer text-[32px] [transition:.12s] ${s <= stars ? "text-m-joy" : "text-line-2"}`}
             >
               ★
             </button>
@@ -388,27 +385,15 @@ function MoveModal({ b, onClose }: { b: B; onClose: () => void }) {
             <button
               key={d}
               onClick={() => setDay(d)}
-              className="flex-none w-[60px] p-[10px_0] rounded-[var(--r-sm)] cursor-pointer [border:var(--day-bd)] [background:var(--day-bg)]"
-              style={
-                {
-                  "--day-bd": `1.5px solid ${day === d ? "var(--coral)" : "var(--line-2)"}`,
-                  "--day-bg": day === d ? "var(--coral-soft)" : "var(--surface)",
-                } as React.CSSProperties
-              }
+              className={`flex-none w-[60px] p-[10px_0] rounded-[var(--r-sm)] cursor-pointer [border-width:1.5px] [border-style:solid] ${day === d ? "border-coral bg-coral-soft" : "border-line-2 bg-surface"}`}
             >
               <div
-                className="text-[11.5px] font-bold [color:var(--day-c)]"
-                style={
-                  { "--day-c": day === d ? "var(--coral-deep)" : "var(--ink-3)" } as React.CSSProperties
-                }
+                className={`text-[11.5px] font-bold ${day === d ? "text-coral-deep" : "text-ink-3"}`}
               >
                 {t(WD[dow(d)])}
               </div>
               <div
-                className="[font-family:var(--display)] font-extrabold text-[18px] [color:var(--day-c2)]"
-                style={
-                  { "--day-c2": day === d ? "var(--coral-deep)" : "var(--ink)" } as React.CSSProperties
-                }
+                className={`[font-family:var(--display)] font-extrabold text-[18px] ${day === d ? "text-coral-deep" : "text-ink"}`}
               >
                 {d}
               </div>

@@ -295,12 +295,12 @@ function Seg({
         return (
           <button
             key={o.v}
-            className={`py-[8px] px-4 rounded-pill font-bold text-[13px] text-ink-3 border-none bg-transparent cursor-pointer [transition:0.16s] whitespace-nowrap inline-flex items-center gap-[6px] ${
+            className={`py-[8px] px-4 rounded-pill font-bold text-[13px] border-none cursor-pointer [transition:0.16s] whitespace-nowrap inline-flex items-center gap-[6px] ${
               on
                 ? accent
                   ? "bg-coral text-[#fff]"
                   : "bg-surface text-ink"
-                : ""
+                : "bg-transparent text-ink-3"
             }`}
             onClick={() => onChange(o.v)}
           >
@@ -587,8 +587,7 @@ function WeekView({
               }`}
             >
               <div
-                className="text-[11px] font-extrabold tracking-[.05em] uppercase opacity-[var(--op)]"
-                style={{ "--op": today ? 0.9 : 0.6 } as React.CSSProperties}
+                className={`text-[11px] font-extrabold tracking-[.05em] uppercase ${today ? "opacity-90" : "opacity-60"}`}
               >
                 {t(CAL_WD[calDow(d)])}
               </div>

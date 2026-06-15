@@ -65,14 +65,7 @@ export function NotificationsList({ items }: { items: Notification[] }) {
           <Card
             key={n.id}
             onClick={() => mark(n.id)}
-            className="flex cursor-pointer gap-3.5 p-4 [border-color:var(--bc,var(--line))]"
-            style={
-              n.unread
-                ? ({
-                    ["--bc"]: "color-mix(in srgb,var(--coral) 32%,transparent)",
-                  } as React.CSSProperties)
-                : undefined
-            }
+            className={`flex cursor-pointer gap-3.5 p-4 ${n.unread ? "[border-color:color-mix(in_srgb,var(--coral)_32%,transparent)]" : "border-line"}`}
           >
             <span
               className="grid h-10 w-10 shrink-0 place-items-center rounded text-lg [background:var(--ic-bg)] [color:var(--ic-c)]"

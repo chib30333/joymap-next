@@ -258,15 +258,11 @@ function Bubble({
       className={`animate-anim-pop-app max-w-[82%] ${me ? "self-end" : "self-start"}`}
     >
       <div
-        className="py-[12px] px-[16px] text-[14.5px] leading-[1.5] [border-radius:var(--bbl-r)] [background:var(--bbl-bg)] [color:var(--bbl-c)] [border:var(--bbl-bd)] [box-shadow:var(--sh-sm)]"
-        style={
-          {
-            "--bbl-r": me ? "18px 18px 6px 18px" : "18px 18px 18px 6px",
-            "--bbl-bg": me ? "var(--coral)" : "var(--surface-2)",
-            "--bbl-c": me ? "#fff" : "var(--ink)",
-            "--bbl-bd": me ? "none" : "1px solid var(--line)",
-          } as React.CSSProperties
-        }
+        className={`py-[12px] px-[16px] text-[14.5px] leading-[1.5] shadow-sm ${
+          me
+            ? "[border-radius:18px_18px_6px_18px] bg-coral text-[#fff] border-none"
+            : "[border-radius:18px_18px_18px_6px] bg-surface-2 text-ink border border-line"
+        }`}
       >
         {children}
       </div>
@@ -318,23 +314,14 @@ function BuildingMap() {
         {steps.map((s, k) => (
           <div
             key={k}
-            className="flex items-center gap-[10px] text-[13.5px] font-semibold [transition:.3s] [color:var(--step-c)]"
-            style={
-              { "--step-c": k <= i ? "var(--ink)" : "var(--ink-3)" } as React.CSSProperties
-            }
+            className={`flex items-center gap-[10px] text-[13.5px] font-semibold [transition:.3s] ${
+              k <= i ? "text-ink" : "text-ink-3"
+            }`}
           >
             <span
-              className="w-[18px] h-[18px] rounded-[99px] grid place-items-center flex-none text-[#fff] [background:var(--badge-bg)]"
-              style={
-                {
-                  "--badge-bg":
-                    k < i
-                      ? "var(--m-calm)"
-                      : k === i
-                        ? "var(--coral)"
-                        : "var(--line-2)",
-                } as React.CSSProperties
-              }
+              className={`w-[18px] h-[18px] rounded-[99px] grid place-items-center flex-none text-[#fff] ${
+                k < i ? "bg-m-calm" : k === i ? "bg-coral" : "bg-line-2"
+              }`}
             >
               {k < i ? (
                 <Icons.check size={12} />
