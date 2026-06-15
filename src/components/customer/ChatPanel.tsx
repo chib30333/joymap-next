@@ -111,13 +111,7 @@ export function ChatPanel({
               </div>
               <div className="flex items-center gap-[6px]">
                 <span
-                  className="text-[12.5px] whitespace-nowrap overflow-hidden flex-1 text-ellipsis [color:var(--last-c)] [font-weight:var(--last-fw)]"
-                  style={
-                    {
-                      ["--last-c"]: th.unread ? "var(--ink)" : "var(--ink-3)",
-                      ["--last-fw"]: th.unread ? 700 : 500,
-                    } as React.CSSProperties
-                  }
+                  className={`text-[12.5px] whitespace-nowrap overflow-hidden flex-1 text-ellipsis ${th.unread ? "text-ink font-bold" : "text-ink-3 font-medium"}`}
                 >
                   {th.last}
                 </span>

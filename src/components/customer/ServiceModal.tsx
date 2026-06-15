@@ -98,10 +98,7 @@ export function ServiceModal({
           <Icons.close size={18} />
         </button>
         <button
-          className="absolute rounded-pill border-none grid place-items-center [transition:0.15s] cursor-pointer hover:bg-[#fff] hover:scale-[1.08] top-[14px] right-[64px] w-[42px] h-[42px] bg-[rgba(255,255,255,.9)] [color:var(--fg)]"
-          style={
-            { ["--fg"]: fav ? "var(--m-energy)" : "#241C2E" } as React.CSSProperties
-          }
+          className={`absolute rounded-pill border-none grid place-items-center [transition:0.15s] cursor-pointer hover:bg-[#fff] hover:scale-[1.08] top-[14px] right-[64px] w-[42px] h-[42px] bg-[rgba(255,255,255,.9)] ${fav ? "text-m-energy" : "text-[#241C2E]"}`}
           onClick={() => onFav(exp.id)}
         >
           <Icons.heart size={19} fill={fav} />
@@ -215,32 +212,15 @@ export function ServiceModal({
                     setDay(d);
                     setTime(timesFor(d)[0]);
                   }}
-                  className="flex-none w-[64px] p-[12px_0] rounded-sm [border:1.5px_solid_var(--bd)] [background:var(--bg)] cursor-pointer [transition:.15s]"
-                  style={
-                    {
-                      "--bd": day === d ? "var(--coral)" : "var(--line-2)",
-                      "--bg": day === d ? "var(--coral-soft)" : "var(--surface)",
-                    } as React.CSSProperties
-                  }
+                  className={`flex-none w-[64px] p-[12px_0] rounded-sm [border-width:1.5px] [border-style:solid] cursor-pointer [transition:.15s] ${day === d ? "border-coral bg-coral-soft" : "border-line-2 bg-surface"}`}
                 >
                   <div
-                    className="text-[12px] font-bold [color:var(--fg)]"
-                    style={
-                      {
-                        "--fg":
-                          day === d ? "var(--coral-deep)" : "var(--ink-3)",
-                      } as React.CSSProperties
-                    }
+                    className={`text-[12px] font-bold ${day === d ? "text-coral-deep" : "text-ink-3"}`}
                   >
                     {WD[dow(d)]}
                   </div>
                   <div
-                    className="[font-family:var(--display)] font-extrabold text-[20px] [color:var(--fg)]"
-                    style={
-                      {
-                        "--fg": day === d ? "var(--coral-deep)" : "var(--ink)",
-                      } as React.CSSProperties
-                    }
+                    className={`[font-family:var(--display)] font-extrabold text-[20px] ${day === d ? "text-coral-deep" : "text-ink"}`}
                   >
                     {d}
                   </div>
@@ -339,21 +319,10 @@ export function ServiceModal({
                     setPay(k);
                     setError(null);
                   }}
-                  className="flex items-center gap-[12px] p-[13px_16px] rounded-sm cursor-pointer [transition:.15s] [border:1.5px_solid_var(--bd)] [background:var(--bg)]"
-                  style={
-                    {
-                      "--bd": pay === k ? "var(--coral)" : "var(--line-2)",
-                      "--bg": pay === k ? "var(--coral-soft)" : "var(--surface)",
-                    } as React.CSSProperties
-                  }
+                  className={`flex items-center gap-[12px] p-[13px_16px] rounded-sm cursor-pointer [transition:.15s] [border-width:1.5px] [border-style:solid] ${pay === k ? "border-coral bg-coral-soft" : "border-line-2 bg-surface"}`}
                 >
                   <span
-                    className="w-[20px] h-[20px] rounded-[99px] [border:2px_solid_var(--bd)] grid place-items-center"
-                    style={
-                      {
-                        "--bd": pay === k ? "var(--coral)" : "var(--line-2)",
-                      } as React.CSSProperties
-                    }
+                    className={`w-[20px] h-[20px] rounded-[99px] [border-width:2px] [border-style:solid] grid place-items-center ${pay === k ? "border-coral" : "border-line-2"}`}
                   >
                     {pay === k && (
                       <span className="w-[10px] h-[10px] rounded-[99px] bg-[var(--coral)]" />
@@ -458,21 +427,12 @@ function Row({ l, r, muted }: { l: string; r: string; muted?: boolean }) {
   return (
     <div className="flex justify-between py-[6px] text-[14px]">
       <span
-        className="font-semibold [color:var(--fg)]"
-        style={
-          { ["--fg"]: muted ? "var(--ink-3)" : "var(--ink-2)" } as React.CSSProperties
-        }
+        className={`font-semibold ${muted ? "text-ink-3" : "text-ink-2"}`}
       >
         {l}
       </span>
       <span
-        className="[font-weight:var(--fw)] [color:var(--fg)]"
-        style={
-          {
-            ["--fw"]: muted ? 600 : 700,
-            ["--fg"]: muted ? "var(--ink-3)" : "var(--ink)",
-          } as React.CSSProperties
-        }
+        className={`${muted ? "font-semibold text-ink-3" : "font-bold text-ink"}`}
       >
         {r}
       </span>
