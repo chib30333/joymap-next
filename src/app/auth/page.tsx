@@ -245,26 +245,31 @@ function ResetFlow({
     else if (step === "reset") setStep("sent");
   };
 
-  const titles: Record<string, [string, React.ReactNode]> = {
-    forgot: [
-      "Reset your password",
-      "Enter the email tied to your account and we'll send a 6-digit code.",
-    ],
-    sent: [
-      "Check your inbox",
-      <>
-        We sent a code to <b className="text-ink">{email || "your email"}</b>.
-        It expires in 10 minutes.
-      </>,
-    ],
-    reset: [
-      "Set a new password",
-      "Choose something strong — at least 8 characters.",
-    ],
-    success: [
-      "Password updated",
-      "Your password has been changed. You can sign in now.",
-    ],
+  const titles: Record<
+    typeof step,
+    { title: string; body: React.ReactNode }
+  > = {
+    forgot: {
+      title: "Reset your password",
+      body: "Enter the email tied to your account and we'll send a 6-digit code.",
+    },
+    sent: {
+      title: "Check your inbox",
+      body: (
+        <>
+          We sent a code to <b className="text-ink">{email || "your email"}</b>.
+          It expires in 10 minutes.
+        </>
+      ),
+    },
+    reset: {
+      title: "Set a new password",
+      body: "Choose something strong — at least 8 characters.",
+    },
+    success: {
+      title: "Password updated",
+      body: "Your password has been changed. You can sign in now.",
+    },
   };
   const pwOK = pwScore(pw).pct >= 60 && pw.length >= 8;
   const matchOK = pw2.length > 0 && pw === pw2;
@@ -299,9 +304,9 @@ function ResetFlow({
       <div
         className={step === "sent" || step === "success" ? "text-center" : ""}
       >
-        <h2 className="text-[25px]">{titles[step][0]}</h2>
+        <h2 className="text-[25px]">{titles[step].title}</h2>
         <p className="text-ink-2 text-[14.5px] mt-[6px] leading-[1.5]">
-          {titles[step][1]}
+          {titles[step].body}
         </p>
       </div>
 
@@ -474,28 +479,31 @@ function ResetFlow({
   );
 }
 
+type SocialProvider = { name: string; color: string; glyph: string };
+
+const SOCIAL_PROVIDERS: SocialProvider[] = [
+  { name: "Yandex", color: "#FC3F1D", glyph: "Я" },
+  { name: "VK", color: "#0077FF", glyph: "VK" },
+  { name: "Google", color: "#4285F4", glyph: "G" },
+];
+
 function Social() {
-  const items: [string, string, string][] = [
-    ["Yandex", "#FC3F1D", "Я"],
-    ["VK", "#0077FF", "VK"],
-    ["Google", "#4285F4", "G"],
-  ];
   return (
     <div className="grid grid-cols-3 gap-[9px]">
-      {items.map(([n, c, g]) => (
+      {SOCIAL_PROVIDERS.map(({ name, color, glyph }) => (
         <button
-          key={n}
+          key={name}
           type="button"
           className="flex items-center justify-center gap-2 px-2 py-[11px] rounded-sm border border-line-2 bg-surface text-ink font-bold text-[13px] cursor-pointer [transition:0.15s] hover:border-ink-3 hover:bg-surface-2"
-          title={`Continue with ${n}`}
+          title={`Continue with ${name}`}
         >
           <span
             className="w-5 h-5 rounded-[6px] grid place-items-center text-white font-extrabold text-[11px] font-display [background:var(--soc-bg)]"
-            style={{ "--soc-bg": c } as React.CSSProperties}
+            style={{ "--soc-bg": color } as React.CSSProperties}
           >
-            {g}
+            {glyph}
           </span>
-          {n}
+          {name}
         </button>
       ))}
     </div>

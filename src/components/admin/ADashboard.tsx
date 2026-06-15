@@ -17,16 +17,46 @@ const CAT_COLORS: Record<string, string> = {
   Other: "#9B8AA0",
 };
 
+type PlatformStats = {
+  gmv: number;
+  revenue: number;
+  activeProviders: number;
+  bookings: number;
+  customers: number;
+  byDay: Record<number, number>;
+  byCat: Record<string, number>;
+};
+
+type Application = { id: string; name: string; cat: string; city: string };
+type PendingService = { id: string; name: string; providerName: string };
+type TopProvider = {
+  id: string;
+  name: string;
+  cat: string;
+  city: string;
+  gmv: number;
+};
+
+type StatCard = {
+  label: string;
+  value: string;
+  icon: React.ReactNode;
+  accent: string;
+  sub: string;
+};
+
+type QueueItem = { kind: string; name: string; sub: string };
+
 export function ADashboard({
   s,
   apps,
   pend,
   top,
 }: {
-  s: any;
-  apps: any[];
-  pend: any[];
-  top: any[];
+  s: PlatformStats;
+  apps: Application[];
+  pend: PendingService[];
+  top: TopProvider[];
 }) {
   const t = useT();
   const router = useRouter();
@@ -42,7 +72,7 @@ export function ADashboard({
     value: s.byCat[c],
     color: CAT_COLORS[c] || CAT_COLORS.Other,
   }));
-  const queue = [
+  const queue: QueueItem[] = [
     ...apps.map((a) => ({
       kind: t("Provider"),
       name: a.name,
@@ -54,37 +84,49 @@ export function ADashboard({
       sub: t("by") + " " + p.providerName,
     })),
   ];
+  const statCards: StatCard[] = [
+    {
+      label: t("GMV · June"),
+      value: money(s.gmv),
+      icon: <Icons.flame size={16} />,
+      accent: "#1FA46E",
+      sub: t("confirmed bookings"),
+    },
+    {
+      label: t("Platform revenue"),
+      value: money(s.revenue),
+      icon: <Icons.wallet size={16} />,
+      accent: "#5563D6",
+      sub: t("15% commission"),
+    },
+    {
+      label: t("Active providers"),
+      value: String(s.activeProviders),
+      icon: <Icons.user size={16} />,
+      accent: "#E89015",
+      sub: `${apps.length} ${t("in review")}`,
+    },
+    {
+      label: t("Bookings"),
+      value: String(s.bookings),
+      icon: <Icons.calendar size={16} />,
+      accent: "#FF8A4C",
+      sub: `${s.customers} ${t("customers")}`,
+    },
+  ];
   return (
     <div className="animate-anim-fade-dash">
       <div className="grid [grid-template-columns:repeat(auto-fit,minmax(210px,1fr))] gap-[var(--gap)] mb-[var(--gap)]">
-        <Stat
-          label={t("GMV · June")}
-          value={money(s.gmv)}
-          icon={<Icons.flame size={16} />}
-          accent="#1FA46E"
-          sub={t("confirmed bookings")}
-        />
-        <Stat
-          label={t("Platform revenue")}
-          value={money(s.revenue)}
-          icon={<Icons.wallet size={16} />}
-          accent="#5563D6"
-          sub={t("15% commission")}
-        />
-        <Stat
-          label={t("Active providers")}
-          value={String(s.activeProviders)}
-          icon={<Icons.user size={16} />}
-          accent="#E89015"
-          sub={`${apps.length} ${t("in review")}`}
-        />
-        <Stat
-          label={t("Bookings")}
-          value={String(s.bookings)}
-          icon={<Icons.calendar size={16} />}
-          accent="#FF8A4C"
-          sub={`${s.customers} ${t("customers")}`}
-        />
+        {statCards.map((c) => (
+          <Stat
+            key={c.label}
+            label={c.label}
+            value={c.value}
+            icon={c.icon}
+            accent={c.accent}
+            sub={c.sub}
+          />
+        ))}
       </div>
       <div className="grid [grid-template-columns:1.6fr_1fr] gap-[var(--gap)] mb-[var(--gap)]">
         <div className="bg-surface border border-line rounded-lg p-[22px]">

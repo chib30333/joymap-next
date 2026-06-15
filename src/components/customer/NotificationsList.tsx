@@ -6,7 +6,7 @@ import { Card } from "@/components/ui";
 import { rpc } from "@/lib/client";
 import { useT } from "@/components/Language";
 
-type N = {
+type Notification = {
   id: string;
   icon: string;
   accent: string;
@@ -16,10 +16,14 @@ type N = {
   unread: boolean;
 };
 
-export function NotificationsList({ items }: { items: N[] }) {
+type Filter = "all" | "unread";
+
+const FILTERS: { key: Filter }[] = [{ key: "all" }, { key: "unread" }];
+
+export function NotificationsList({ items }: { items: Notification[] }) {
   const t = useT();
   const router = useRouter();
-  const [filter, setFilter] = useState<"all" | "unread">("all");
+  const [filter, setFilter] = useState<Filter>("all");
   const unread = items.filter((n) => n.unread).length;
   const list = filter === "all" ? items : items.filter((n) => n.unread);
 
@@ -36,13 +40,13 @@ export function NotificationsList({ items }: { items: N[] }) {
     <div className="max-w-2xl animate-rise">
       <div className="mb-5 flex items-center gap-3">
         <div className="flex gap-1.5 rounded-pill border border-line bg-surface-2 p-1.5">
-          {(["all", "unread"] as const).map((k) => (
+          {FILTERS.map(({ key }) => (
             <button
-              key={k}
-              onClick={() => setFilter(k)}
-              className={`rounded-pill px-4 py-2 text-[13px] font-bold ${filter === k ? "bg-surface text-ink shadow-sm" : "text-ink-3"}`}
+              key={key}
+              onClick={() => setFilter(key)}
+              className={`rounded-pill px-4 py-2 text-[13px] font-bold ${filter === key ? "bg-surface text-ink shadow-sm" : "text-ink-3"}`}
             >
-              {k === "all"
+              {key === "all"
                 ? t("All")
                 : `${t("Unread")}${unread ? ` · ${unread}` : ""}`}
             </button>

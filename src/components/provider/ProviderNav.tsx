@@ -7,14 +7,18 @@ import { LangSwitcher, useT } from "@/components/Language";
 import { Avatar } from "@/components/dash/primitives";
 import { rpc } from "@/lib/client";
 
-type NavItem = {
-  sec?: string;
-  key?: string;
-  label?: string;
-  icon?: keyof typeof Icons;
-  href?: string;
-  badge?: number | null;
+type NavSection = { sec: string };
+
+type NavLink = {
+  key: string;
+  label: string;
+  icon: keyof typeof Icons;
+  href: string;
 };
+
+type NavItem = NavSection | NavLink;
+
+const isSection = (item: NavItem): item is NavSection => "sec" in item;
 
 const P_NAV: NavItem[] = [
   { sec: "Workspace" },
@@ -101,24 +105,43 @@ export function ProviderNav({
   const router = useRouter();
   const pathname = usePathname();
   const t = useT();
-  const TITLES: Record<string, [string, string]> = {
-    "/provider/overview": ["Overview", `${t("Welcome back")}, ${providerName}`],
-    "/provider/calendar": ["Calendar", "Manage your weekly availability"],
-    "/provider/bookings": ["Bookings", "Confirm, complete & track sessions"],
-    "/provider/messages": ["Messages", "Chat with your customers"],
-    "/provider/profile": ["Business profile", "How customers see you"],
-    "/provider/services": ["Services", "Your catalogue of activities"],
-    "/provider/pricing": ["Pricing", "Base prices & dynamic rules"],
-    "/provider/gallery": ["Gallery", "Photos & videos of your experiences"],
-    "/provider/analytics": ["Analytics", "Understand your performance"],
-    "/provider/payouts": ["Payouts", "Platform commission & withdrawals"],
-    "/provider/reviews": ["Reviews", "What customers are saying"],
-    "/provider/marketing": ["Marketing", "Promo codes & growth"],
+  const welcome = `${t("Welcome back")}, ${providerName}`;
+  const TITLES: Record<string, { title: string; sub: string }> = {
+    "/provider/overview": { title: "Overview", sub: welcome },
+    "/provider/calendar": {
+      title: "Calendar",
+      sub: "Manage your weekly availability",
+    },
+    "/provider/bookings": {
+      title: "Bookings",
+      sub: "Confirm, complete & track sessions",
+    },
+    "/provider/messages": { title: "Messages", sub: "Chat with your customers" },
+    "/provider/profile": {
+      title: "Business profile",
+      sub: "How customers see you",
+    },
+    "/provider/services": {
+      title: "Services",
+      sub: "Your catalogue of activities",
+    },
+    "/provider/pricing": { title: "Pricing", sub: "Base prices & dynamic rules" },
+    "/provider/gallery": {
+      title: "Gallery",
+      sub: "Photos & videos of your experiences",
+    },
+    "/provider/analytics": {
+      title: "Analytics",
+      sub: "Understand your performance",
+    },
+    "/provider/payouts": {
+      title: "Payouts",
+      sub: "Platform commission & withdrawals",
+    },
+    "/provider/reviews": { title: "Reviews", sub: "What customers are saying" },
+    "/provider/marketing": { title: "Marketing", sub: "Promo codes & growth" },
   };
-  const [title, sub] = TITLES[pathname] || [
-    "Overview",
-    `${t("Welcome back")}, ${providerName}`,
-  ];
+  const { title, sub } = TITLES[pathname] || { title: "Overview", sub: welcome };
   return (
     <header className="sticky top-0 z-40 bg-[color-mix(in_srgb,var(--bg)_82%,transparent)] [backdrop-filter:blur(16px)] [-webkit-backdrop-filter:blur(16px)] border-b border-line">
       <div className="flex items-center gap-4 py-[13px] px-[var(--pad)]">
@@ -159,7 +182,7 @@ export function ProviderNav({
       </div>
       <div className="flex items-center gap-[2px] px-[var(--pad)] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {P_NAV.map((n, i) => {
-          if (n.sec)
+          if (isSection(n))
             return (
               <span key={`s${i}`} className="inline-flex items-center">
                 {i > 0 && <span className="w-px h-5 bg-line-2 mx-2 flex-none" />}
@@ -168,23 +191,43 @@ export function ProviderNav({
                 </span>
               </span>
             );
-          const I = Icons[n.icon!];
-          const b = (badges as Record<string, number | null>)[n.key!];
-          const on = pathname === n.href;
           return (
-            <button
+            <NavTab
               key={n.key}
-              className={`inline-flex items-center gap-2 py-[13px] px-[15px] font-semibold text-[14px] whitespace-nowrap cursor-pointer relative [transition:0.14s] border-b-[2.5px] border-solid mb-[-1px] hover:text-ink ${on ? "text-coral border-coral [&_svg]:text-coral" : "text-ink-2 border-transparent"}`}
-              onClick={() => router.push(n.href!)}
-            >
-              <I size={17} />
-              {t(n.label!)}
-              {b ? <span className="bg-coral text-white text-[10.5px] font-extrabold min-w-[17px] h-[17px] rounded-[99px] grid place-items-center px-1">{b}</span> : null}
-            </button>
+              item={n}
+              active={pathname === n.href}
+              badge={(badges as Record<string, number | null>)[n.key]}
+              onSelect={() => router.push(n.href)}
+            />
           );
         })}
       </div>
     </header>
+  );
+}
+
+function NavTab({
+  item,
+  active,
+  badge,
+  onSelect,
+}: {
+  item: NavLink;
+  active: boolean;
+  badge: number | null | undefined;
+  onSelect: () => void;
+}) {
+  const t = useT();
+  const Icon = Icons[item.icon];
+  return (
+    <button
+      className={`inline-flex items-center gap-2 py-[13px] px-[15px] font-semibold text-[14px] whitespace-nowrap cursor-pointer relative [transition:0.14s] border-b-[2.5px] border-solid mb-[-1px] hover:text-ink ${active ? "text-coral border-coral [&_svg]:text-coral" : "text-ink-2 border-transparent"}`}
+      onClick={onSelect}
+    >
+      <Icon size={17} />
+      {t(item.label)}
+      {badge ? <span className="bg-coral text-white text-[10.5px] font-extrabold min-w-[17px] h-[17px] rounded-[99px] grid place-items-center px-1">{badge}</span> : null}
+    </button>
   );
 }
 

@@ -21,8 +21,27 @@ const PCAL_TIMES = [
   "20:00",
 ];
 
-type Svc = any;
-type Slot = any;
+type Svc = {
+  id: string;
+  name: string;
+  mood: string;
+  dur: string;
+  cap: number;
+  status?: string;
+  active?: boolean;
+};
+
+type Slot = {
+  id: string;
+  day: number;
+  time: string;
+  serviceId: string;
+  booked?: number;
+};
+
+type DragPayload =
+  | { kind: "service"; sid: string }
+  | { kind: "slot"; slotId: string; fromDay: number; time: string };
 
 export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
   const t = useT();
@@ -40,7 +59,7 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
   const [over, setOver] = useState<number | null>(null);
   const [editing, setEditing] = useState<string | null>(null);
   const [dragId, setDragId] = useState<string | null>(null);
-  const drag = useRef<any>(null);
+  const drag = useRef<DragPayload | null>(null);
   const total = slots.length;
   const nextTime = (arr: Slot[]) => {
     const used = new Set(arr.map((s) => s.time));

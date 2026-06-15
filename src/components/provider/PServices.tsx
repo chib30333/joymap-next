@@ -12,6 +12,33 @@ import { useT } from "@/components/Language";
 
 type Svc = any;
 
+const DURATIONS = [
+  "45 min",
+  "60 min",
+  "75 min",
+  "90 min",
+  "120 min",
+  "150 min",
+  "180 min",
+] as const;
+
+type StatusBadge = { status: string; className: string; label: string };
+
+const STATUS_BADGES: StatusBadge[] = [
+  {
+    status: "review",
+    className:
+      "bg-[rgba(232,144,21,.92)] text-[#fff] py-[4px] px-[10px] rounded-[99px] text-[11px] font-extrabold",
+    label: "IN REVIEW",
+  },
+  {
+    status: "rejected",
+    className:
+      "bg-[rgba(224,33,47,.92)] text-[#fff] py-[4px] px-[10px] rounded-[99px] text-[11px] font-extrabold",
+    label: "REJECTED",
+  },
+];
+
 export function PServices({ svcs }: { svcs: Svc[] }) {
   const t = useT();
   const router = useRouter();
@@ -88,15 +115,12 @@ export function PServices({ svcs }: { svcs: Svc[] }) {
                         />
                         {m.label}
                       </span>
-                      {s.status === "review" && (
-                        <span className="bg-[rgba(232,144,21,.92)] text-[#fff] py-[4px] px-[10px] rounded-[99px] text-[11px] font-extrabold">
-                          {t("IN REVIEW")}
-                        </span>
-                      )}
-                      {s.status === "rejected" && (
-                        <span className="bg-[rgba(224,33,47,.92)] text-[#fff] py-[4px] px-[10px] rounded-[99px] text-[11px] font-extrabold">
-                          {t("REJECTED")}
-                        </span>
+                      {STATUS_BADGES.filter((b) => b.status === s.status).map(
+                        (b) => (
+                          <span key={b.status} className={b.className}>
+                            {t(b.label)}
+                          </span>
+                        ),
                       )}
                     </div>
                     <Toggle
@@ -280,15 +304,7 @@ function ServiceFormModal({
                 value={f.dur}
                 onChange={(e) => set("dur", e.target.value)}
               >
-                {[
-                  "45 min",
-                  "60 min",
-                  "75 min",
-                  "90 min",
-                  "120 min",
-                  "150 min",
-                  "180 min",
-                ].map((d) => (
+                {DURATIONS.map((d) => (
                   <option key={d}>{d}</option>
                 ))}
               </Select>

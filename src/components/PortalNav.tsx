@@ -5,6 +5,22 @@ import { rpc } from "@/lib/client";
 import { Avatar } from "@/components/ui";
 import { clsx } from "@/lib/cx";
 
+function NavTab({ href, label, active }: { href: string; label: string; active: boolean }) {
+  return (
+    <Link
+      href={href}
+      className={clsx(
+        "whitespace-nowrap rounded-pill px-3.5 py-2 text-sm font-bold transition",
+        active
+          ? "bg-coral-soft text-coral-deep"
+          : "text-ink-2 hover:bg-surface-2",
+      )}
+    >
+      {label}
+    </Link>
+  );
+}
+
 export function PortalNav({
   brandTag,
   name,
@@ -30,23 +46,9 @@ export function PortalNav({
           {brandTag}
         </span>
         <nav className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden ml-2 flex flex-1 items-center gap-1 overflow-x-auto">
-          {tabs.map(([href, label]) => {
-            const on = pathname === href;
-            return (
-              <Link
-                key={href}
-                href={href}
-                className={clsx(
-                  "whitespace-nowrap rounded-pill px-3.5 py-2 text-sm font-bold transition",
-                  on
-                    ? "bg-coral-soft text-coral-deep"
-                    : "text-ink-2 hover:bg-surface-2",
-                )}
-              >
-                {label}
-              </Link>
-            );
-          })}
+          {tabs.map(([href, label]) => (
+            <NavTab key={href} href={href} label={label} active={pathname === href} />
+          ))}
         </nav>
         <button
           onClick={logout}

@@ -20,6 +20,12 @@ export { MOODS, MOOD_ORDER, CITIES, CATS, WD, dow, type Mood };
 export const fmt = (n: number) =>
   new Intl.NumberFormat("ru-RU").format(n) + " ₽";
 
+// Local helper: typed CSS custom-property maps without repeating the
+// `as React.CSSProperties` cast at every call site. The returned object is
+// identical at runtime to the literal it wraps.
+const cssVars = (vars: Record<`--${string}`, string>): React.CSSProperties =>
+  vars as React.CSSProperties;
+
 export type Exp = {
   id: string;
   title: string;
@@ -48,7 +54,7 @@ export function MoodDot({ mood, size = 9 }: { mood: string; size?: number }) {
   return (
     <span
       className="rounded-pill flex-none [width:var(--s)] [height:var(--s)] [background:var(--bg)]"
-      style={{ ["--s"]: size + "px", ["--bg"]: m.color } as React.CSSProperties}
+      style={cssVars({ "--s": size + "px", "--bg": m.color })}
     />
   );
 }
@@ -69,14 +75,14 @@ export function MoodChip({
       className="inline-flex items-center gap-[8px] pt-[7px] pr-[13px] pb-[7px] pl-[11px] rounded-pill text-[13px] font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid [background:var(--bg)] [color:var(--fg)] [border-color:var(--bd)]"
       onClick={onClick}
       style={
-        (active
-          ? { ["--bg"]: m.color, ["--fg"]: "#fff", ["--bd"]: m.color }
-          : { ["--bg"]: m.soft, ["--fg"]: m.color, ["--bd"]: "transparent" }) as React.CSSProperties
+        active
+          ? cssVars({ "--bg": m.color, "--fg": "#fff", "--bd": m.color })
+          : cssVars({ "--bg": m.soft, "--fg": m.color, "--bd": "transparent" })
       }
     >
       <span
         className="rounded-pill flex-none w-[9px] h-[9px] [background:var(--dot)]"
-        style={{ ["--dot"]: active ? "#fff" : m.color } as React.CSSProperties}
+        style={cssVars({ "--dot": active ? "#fff" : m.color })}
       />
       {t(m.label)}
     </button>
@@ -105,7 +111,7 @@ export function Avatar({ name, size = 40 }: { name: string; size?: number }) {
   return (
     <div
       className="rounded-pill bg-[linear-gradient(140deg,var(--red),var(--orange))] text-[#fff] grid place-items-center font-extrabold font-display flex-none [width:var(--s)] [height:var(--s)] [font-size:var(--fs)]"
-      style={{ ["--s"]: size + "px", ["--fs"]: size * 0.42 + "px" } as React.CSSProperties}
+      style={cssVars({ "--s": size + "px", "--fs": size * 0.42 + "px" })}
     >
       {(name || "?")[0]}
     </div>
@@ -124,7 +130,7 @@ export function PhotoFrame({
   return (
     <div
       className="relative aspect-[var(--ar,4/3)] overflow-hidden [background:var(--bg)]"
-      style={{ ["--bg"]: bg(exp), ...(ratio ? { ["--ar"]: ratio } : {}) } as React.CSSProperties}
+      style={cssVars({ "--bg": bg(exp), ...(ratio ? { "--ar": ratio } : {}) })}
     >
       <div className="absolute inset-0 opacity-[0.16] mix-blend-overlay bg-[radial-gradient(rgba(255,255,255,0.9)_0.6px,transparent_0.6px)] bg-[length:7px_7px]" />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_40%,rgba(0,0,0,0.42))]" />
@@ -172,7 +178,7 @@ export function ExperienceCard({
         <div className="flex items-center justify-between gap-[8px]">
           <span
             className="inline-flex items-center gap-[8px] rounded-pill font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid border-transparent p-[5px_11px_5px_9px] text-[12px] [background:var(--bg)] [color:var(--fg)]"
-            style={{ ["--bg"]: m.soft, ["--fg"]: m.color } as React.CSSProperties}
+            style={cssVars({ "--bg": m.soft, "--fg": m.color })}
           >
             <MoodDot mood={exp.mood} size={7} />
             {t(m.label)}
@@ -259,7 +265,7 @@ export function Modal({
     >
       <div
         className="bg-bg w-full max-w-[var(--mw,560px)] rounded-t-xl max-h-[92vh] overflow-auto min-[760px]:rounded-xl animate-anim-slideup motion-reduce:animate-none"
-        style={maxWidth ? ({ ["--mw"]: maxWidth + "px" } as React.CSSProperties) : undefined}
+        style={maxWidth ? cssVars({ "--mw": maxWidth + "px" }) : undefined}
         onClick={(e) => e.stopPropagation()}
       >
         {children}

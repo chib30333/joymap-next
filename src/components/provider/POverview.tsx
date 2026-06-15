@@ -6,14 +6,61 @@ import { useT } from "@/components/Language";
 import { Button } from "@/components/ui";
 import { money, Stat, Bars } from "@/components/dash/primitives";
 import { MOODS } from "@/components/customer/primitives";
-import { BookingsTable } from "@/components/provider/BookingsTable";
+import { BookingsTable, type Booking } from "@/components/provider/BookingsTable";
 
 const WD = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const dow = (d: number) => (d - 1) % 7;
 const TODAY = 10;
 
-type Booking = any;
-type Svc = any;
+type Svc = {
+  id: string;
+  name: string;
+  mood: keyof typeof MOODS;
+  cap: number;
+};
+
+type Slot = {
+  serviceId: string;
+  time: string;
+  booked?: number;
+};
+
+type Fin = { gross: number };
+
+type Rating = { rating: number | null };
+
+type Kpi = {
+  label: string;
+  value: string;
+  icon: keyof typeof Icons;
+  accent: string;
+};
+
+function SlotRow({ slot, svc, t }: { slot: Slot; svc: Svc; t: ReturnType<typeof useT> }) {
+  return (
+    <div className="flex items-center gap-[12px]">
+      <div className="font-display font-extrabold text-[14px] w-[46px] text-ink-2">
+        {slot.time}
+      </div>
+      <div
+        className="w-[3px] self-stretch rounded-[9px] [background:var(--mood-bg)]"
+        style={
+          {
+            ["--mood-bg"]: MOODS[svc.mood].color,
+          } as React.CSSProperties
+        }
+      />
+      <div className="flex-1 min-w-0">
+        <div className="font-bold text-[14px] whitespace-nowrap overflow-hidden text-ellipsis">
+          {svc.name}
+        </div>
+        <div className="text-[12.5px] text-ink-3 font-semibold">
+          {slot.booked || 0}/{svc.cap} {t("booked")}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function POverview({
   bookings,
@@ -23,10 +70,10 @@ export function POverview({
   rating,
 }: {
   bookings: Booking[];
-  fin: any;
-  todaySlots: any[];
+  fin: Fin;
+  todaySlots: Slot[];
   svcs: Svc[];
-  rating: any;
+  rating: Rating;
 }) {
   const router = useRouter();
   const t = useT();
@@ -47,7 +94,7 @@ export function POverview({
         (todaySlots.reduce((a, s) => a + (s.booked || 0), 0) / cap) * 100,
       )
     : 0;
-  const kpis = [
+  const kpis: Kpi[] = [
     {
       label: "Revenue · June",
       value: money(fin.gross),
@@ -139,33 +186,12 @@ export function POverview({
                 .sort((a, b) => a.time.localeCompare(b.time))
                 .map((s, i) => {
                   const sv = svcs.find((x) => x.id === s.serviceId) || {
+                    id: s.serviceId,
                     name: t("Service"),
-                    mood: "calm",
+                    mood: "calm" as const,
                     cap: 0,
                   };
-                  return (
-                    <div key={i} className="flex items-center gap-[12px]">
-                      <div className="font-display font-extrabold text-[14px] w-[46px] text-ink-2">
-                        {s.time}
-                      </div>
-                      <div
-                        className="w-[3px] self-stretch rounded-[9px] [background:var(--mood-bg)]"
-                        style={
-                          {
-                            ["--mood-bg"]: MOODS[sv.mood].color,
-                          } as React.CSSProperties
-                        }
-                      />
-                      <div className="flex-1 min-w-0">
-                        <div className="font-bold text-[14px] whitespace-nowrap overflow-hidden text-ellipsis">
-                          {sv.name}
-                        </div>
-                        <div className="text-[12.5px] text-ink-3 font-semibold">
-                          {s.booked || 0}/{sv.cap} {t("booked")}
-                        </div>
-                      </div>
-                    </div>
-                  );
+                  return <SlotRow key={i} slot={s} svc={sv} t={t} />;
                 })}
             </div>
           )}

@@ -7,7 +7,16 @@ import { DataTable, TableCard, Button } from "@/components/ui";
 import { downloadCSV } from "@/lib/csv";
 import { EmptyCard } from "@/components/admin/AdminShared";
 
-export function ACustomers({ list }: { list: any[] }) {
+type Customer = {
+  id: string;
+  name: string;
+  tier: string;
+  bookings: number;
+  ltv: number;
+  joined: string;
+};
+
+export function ACustomers({ list }: { list: Customer[] }) {
   const t = useT();
   const avgLtv = list.length
     ? Math.round(list.reduce((a, c) => a + c.ltv, 0) / list.length)

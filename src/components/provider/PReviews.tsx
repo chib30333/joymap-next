@@ -8,7 +8,21 @@ import { Avatar } from "@/components/dash/primitives";
 import { Button } from "@/components/ui";
 import { useT } from "@/components/Language";
 
-export function PReviews({ list, rating }: { list: any[]; rating: any }) {
+type Review = {
+  id: string;
+  name: string;
+  serviceName: string;
+  date: string;
+  rating: number;
+  text?: string;
+  replied?: boolean;
+};
+
+type Rating = { rating: number | null };
+
+type RatingBar = { star: number; percent: number };
+
+export function PReviews({ list, rating }: { list: Review[]; rating: Rating }) {
   const t = useT();
   const router = useRouter();
   const [replying, setReplying] = useState<string | null>(null);
@@ -24,15 +38,12 @@ export function PReviews({ list, rating }: { list: any[]; rating: any }) {
         </p>
       </div>
     );
-  const dist = [5, 4, 3, 2, 1].map(
-    (st) =>
-      [
-        st,
-        Math.round(
-          (list.filter((x) => x.rating === st).length / list.length) * 100,
-        ),
-      ] as [number, number],
-  );
+  const dist: RatingBar[] = [5, 4, 3, 2, 1].map((star) => ({
+    star,
+    percent: Math.round(
+      (list.filter((x) => x.rating === star).length / list.length) * 100,
+    ),
+  }));
   return (
     <div className="animate-anim-fade-dash">
       <div className="bg-surface border border-line rounded-lg p-[22px] flex items-center gap-[24px] mb-[var(--gap)]">
@@ -46,17 +57,17 @@ export function PReviews({ list, rating }: { list: any[]; rating: any }) {
           </div>
         </div>
         <div className="flex-1 flex flex-col gap-[6px]">
-          {dist.map(([st, p]) => (
-            <div key={st} className="flex items-center gap-[10px]">
-              <span className="text-[12px] font-bold w-[10px]">{st}</span>
+          {dist.map(({ star, percent }) => (
+            <div key={star} className="flex items-center gap-[10px]">
+              <span className="text-[12px] font-bold w-[10px]">{star}</span>
               <div className="flex-1 h-[7px] rounded-[99px] bg-surface-2 overflow-hidden">
                 <div
                   className="h-full w-[var(--w)] bg-[var(--m-joy)] rounded-[99px]"
-                  style={{ ["--w"]: p + "%" } as React.CSSProperties}
+                  style={{ ["--w"]: percent + "%" } as React.CSSProperties}
                 />
               </div>
               <span className="text-[12px] text-ink-3 font-semibold w-[30px]">
-                {p}%
+                {percent}%
               </span>
             </div>
           ))}

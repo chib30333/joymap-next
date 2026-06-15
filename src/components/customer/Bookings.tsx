@@ -207,33 +207,51 @@ export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
   );
 }
 
+type PillStyle = {
+  label: string;
+  color: string;
+  bg: string;
+  icon: keyof typeof Icons;
+};
+
+const PILL_STYLES: Record<string, PillStyle> = {
+  pending: {
+    label: "Awaiting confirmation",
+    color: "var(--m-joy)",
+    bg: "var(--m-joy-soft)",
+    icon: "clock",
+  },
+  confirmed: {
+    label: "Confirmed",
+    color: "var(--m-calm)",
+    bg: "var(--m-calm-soft)",
+    icon: "check",
+  },
+  cancelled: {
+    label: "Cancelled",
+    color: "var(--coral)",
+    bg: "var(--coral-soft)",
+    icon: "close",
+  },
+  completed: {
+    label: "Completed",
+    color: "var(--m-focus)",
+    bg: "var(--m-focus-soft)",
+    icon: "sparkle",
+  },
+};
+
 export function BookingPill({ status }: { status: string }) {
   const t = useT();
-  const map: Record<string, [string, string, string, keyof typeof Icons]> = {
-    pending: [
-      "Awaiting confirmation",
-      "var(--m-joy)",
-      "var(--m-joy-soft)",
-      "clock",
-    ],
-    confirmed: ["Confirmed", "var(--m-calm)", "var(--m-calm-soft)", "check"],
-    cancelled: ["Cancelled", "var(--coral)", "var(--coral-soft)", "close"],
-    completed: [
-      "Completed",
-      "var(--m-focus)",
-      "var(--m-focus-soft)",
-      "sparkle",
-    ],
-  };
-  const [l, c, bgc, ic] = map[status] || map.pending;
-  const I = Icons[ic];
+  const { label, color, bg: bgc, icon } = PILL_STYLES[status] ?? PILL_STYLES.pending;
+  const I = Icons[icon];
   return (
     <span
       className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] border-none font-bold [background:var(--pill-bg)] text-[var(--pill-c)]"
-      style={{ "--pill-bg": bgc, "--pill-c": c } as React.CSSProperties}
+      style={{ "--pill-bg": bgc, "--pill-c": color } as React.CSSProperties}
     >
       <I size={13} className="mr-[4px]" />
-      {t(l)}
+      {t(label)}
     </span>
   );
 }

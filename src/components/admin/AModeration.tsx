@@ -21,9 +21,44 @@ const REJECT_REASONS = [
   "Other",
 ];
 
-export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
+const PROVIDER_DOCS = [
+  "Business license",
+  "Identity verification",
+  "Insurance certificate",
+];
+
+type ProviderApp = {
+  id: string;
+  name: string;
+  cat: string;
+  city: string;
+  email: string;
+  docs: number;
+};
+
+type PendingService = {
+  id: string;
+  name: string;
+  mood: string;
+  cat: string;
+  price: number;
+  about: string;
+  providerName: string;
+};
+
+type Selection =
+  | { kind: "provider"; item: ProviderApp; mode: "approve" | "reject" }
+  | { kind: "service"; item: PendingService; mode: "approve" | "reject" };
+
+export function AModeration({
+  apps,
+  svcs,
+}: {
+  apps: ProviderApp[];
+  svcs: PendingService[];
+}) {
   const t = useT();
-  const [sel, setSel] = useState<any>(null);
+  const [sel, setSel] = useState<Selection | null>(null);
   const empty = apps.length === 0 && svcs.length === 0;
   return (
     <div className="animate-anim-fade-dash">
@@ -170,7 +205,13 @@ export function AModeration({ apps, svcs }: { apps: any[]; svcs: any[] }) {
   );
 }
 
-function ModerationModal({ sel, onClose }: { sel: any; onClose: () => void }) {
+function ModerationModal({
+  sel,
+  onClose,
+}: {
+  sel: Selection;
+  onClose: () => void;
+}) {
   const t = useT();
   const router = useRouter();
   const [reason, setReason] = useState(REJECT_REASONS[0]);
@@ -203,20 +244,14 @@ function ModerationModal({ sel, onClose }: { sel: any; onClose: () => void }) {
             <h3 className="text-[18px]">{it.name}</h3>
             <div className="text-[13px] text-ink-3 font-semibold">
               {sel.kind === "provider"
-                ? `${it.cat} · ${it.city}`
-                : `${t("Service")} · ${t("by")} ${it.providerName}`}
+                ? `${sel.item.cat} · ${sel.item.city}`
+                : `${t("Service")} · ${t("by")} ${sel.item.providerName}`}
             </div>
           </div>
         </div>
         {sel.kind === "provider" && (
           <div className="bg-[var(--surface-2)] border border-line rounded-lg p-[14px] mb-[18px]">
-            {[
-              "Business license",
-              "Identity verification",
-              "Insurance certificate",
-            ]
-              .slice(0, it.docs || 3)
-              .map((d, i) => (
+            {PROVIDER_DOCS.slice(0, sel.item.docs || 3).map((d, i) => (
                 <div
                   key={i}
                   className="flex items-center gap-[10px] px-0 py-[7px] text-[13.5px] font-semibold"

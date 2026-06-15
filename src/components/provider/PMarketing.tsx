@@ -6,7 +6,20 @@ import { Pill, Seg, Modal } from "@/components/dash/primitives";
 import { Button, Input } from "@/components/ui";
 import { useT } from "@/components/Language";
 
-const P_PROMOS = [
+type PromoStatus = "active" | "rejected" | string;
+
+type Promo = {
+  code: string;
+  desc: string;
+  uses: number;
+  cap: number;
+  expires: string;
+  status: PromoStatus;
+};
+
+type NewPromo = Pick<Promo, "code" | "desc" | "cap" | "expires">;
+
+const P_PROMOS: Promo[] = [
   {
     code: "CALM15",
     desc: "15% off any wellness session",
@@ -37,7 +50,7 @@ export function PMarketing() {
   const t = useT();
   const [promos, setPromos] = useState(P_PROMOS);
   const [modal, setModal] = useState(false);
-  const add = (p: any) => {
+  const add = (p: NewPromo) => {
     setPromos((ps) => [{ ...p, uses: 0, status: "active" }, ...ps]);
     setModal(false);
   };
@@ -61,8 +74,8 @@ export function PMarketing() {
         </Button>
       </div>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-[var(--gap)]">
-        {promos.map((p, i) => (
-          <div key={i} className="bg-surface border border-line rounded-lg animate-anim-pop-dash p-[20px]">
+        {promos.map((p) => (
+          <div key={p.code} className="bg-surface border border-line rounded-lg animate-anim-pop-dash p-[20px]">
             <div className="flex items-center justify-between mb-[12px]">
               <span className="font-extrabold text-[18px] tracking-[.04em] py-[5px] px-[12px] rounded-xs bg-[color-mix(in_srgb,var(--orange)_14%,transparent)] text-[var(--orange-deep)] [font-family:var(--display)] [border:1px_dashed_color-mix(in_srgb,var(--orange)_45%,transparent)]">
                 {p.code}
@@ -114,7 +127,7 @@ function PromoModal({
   onAdd,
 }: {
   onClose: () => void;
-  onAdd: (p: any) => void;
+  onAdd: (p: NewPromo) => void;
 }) {
   const t = useT();
   const [code, setCode] = useState("");

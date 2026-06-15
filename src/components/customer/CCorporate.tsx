@@ -155,7 +155,7 @@ export function CCorporate({
   return (
     <div
       className="animate-anim-fade-app"
-      style={{ ["--gold" as any]: "#e6a23c" }}
+      style={{ ["--gold"]: "#e6a23c" } as React.CSSProperties}
     >
       <div className="relative overflow-hidden rounded-xl text-[#f4e9d8] min-h-[430px] flex items-end [background-image:linear-gradient(95deg,rgba(24,5,7,0.98)_0%,rgba(40,8,11,0.95)_40%,rgba(40,8,11,0.72)_64%,rgba(40,8,11,0.5)_100%),url('/images/corporate-hero.jpg')] bg-cover [background-position:right_28%] py-10 px-[44px] before:content-[''] before:absolute before:inset-0 before:opacity-30 before:[mix-blend-mode:overlay] before:[background-image:radial-gradient(rgba(255,255,255,0.5)_0.6px,transparent_0.6px)] before:[background-size:10px_10px] before:pointer-events-none [&_h1]:[text-shadow:0_2px_18px_rgba(20,4,6,0.5)] [&_p]:[text-shadow:0_2px_18px_rgba(20,4,6,0.5)]">
         <div className="relative flex gap-[30px] items-center flex-wrap">
@@ -199,7 +199,7 @@ export function CCorporate({
           <div className="flex flex-col items-center gap-[14px]">
             <div
               className="w-[118px] h-[118px] rounded-[99px] flex-none [background:conic-gradient(var(--gold)_calc(var(--p)*1%),rgba(255,255,255,0.14)_0)] grid place-items-center"
-              style={{ ["--p" as any]: pct }}
+              style={{ ["--p"]: pct } as React.CSSProperties}
             >
               <div className="w-[92px] h-[92px] rounded-[99px] bg-[rgba(30,8,9,0.72)] backdrop-blur-[4px] grid place-items-center text-center">
                 <div>
