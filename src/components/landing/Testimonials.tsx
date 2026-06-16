@@ -40,31 +40,31 @@ function initials(name: string) {
 
 export function Testimonials() {
   return (
-    <section className="pb-[96px] pt-0" id="stories">
-      <div className="max-w-7xl mx-auto px-6">
-        <Reveal className="max-w-[680px] mx-auto mb-[52px] text-center">
-          <div className="text-[12.5px] font-extrabold tracking-[0.16em] uppercase text-orange">Loved in the city</div>
-          <h2 className="text-[clamp(28px,3.6vw,46px)] leading-[1.04] mt-[14px]">Real weeks, real joy.</h2>
-          <p className="text-[17px] text-ink-2 leading-[1.6] mt-[16px]">
+    <section className="pb-24 pt-0" id="stories">
+      <div className="max-w-7xl mx-auto px-12">
+        <Reveal className="max-w-[680px] mx-auto mb-12 text-center">
+          <div className="text-xs font-extrabold tracking-widest uppercase text-orange">Loved in the city</div>
+          <h2 className="text-[clamp(28px,3.6vw,46px)] mt-3.5">Real weeks, real joy.</h2>
+          <p className="text-4 text-ink-2 leading-normal mt-4">
             Explorers, partners and teams across Moscow share what a week with
             Joymap feels like.
           </p>
         </Reveal>
-        <Reveal className="grid grid-cols-3 gap-[20px] max-[880px]:grid-cols-1">
+        <Reveal className="grid grid-cols-3 gap-5 max-[880px]:grid-cols-1">
           {ITEMS.map((it) => (
             <figure
-              className="flex flex-col bg-surface border border-line rounded-xl p-[28px] shadow-sm [transition:0.2s] hover:[transform:translateY(-5px)] hover:shadow-lg"
+              className="flex flex-col bg-surface border border-line rounded-xl p-7 shadow-sm duration-200 hover:[transform:translateY(-5px)] hover:shadow-lg"
               key={it.name}
             >
-              <div className="flex gap-[3px] text-orange text-[15px] mb-[16px]">
+              <div className="flex gap-1 text-orange text-base mb-4">
                 {"★★★★★"}
               </div>
-              <blockquote className="text-[16px] text-ink leading-[1.6] flex-1 m-0">
+              <blockquote className="text-base text-ink leading-normal flex-1 m-0">
                 “{it.quote}”
               </blockquote>
-              <figcaption className="flex items-center gap-[12px] mt-[22px]">
+              <figcaption className="flex items-center gap-3 mt-5">
                 <span
-                  className="w-[44px] h-[44px] rounded-pill grid place-items-center text-white font-extrabold font-display text-[15px] flex-none [background:var(--av-bg)]"
+                  className="w-11 h-11 rounded-pill grid place-items-center text-white font-extrabold font-display text-base flex-none [background:var(--av-bg)]"
                   style={{ "--av-bg": it.grad } as React.CSSProperties}
                 >
                   {initials(it.name)}

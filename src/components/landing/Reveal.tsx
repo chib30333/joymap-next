@@ -33,7 +33,7 @@ export function Reveal({
     <div
       ref={ref}
       className={clsx(
-        "opacity-0 translate-y-[22px] [transition:opacity_0.7s_cubic-bezier(0.22,1,0.36,1),transform_0.7s_cubic-bezier(0.22,1,0.36,1)] [&.in]:opacity-100 [&.in]:translate-y-0 motion-reduce:opacity-100 motion-reduce:translate-y-0",
+        "opacity-0 translate-y-5 [transition:opacity_0.7s_cubic-bezier(0.22,1,0.36,1),transform_0.7s_cubic-bezier(0.22,1,0.36,1)] [&.in]:opacity-100 [&.in]:translate-y-0 motion-reduce:opacity-100 motion-reduce:translate-y-0",
         className,
       )}
       id={id}

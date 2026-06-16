@@ -39,7 +39,7 @@ const FEATURES: Feature[] = [
 /* -------------------------------------------------------------------------- */
 
 function Container({ className = "", children }: { className?: string; children: ReactNode }) {
-  return <div className={`max-w-7xl mx-auto px-6 ${className}`.trimEnd()}>{children}</div>;
+  return <div className={`max-w-7xl mx-auto px-12 ${className}`.trimEnd()}>{children}</div>;
 }
 
 /** Small uppercase orange kicker used above every section heading. */

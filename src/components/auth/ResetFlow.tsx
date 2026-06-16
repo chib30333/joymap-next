@@ -87,7 +87,7 @@ export function ResetFlow({
     <>
       {step !== "success" && (
         <button
-          className="inline-flex items-center gap-[5px] text-ink-3 text-[13px] font-bold px-[2px] py-1 mb-[14px] [transition:0.15s] hover:text-ink"
+          className="inline-flex items-center gap-1 text-ink-3 text-sm font-bold px-0.5 py-1 mb-3.5 duration-150 hover:text-ink"
           type="button"
           onClick={back}
         >
@@ -97,7 +97,7 @@ export function ResetFlow({
       )}
       {(step === "sent" || step === "success") && (
         <div
-          className={`w-16 h-16 rounded-full mx-auto mt-1 mb-[18px] grid place-items-center animate-anim-cardin motion-reduce:animate-none ${
+          className={`w-16 h-16 rounded-full mx-auto mt-1 mb-4 grid place-items-center animate-anim-cardin motion-reduce:animate-none ${
             step === "success"
               ? "bg-[color-mix(in_srgb,#1fa46e_16%,transparent)] text-[#1fa46e] shadow-[0_10px_28px_color-mix(in_srgb,#1fa46e_30%,transparent)]"
               : "bg-coral-soft text-coral-deep"
@@ -113,8 +113,8 @@ export function ResetFlow({
       <div
         className={step === "sent" || step === "success" ? "text-center" : ""}
       >
-        <h2 className="text-[25px]">{titles[step].title}</h2>
-        <p className="text-ink-2 text-[14.5px] mt-[6px] leading-[1.5]">
+        <h2 className="text-2xl">{titles[step].title}</h2>
+        <p className="text-ink-2 text-sm mt-1.5 leading-normal">
           {titles[step].body}
         </p>
       </div>
@@ -142,7 +142,7 @@ export function ResetFlow({
             block
             type="submit"
             disabled={email.length < 3 || busy}
-            className={email.length < 3 ? "opacity-[0.5] shadow-none" : ""}
+            className={email.length < 3 ? "opacity-50 shadow-none" : ""}
           >
             {busy ? (
               <span className={SPIN} />
@@ -178,7 +178,7 @@ export function ResetFlow({
             block
             type="submit"
             disabled={code.length < 6 || busy}
-            className={code.length < 6 ? "opacity-[0.5] shadow-none" : ""}
+            className={code.length < 6 ? "opacity-50 shadow-none" : ""}
           >
             {busy ? (
               <span className={SPIN} />
@@ -189,7 +189,7 @@ export function ResetFlow({
               </>
             )}
           </Button>
-          <div className={`${FOOT} [margin-top:4px]`}>
+          <div className={`${FOOT} mt-1`}>
             {resend > 0 ? (
               <span className="text-ink-3">
                 Resend code in 0:{String(resend).padStart(2, "0")}
@@ -232,7 +232,7 @@ export function ResetFlow({
             />
             {pw2.length > 0 && (
               <div
-                className={`flex items-center gap-[6px] text-[12.5px] font-bold mt-2 whitespace-nowrap ${matchOK ? "text-[#1FA46E]" : "text-[#FF4D74]"}`}
+                className={`flex items-center gap-1.5 text-sm font-bold mt-2 whitespace-nowrap ${matchOK ? "text-[#1FA46E]" : "text-[#FF4D74]"}`}
               >
                 {matchOK ? (
                   <>
@@ -255,7 +255,7 @@ export function ResetFlow({
             block
             type="submit"
             disabled={!(pwOK && matchOK) || busy}
-            className={!(pwOK && matchOK) ? "opacity-[0.5] shadow-none" : ""}
+            className={!(pwOK && matchOK) ? "opacity-50 shadow-none" : ""}
           >
             {busy ? (
               <span className={SPIN} />

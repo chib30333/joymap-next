@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Icons, Logo } from "@/components/Icons";
 import { LangSwitcher } from "@/components/Language";
+import { Button } from "@/components/ui";
 import { AuthTabs } from "../../components/auth/AuthTabs";
 import { LoginForm } from "../../components/auth/LoginForm";
 import { SignupForm } from "../../components/auth/SignupForm";
@@ -44,13 +45,13 @@ export default function AuthPage() {
 
   return (
     <div className="auth-wrap">
-      <div className="flex flex-col items-center justify-center gap-4 px-7 py-10 relative bg-bg">
+      <div className="flex flex-col items-center justify-center gap-4 px-8 py-10 relative bg-bg">
         <div className="flex items-center justify-between w-full max-w-[420px] mb-1">
           <Link href="/" className="inline-flex no-underline">
             <Logo size={26} />
           </Link>
         </div>
-        <div className="absolute top-4 [inset-inline-end:24px] z-10">
+        <div className="absolute top-5 [inset-inline-end:24px] z-10">
           <LangSwitcher />
         </div>
 
@@ -98,16 +99,17 @@ export default function AuthPage() {
         </div>
 
         {mode !== "reset" && (
-          <button
-            className="inline-flex items-center gap-2 text-ink-3 text-sm font-bold px-3 py-2 rounded-full [transition:0.15s] hover:text-ink hover:bg-surface-2"
+          <Button
+            ctx="auth"
+            icon={<Icons.settings size={15} />}
+            className="text-ink-3 px-3 py-2 hover:text-ink hover:bg-surface-2"
             onClick={() => {
               setAdmin((a) => !a);
               setMode("login");
             }}
           >
-            <Icons.settings size={15} />
             {admin ? "Back to member sign-in" : "Sign in as platform team"}
-          </button>
+          </Button>
         )}
       </div>
     </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { Input } from "@/components/ui/Input";
 
 export function CodeInput({
   value,
@@ -36,12 +37,13 @@ export function CodeInput({
   return (
     <div className="flex gap-[9px] justify-between" onPaste={onPaste}>
       {Array.from({ length: len }).map((_, i) => (
-        <input
+        <Input
           key={i}
+          variant="bare"
           ref={(el) => {
             refs.current[i] = el;
           }}
-          className="flex-1 min-w-0 aspect-[1/1.15] text-center font-display font-extrabold text-[24px] text-ink bg-surface border-[1.5px] border-line-2 rounded-sm outline-none [transition:0.15s] focus:border-coral focus:shadow-[0_0_0_3px_var(--coral-soft)]"
+          className="flex-1 min-w-0 aspect-[1/1.15] text-center font-display font-extrabold text-2xl border-2"
           inputMode="numeric"
           maxLength={1}
           value={value[i] || ""}

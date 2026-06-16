@@ -1,16 +1,21 @@
 import type { Metadata } from "next";
-import { Baloo_2, Hanken_Grotesk } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { LangProvider } from "@/components/Language";
 
-const display = Baloo_2({
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
+// Self-hosted (variable) fonts. Loading them from disk instead of
+// next/font/google removes the build-time network fetch to Google Fonts,
+// which intermittently times out ("Failed to download `Baloo 2`").
+const display = localFont({
+  src: "./fonts/Baloo2-Variable.ttf",
+  weight: "500 800",
+  display: "swap",
   variable: "--font-display",
 });
-const body = Hanken_Grotesk({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+const body = localFont({
+  src: "./fonts/HankenGrotesk-Variable.ttf",
+  weight: "400 700",
+  display: "swap",
   variable: "--font-body",
 });
 
