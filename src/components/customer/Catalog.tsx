@@ -31,7 +31,7 @@ function PillButton({
 }) {
   return (
     <button
-      className={`inline-flex items-center gap-[7px] ${paddingClass} rounded-pill text-[13px] font-semibold border cursor-pointer [transition:0.14s] whitespace-nowrap ${active ? "bg-coral text-white border-coral" : "bg-surface text-ink-2 border-line-2 hover:border-ink-3 hover:text-ink"}`}
+      className={`inline-flex items-center gap-2 ${paddingClass} rounded-pill text-sm font-semibold border cursor-pointer duration-[140ms] whitespace-nowrap ${active ? "bg-coral text-white border-coral" : "bg-surface text-ink-2 border-line-2 hover:border-ink-3 hover:text-ink"}`}
       onClick={onClick}
     >
       {children}
@@ -82,14 +82,14 @@ export function Catalog({
 
   return (
     <div className="animate-anim-fade-app">
-      <div className="mb-[18px]">
-        <div className="text-[12.5px] font-bold tracking-[0.1em] uppercase text-orange mb-[12px]">
+      <div className="mb-4">
+        <div className="text-xs font-bold tracking-widest uppercase text-orange mb-3">
           {t("Browse by how you want to feel")}
         </div>
-        <div className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden flex gap-[10px] overflow-x-auto pb-[4px]">
+        <div className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden flex gap-2.5 overflow-x-auto pb-1">
           <PillButton
             active={!mood}
-            paddingClass="p-[9px_16px]"
+            paddingClass="px-4 py-2"
             onClick={() => setMood(null)}
           >
             {t("All moods")}
@@ -105,23 +105,23 @@ export function Catalog({
         </div>
       </div>
 
-      <div className="flex items-center gap-[10px] flex-wrap mb-[22px]">
+      <div className="flex items-center gap-2.5 flex-wrap mb-6">
         {["All", ...CATS].map((c) => (
           <PillButton
             key={c}
             active={cat === c}
-            paddingClass="py-[7px] px-[13px]"
+            paddingClass="py-2 px-3.5"
             onClick={() => setCat(c)}
           >
             {t(c)}
           </PillButton>
         ))}
         <div className="flex-1" />
-        <div className="flex items-center gap-[8px] text-ink-3 text-[13.5px] font-semibold">
+        <div className="flex items-center gap-2 text-ink-3 text-sm font-semibold">
           <Icons.filter size={16} />
           {t("Sort")}
           <Select
-            className="[width:auto] [padding:8px_12px] [border-radius:var(--r-pill)] [font-weight:700] [font-size:13.5px]"
+            className="w-auto px-3 py-2 rounded-pill font-bold text-sm"
             value={sort}
             onChange={(e) => setSort(e.target.value)}
           >
@@ -134,11 +134,11 @@ export function Catalog({
         </div>
       </div>
 
-      <div className="flex items-baseline gap-[10px] mb-[16px]">
-        <span className="font-bold text-[15px]">
+      <div className="flex items-baseline gap-2.5 mb-4">
+        <span className="font-bold text-base">
           {list.length} {list.length !== 1 ? t("experiences") : t("experience")}
         </span>
-        <span className="text-ink-3 text-[14px]">
+        <span className="text-ink-3 text-sm">
           {t("in")} {city}
           {mood ? ` · ${t(MOODS[mood].label)}` : ""}
         </span>
@@ -186,12 +186,12 @@ export function Catalog({
 function Empty() {
   const t = useT();
   return (
-    <div className="text-center py-[80px] px-[20px] text-ink-3">
-      <div className="w-[64px] h-[64px] rounded-[99px] bg-surface-2 grid place-items-center mt-0 mx-auto mb-[16px] text-ink-3">
+    <div className="text-center py-20 px-5 text-ink-3">
+      <div className="w-16 h-16 rounded-pill bg-surface-2 grid place-items-center mt-0 mx-auto mb-4 text-ink-3">
         <Icons.search size={28} />
       </div>
-      <h3 className="text-[19px] text-ink">{t("Nothing matches — yet")}</h3>
-      <p className="max-w-[340px] mt-[8px] mx-auto mb-0">
+      <h3 className="text-xl text-ink">{t("Nothing matches — yet")}</h3>
+      <p className="max-w-[340px] mt-2 mx-auto mb-0">
         {t("Try a different mood or clear your filters to see everything nearby.")}
       </p>
     </div>

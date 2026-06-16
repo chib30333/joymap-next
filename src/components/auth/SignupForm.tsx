@@ -67,7 +67,7 @@ export function SignupForm({
 
       <form onSubmit={submit} className={BODY}>
         {!admin && (
-          <div className="grid grid-cols-2 gap-2.5 mb-[2px] max-[420px]:grid-cols-1">
+          <div className="grid grid-cols-2 gap-2.5 mb-0.5 max-[420px]:grid-cols-1">
             {Object.entries(ROLES).map(([k, r]) => {
               const I = Icons[r.icon];
               const on = role === k;
@@ -172,7 +172,7 @@ export function SignupForm({
           block
           type="submit"
           disabled={!canSubmit}
-          className={!canSubmit ? "opacity-[0.5] shadow-none" : ""}
+          className={!canSubmit ? "opacity-50 shadow-none" : ""}
         >
           {busy ? (
             <span className={SPIN} />

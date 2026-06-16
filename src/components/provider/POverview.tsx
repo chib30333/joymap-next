@@ -38,12 +38,12 @@ type Kpi = {
 
 function SlotRow({ slot, svc, t }: { slot: Slot; svc: Svc; t: ReturnType<typeof useT> }) {
   return (
-    <div className="flex items-center gap-[12px]">
-      <div className="font-display font-extrabold text-[14px] w-[46px] text-ink-2">
+    <div className="flex items-center gap-3">
+      <div className="font-display font-extrabold text-sm w-12 text-ink-2">
         {slot.time}
       </div>
       <div
-        className="w-[3px] self-stretch rounded-[9px] [background:var(--mood-bg)]"
+        className="w-1 self-stretch rounded-md [background:var(--mood-bg)]"
         style={
           {
             ["--mood-bg"]: MOODS[svc.mood].color,
@@ -51,10 +51,10 @@ function SlotRow({ slot, svc, t }: { slot: Slot; svc: Svc; t: ReturnType<typeof 
         }
       />
       <div className="flex-1 min-w-0">
-        <div className="font-bold text-[14px] whitespace-nowrap overflow-hidden text-ellipsis">
+        <div className="font-bold text-sm whitespace-nowrap overflow-hidden text-ellipsis">
           {svc.name}
         </div>
-        <div className="text-[12.5px] text-ink-3 font-semibold">
+        <div className="text-xs text-ink-3 font-semibold">
           {slot.booked || 0}/{svc.cap} {t("booked")}
         </div>
       </div>
@@ -138,11 +138,11 @@ export function POverview({
         })}
       </div>
       <div className="grid grid-cols-[1.5fr_1fr] gap-[var(--gap)] mb-[var(--gap)]">
-        <div className="bg-surface border border-line rounded-lg p-[22px]">
-          <div className="flex items-end justify-between gap-4 mb-[8px]">
+        <div className="bg-surface border border-line rounded-lg p-6">
+          <div className="flex items-end justify-between gap-4 mb-2">
             <div>
-              <h3 className="text-[17px]">{t("Revenue this week")}</h3>
-              <div className="text-[13px] text-ink-3 font-semibold">
+              <h3 className="text-base">{t("Revenue this week")}</h3>
+              <div className="text-sm text-ink-3 font-semibold">
                 {max > 0
                   ? t("Confirmed + pending bookings by day")
                   : t("No bookings this week yet")}
@@ -155,19 +155,19 @@ export function POverview({
               unit="₽"
             />
           ) : (
-            <div className="h-[160px] grid place-items-center text-ink-3 font-semibold text-[13.5px]">
+            <div className="h-40 grid place-items-center text-ink-3 font-semibold text-sm">
               {t("Revenue appears here as bookings come in.")}
             </div>
           )}
         </div>
-        <div className="bg-surface border border-line rounded-lg p-[22px]">
-          <h3 className="text-[17px] mb-[4px]">{t("Today's schedule")}</h3>
-          <div className="text-[13px] text-ink-3 font-semibold mb-[16px]">
+        <div className="bg-surface border border-line rounded-lg p-6">
+          <h3 className="text-base mb-1">{t("Today's schedule")}</h3>
+          <div className="text-sm text-ink-3 font-semibold mb-4">
             {t(WD[dow(TODAY)])} {TODAY} {t("Jun")} · {todaySlots.length}{" "}
             {todaySlots.length !== 1 ? t("sessions") : t("session")}
           </div>
           {todaySlots.length === 0 ? (
-            <div className="py-[30px] px-0 text-center text-ink-3 font-semibold text-[13.5px]">
+            <div className="py-8 px-0 text-center text-ink-3 font-semibold text-sm">
               {t("Nothing scheduled today.")}
               <br />
               {t("Drag services onto days in")}{" "}
@@ -180,7 +180,7 @@ export function POverview({
               .
             </div>
           ) : (
-            <div className="flex flex-col gap-[10px]">
+            <div className="flex flex-col gap-2.5">
               {todaySlots
                 .slice()
                 .sort((a, b) => a.time.localeCompare(b.time))
@@ -198,8 +198,8 @@ export function POverview({
         </div>
       </div>
       <div className="bg-surface border border-line rounded-lg overflow-hidden">
-        <div className="flex items-center justify-between py-[18px] px-[20px]">
-          <h3 className="text-[17px]">{t("Recent bookings")}</h3>
+        <div className="flex items-center justify-between py-5 px-5">
+          <h3 className="text-base">{t("Recent bookings")}</h3>
           <Button
             ctx="dash"
             variant="ghost"
@@ -210,7 +210,7 @@ export function POverview({
           </Button>
         </div>
         {bookings.length === 0 ? (
-          <div className="py-[26px] px-[20px] text-ink-3 font-semibold text-[13.5px] border-t border-line">
+          <div className="py-7 px-5 text-ink-3 font-semibold text-sm border-t border-line">
             {t(
               "No bookings yet — once your services are approved and customers book, they land here.",
             )}

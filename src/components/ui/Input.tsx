@@ -5,9 +5,9 @@ import { clsx } from "@/lib/cx";
 // variant. `field` layers on the standard text-field box; `bare` leaves
 // sizing/layout to the caller (e.g. the OTP digit boxes in CodeInput).
 const SKIN =
-  "bg-surface text-ink rounded-sm border-line-2 outline-none [transition:0.15s] focus:border-coral focus:shadow-[0_0_0_3px_var(--coral-soft)]";
+  "bg-surface text-ink rounded-sm border-line-2 outline-none duration-150 focus:border-coral focus:shadow-[0_0_0_3px_var(--coral-soft)]";
 const FIELD =
-  "w-full px-4 py-[13px] border text-[15px] [.auth-wrap_&]:placeholder:text-ink-3 [.jmdash_&]:px-[14px] [.jmdash_&]:py-[11px] [.jmdash_&]:text-[14.5px]";
+  "w-full px-4 py-3.5 border text-base [.auth-wrap_&]:placeholder:text-ink-3 [.jmdash_&]:px-3.5 [.jmdash_&]:py-3 [.jmdash_&]:text-sm";
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   variant?: "field" | "bare";

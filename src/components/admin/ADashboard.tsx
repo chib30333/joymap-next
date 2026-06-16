@@ -129,11 +129,11 @@ export function ADashboard({
         ))}
       </div>
       <div className="grid [grid-template-columns:1.6fr_1fr] gap-[var(--gap)] mb-[var(--gap)]">
-        <div className="bg-surface border border-line rounded-lg p-[22px]">
-          <div className="flex items-end justify-between gap-[16px] mb-[8px]">
+        <div className="bg-surface border border-line rounded-lg p-6">
+          <div className="flex items-end justify-between gap-4 mb-2">
             <div>
-              <h3 className="text-[17px]">{t("Gross merchandise value")}</h3>
-              <div className="text-[13px] text-ink-3 font-semibold">
+              <h3 className="text-base">{t("Gross merchandise value")}</h3>
+              <div className="text-sm text-ink-3 font-semibold">
                 {t("By booking day · live")}
               </div>
             </div>
@@ -153,17 +153,17 @@ export function ADashboard({
           ) : gmvPts.length === 1 ? (
             <Bars data={gmvPts} unit="₽" />
           ) : (
-            <div className="h-[210px] grid place-items-center text-ink-3 font-semibold text-[13.5px]">
+            <div className="h-[210px] grid place-items-center text-ink-3 font-semibold text-sm">
               {t("GMV charts light up once bookings are confirmed.")}
             </div>
           )}
         </div>
-        <div className="bg-surface border border-line rounded-lg p-[22px] flex flex-col items-center">
-          <h3 className="text-[17px] mb-[16px] self-start">
+        <div className="bg-surface border border-line rounded-lg p-6 flex flex-col items-center">
+          <h3 className="text-base mb-4 self-start">
             {t("GMV by category")}
           </h3>
           {cats.length === 0 ? (
-            <div className="flex-1 grid place-items-center text-ink-3 font-semibold text-[13.5px] text-center">
+            <div className="flex-1 grid place-items-center text-ink-3 font-semibold text-sm text-center">
               {t("No category data yet.")}
             </div>
           ) : (
@@ -176,14 +176,14 @@ export function ADashboard({
                   `${Math.round((seg.value / total) * 100)}% · ${money(seg.value)}`
                 }
               />
-              <div className="grid mt-[18px] w-full [grid-template-columns:1fr_1fr] gap-[8px_14px]">
+              <div className="grid mt-5 w-full [grid-template-columns:1fr_1fr] gap-y-2 gap-x-3.5">
                 {cats.map((c) => (
                   <span
                     key={c.label}
-                    className="inline-flex items-center gap-[7px] text-[12.5px] font-bold text-ink-2"
+                    className="inline-flex items-center gap-2 text-xs font-bold text-ink-2"
                   >
                     <span
-                      className="w-[9px] h-[9px] rounded-[99px] [background:var(--seg-c)]"
+                      className="w-2.5 h-2.5 rounded-pill [background:var(--seg-c)]"
                       style={{ ["--seg-c"]: c.color } as React.CSSProperties}
                     />
                     {t(c.label)}
@@ -199,8 +199,8 @@ export function ADashboard({
       </div>
       <div className="grid [grid-template-columns:1fr_1fr] gap-[var(--gap)]">
         <div className="bg-surface border border-line rounded-lg overflow-hidden">
-          <div className="flex items-center justify-between px-[20px] py-[18px]">
-            <h3 className="text-[16px]">{t("Moderation queue")}</h3>
+          <div className="flex items-center justify-between px-5 py-5">
+            <h3 className="text-base">{t("Moderation queue")}</h3>
             <Button
               ctx="dash"
               variant="ghost"
@@ -211,14 +211,14 @@ export function ADashboard({
             </Button>
           </div>
           {queue.length === 0 && (
-            <div className="px-[20px] py-[18px] border-t border-line text-ink-3 font-semibold text-[13.5px]">
+            <div className="px-5 py-5 border-t border-line text-ink-3 font-semibold text-sm">
               {t("Queue is clear — nothing awaiting review.")}
             </div>
           )}
           {queue.slice(0, 3).map((m, i) => (
             <div
               key={i}
-              className="flex items-center gap-[12px] px-[20px] py-[12px] border-t border-line"
+              className="flex items-center gap-3 px-5 py-3 border-t border-line"
             >
               <Avatar
                 name={m.name}
@@ -226,8 +226,8 @@ export function ADashboard({
                 grad="linear-gradient(140deg,var(--m-focus),#3742A8)"
               />
               <div className="flex-1 min-w-0">
-                <div className="font-bold text-[14px]">{m.name}</div>
-                <div className="text-[12px] text-ink-3 font-semibold">
+                <div className="font-bold text-sm">{m.name}</div>
+                <div className="text-xs text-ink-3 font-semibold">
                   {m.kind} · {m.sub}
                 </div>
               </div>
@@ -236,8 +236,8 @@ export function ADashboard({
           ))}
         </div>
         <div className="bg-surface border border-line rounded-lg overflow-hidden">
-          <div className="flex items-center justify-between px-[20px] py-[18px]">
-            <h3 className="text-[16px]">{t("Top providers by GMV")}</h3>
+          <div className="flex items-center justify-between px-5 py-5">
+            <h3 className="text-base">{t("Top providers by GMV")}</h3>
             <Button
               ctx="dash"
               variant="ghost"
@@ -248,26 +248,26 @@ export function ADashboard({
             </Button>
           </div>
           {top.length === 0 && (
-            <div className="px-[20px] py-[18px] border-t border-line text-ink-3 font-semibold text-[13.5px]">
+            <div className="px-5 py-5 border-t border-line text-ink-3 font-semibold text-sm">
               {t("No providers yet.")}
             </div>
           )}
           {top.map((p, i) => (
             <div
               key={p.id}
-              className="flex items-center gap-[12px] px-[20px] py-[12px] border-t border-line"
+              className="flex items-center gap-3 px-5 py-3 border-t border-line"
             >
-              <span className="font-display font-extrabold text-ink-3 w-[16px]">
+              <span className="font-display font-extrabold text-ink-3 w-4">
                 {i + 1}
               </span>
               <Avatar name={p.name} size={34} />
               <div className="flex-1 min-w-0">
-                <div className="font-bold text-[14px]">{p.name}</div>
-                <div className="text-[12px] text-ink-3 font-semibold">
+                <div className="font-bold text-sm">{p.name}</div>
+                <div className="text-xs text-ink-3 font-semibold">
                   {p.cat} · {p.city}
                 </div>
               </div>
-              <span className="font-display font-bold text-[14px]">
+              <span className="font-display font-bold text-sm">
                 {money(p.gmv)}
               </span>
             </div>

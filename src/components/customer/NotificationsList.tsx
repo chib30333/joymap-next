@@ -44,7 +44,7 @@ export function NotificationsList({ items }: { items: Notification[] }) {
             <button
               key={key}
               onClick={() => setFilter(key)}
-              className={`rounded-pill px-4 py-2 text-[13px] font-bold ${filter === key ? "bg-surface text-ink shadow-sm" : "text-ink-3"}`}
+              className={`rounded-pill px-4 py-2 text-sm font-bold ${filter === key ? "bg-surface text-ink shadow-sm" : "text-ink-3"}`}
             >
               {key === "all"
                 ? t("All")
@@ -55,7 +55,7 @@ export function NotificationsList({ items }: { items: Notification[] }) {
         <div className="flex-1" />
         <button
           onClick={markAll}
-          className="text-[13px] font-bold text-ink-3 hover:text-ink"
+          className="text-sm font-bold text-ink-3 hover:text-ink"
         >
           {t("Mark all read")}
         </button>
@@ -80,13 +80,13 @@ export function NotificationsList({ items }: { items: Notification[] }) {
             </span>
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2">
-                <span className="text-[14.5px] font-bold">{n.title}</span>
+                <span className="text-sm font-bold">{n.title}</span>
                 {n.unread && <span className="h-2 w-2 rounded-full bg-coral" />}
                 <span className="ml-auto text-xs font-semibold text-ink-3">
                   {n.time}
                 </span>
               </div>
-              <p className="mt-0.5 text-[13.5px] leading-snug text-ink-2">
+              <p className="mt-0.5 text-sm leading-snug text-ink-2">
                 {n.body}
               </p>
             </div>

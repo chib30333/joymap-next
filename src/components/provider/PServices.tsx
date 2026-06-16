@@ -28,13 +28,13 @@ const STATUS_BADGES: StatusBadge[] = [
   {
     status: "review",
     className:
-      "bg-[rgba(232,144,21,.92)] text-[#fff] py-[4px] px-[10px] rounded-[99px] text-[11px] font-extrabold",
+      "bg-[rgba(232,144,21,.92)] text-white py-1 px-2.5 rounded-pill text-xs font-extrabold",
     label: "IN REVIEW",
   },
   {
     status: "rejected",
     className:
-      "bg-[rgba(224,33,47,.92)] text-[#fff] py-[4px] px-[10px] rounded-[99px] text-[11px] font-extrabold",
+      "bg-[rgba(224,33,47,.92)] text-white py-1 px-2.5 rounded-pill text-xs font-extrabold",
     label: "REJECTED",
   },
 ];
@@ -47,7 +47,7 @@ export function PServices({ svcs }: { svcs: Svc[] }) {
     rpc("toggleService", { id }).then(() => router.refresh());
   return (
     <div className="animate-anim-fade-dash">
-      <div className="flex items-end justify-between gap-4 mb-[18px]">
+      <div className="flex items-end justify-between gap-4 mb-5">
         <div />
         <Button
           ctx="dash"
@@ -60,12 +60,12 @@ export function PServices({ svcs }: { svcs: Svc[] }) {
         </Button>
       </div>
       {svcs.length === 0 ? (
-        <div className="bg-surface border border-line rounded-lg py-[60px] px-[24px] text-center">
-          <div className="w-[60px] h-[60px] rounded-[99px] bg-coral-soft text-coral-deep grid place-items-center mt-0 mx-auto mb-[14px]">
+        <div className="bg-surface border border-line rounded-lg py-16 px-6 text-center">
+          <div className="w-16 h-16 rounded-pill bg-coral-soft text-coral-deep grid place-items-center mt-0 mx-auto mb-3.5">
             <Icons.compass size={26} />
           </div>
-          <h3 className="text-[20px]">{t("List your first experience")}</h3>
-          <p className="text-ink-2 text-[14.5px] mt-[8px] mx-auto mb-[18px] max-w-[420px] leading-[1.55]">
+          <h3 className="text-xl">{t("List your first experience")}</h3>
+          <p className="text-ink-2 text-sm mt-2 mx-auto mb-5 max-w-[420px] leading-normal">
             {t(
               "Create a service, send it for review, and once the platform team approves it customers can book it.",
             )}
@@ -87,10 +87,10 @@ export function PServices({ svcs }: { svcs: Svc[] }) {
             return (
               <div
                 key={s.id}
-                className={`bg-surface border border-line rounded-lg animate-anim-pop-dash p-0 overflow-hidden ${s.active !== false ? "opacity-100" : "opacity-[0.62]"}`}
+                className={`bg-surface border border-line rounded-lg animate-anim-pop-dash p-0 overflow-hidden ${s.active !== false ? "opacity-100" : "opacity-60"}`}
               >
                 <div
-                  className="relative h-[128px] [background:var(--card-bg)]"
+                  className="relative h-32 [background:var(--card-bg)]"
                   style={
                     {
                       ["--card-bg"]: s.img
@@ -100,14 +100,14 @@ export function PServices({ svcs }: { svcs: Svc[] }) {
                   }
                 >
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.5))]" />
-                  <div className="absolute top-[12px] left-[12px] right-[12px] flex justify-between items-start">
-                    <div className="flex gap-[6px]">
+                  <div className="absolute top-3 left-3 right-3 flex justify-between items-start">
+                    <div className="flex gap-1.5">
                       <span
-                        className="bg-[rgba(255,255,255,.92)] py-[4px] px-[10px] rounded-[99px] text-[11.5px] font-extrabold inline-flex items-center gap-[5px] text-[var(--mood)]"
+                        className="bg-[rgba(255,255,255,.92)] py-1 px-2.5 rounded-pill text-xs font-extrabold inline-flex items-center gap-1.5 text-[var(--mood)]"
                         style={{ ["--mood"]: m.color } as React.CSSProperties}
                       >
                         <span
-                          className="w-[7px] h-[7px] rounded-[99px] [background:var(--mood)]"
+                          className="w-2 h-2 rounded-pill [background:var(--mood)]"
                           style={{ ["--mood"]: m.color } as React.CSSProperties}
                         />
                         {m.label}
@@ -125,31 +125,31 @@ export function PServices({ svcs }: { svcs: Svc[] }) {
                       onChange={() => toggle(s.id)}
                     />
                   </div>
-                  <h3 className="absolute left-[14px] bottom-[11px] right-[14px] text-[#fff] text-[18px] [text-shadow:0_1px_10px_rgba(0,0,0,.4)]">
+                  <h3 className="absolute left-3.5 bottom-3 right-3.5 text-white text-lg [text-shadow:0_1px_10px_rgba(0,0,0,.4)]">
                     {s.name}
                   </h3>
                 </div>
-                <div className="pt-[14px] px-[18px] pb-[18px]">
-                  <div className="flex gap-[14px] text-ink-3 text-[13px] font-semibold mb-[14px]">
-                    <span className="inline-flex gap-[5px] items-center">
+                <div className="pt-3.5 px-5 pb-5">
+                  <div className="flex gap-3.5 text-ink-3 text-sm font-semibold mb-3.5">
+                    <span className="inline-flex gap-1.5 items-center">
                       <Icons.clock size={14} />
                       {s.dur}
                     </span>
-                    <span className="inline-flex gap-[5px] items-center">
+                    <span className="inline-flex gap-1.5 items-center">
                       <Icons.user size={14} />
                       {s.cap} {t("cap")}
                     </span>
-                    <span className="inline-flex gap-[5px] items-center">
+                    <span className="inline-flex gap-1.5 items-center">
                       <Icons.star size={14} />
                       {s.rating || "—"}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between pt-[14px] border-t border-line">
+                  <div className="flex items-center justify-between pt-3.5 border-t border-line">
                     <div>
-                      <div className="font-display font-extrabold text-[20px]">
+                      <div className="font-display font-extrabold text-xl">
                         {money(s.price)}
                       </div>
-                      <div className="text-[12px] text-ink-3 font-semibold">
+                      <div className="text-xs text-ink-3 font-semibold">
                         {s.booked} {t("booked all-time")}
                       </div>
                     </div>
@@ -240,18 +240,18 @@ function ServiceFormModal({
     );
   return (
     <Modal onClose={onClose} maxWidth={500}>
-      <div className="py-[24px] px-[26px]">
-        <h3 className="text-[20px] mb-[4px]">
+      <div className="py-6 px-7">
+        <h3 className="text-xl mb-1">
           {isNew ? t("New service") : t("Edit service")}
         </h3>
-        <p className="text-ink-2 text-[13.5px] mt-0 mx-0 mb-[18px]">
+        <p className="text-ink-2 text-sm mt-0 mx-0 mb-5">
           {isNew
             ? t(
                 "New services go to platform review before customers can see them.",
               )
             : t("Changes apply immediately.")}
         </p>
-        <div className="flex flex-col gap-[14px]">
+        <div className="flex flex-col gap-3.5">
           <div>
             <L>{t("Name")}</L>
             <Input
@@ -260,7 +260,7 @@ function ServiceFormModal({
               onChange={(e) => set("name", e.target.value)}
             />
           </div>
-          <div className="flex gap-[12px]">
+          <div className="flex gap-3">
             <div className="flex-1">
               <L>{t("Category")}</L>
               <Select
@@ -286,7 +286,7 @@ function ServiceFormModal({
               </Select>
             </div>
           </div>
-          <div className="flex gap-[12px]">
+          <div className="flex gap-3">
             <div className="flex-1">
               <L>{t("Price")} (₽)</L>
               <Input
@@ -327,11 +327,11 @@ function ServiceFormModal({
           </div>
         </div>
         {error && (
-          <div className="mt-[12px] text-coral-deep font-bold text-[13.5px]">
+          <div className="mt-3 text-coral-deep font-bold text-sm">
             {error}
           </div>
         )}
-        <div className="flex gap-[10px] mt-[20px]">
+        <div className="flex gap-2.5 mt-5">
           <Button ctx="dash" variant="ghost" size="md" block onClick={onClose}>
             {t("Cancel")}
           </Button>
@@ -355,7 +355,7 @@ function ServiceFormModal({
 
 function L({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-[12.5px] font-bold text-ink-2 mb-[7px]">
+    <div className="text-xs font-bold text-ink-2 mb-2">
       {children}
     </div>
   );

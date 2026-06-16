@@ -59,14 +59,14 @@ export function PPayouts({
   return (
     <div className="animate-anim-fade-dash grid grid-cols-[1fr_1.3fr] items-start gap-[var(--gap)]">
       <div className="flex flex-col gap-[var(--gap)]">
-        <div className="bg-[linear-gradient(160deg,#5e1014,var(--maroon))] border border-[color-mix(in_srgb,var(--red)_55%,transparent)] text-[#f3ebe0] rounded-lg p-[26px] relative overflow-hidden">
-          <div className="text-[13.5px] opacity-[.82] font-semibold mb-[8px]">
+        <div className="bg-[linear-gradient(160deg,#5e1014,var(--maroon))] border border-[color-mix(in_srgb,var(--red)_55%,transparent)] text-[#f3ebe0] rounded-lg p-7 relative overflow-hidden">
+          <div className="text-sm opacity-80 font-semibold mb-2">
             {t("Available balance")}
           </div>
-          <div className="font-display font-extrabold text-[38px] tracking-[-.02em]">
+          <div className="font-display font-extrabold text-4xl tracking-tight">
             {money(fin.available)}
           </div>
-          <div className="text-[13px] opacity-[.82] font-semibold mt-[6px]">
+          <div className="text-sm opacity-80 font-semibold mt-1.5">
             {t("Net of")} {fin.commission}
             {t("% platform commission")}
           </div>
@@ -83,27 +83,27 @@ export function PPayouts({
                 () => router.refresh(),
               )
             }
-            className="mt-[18px]"
+            className="mt-5"
           >
             {t("Withdraw")} {fin.available > 0 ? money(fin.available) : ""}
           </Button>
           {error && (
-            <div className="mt-[10px] text-[13px] font-bold text-[#FFC58A]">
+            <div className="mt-2.5 text-sm font-bold text-[#FFC58A]">
               {error}
             </div>
           )}
-          <div className="absolute right-[-30px] bottom-[-40px] w-[150px] h-[150px] rounded-[99px] bg-[rgba(255,255,255,.05)]" />
+          <div className="absolute right-[-30px] bottom-[-40px] w-[150px] h-[150px] rounded-pill bg-white/5" />
         </div>
-        <div className="bg-surface border border-line rounded-lg p-[22px]">
-          <h3 className="text-[16px] mb-[14px]">{t("Earnings breakdown")}</h3>
+        <div className="bg-surface border border-line rounded-lg p-6">
+          <h3 className="text-base mb-3.5">{t("Earnings breakdown")}</h3>
           {breakdown.map((row, i) => (
             <PRow key={i} l={row.l} r={row.r} neg={row.neg} />
           ))}
-          <div className="border-t border-line mt-[8px] pt-[12px]">
+          <div className="border-t border-line mt-2 pt-3">
             <PRow
               l={<b>{t("Available")}</b>}
               r={
-                <b className="font-display text-[17px]">
+                <b className="font-display text-base">
                   {money(fin.available)}
                 </b>
               }
@@ -112,11 +112,11 @@ export function PPayouts({
         </div>
       </div>
       <div className="bg-surface border border-line rounded-lg overflow-hidden">
-        <h3 className="text-[17px] pt-[18px] px-[20px] pb-[4px]">
+        <h3 className="text-base pt-5 px-5 pb-1">
           {t("Payout history")}
         </h3>
         {list.length === 0 ? (
-          <div className="py-[34px] px-[20px] text-ink-3 font-semibold text-[13.5px]">
+          <div className="py-9 px-5 text-ink-3 font-semibold text-sm">
             {t(
               "No payouts yet. Withdraw your balance and the request lands in the admin payout queue.",
             )}
@@ -132,7 +132,7 @@ export function PPayouts({
             }
           >
             {list.map((p) => (
-              <tr key={p.id} className="[transition:0.12s] cursor-pointer">
+              <tr key={p.id} className="duration-[120ms] cursor-pointer">
                 <td className="font-bold">{p.date}</td>
                 <td className="font-display font-bold">{money(p.amount)}</td>
                 <td className="text-ink-2">{p.due}</td>
@@ -158,7 +158,7 @@ function PRow({
   neg?: boolean;
 }) {
   return (
-    <div className="flex justify-between py-[7px] px-0 text-[14px]">
+    <div className="flex justify-between py-2 px-0 text-sm">
       <span className="text-ink-2 font-semibold">{l}</span>
       <span className={`font-bold ${neg ? "text-coral" : "text-ink"}`}>
         {r}

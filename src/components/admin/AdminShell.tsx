@@ -65,20 +65,20 @@ export function AdminSidebar({
     router.push("/auth");
   };
   return (
-    <aside className="sticky top-0 h-screen bg-surface border-r border-line flex flex-col p-[20px_14px] gap-[5px] z-20">
-      <div className="pt-[6px] px-[10px] pb-[16px] flex items-center gap-[9px] flex-wrap">
+    <aside className="sticky top-0 h-screen bg-surface border-r border-line flex flex-col px-3.5 py-5 gap-1.5 z-20">
+      <div className="pt-1.5 px-2.5 pb-4 flex items-center gap-2.5 flex-wrap">
         <Logo size={25} />
-        <span className="inline-flex items-center gap-[5px] whitespace-nowrap bg-[color-mix(in_srgb,var(--orange)_18%,transparent)] text-[var(--orange)] px-[9px] py-[3px] rounded-[99px] text-[10px] font-extrabold font-display">
+        <span className="inline-flex items-center gap-1 whitespace-nowrap bg-[color-mix(in_srgb,var(--orange)_18%,transparent)] text-[var(--orange)] px-2.5 py-1 rounded-pill text-[10px] font-extrabold font-display">
           Admin
         </span>
       </div>
-      <nav className="flex flex-col gap-[3px]">
+      <nav className="flex flex-col gap-1">
         {A_NAV.map((n, i) => {
           if (n.sec)
             return (
               <div
                 key={`s${i}`}
-                className="text-[11px] font-extrabold tracking-[0.1em] uppercase text-ink-3 pt-[14px] px-[13px] pb-[6px]"
+                className="text-xs font-extrabold tracking-widest uppercase text-ink-3 pt-3.5 px-3.5 pb-1.5"
               >
                 {t(n.sec)}
               </div>
@@ -89,7 +89,7 @@ export function AdminSidebar({
           return (
             <button
               key={n.key}
-              className={`flex items-center gap-[12px] py-[10px] px-[13px] rounded-sm font-semibold text-[14px] [transition:0.15s] cursor-pointer bg-none border-none w-full text-left ${
+              className={`flex items-center gap-3 py-2.5 px-3.5 rounded-sm font-semibold text-sm duration-150 cursor-pointer bg-none border-none w-full text-left ${
                 on
                   ? "bg-[color-mix(in_srgb,var(--red)_14%,transparent)] text-coral"
                   : "text-ink-2 hover:bg-surface-2 hover:text-ink"
@@ -99,7 +99,7 @@ export function AdminSidebar({
               <I size={19} />
               {t(n.label!)}
               {b ? (
-                <span className="ml-auto bg-coral text-white text-[11px] font-bold min-w-[19px] h-[19px] rounded-[99px] grid place-items-center px-[5px]">
+                <span className="ml-auto bg-coral text-white text-xs font-bold min-w-[19px] h-5 rounded-pill grid place-items-center px-1.5">
                   {b}
                 </span>
               ) : null}
@@ -107,9 +107,9 @@ export function AdminSidebar({
           );
         })}
       </nav>
-      <div className="mt-auto pt-[10px]">
+      <div className="mt-auto pt-2.5">
         <button
-          className="flex items-center gap-[12px] py-[10px] px-[13px] rounded-sm font-semibold text-[14px] [transition:0.15s] cursor-pointer bg-none border-none w-full text-left hover:bg-surface-2 hover:text-ink text-[var(--ink-3)]"
+          className="flex items-center gap-3 py-2.5 px-3.5 rounded-sm font-semibold text-sm duration-150 cursor-pointer bg-none border-none w-full text-left hover:bg-surface-2 hover:text-ink text-[var(--ink-3)]"
           onClick={logout}
         >
           <Icons.logout size={19} />
@@ -155,19 +155,19 @@ export function AdminTopbar({
   const t = useT();
   const { title, sub } = PAGE_TITLES[pathname] ?? DEFAULT_PAGE_TITLE;
   return (
-    <div className="sticky top-0 bg-[color-mix(in_srgb,var(--bg)_80%,transparent)] [backdrop-filter:blur(12px)] [-webkit-backdrop-filter:blur(12px)] z-[15] flex items-center gap-[14px] py-[16px] px-[var(--pad)] border-b border-line">
+    <div className="sticky top-0 bg-[color-mix(in_srgb,var(--bg)_80%,transparent)] [backdrop-filter:blur(12px)] [-webkit-backdrop-filter:blur(12px)] z-[15] flex items-center gap-3.5 py-4 px-[var(--pad)] border-b border-line">
       <div className="flex-1 min-w-0">
-        <h1 className="text-[20px] leading-[1.1]">{t(title)}</h1>
+        <h1 className="text-xl leading-none">{t(title)}</h1>
         {sub && (
-          <div className="text-[13px] text-ink-3 font-semibold mt-[2px]">
+          <div className="text-sm text-ink-3 font-semibold mt-0.5">
             {t(sub)}
           </div>
         )}
       </div>
       <LangSwitcher />
-      <button className="w-10 h-10 rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2">
+      <button className="w-10 h-10 rounded-pill grid place-items-center bg-surface border border-line text-ink-2 duration-150 relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2">
         <Icons.bell size={18} />
-        {unread > 0 && <span className="absolute top-[9px] right-[10px] w-2 h-2 rounded-full bg-coral border-2 border-surface" />}
+        {unread > 0 && <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-coral border-2 border-surface" />}
       </button>
       <Avatar
         name={name}

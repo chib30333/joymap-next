@@ -52,7 +52,7 @@ export function PortalNav({
         </nav>
         <button
           onClick={logout}
-          className="text-[13px] font-bold text-ink-3 hover:text-ink"
+          className="text-sm font-bold text-ink-3 hover:text-ink"
         >
           Log out
         </button>

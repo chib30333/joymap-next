@@ -28,7 +28,7 @@ export function ACustomers({ list }: { list: Customer[] }) {
     ]);
   return (
     <div className="animate-anim-fade-dash">
-      <div className="flex items-end justify-between gap-[16px] mb-[var(--gap)]">
+      <div className="flex items-end justify-between gap-4 mb-[var(--gap)]">
         <div />
         <Button
           ctx="dash"
@@ -80,10 +80,10 @@ export function ACustomers({ list }: { list: Customer[] }) {
             {list.map((c, i) => (
               <tr
                 key={i}
-                className="[transition:0.12s] cursor-pointer hover:[&>td]:bg-surface-2"
+                className="duration-[120ms] cursor-pointer hover:[&>td]:bg-surface-2"
               >
                 <td>
-                  <div className="flex items-center gap-[10px]">
+                  <div className="flex items-center gap-2.5">
                     <Avatar name={c.name} size={32} />
                     <b className="font-bold">{c.name}</b>
                   </div>

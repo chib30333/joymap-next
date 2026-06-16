@@ -23,8 +23,9 @@ export const fmt = (n: number) =>
 // Local helper: typed CSS custom-property maps without repeating the
 // `as React.CSSProperties` cast at every call site. The returned object is
 // identical at runtime to the literal it wraps.
-const cssVars = (vars: Record<`--${string}`, string>): React.CSSProperties =>
-  vars as React.CSSProperties;
+export const cssVars = (
+  vars: Record<`--${string}`, string>,
+): React.CSSProperties => vars as React.CSSProperties;
 
 export type Exp = {
   id: string;
@@ -72,7 +73,7 @@ export function MoodChip({
   const m = MOODS[mood];
   return (
     <button
-      className="inline-flex items-center gap-[8px] pt-[7px] pr-[13px] pb-[7px] pl-[11px] rounded-pill text-[13px] font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid [background:var(--bg)] [color:var(--fg)] [border-color:var(--bd)]"
+      className="inline-flex items-center gap-2 pt-2 pr-3.5 pb-2 pl-3 rounded-pill text-sm font-bold cursor-pointer duration-[140ms] border-2 border-solid [background:var(--bg)] [color:var(--fg)] [border-color:var(--bd)]"
       onClick={onClick}
       style={
         active
@@ -81,7 +82,7 @@ export function MoodChip({
       }
     >
       <span
-        className="rounded-pill flex-none w-[9px] h-[9px] [background:var(--dot)]"
+        className="rounded-pill flex-none w-2.5 h-2.5 [background:var(--dot)]"
         style={cssVars({ "--dot": active ? "#fff" : m.color })}
       />
       {t(m.label)}
@@ -97,7 +98,7 @@ export function Rating({
   reviews?: number | null;
 }) {
   return (
-    <span className="inline-flex items-center gap-[5px] font-bold text-[13.5px] text-ink [&_svg]:text-m-joy">
+    <span className="inline-flex items-center gap-1.5 font-bold text-sm text-ink [&_svg]:text-m-joy">
       <Icons.star size={15} />
       {value}
       {reviews != null && (
@@ -110,7 +111,7 @@ export function Rating({
 export function Avatar({ name, size = 40 }: { name: string; size?: number }) {
   return (
     <div
-      className="rounded-pill bg-[linear-gradient(140deg,var(--red),var(--orange))] text-[#fff] grid place-items-center font-extrabold font-display flex-none [width:var(--s)] [height:var(--s)] [font-size:var(--fs)]"
+      className="rounded-pill bg-[linear-gradient(140deg,var(--red),var(--orange))] text-white grid place-items-center font-extrabold font-display flex-none [width:var(--s)] [height:var(--s)] [font-size:var(--fs)]"
       style={cssVars({ "--s": size + "px", "--fs": size * 0.42 + "px" })}
     >
       {(name || "?")[0]}
@@ -154,15 +155,15 @@ export function ExperienceCard({
   const m = MOODS[exp.mood];
   return (
     <article
-      className="cursor-pointer flex flex-col overflow-hidden bg-surface border border-line rounded-lg [transition:0.2s] hover:-translate-y-[4px] hover:shadow-lg hover:border-transparent"
+      className="cursor-pointer flex flex-col overflow-hidden bg-surface border border-line rounded-lg duration-200 hover:-translate-y-1 hover:shadow-lg hover:border-transparent"
       onClick={() => onOpen(exp)}
     >
       <PhotoFrame exp={exp}>
-        <span className="absolute top-[12px] left-[12px] bg-[rgba(255,255,255,0.92)] text-[#241c2e] px-[11px] py-[5px] rounded-pill text-[11.5px] font-bold tracking-[0.01em]">
+        <span className="absolute top-3 left-3 bg-[rgba(255,255,255,0.92)] text-[#241c2e] px-3 py-1.5 rounded-pill text-xs font-bold tracking-normal">
           {t(exp.cat)}
         </span>
         <button
-          className={`absolute top-[10px] right-[10px] w-[34px] h-[34px] rounded-pill border-none bg-[rgba(255,255,255,0.85)] grid place-items-center [transition:0.15s] cursor-pointer hover:bg-[#fff] hover:scale-[1.08] ${fav ? "text-m-energy" : "text-[#241c2e]"}`}
+          className={`absolute top-2.5 right-2.5 w-9 h-9 rounded-pill border-none bg-[rgba(255,255,255,0.85)] grid place-items-center duration-150 cursor-pointer hover:bg-white hover:scale-[1.08] ${fav ? "text-m-energy" : "text-[#241c2e]"}`}
           onClick={(e) => {
             e.stopPropagation();
             onFav?.(exp.id);
@@ -170,14 +171,14 @@ export function ExperienceCard({
         >
           <Icons.heart size={17} fill={fav} />
         </button>
-        <div className="absolute left-[14px] right-[14px] bottom-[12px] text-[#fff] font-display font-bold text-[18px] tracking-[-0.01em] leading-[1.1] [text-shadow:0_1px_12px_rgba(0,0,0,0.35)]">
+        <div className="absolute left-3.5 right-3.5 bottom-3 text-white font-display font-bold text-lg tracking-normal leading-none [text-shadow:0_1px_12px_rgba(0,0,0,0.35)]">
           {exp.title}
         </div>
       </PhotoFrame>
-      <div className="px-[16px] pt-[14px] pb-[16px] flex flex-col gap-[10px]">
-        <div className="flex items-center justify-between gap-[8px]">
+      <div className="px-4 pt-3.5 pb-4 flex flex-col gap-2.5">
+        <div className="flex items-center justify-between gap-2">
           <span
-            className="inline-flex items-center gap-[8px] rounded-pill font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid border-transparent p-[5px_11px_5px_9px] text-[12px] [background:var(--bg)] [color:var(--fg)]"
+            className="inline-flex items-center gap-2 rounded-pill font-bold cursor-pointer duration-[140ms] border-2 border-solid border-transparent px-2.5 py-1.5 text-xs [background:var(--bg)] [color:var(--fg)]"
             style={cssVars({ "--bg": m.soft, "--fg": m.color })}
           >
             <MoodDot mood={exp.mood} size={7} />
@@ -186,23 +187,23 @@ export function ExperienceCard({
           {exp.rating ? (
             <Rating value={exp.rating} reviews={exp.reviews} />
           ) : (
-            <span className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] [background:var(--coral-soft)] [color:var(--coral-deep)] [border:none] font-bold">
+            <span className="inline-flex items-center px-3 py-1.5 rounded-pill text-xs [background:var(--coral-soft)] [color:var(--coral-deep)] [border:none] font-bold">
               {t("New")}
             </span>
           )}
         </div>
-        <div className="flex items-center gap-[12px] text-ink-3 text-[13px] font-semibold">
-          <span className="inline-flex items-center gap-[5px]">
+        <div className="flex items-center gap-3 text-ink-3 text-sm font-semibold">
+          <span className="inline-flex items-center gap-1.5">
             <Icons.pin size={14} />
             {exp.area}
           </span>
-          <span className="inline-flex items-center gap-[5px]">
+          <span className="inline-flex items-center gap-1.5">
             <Icons.clock size={14} />
             {exp.dur}
           </span>
         </div>
-        <div className="flex items-center justify-between mt-[2px]">
-          <span className="font-display font-bold text-[18px] text-ink whitespace-nowrap [&_small]:font-semibold [&_small]:text-[12.5px] [&_small]:text-ink-3">
+        <div className="flex items-center justify-between mt-0.5">
+          <span className="font-display font-bold text-lg text-ink whitespace-nowrap [&_small]:font-semibold [&_small]:text-[12.5px] [&_small]:text-ink-3">
             {fmt(exp.price)} <small>/ {t("person")}</small>
           </span>
           <span className="text-coral-deep inline-flex">
@@ -224,14 +225,14 @@ export function SectionHead({
   action?: ReactNode;
 }) {
   return (
-    <div className="flex items-end justify-between gap-[16px] mb-[18px]">
+    <div className="flex items-end justify-between gap-4 mb-5">
       <div>
         {eyebrow && (
-          <div className="text-[12.5px] font-bold tracking-[0.1em] uppercase text-orange mb-[7px]">
+          <div className="text-xs font-bold tracking-widest uppercase text-orange mb-2">
             {eyebrow}
           </div>
         )}
-        <h2 className="text-[26px]">{title}</h2>
+        <h2 className="text-2xl">{title}</h2>
       </div>
       {action}
     </div>
@@ -260,7 +261,7 @@ export function Modal({
   }, [onClose]);
   return (
     <div
-      className="fixed inset-0 bg-[rgba(20,14,26,0.55)] [backdrop-filter:blur(4px)] z-[100] flex items-end justify-center min-[760px]:items-center min-[760px]:p-[30px] animate-anim-fade motion-reduce:animate-none"
+      className="fixed inset-0 bg-[rgba(20,14,26,0.55)] [backdrop-filter:blur(4px)] z-[100] flex items-end justify-center min-[760px]:items-center min-[760px]:p-8 animate-anim-fade motion-reduce:animate-none"
       onClick={onClose}
     >
       <div
@@ -315,7 +316,7 @@ export function QR() {
       viewBox="0 0 103 103"
       width="150"
       height="150"
-      className="bg-[#fff] rounded-sm p-[6px]"
+      className="bg-white rounded-sm p-1.5"
     >
       {cells}
     </svg>

@@ -56,10 +56,10 @@ export function PMarketing() {
   };
   return (
     <div className="animate-anim-fade-dash">
-      <div className="flex items-end justify-between gap-4 mb-[18px]">
+      <div className="flex items-end justify-between gap-4 mb-5">
         <div>
-          <h3 className="text-[17px]">{t("Promo codes")}</h3>
-          <div className="text-[13px] text-ink-3 font-semibold">
+          <h3 className="text-base">{t("Promo codes")}</h3>
+          <div className="text-sm text-ink-3 font-semibold">
             {t("Drive bookings with limited-time offers")}
           </div>
         </div>
@@ -75,9 +75,9 @@ export function PMarketing() {
       </div>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-[var(--gap)]">
         {promos.map((p) => (
-          <div key={p.code} className="bg-surface border border-line rounded-lg animate-anim-pop-dash p-[20px]">
-            <div className="flex items-center justify-between mb-[12px]">
-              <span className="font-extrabold text-[18px] tracking-[.04em] py-[5px] px-[12px] rounded-xs bg-[color-mix(in_srgb,var(--orange)_14%,transparent)] text-[var(--orange-deep)] [font-family:var(--display)] [border:1px_dashed_color-mix(in_srgb,var(--orange)_45%,transparent)]">
+          <div key={p.code} className="bg-surface border border-line rounded-lg animate-anim-pop-dash p-5">
+            <div className="flex items-center justify-between mb-3">
+              <span className="font-extrabold text-lg tracking-wider py-1.5 px-3 rounded-xs bg-[color-mix(in_srgb,var(--orange)_14%,transparent)] text-[var(--orange-deep)] [font-family:var(--display)] [border:1px_dashed_color-mix(in_srgb,var(--orange)_45%,transparent)]">
                 {p.code}
               </span>
               <Pill
@@ -91,12 +91,12 @@ export function PMarketing() {
                 }
               />
             </div>
-            <p className="mt-0 mx-0 mb-[14px] text-[14px] text-ink-2 font-semibold">
+            <p className="mt-0 mx-0 mb-3.5 text-sm text-ink-2 font-semibold">
               {p.desc}
             </p>
-            <div className="h-[7px] rounded-[99px] bg-surface-2 overflow-hidden mb-[8px]">
+            <div className="h-2 rounded-pill bg-surface-2 overflow-hidden mb-2">
               <div
-                className="h-full rounded-[99px] w-[var(--w)] [background:var(--bg)]"
+                className="h-full rounded-pill w-[var(--w)] [background:var(--bg)]"
                 style={
                   {
                     ["--w"]: `${Math.min((p.uses / p.cap) * 100, 100)}%`,
@@ -106,7 +106,7 @@ export function PMarketing() {
                 }
               />
             </div>
-            <div className="flex justify-between text-[12.5px] text-ink-3 font-semibold">
+            <div className="flex justify-between text-xs text-ink-3 font-semibold">
               <span>
                 {p.uses}/{p.cap} {t("redeemed")}
               </span>
@@ -137,22 +137,22 @@ function PromoModal({
   const [cap, setCap] = useState("100");
   return (
     <Modal onClose={onClose} maxWidth={460}>
-      <div className="py-[24px] px-[26px]">
-        <h3 className="text-[20px] mb-[18px]">{t("Create promo code")}</h3>
-        <div className="flex flex-col gap-[14px]">
+      <div className="py-6 px-7">
+        <h3 className="text-xl mb-5">{t("Create promo code")}</h3>
+        <div className="flex flex-col gap-3.5">
           <div>
-            <div className="text-[12.5px] font-bold text-ink-2 mb-[7px]">
+            <div className="text-xs font-bold text-ink-2 mb-2">
               {t("Code")}
             </div>
             <Input
               placeholder="SUMMER20"
               value={code}
               onChange={(e) => setCode(e.target.value.toUpperCase())}
-              className="[font-family:var(--display)] font-bold tracking-[.05em]"
+              className="[font-family:var(--display)] font-bold tracking-wider"
             />
           </div>
           <div>
-            <div className="text-[12.5px] font-bold text-ink-2 mb-[7px]">
+            <div className="text-xs font-bold text-ink-2 mb-2">
               {t("Description")}
             </div>
             <Input
@@ -161,12 +161,12 @@ function PromoModal({
               onChange={(e) => setDesc(e.target.value)}
             />
           </div>
-          <div className="flex gap-[12px]">
+          <div className="flex gap-3">
             <div className="flex-1">
-              <div className="text-[12.5px] font-bold text-ink-2 mb-[7px]">
+              <div className="text-xs font-bold text-ink-2 mb-2">
                 {t("Discount")}
               </div>
-              <div className="flex gap-[8px]">
+              <div className="flex gap-2">
                 <Input
                   value={amt}
                   onChange={(e) => setAmt(e.target.value)}
@@ -183,14 +183,14 @@ function PromoModal({
               </div>
             </div>
             <div className="w-[110px]">
-              <div className="text-[12.5px] font-bold text-ink-2 mb-[7px]">
+              <div className="text-xs font-bold text-ink-2 mb-2">
                 {t("Max uses")}
               </div>
               <Input value={cap} onChange={(e) => setCap(e.target.value)} />
             </div>
           </div>
         </div>
-        <div className="flex gap-[10px] mt-[22px]">
+        <div className="flex gap-2.5 mt-6">
           <Button ctx="dash" variant="ghost" size="md" block onClick={onClose}>
             {t("Cancel")}
           </Button>

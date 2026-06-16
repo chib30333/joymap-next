@@ -88,7 +88,7 @@ function ActionButtons({
       ))}
       {booking.status === "pending" && (
         <button
-          className="w-[34px] h-[34px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
+          className="w-9 h-9 rounded-pill grid place-items-center bg-surface border border-line text-ink-2 duration-150 relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
           title={t("Decline")}
           onClick={(e) => {
             e.stopPropagation();
@@ -131,11 +131,11 @@ export function BookingsTable({
       {rows.map((b) => (
         <tr
           key={b.id}
-          className="[transition:0.12s] cursor-pointer"
+          className="duration-[120ms] cursor-pointer"
           onClick={onRow ? () => onRow(b) : undefined}
         >
           <td>
-            <div className="flex items-center gap-[10px]">
+            <div className="flex items-center gap-2.5">
               <Avatar name={b.customer} size={30} />
               <b className="font-bold">{b.customer}</b>
             </div>
@@ -150,9 +150,9 @@ export function BookingsTable({
           </td>
           {onAct && (
             <td>
-              <div className="flex gap-[6px] justify-end items-center">
+              <div className="flex gap-1.5 justify-end items-center">
                 {actingId === b.id ? (
-                  <span className="w-[17px] h-[17px] rounded-full inline-block flex-none border-[2.5px] border-solid [border-top-color:currentColor] [border-right-color:color-mix(in_srgb,currentColor_35%,transparent)] [border-bottom-color:color-mix(in_srgb,currentColor_35%,transparent)] [border-left-color:color-mix(in_srgb,currentColor_35%,transparent)] animate-jm-spin text-ink-3" />
+                  <span className="w-[17px] h-[17px] rounded-full inline-block flex-none border-2 border-solid [border-top-color:currentColor] [border-right-color:color-mix(in_srgb,currentColor_35%,transparent)] [border-bottom-color:color-mix(in_srgb,currentColor_35%,transparent)] [border-left-color:color-mix(in_srgb,currentColor_35%,transparent)] animate-jm-spin text-ink-3" />
                 ) : (
                   <ActionButtons booking={b} onAct={onAct} t={t} />
                 )}

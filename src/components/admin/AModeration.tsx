@@ -73,37 +73,37 @@ export function AModeration({
       )}
       {apps.length > 0 && (
         <>
-          <h3 className="text-[16px] mt-[4px] mx-0 mb-[14px]">
+          <h3 className="text-base mt-1 mx-0 mb-3.5">
             {t("Provider applications")}
           </h3>
           <div className="grid [grid-template-columns:repeat(auto-fill,minmax(320px,1fr))] gap-[var(--gap)] mb-[var(--gap)]">
             {apps.map((m) => (
-              <div key={m.id} className="bg-surface border border-line rounded-lg animate-anim-pop-dash p-[20px]">
-                <div className="flex items-center gap-[12px] mb-[14px]">
+              <div key={m.id} className="bg-surface border border-line rounded-lg animate-anim-pop-dash p-5">
+                <div className="flex items-center gap-3 mb-3.5">
                   <Avatar
                     name={m.name}
                     size={42}
                     grad="linear-gradient(140deg,var(--m-focus),#3742A8)"
                   />
                   <div className="flex-1">
-                    <div className="font-extrabold text-[16px]">{m.name}</div>
-                    <div className="text-[12.5px] text-ink-3 font-semibold">
+                    <div className="font-extrabold text-base">{m.name}</div>
+                    <div className="text-xs text-ink-3 font-semibold">
                       {m.cat} · {m.city}
                     </div>
                   </div>
                   <Pill status="review" label={t("new")} />
                 </div>
-                <div className="flex gap-[14px] text-[13px] text-ink-2 font-semibold mb-[16px]">
-                  <span className="inline-flex gap-[6px] items-center">
+                <div className="flex gap-3.5 text-sm text-ink-2 font-semibold mb-4">
+                  <span className="inline-flex gap-1.5 items-center">
                     <Icons.mail size={15} />
                     {m.email}
                   </span>
-                  <span className="inline-flex gap-[6px] items-center">
+                  <span className="inline-flex gap-1.5 items-center">
                     <Icons.checkCirc size={15} />
                     {m.docs || 3} {t("documents")}
                   </span>
                 </div>
-                <div className="flex gap-[9px]">
+                <div className="flex gap-2">
                   <Button
                     ctx="dash"
                     variant="primary"
@@ -135,7 +135,7 @@ export function AModeration({
       )}
       {svcs.length > 0 && (
         <>
-          <h3 className="text-[16px] mt-[4px] mx-0 mb-[14px]">
+          <h3 className="text-base mt-1 mx-0 mb-3.5">
             {t("Service submissions")}
           </h3>
           <div className="grid [grid-template-columns:repeat(auto-fill,minmax(320px,1fr))] gap-[var(--gap)]">
@@ -144,9 +144,9 @@ export function AModeration({
               return (
                 <div
                   key={s.id}
-                  className="bg-surface border border-line rounded-lg animate-anim-pop-dash p-[20px]"
+                  className="bg-surface border border-line rounded-lg animate-anim-pop-dash p-5"
                 >
-                  <div className="flex items-center gap-[12px] mb-[12px]">
+                  <div className="flex items-center gap-3 mb-3">
                     <span
                       className="w-[42px] h-[42px] rounded-sm flex-none [background:var(--sw-bg)]"
                       style={
@@ -156,20 +156,20 @@ export function AModeration({
                       }
                     />
                     <div className="flex-1">
-                      <div className="font-extrabold text-[16px]">{s.name}</div>
-                      <div className="text-[12.5px] text-ink-3 font-semibold">
+                      <div className="font-extrabold text-base">{s.name}</div>
+                      <div className="text-xs text-ink-3 font-semibold">
                         {t("by")} {s.providerName} · {s.cat} · {money(s.price)}
                       </div>
                     </div>
                     <Pill status="review" label={t("new")} />
                   </div>
                   {s.about && (
-                    <p className="mt-0 mx-0 mb-[14px] text-[13.5px] text-ink-2 leading-[1.5]">
+                    <p className="mt-0 mx-0 mb-3.5 text-sm text-ink-2 leading-normal">
                       {s.about.slice(0, 140)}
                       {s.about.length > 140 ? "…" : ""}
                     </p>
                   )}
-                  <div className="flex gap-[9px]">
+                  <div className="flex gap-2">
                     <Button
                       ctx="dash"
                       variant="primary"
@@ -233,16 +233,16 @@ function ModerationModal({
     );
   return (
     <Modal onClose={onClose} maxWidth={440}>
-      <div className="px-[26px] py-[24px]">
-        <div className="flex items-center gap-[12px] mb-[18px]">
+      <div className="px-7 py-6">
+        <div className="flex items-center gap-3 mb-5">
           <Avatar
             name={it.name}
             size={44}
             grad="linear-gradient(140deg,var(--m-focus),#3742A8)"
           />
           <div>
-            <h3 className="text-[18px]">{it.name}</h3>
-            <div className="text-[13px] text-ink-3 font-semibold">
+            <h3 className="text-lg">{it.name}</h3>
+            <div className="text-sm text-ink-3 font-semibold">
               {sel.kind === "provider"
                 ? `${sel.item.cat} · ${sel.item.city}`
                 : `${t("Service")} · ${t("by")} ${sel.item.providerName}`}
@@ -250,15 +250,15 @@ function ModerationModal({
           </div>
         </div>
         {sel.kind === "provider" && (
-          <div className="bg-[var(--surface-2)] border border-line rounded-lg p-[14px] mb-[18px]">
+          <div className="bg-[var(--surface-2)] border border-line rounded-lg p-3.5 mb-5">
             {PROVIDER_DOCS.slice(0, sel.item.docs || 3).map((d, i) => (
                 <div
                   key={i}
-                  className="flex items-center gap-[10px] px-0 py-[7px] text-[13.5px] font-semibold"
+                  className="flex items-center gap-2.5 px-0 py-2 text-sm font-semibold"
                 >
                   <Icons.checkCirc size={17} className="text-[#1FA46E]" />
                   {t(d)}
-                  <span className="ml-auto text-[12px] text-ink-3">
+                  <span className="ml-auto text-xs text-ink-3">
                     {t("Verified")}
                   </span>
                 </div>
@@ -266,8 +266,8 @@ function ModerationModal({
           </div>
         )}
         {reject ? (
-          <div className="mb-[18px]">
-            <div className="font-bold text-[14px] mb-[8px]">
+          <div className="mb-5">
+            <div className="font-bold text-sm mb-2">
               {t("Reason for rejection")}
             </div>
             <Select value={reason} onChange={(e) => setReason(e.target.value)}>
@@ -279,7 +279,7 @@ function ModerationModal({
             </Select>
           </div>
         ) : (
-          <p className="text-ink-2 text-[14px] mb-[18px]">
+          <p className="text-ink-2 text-sm mb-5">
             {t("Approving will")}{" "}
             {sel.kind === "provider" ? (
               <>
@@ -293,7 +293,7 @@ function ModerationModal({
             {t("and notify the owner.")}
           </p>
         )}
-        <div className="flex gap-[10px]">
+        <div className="flex gap-2.5">
           <Button ctx="dash" variant="ghost" size="md" block onClick={onClose}>
             {t("Cancel")}
           </Button>

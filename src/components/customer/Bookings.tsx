@@ -42,7 +42,7 @@ export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
 
   return (
     <div className="animate-anim-fade-app">
-      <div className="flex gap-[8px] mb-[24px] bg-surface-2 p-[5px] rounded-pill w-fit border border-line">
+      <div className="flex gap-2 mb-6 bg-surface-2 p-1 rounded-pill w-fit border border-line">
         {(
           [
             ["upcoming", t("Upcoming")],
@@ -56,8 +56,8 @@ export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
             onClick={() => setTab(k)}
             className={
               tab === k
-                ? "bg-[var(--surface)] text-[var(--ink)] [box-shadow:var(--sh-sm)]"
-                : "text-[var(--ink-3)]"
+                ? "bg-surface text-ink [box-shadow:var(--sh-sm)]"
+                : "text-ink-3"
             }
           >
             {l}
@@ -66,16 +66,16 @@ export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
       </div>
 
       {list.length === 0 ? (
-        <div className="text-center py-[70px] px-[20px] text-ink-3">
-          <div className="w-[64px] h-[64px] rounded-[99px] bg-surface-2 grid place-items-center mt-0 mx-auto mb-[16px]">
+        <div className="text-center py-16 px-5 text-ink-3">
+          <div className="w-16 h-16 rounded-full bg-surface-2 grid place-items-center mt-0 mx-auto mb-4">
             <Icons.calendar size={28} />
           </div>
-          <h3 className="text-[19px] text-ink">
+          <h3 className="text-xl text-ink">
             {tab === "upcoming"
               ? t("Nothing booked yet")
               : t("No past experiences")}
           </h3>
-          <p className="max-w-[360px] mt-[8px] mx-auto mb-0">
+          <p className="max-w-[360px] mt-2 mx-auto mb-0">
             {tab === "upcoming"
               ? t(
                   "Find something in Discover and book your first experience — it will appear here.",
@@ -84,7 +84,7 @@ export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
           </p>
         </div>
       ) : (
-        <div className="flex flex-col gap-[14px]">
+        <div className="flex flex-col gap-3.5">
           {list.map((b, i) => {
             const e = b.exp;
             if (!e) return null;
@@ -96,44 +96,45 @@ export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
                 style={{ "--ad": `${i * 0.05}s` } as React.CSSProperties}
               >
                 <div
-                  className="w-[150px] flex-none relative [background:var(--cell-bg)]"
+                  className="w-36 flex-none relative [background:var(--cell-bg)]"
                   style={{ "--cell-bg": bg(e) } as React.CSSProperties}
                 >
-                  <div
-                    className="absolute inset-0 mix-blend-overlay bg-[radial-gradient(rgba(255,255,255,0.9)_0.6px,transparent_0.6px)] bg-[length:7px_7px] opacity-[0.15]"
-                  />
+                  <div className="absolute inset-0 mix-blend-overlay bg-[radial-gradient(rgba(255,255,255,0.9)_0.6px,transparent_0.6px)] bg-[length:7px_7px] opacity-[0.16]" />
                 </div>
-                <div className="flex-1 py-[18px] px-[22px] flex items-center gap-[20px] flex-wrap">
+                <div className="flex-1 py-4 px-6 flex items-center gap-5 flex-wrap">
                   <div className="flex-1 min-w-[180px]">
                     <span
-                      className="inline-flex items-center gap-[8px] rounded-pill font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid border-transparent p-[4px_10px_4px_8px] text-[11.5px] mb-[8px] [background:var(--chip-bg)] text-[var(--chip-c)]"
+                      className="inline-flex items-center gap-2 rounded-pill font-bold cursor-pointer duration-[140ms] border-2 border-solid border-transparent px-2 py-1 text-xs mb-2 [background:var(--chip-bg)] text-[var(--chip-c)]"
                       style={
-                        { "--chip-bg": m.soft, "--chip-c": m.color } as React.CSSProperties
+                        {
+                          "--chip-bg": m.soft,
+                          "--chip-c": m.color,
+                        } as React.CSSProperties
                       }
                     >
                       <MoodDot mood={e.mood} size={6} />
                       {t(m.label)}
                     </span>
-                    <h3 className="text-[18px] mt-[8px]">{e.title}</h3>
-                    <div className="flex gap-[14px] mt-[8px] text-ink-3 text-[13.5px] font-semibold flex-wrap">
-                      <span className="inline-flex gap-[5px] items-center">
+                    <h3 className="text-lg mt-2">{e.title}</h3>
+                    <div className="flex gap-3.5 mt-2 text-ink-3 text-sm font-semibold flex-wrap">
+                      <span className="inline-flex gap-1 items-center">
                         <Icons.calendar size={14} />
                         {b.date}
                       </span>
-                      <span className="inline-flex gap-[5px] items-center">
+                      <span className="inline-flex gap-1 items-center">
                         <Icons.clock size={14} />
                         {b.time}
                       </span>
-                      <span className="inline-flex gap-[5px] items-center">
+                      <span className="inline-flex gap-1 items-center">
                         <Icons.pin size={14} />
                         {e.area}
                       </span>
                     </div>
                   </div>
                   {tab === "upcoming" ? (
-                    <div className="flex flex-col gap-[8px] items-end">
+                    <div className="flex flex-col gap-2 items-end">
                       <BookingPill status={b.status} />
-                      <div className="flex gap-[6px]">
+                      <div className="flex gap-1.5">
                         <Button
                           ctx="app"
                           variant="ghost"
@@ -162,12 +163,12 @@ export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
                           {t("Cancel")}
                         </Button>
                       </div>
-                      <span className="text-[12px] text-ink-3 font-semibold">
+                      <span className="text-xs text-ink-3 font-semibold">
                         {b.code}
                       </span>
                     </div>
                   ) : (
-                    <div className="flex flex-col gap-[8px] items-end">
+                    <div className="flex flex-col gap-2 items-end">
                       {b.status === "cancelled" ? (
                         <BookingPill status="cancelled" />
                       ) : b.rated ? (
@@ -243,14 +244,19 @@ const PILL_STYLES: Record<string, PillStyle> = {
 
 export function BookingPill({ status }: { status: string }) {
   const t = useT();
-  const { label, color, bg: bgc, icon } = PILL_STYLES[status] ?? PILL_STYLES.pending;
+  const {
+    label,
+    color,
+    bg: bgc,
+    icon,
+  } = PILL_STYLES[status] ?? PILL_STYLES.pending;
   const I = Icons[icon];
   return (
     <span
-      className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] border-none font-bold [background:var(--pill-bg)] text-[var(--pill-c)]"
+      className="inline-flex items-center px-3 py-1 rounded-pill text-xs border-none font-bold [background:var(--pill-bg)] text-[var(--pill-c)]"
       style={{ "--pill-bg": bgc, "--pill-c": color } as React.CSSProperties}
     >
-      <I size={13} className="mr-[4px]" />
+      <I size={13} className="mr-1" />
       {t(label)}
     </span>
   );
@@ -260,19 +266,17 @@ function QRModal({ b, onClose }: { b: B; onClose: () => void }) {
   const t = useT();
   return (
     <Modal onClose={onClose} maxWidth={360}>
-      <div className="p-[28px] text-center">
-        <h3 className="text-[19px] mb-[4px]">{b.exp?.title ?? ""}</h3>
-        <div className="text-[13.5px] text-ink-3 font-semibold mb-[18px]">
+      <div className="p-7 text-center">
+        <h3 className="text-xl mb-1">{b.exp?.title ?? ""}</h3>
+        <div className="text-sm text-ink-3 font-semibold mb-5">
           {b.date} · {b.time}
         </div>
-        <div
-          className="border border-line rounded-lg p-[22px] bg-surface-2"
-        >
+        <div className="border border-line rounded-lg p-6 bg-surface-2">
           <QR />
-          <div className="mt-[14px] [font-family:var(--display)] font-extrabold tracking-[.12em] text-[18px]">
+          <div className="mt-3.5 font-display font-extrabold tracking-widest text-lg">
             {b.code}
           </div>
-          <div className="text-[12.5px] text-ink-3 font-semibold mt-[3px]">
+          <div className="text-xs text-ink-3 font-semibold mt-1">
             {t("Show this at the door")}
           </div>
         </div>
@@ -281,7 +285,7 @@ function QRModal({ b, onClose }: { b: B; onClose: () => void }) {
           variant="ghost"
           size="md"
           block
-          className="mt-[16px]"
+          className="mt-4"
           onClick={onClose}
         >
           {t("Close")}
@@ -299,17 +303,17 @@ function RateModal({ b, onClose }: { b: B; onClose: () => void }) {
   const { busy, run } = useBusy();
   return (
     <Modal onClose={onClose} maxWidth={420}>
-      <div className="p-[26px]">
-        <h3 className="text-[20px] mb-[4px]">{t("How was it?")}</h3>
-        <div className="text-[13.5px] text-ink-3 font-semibold mb-[18px]">
+      <div className="p-6">
+        <h3 className="text-xl mb-1">{t("How was it?")}</h3>
+        <div className="text-sm text-ink-3 font-semibold mb-5">
           {b.exp?.title ?? ""} · {b.date}
         </div>
-        <div className="flex gap-[6px] justify-center mb-[18px]">
+        <div className="flex gap-1.5 justify-center mb-4">
           {[1, 2, 3, 4, 5].map((s) => (
             <button
               key={s}
               onClick={() => setStars(s)}
-              className={`[background:none] border-none cursor-pointer text-[32px] [transition:.12s] ${s <= stars ? "text-m-joy" : "text-line-2"}`}
+              className={`bg-none border-none cursor-pointer text-3xl duration-150 ${s <= stars ? "text-m-joy" : "text-line-2"}`}
             >
               ★
             </button>
@@ -320,9 +324,9 @@ function RateModal({ b, onClose }: { b: B; onClose: () => void }) {
           placeholder={t("Tell others what you loved (optional)…")}
           value={text}
           onChange={(e) => setText(e.target.value)}
-          className="resize-y mb-[18px]"
+          className="resize-y mb-4"
         />
-        <div className="flex gap-[10px]">
+        <div className="flex gap-2.5">
           <Button ctx="app" variant="ghost" size="md" block onClick={onClose}>
             {t("Cancel")}
           </Button>
@@ -372,47 +376,45 @@ function MoveModal({ b, onClose }: { b: B; onClose: () => void }) {
   const { busy, run } = useBusy();
   return (
     <Modal onClose={onClose} maxWidth={440}>
-      <div className="p-[26px]">
-        <h3 className="text-[20px] mb-[4px]">{t("Reschedule")}</h3>
-        <div className="text-[13.5px] text-ink-3 font-semibold mb-[18px]">
+      <div className="p-6">
+        <h3 className="text-xl mb-1">{t("Reschedule")}</h3>
+        <div className="text-sm text-ink-3 font-semibold mb-5">
           {b.exp?.title ?? ""} — {t("the provider will re-confirm.")}
         </div>
-        <div className="font-bold text-[14px] mb-[10px]">{t("New day")}</div>
-        <div
-          className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden flex gap-[8px] overflow-x-auto mb-[18px]"
-        >
+        <div className="font-bold text-sm mb-2.5">{t("New day")}</div>
+        <div className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden flex gap-2 overflow-x-auto mb-4">
           {days.map((d) => (
             <button
               key={d}
               onClick={() => setDay(d)}
-              className={`flex-none w-[60px] p-[10px_0] rounded-[var(--r-sm)] cursor-pointer [border-width:1.5px] [border-style:solid] ${day === d ? "border-coral bg-coral-soft" : "border-line-2 bg-surface"}`}
+              className={`flex-none w-14 py-2.5 px-0 rounded-sm cursor-pointer border-2 border-solid ${day === d ? "border-coral bg-coral-soft" : "border-line-2 bg-surface"}`}
             >
               <div
-                className={`text-[11.5px] font-bold ${day === d ? "text-coral-deep" : "text-ink-3"}`}
+                className={`text-xs font-bold ${day === d ? "text-coral-deep" : "text-ink-3"}`}
               >
                 {t(WD[dow(d)])}
               </div>
               <div
-                className={`[font-family:var(--display)] font-extrabold text-[18px] ${day === d ? "text-coral-deep" : "text-ink"}`}
+                className={`font-display font-extrabold text-lg ${day === d ? "text-coral-deep" : "text-ink"}`}
               >
                 {d}
               </div>
             </button>
           ))}
         </div>
-        <div className="font-bold text-[14px] mb-[10px]">{t("New time")}</div>
-        <div className="flex gap-[8px] flex-wrap mb-[20px]">
+        <div className="font-bold text-sm mb-2.5">{t("New time")}</div>
+        <div className="flex gap-2 flex-wrap mb-5">
           {times.map((tm) => (
             <button
               key={tm}
-              className={`inline-flex items-center gap-[7px] py-[7px] px-[13px] rounded-pill text-[13px] font-semibold border cursor-pointer [transition:0.14s] whitespace-nowrap ${time === tm ? "bg-coral text-white border-coral" : "bg-surface text-ink-2 border-line-2 hover:border-ink-3 hover:text-ink"}`}
+              className={`inline-flex items-center gap-2 py-2 px-3.5 rounded-pill text-sm font-semibold border cursor-pointer duration-150 whitespace-nowrap ${time === tm ? "bg-coral text-white border-coral" : "bg-surface text-ink-2 border-line-2 hover:border-ink-3 hover:text-ink"}`}
               onClick={() => setTime(tm)}
             >
               {tm}
             </button>
           ))}
         </div>
-        <div className="flex gap-[10px]">
+        <div className="flex gap-2.5">
           <Button ctx="app" variant="ghost" size="md" block onClick={onClose}>
             {t("Cancel")}
           </Button>
@@ -447,20 +449,20 @@ function CancelModal({ b, onClose }: { b: B; onClose: () => void }) {
   const { busy, run } = useBusy();
   return (
     <Modal onClose={onClose} maxWidth={400}>
-      <div className="p-[26px] text-center">
-        <div className="w-[56px] h-[56px] rounded-[99px] bg-coral-soft text-coral grid place-items-center mt-0 mx-auto mb-[14px]">
+      <div className="p-6 text-center">
+        <div className="w-14 h-14 rounded-full bg-coral-soft text-coral grid place-items-center mt-0 mx-auto mb-3.5">
           <Icons.close size={26} />
         </div>
-        <h3 className="text-[20px] mb-[8px]">{t("Cancel this booking?")}</h3>
-        <p className="text-ink-2 text-[14px] mb-[6px]">
+        <h3 className="text-xl mb-2">{t("Cancel this booking?")}</h3>
+        <p className="text-ink-2 text-sm mb-1.5">
           <b>{b.exp?.title ?? ""}</b> · {b.date}, {b.time}
         </p>
-        <p className="text-ink-3 text-[13px] mb-[20px]">
+        <p className="text-ink-3 text-sm mb-5">
           {b.pay === "wallet"
             ? `${fmt(b.total)} ${t("will be refunded to your Joymap balance.")}`
             : t("Free cancellation up to 12h before the start.")}
         </p>
-        <div className="flex gap-[10px]">
+        <div className="flex gap-2.5">
           <Button ctx="app" variant="ghost" size="md" block onClick={onClose}>
             {t("Keep it")}
           </Button>
@@ -469,7 +471,7 @@ function CancelModal({ b, onClose }: { b: B; onClose: () => void }) {
             ctx="app"
             size="md"
             block
-            className="bg-[var(--coral)] text-[#fff]"
+            className="bg-coral text-white"
             onClick={() =>
               run(
                 () => rpc("cancelBooking", { id: b.id }),

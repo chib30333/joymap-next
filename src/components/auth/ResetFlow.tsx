@@ -153,7 +153,7 @@ export function ResetFlow({
               </>
             )}
           </Button>
-          <div className={`${FOOT} [margin-top:4px]`}>
+          <div className={`${FOOT} mt-1`}>
             Remembered it?{" "}
             <a className={LINK_STRONG} onClick={onBackToLogin}>
               Back to log in

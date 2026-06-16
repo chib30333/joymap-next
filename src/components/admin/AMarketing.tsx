@@ -51,9 +51,9 @@ export function AMarketing() {
   const [promo, setPromo] = useState(false);
   return (
     <div className="animate-anim-fade-dash">
-      <div className="flex items-end justify-between gap-[16px] mb-[18px]">
+      <div className="flex items-end justify-between gap-4 mb-5">
         <div />
-        <div className="flex gap-[10px]">
+        <div className="flex gap-2.5">
           <Button
             ctx="dash"
             variant="ghost"
@@ -70,7 +70,7 @@ export function AMarketing() {
         </div>
       </div>
       <TableCard className="mb-[var(--gap)]">
-        <h3 className="text-[17px] pt-[18px] px-[20px] pb-[4px]">
+        <h3 className="text-base pt-5 px-5 pb-1">
           {t("Campaigns")}
         </h3>
         <DataTable
@@ -88,7 +88,7 @@ export function AMarketing() {
           {A_CAMPAIGNS.map((c, i) => (
             <tr
               key={i}
-              className="[transition:0.12s] cursor-pointer hover:[&>td]:bg-surface-2"
+              className="duration-[120ms] cursor-pointer hover:[&>td]:bg-surface-2"
             >
               <td>
                 <b className="font-bold">{t(c.name)}</b>
@@ -132,19 +132,19 @@ function PromoMassModal({ onClose }: { onClose: () => void }) {
   );
   return (
     <Modal onClose={onClose} maxWidth={460}>
-      <div className="px-[26px] py-[24px]">
+      <div className="px-7 py-6">
         {!done ? (
           <>
-            <h3 className="text-[20px] mb-[6px]">
+            <h3 className="text-xl mb-1.5">
               {t("Mass-create promo codes")}
             </h3>
-            <p className="text-ink-2 text-[14px] mt-0 mx-0 mb-[18px]">
+            <p className="text-ink-2 text-sm mt-0 mx-0 mb-5">
               {t("Generate a batch of unique single-use codes for a campaign.")}
             </p>
-            <div className="flex flex-col gap-[14px]">
-              <div className="flex gap-[12px]">
+            <div className="flex flex-col gap-3.5">
+              <div className="flex gap-3">
                 <div className="flex-1">
-                  <div className="text-[12.5px] font-bold text-ink-2 mb-[7px]">
+                  <div className="text-xs font-bold text-ink-2 mb-2">
                     {t("Code prefix")}
                   </div>
                   <Input
@@ -154,7 +154,7 @@ function PromoMassModal({ onClose }: { onClose: () => void }) {
                   />
                 </div>
                 <div className="w-[120px]">
-                  <div className="text-[12.5px] font-bold text-ink-2 mb-[7px]">
+                  <div className="text-xs font-bold text-ink-2 mb-2">
                     {t("How many")}
                   </div>
                   <Input
@@ -165,31 +165,31 @@ function PromoMassModal({ onClose }: { onClose: () => void }) {
                 </div>
               </div>
               <div>
-                <div className="text-[12.5px] font-bold text-ink-2 mb-[7px]">
+                <div className="text-xs font-bold text-ink-2 mb-2">
                   {t("Discount (%)")}
                 </div>
                 <Input value={disc} onChange={(e) => setDisc(e.target.value)} />
               </div>
-              <div className="bg-[var(--surface-2)] border border-line rounded-lg p-[14px]">
-                <div className="text-[12px] font-bold text-ink-3 mb-[8px]">
+              <div className="bg-[var(--surface-2)] border border-line rounded-lg p-3.5">
+                <div className="text-xs font-bold text-ink-3 mb-2">
                   {t("PREVIEW")}
                 </div>
-                <div className="flex gap-[8px] flex-wrap">
+                <div className="flex gap-2 flex-wrap">
                   {sample.map((sm, i) => (
                     <span
                       key={i}
-                      className="font-display font-bold text-[13px] px-[10px] py-[4px] rounded-[7px] bg-surface [border:1px_dashed_var(--line-2)]"
+                      className="font-display font-bold text-sm px-2.5 py-1 rounded-md bg-surface [border:1px_dashed_var(--line-2)]"
                     >
                       {sm}
                     </span>
                   ))}
-                  <span className="text-[13px] text-ink-3 font-semibold self-center">
+                  <span className="text-sm text-ink-3 font-semibold self-center">
                     +{Math.max(count - 3, 0)} {t("more")}
                   </span>
                 </div>
               </div>
             </div>
-            <div className="flex gap-[10px] mt-[22px]">
+            <div className="flex gap-2.5 mt-6">
               <Button
                 ctx="dash"
                 variant="ghost"
@@ -206,17 +206,17 @@ function PromoMassModal({ onClose }: { onClose: () => void }) {
             </div>
           </>
         ) : (
-          <div className="text-center px-0 py-[10px]">
-            <div className="w-[60px] h-[60px] rounded-[99px] bg-[rgba(31,164,110,.14)] text-[#1FA46E] grid place-items-center mt-0 mx-auto mb-[16px]">
+          <div className="text-center px-0 py-2.5">
+            <div className="w-[60px] h-[60px] rounded-pill bg-[rgba(31,164,110,.14)] text-[#1FA46E] grid place-items-center mt-0 mx-auto mb-4">
               <Icons.check size={32} />
             </div>
-            <h3 className="text-[20px] mb-[6px]">
+            <h3 className="text-xl mb-1.5">
               {count} {t("codes created")}
             </h3>
-            <p className="text-ink-2 text-[14px] mt-0 mx-0 mb-[20px]">
+            <p className="text-ink-2 text-sm mt-0 mx-0 mb-5">
               {t("Download the batch as CSV to share with your campaign.")}
             </p>
-            <div className="flex gap-[10px]">
+            <div className="flex gap-2.5">
               <Button
                 ctx="dash"
                 variant="ghost"

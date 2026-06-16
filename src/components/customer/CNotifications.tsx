@@ -34,7 +34,7 @@ function NotificationRow({
   const Icon = Icons[item.icon] || Icons.bell;
   return (
     <div
-      className={`bg-surface border rounded-lg p-[15px_17px] flex gap-[13px] cursor-pointer ${item.unread ? "[border-color:color-mix(in_srgb,var(--coral)_32%,transparent)]" : "border-line"}`}
+      className={`bg-surface border rounded-lg px-4 py-4 flex gap-3.5 cursor-pointer ${item.unread ? "[border-color:color-mix(in_srgb,var(--coral)_32%,transparent)]" : "border-line"}`}
       onClick={() => onMark(item.id)}
     >
       <span
@@ -50,15 +50,15 @@ function NotificationRow({
       </span>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <span className="font-bold text-[14.5px]">{item.title}</span>
+          <span className="font-bold text-sm">{item.title}</span>
           {item.unread && (
-            <span className="w-2 h-2 rounded-[99px] bg-coral flex-none" />
+            <span className="w-2 h-2 rounded-pill bg-coral flex-none" />
           )}
-          <span className="ml-auto text-[12px] text-ink-3 font-semibold flex-none">
+          <span className="ml-auto text-xs text-ink-3 font-semibold flex-none">
             {item.time}
           </span>
         </div>
-        <p className="mt-[3px] mx-0 mb-0 text-[13.5px] text-ink-2 leading-[1.45]">
+        <p className="mt-1 mx-0 mb-0 text-sm text-ink-2 leading-normal">
           {item.body}
         </p>
       </div>
@@ -84,7 +84,7 @@ export function CNotifications({ items }: { items: Notification[] }) {
   return (
     <div className="animate-anim-fade-app">
       <div className="flex items-center gap-3 mb-5 flex-wrap">
-        <div className="flex gap-1.5 bg-surface-2 p-[5px] rounded-pill border border-line">
+        <div className="flex gap-1.5 bg-surface-2 p-1.5 rounded-pill border border-line">
           {tabs.map(({ key, label }) => (
             <Button
               key={key}
@@ -112,7 +112,7 @@ export function CNotifications({ items }: { items: Notification[] }) {
           <NotificationRow key={n.id} item={n} onMark={mark} />
         ))}
         {list.length === 0 && (
-          <div className="text-center p-[50px] text-ink-3">
+          <div className="text-center p-12 text-ink-3">
             <Icons.checkCirc size={36} />
             <p className="mt-2.5 font-semibold">{t("You're all caught up.")}</p>
           </div>
