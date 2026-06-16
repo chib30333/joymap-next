@@ -1,5 +1,6 @@
 export { Button } from "./Button";
 export type { ButtonProps } from "./Button";
+export { Checkbox } from "./Checkbox";
 export { Card } from "./Card";
 export { Pill, STATUS, statusColor } from "./Pill";
 export { MoodChip } from "./MoodChip";

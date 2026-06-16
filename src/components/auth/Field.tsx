@@ -99,7 +99,7 @@ export function PwField({
             />
           </div>
           <span
-            className="font-bold text-[12px] text-[var(--pw-c)]"
+            className="font-bold text-xs text-[var(--pw-c)]"
             style={{ "--pw-c": score.color } as React.CSSProperties}
           >
             {score.label}

@@ -16,7 +16,7 @@ const NAV_LINKS: NavLink[] = [
 export function Header() {
   return (
     <header className="sticky top-0 z-50 bg-[color-mix(in_srgb,var(--bg)_80%,transparent)] backdrop-blur-[16px] border-b border-line">
-      <div className="max-w-7xl mx-auto px-6 flex items-center gap-6 h-20">
+      <div className="max-w-7xl mx-auto px-12 flex items-center gap-6 h-20">
         <Link className="flex items-center gap-2" href="/">
           <Logo />
         </Link>

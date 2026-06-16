@@ -10,16 +10,16 @@ const SOCIAL_PROVIDERS: SocialProvider[] = [
 
 export function Social() {
   return (
-    <div className="grid grid-cols-3 gap-[9px]">
+    <div className="grid grid-cols-3 gap-2">
       {SOCIAL_PROVIDERS.map(({ name, color, glyph }) => (
         <button
           key={name}
           type="button"
-          className="flex items-center justify-center gap-2 px-2 py-[11px] rounded-sm border border-line-2 bg-surface text-ink font-bold text-[13px] cursor-pointer [transition:0.15s] hover:border-ink-3 hover:bg-surface-2"
+          className="flex items-center justify-center gap-2 px-2 py-2.5 rounded-sm border border-line-2 bg-surface text-ink font-bold text-sm cursor-pointer duration-150 hover:border-ink-3 hover:bg-surface-2"
           title={`Continue with ${name}`}
         >
           <span
-            className="w-5 h-5 rounded-[6px] grid place-items-center text-white font-extrabold text-[11px] font-display [background:var(--soc-bg)]"
+            className="w-5 h-5 rounded-md grid place-items-center text-white font-extrabold text-2.5 font-display [background:var(--soc-bg)]"
             style={{ "--soc-bg": color } as React.CSSProperties}
           >
             {glyph}
