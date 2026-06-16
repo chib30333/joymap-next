@@ -325,7 +325,7 @@ export function Logo({
   mono?: boolean;
 }) {
   return (
-    <span className="inline-flex items-center gap-[10px]">
+    <span className="inline-flex items-center gap-2.5">
       <span className="relative inline-flex">
         <svg width={size} height={size} viewBox="0 0 32 32" fill="none">
           <path
@@ -351,7 +351,7 @@ export function Logo({
         </svg>
       </span>
       <span
-        className="font-display font-extrabold tracking-[-.03em]"
+        className="font-display font-extrabold tracking-tight"
         style={{
           fontSize: size * 0.78,
           color: mono ? "currentColor" : "var(--ink)",

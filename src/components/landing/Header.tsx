@@ -24,7 +24,7 @@ export function Header() {
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
-              className="font-semibold text-base text-ink-2 [transition:0.14s] hover:text-coral-deep"
+              className="font-semibold text-base text-ink-2 duration-[140ms] hover:text-coral-deep"
               href={link.href}
             >
               {link.label}
@@ -36,7 +36,7 @@ export function Header() {
           ctx="lp"
           variant="ghost"
           href="/auth"
-          className="[padding:11px_20px] text-[14px]"
+          className="px-5 py-3 text-sm"
         >
           Sign in
         </Button>
@@ -44,7 +44,7 @@ export function Header() {
           ctx="lp"
           variant="primary"
           href="/auth"
-          className="[padding:12px_22px] text-[14px]"
+          className="px-6 py-3 text-sm"
         >
           Get started
         </Button>

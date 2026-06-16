@@ -70,8 +70,8 @@ export function Testimonials() {
                   {initials(it.name)}
                 </span>
                 <span className="flex flex-col">
-                  <b className="text-[14.5px] text-ink font-display font-extrabold">{it.name}</b>
-                  <span className="text-[12.5px] text-ink-3 font-semibold">{it.role}</span>
+                  <b className="text-sm text-ink font-display font-extrabold">{it.name}</b>
+                  <span className="text-xs text-ink-3 font-semibold">{it.role}</span>
                 </span>
               </figcaption>
             </figure>

@@ -31,9 +31,9 @@ function ChartCard({
   children: ReactNode;
 }) {
   return (
-    <div className="bg-surface border border-line rounded-lg p-[22px]">
-      <h3 className="text-[17px] mb-[4px]">{title}</h3>
-      <div className="text-[13px] text-ink-3 font-semibold mb-[8px]">
+    <div className="bg-surface border border-line rounded-lg p-6">
+      <h3 className="text-base mb-1">{title}</h3>
+      <div className="text-sm text-ink-3 font-semibold mb-2">
         {caption}
       </div>
       {children}
@@ -52,10 +52,10 @@ export function PAnalytics({
   const ok = bookings.filter((b) => b.status !== "cancelled");
   if (ok.length === 0)
     return (
-      <div className="bg-surface border border-line rounded-lg animate-anim-fade-dash py-[60px] px-[24px] text-center text-ink-3">
+      <div className="bg-surface border border-line rounded-lg animate-anim-fade-dash py-16 px-6 text-center text-ink-3">
         <Icons.flame size={36} />
-        <h3 className="text-ink mt-[12px] text-[19px]">{t("No data yet")}</h3>
-        <p className="max-w-[380px] mt-[8px] mx-auto mb-0 font-semibold text-[14px]">
+        <h3 className="text-ink mt-3 text-lg">{t("No data yet")}</h3>
+        <p className="max-w-[380px] mt-2 mx-auto mb-0 font-semibold text-sm">
           {t(
             "Analytics light up as bookings come in — revenue trends, peak hours and top services."
           )}
@@ -105,20 +105,20 @@ export function PAnalytics({
           />
         </ChartCard>
       </div>
-      <div className="bg-surface border border-line rounded-lg p-[22px] max-w-[640px]">
-        <h3 className="text-[17px] mb-[16px]">{t("Top services")}</h3>
-        <div className="flex flex-col gap-[14px]">
+      <div className="bg-surface border border-line rounded-lg p-6 max-w-[640px]">
+        <h3 className="text-base mb-4">{t("Top services")}</h3>
+        <div className="flex flex-col gap-3.5">
           {top.map((s) => (
             <div key={s.id}>
-              <div className="flex justify-between mb-[6px]">
-                <span className="font-bold text-[14px]">{s.name}</span>
-                <span className="font-bold text-[13px] text-ink-3">
+              <div className="flex justify-between mb-1.5">
+                <span className="font-bold text-sm">{s.name}</span>
+                <span className="font-bold text-sm text-ink-3">
                   {s.booked}
                 </span>
               </div>
-              <div className="h-[8px] rounded-[99px] bg-surface-2 overflow-hidden">
+              <div className="h-2 rounded-pill bg-surface-2 overflow-hidden">
                 <div
-                  className="h-full rounded-[99px] w-[var(--w)] [background:var(--bg)]"
+                  className="h-full rounded-pill w-[var(--w)] [background:var(--bg)]"
                   style={
                     {
                       ["--w"]: `${(s.booked / maxB) * 100}%`,

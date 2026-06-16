@@ -35,7 +35,7 @@ export function CodeInput({
     }
   };
   return (
-    <div className="flex gap-[9px] justify-between" onPaste={onPaste}>
+    <div className="flex gap-2 justify-between" onPaste={onPaste}>
       {Array.from({ length: len }).map((_, i) => (
         <Input
           key={i}

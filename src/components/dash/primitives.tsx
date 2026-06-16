@@ -17,7 +17,7 @@ export function Avatar({
 }) {
   return (
     <div
-      className="grid place-items-center rounded-[99px] [background:var(--av-bg,linear-gradient(140deg,var(--coral),var(--orange)))] text-white font-extrabold font-display flex-none w-[var(--av-s)] h-[var(--av-s)] text-[length:var(--av-fs)]"
+      className="grid place-items-center rounded-pill [background:var(--av-bg,linear-gradient(140deg,var(--coral),var(--orange)))] text-white font-extrabold font-display flex-none w-[var(--av-s)] h-[var(--av-s)] text-[length:var(--av-fs)]"
       style={
         {
           "--av-s": size + "px",
@@ -35,10 +35,10 @@ export function Pill({ status, label }: { status: string; label?: string }) {
   const [c, bg] = statusColor(status);
   return (
     <span
-      className="inline-flex items-center gap-[6px] py-[4px] px-[11px] rounded-pill text-[12px] font-bold whitespace-nowrap text-[var(--pill-c)] bg-[var(--pill-bg)]"
+      className="inline-flex items-center gap-1.5 py-1 px-3 rounded-pill text-xs font-bold whitespace-nowrap text-[var(--pill-c)] bg-[var(--pill-bg)]"
       style={{ "--pill-c": c, "--pill-bg": bg } as React.CSSProperties}
     >
-      <span className="w-[6px] h-[6px] rounded-[99px] bg-[var(--pill-c)]" />
+      <span className="w-1.5 h-1.5 rounded-pill bg-[var(--pill-c)]" />
       {label || status}
     </span>
   );
@@ -61,11 +61,11 @@ export function Stat({
   accent?: string;
 }) {
   return (
-    <div className="bg-surface border border-line rounded-lg p-5 flex flex-col gap-[6px] animate-anim-pop-dash">
-      <div className="text-[13px] font-semibold text-ink-3 flex items-center gap-2">
+    <div className="bg-surface border border-line rounded-lg p-5 flex flex-col gap-1.5 animate-anim-pop-dash">
+      <div className="text-sm font-semibold text-ink-3 flex items-center gap-2">
         {icon && (
           <span
-            className="grid place-items-center flex-none w-[28px] h-[28px] rounded-[9px] [background:var(--ic-bg)] text-[color:var(--ic-fg)]"
+            className="grid place-items-center flex-none w-7 h-7 rounded-md [background:var(--ic-bg)] text-[color:var(--ic-fg)]"
             style={
               {
                 "--ic-bg": accent
@@ -80,17 +80,17 @@ export function Stat({
         )}
         {label}
       </div>
-      <div className="font-display font-extrabold text-[30px] tracking-[-0.02em] leading-none whitespace-nowrap">{value}</div>
-      <div className="flex items-center gap-[8px]">
+      <div className="font-display font-extrabold text-3xl tracking-tight leading-none whitespace-nowrap">{value}</div>
+      <div className="flex items-center gap-2">
         {delta != null && (
           <span
-            className={`inline-flex items-center gap-[3px] text-[12.5px] font-bold ${deltaDir === "down" ? "text-coral" : "text-[#1fa46e]"}`}
+            className={`inline-flex items-center gap-1 text-xs font-bold ${deltaDir === "down" ? "text-coral" : "text-[#1fa46e]"}`}
           >
             {deltaDir === "down" ? "▾" : "▴"} {delta}
           </span>
         )}
         {sub && (
-          <span className="text-[12.5px] text-ink-3 font-semibold">{sub}</span>
+          <span className="text-xs text-ink-3 font-semibold">{sub}</span>
         )}
       </div>
     </div>
@@ -106,14 +106,14 @@ export function SectionHead({
   action?: ReactNode;
 }) {
   return (
-    <div className="flex items-end justify-between gap-4 mb-[18px]">
+    <div className="flex items-end justify-between gap-4 mb-5">
       <div>
         {eyebrow && (
-          <div className="text-[12px] font-extrabold tracking-[0.1em] uppercase text-orange mb-[7px]">
+          <div className="text-xs font-extrabold tracking-widest uppercase text-orange mb-2">
             {eyebrow}
           </div>
         )}
-        <h2 className="text-[24px]">{title}</h2>
+        <h2 className="text-2xl">{title}</h2>
       </div>
       {action}
     </div>
@@ -155,11 +155,11 @@ export function Toggle({
 }) {
   return (
     <div
-      className={`w-[42px] h-[24px] rounded-[99px] relative [transition:0.18s] cursor-pointer flex-none ${on ? "bg-coral" : "bg-line-2"}`}
+      className={`w-11 h-6 rounded-pill relative duration-[180ms] cursor-pointer flex-none ${on ? "bg-coral" : "bg-line-2"}`}
       onClick={() => onChange(!on)}
     >
       <i
-        className={`absolute top-[3px] w-[18px] h-[18px] rounded-[99px] bg-white [transition:0.18s] shadow-[0_1px_3px_rgba(0,0,0,0.2)] ${on ? "left-[21px]" : "left-[3px]"}`}
+        className={`absolute top-1 w-5 h-5 rounded-pill bg-white duration-[180ms] shadow-[0_1px_3px_rgba(0,0,0,0.2)] ${on ? "left-5" : "left-1"}`}
       />
     </div>
   );
@@ -211,7 +211,7 @@ export function Bars({
   const max = Math.max(...data.map((d) => d.value)) || 1;
   return (
     <div
-      className="flex items-end gap-[10px] pt-[18px] h-[var(--bars-h)]"
+      className="flex items-end gap-2.5 pt-5 h-[var(--bars-h)]"
       style={{ "--bars-h": h + "px" } as React.CSSProperties}
     >
       {data.map((d, i) => {
@@ -219,17 +219,17 @@ export function Bars({
         return (
           <div
             key={i}
-            className="flex-1 flex flex-col items-center gap-[8px] h-full justify-end"
+            className="flex-1 flex flex-col items-center gap-2 h-full justify-end"
           >
             <span
-              className="text-[11.5px] font-bold text-[color:var(--ink-2)]"
+              className="text-xs font-bold text-[color:var(--ink-2)]"
             >
               {d.short ||
                 (unit === "₽" ? Math.round(d.value / 1000) + "k" : d.value)}
             </span>
             <div
               title={d.value + unit}
-              className="origin-bottom animate-[grow_0.6s_both] w-[72%] max-w-[34px] [border-radius:7px_7px_3px_3px] [transition:.3s] [background:var(--bar-bg)] h-[var(--bar-h)] [animation-delay:var(--bar-delay)]"
+              className="origin-bottom animate-[grow_0.6s_both] w-[72%] max-w-[34px] [border-radius:7px_7px_3px_3px] duration-300 [background:var(--bar-bg)] h-[var(--bar-h)] [animation-delay:var(--bar-delay)]"
               style={
                 {
                   "--bar-bg": d.hot
@@ -241,7 +241,7 @@ export function Bars({
               }
             />
             <span
-              className="text-[11.5px] font-bold text-[color:var(--ink-3)]"
+              className="text-xs font-bold text-[color:var(--ink-3)]"
             >
               {d.label}
             </span>
@@ -359,7 +359,7 @@ export function LineChart({
         ))}
       </svg>
       <div
-        className={`absolute z-30 pointer-events-none translate-x-[-50%] translate-y-[-118%] bg-ink text-bg py-2 px-[11px] rounded-[10px] shadow-lg whitespace-nowrap font-semibold text-[12.5px] [transition:opacity_0.12s] after:content-[''] after:absolute after:left-1/2 after:top-full after:translate-x-[-50%] after:border-[5px] after:border-solid after:border-transparent after:border-t-ink left-[var(--tip-l)] top-[var(--tip-t)] ${hi != null ? "opacity-100" : "opacity-0"}`}
+        className={`absolute z-30 pointer-events-none translate-x-[-50%] translate-y-[-118%] bg-ink text-bg py-2 px-3 rounded-md shadow-lg whitespace-nowrap font-semibold text-xs [transition:opacity_0.12s] after:content-[''] after:absolute after:left-1/2 after:top-full after:translate-x-[-50%] after:border-[5px] after:border-solid after:border-transparent after:border-t-ink left-[var(--tip-l)] top-[var(--tip-t)] ${hi != null ? "opacity-100" : "opacity-0"}`}
         style={
           {
             "--tip-l": typeof tipX === "number" ? tipX + "px" : tipX,
@@ -369,11 +369,11 @@ export function LineChart({
       >
         {hi != null && (
           <>
-            <div className="flex items-center gap-[6px] text-[11px] font-bold opacity-70 uppercase tracking-[0.04em] mb-[3px]">
-              <span className="w-2 h-2 rounded-[99px] flex-none [background:var(--dot-bg)]" style={{ "--dot-bg": accent } as React.CSSProperties} />
+            <div className="flex items-center gap-1.5 text-xs font-bold opacity-70 uppercase tracking-wider mb-1">
+              <span className="w-2 h-2 rounded-pill flex-none [background:var(--dot-bg)]" style={{ "--dot-bg": accent } as React.CSSProperties} />
               {caption} · {points[hi].label}
             </div>
-            <div className="font-display font-extrabold text-[15px] tracking-[-0.01em]">{fmt(points[hi].value)}</div>
+            <div className="font-display font-extrabold text-base tracking-normal">{fmt(points[hi].value)}</div>
           </>
         )}
       </div>
@@ -468,12 +468,12 @@ export function Donut({
         >
           <div>
             <div
-              className="[font-family:var(--display)] font-extrabold text-[22px] leading-[1]"
+              className="[font-family:var(--display)] font-extrabold text-xl leading-none"
             >
               {seg ? `${Math.round((seg.value / total) * 100)}%` : center.v}
             </div>
             <div
-              className="text-[11.5px] text-[color:var(--ink-3)] font-semibold"
+              className="text-xs text-[color:var(--ink-3)] font-semibold"
             >
               {seg ? seg.label : center.l}
             </div>
@@ -481,16 +481,16 @@ export function Donut({
         </div>
       )}
       <div
-        className={`absolute z-30 pointer-events-none translate-x-[-50%] translate-y-[-118%] bg-ink text-bg py-2 px-[11px] rounded-[10px] shadow-lg whitespace-nowrap font-semibold text-[12.5px] [transition:opacity_0.12s] after:content-[''] after:absolute after:left-1/2 after:top-full after:translate-x-[-50%] after:border-[5px] after:border-solid after:border-transparent after:border-t-ink left-[var(--tip-l)] top-[var(--tip-t)] ${seg ? "opacity-100" : "opacity-0"}`}
+        className={`absolute z-30 pointer-events-none translate-x-[-50%] translate-y-[-118%] bg-ink text-bg py-2 px-3 rounded-md shadow-lg whitespace-nowrap font-semibold text-xs [transition:opacity_0.12s] after:content-[''] after:absolute after:left-1/2 after:top-full after:translate-x-[-50%] after:border-[5px] after:border-solid after:border-transparent after:border-t-ink left-[var(--tip-l)] top-[var(--tip-t)] ${seg ? "opacity-100" : "opacity-0"}`}
         style={{ "--tip-l": pos.x + "px", "--tip-t": pos.y + "px" } as React.CSSProperties}
       >
         {seg && (
           <>
-            <div className="flex items-center gap-[6px] text-[11px] font-bold opacity-70 uppercase tracking-[0.04em] mb-[3px]">
-              <span className="w-2 h-2 rounded-[99px] flex-none [background:var(--dot-bg)]" style={{ "--dot-bg": seg.color } as React.CSSProperties} />
+            <div className="flex items-center gap-1.5 text-xs font-bold opacity-70 uppercase tracking-wider mb-1">
+              <span className="w-2 h-2 rounded-pill flex-none [background:var(--dot-bg)]" style={{ "--dot-bg": seg.color } as React.CSSProperties} />
               {seg.label}
             </div>
-            <div className="font-display font-extrabold text-[15px] tracking-[-0.01em]">
+            <div className="font-display font-extrabold text-base tracking-normal">
               {valFmt ? valFmt(seg, total) : `${seg.value}${unit}`}
             </div>
           </>

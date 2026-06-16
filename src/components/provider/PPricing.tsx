@@ -72,17 +72,17 @@ export function PPricing({ svcs }: { svcs: PricingService[] }) {
     );
   return (
     <div className="animate-anim-fade-dash">
-      <div className="bg-surface border border-line rounded-lg p-[22px] mb-[var(--gap)]">
-        <div className="flex items-end justify-between gap-4 mb-[14px]">
+      <div className="bg-surface border border-line rounded-lg p-6 mb-[var(--gap)]">
+        <div className="flex items-end justify-between gap-4 mb-3.5">
           <div>
-            <h3 className="text-[17px]">{t("Base prices")}</h3>
-            <div className="text-[13px] text-ink-3 font-semibold">
+            <h3 className="text-base">{t("Base prices")}</h3>
+            <div className="text-sm text-ink-3 font-semibold">
               {t("Per person, before dynamic rules")}
             </div>
           </div>
         </div>
         {svcs.length === 0 ? (
-          <div className="py-[20px] px-0 text-ink-3 font-semibold text-[13.5px]">
+          <div className="py-5 px-0 text-ink-3 font-semibold text-sm">
             {t("No services yet — create one in Services.")}
           </div>
         ) : (
@@ -97,7 +97,7 @@ export function PPricing({ svcs }: { svcs: PricingService[] }) {
             }
           >
             {svcs.map((s) => (
-              <tr key={s.id} className="[transition:0.12s] cursor-pointer">
+              <tr key={s.id} className="duration-[120ms] cursor-pointer">
                 <td>
                   <b className="font-bold">{s.name}</b>
                 </td>
@@ -111,10 +111,10 @@ export function PPricing({ svcs }: { svcs: PricingService[] }) {
           </DataTable>
         )}
       </div>
-      <div className="flex items-end justify-between gap-4 mb-[18px]">
+      <div className="flex items-end justify-between gap-4 mb-5">
         <div>
-          <h3 className="text-[17px]">{t("Dynamic pricing rules")}</h3>
-          <div className="text-[13px] text-ink-3 font-semibold">
+          <h3 className="text-base">{t("Dynamic pricing rules")}</h3>
+          <div className="text-sm text-ink-3 font-semibold">
             {t("Automatically adjust prices to fill capacity")}
           </div>
         </div>
@@ -122,14 +122,14 @@ export function PPricing({ svcs }: { svcs: PricingService[] }) {
           {t("New rule")}
         </Button>
       </div>
-      <div className="flex flex-col gap-[12px]">
+      <div className="flex flex-col gap-3">
         {rules.map((r) => (
           <div
             key={r.id}
-            className={`bg-surface border border-line rounded-lg py-[16px] px-[20px] flex items-center gap-[16px] ${r.active ? "opacity-100" : "opacity-[0.6]"}`}
+            className={`bg-surface border border-line rounded-lg py-4 px-5 flex items-center gap-4 ${r.active ? "opacity-100" : "opacity-60"}`}
           >
             <span
-              className="w-[42px] h-[42px] rounded-sm flex-none grid place-items-center [background:var(--bg)] [color:var(--c)]"
+              className="w-11 h-11 rounded-sm flex-none grid place-items-center [background:var(--bg)] [color:var(--c)]"
               style={
                 {
                   ["--bg"]:
@@ -143,13 +143,13 @@ export function PPricing({ svcs }: { svcs: PricingService[] }) {
               <Icons.percent size={20} />
             </span>
             <div className="flex-1 min-w-0">
-              <div className="font-bold text-[15px]">{t(r.name)}</div>
-              <div className="text-[13px] text-ink-3 font-semibold">
+              <div className="font-bold text-base">{t(r.name)}</div>
+              <div className="text-sm text-ink-3 font-semibold">
                 {t(r.cond)}
               </div>
             </div>
             <span
-              className="font-extrabold text-[18px] [font-family:var(--display)] [color:var(--c)]"
+              className="font-extrabold text-lg [font-family:var(--display)] [color:var(--c)]"
               style={
                 {
                   ["--c"]: ruleColor(r.type),

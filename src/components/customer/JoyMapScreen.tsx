@@ -79,20 +79,20 @@ export function JoyMapScreen({
 
   return (
     <div className="animate-anim-fade-app">
-      <div className="flex items-end justify-between gap-[20px] flex-wrap mt-[6px] mb-[22px]">
+      <div className="flex items-end justify-between gap-5 flex-wrap mt-1.5 mb-6">
         <div>
-          <div className="text-[12.5px] font-bold tracking-[0.1em] uppercase text-orange mb-[9px]">
+          <div className="text-xs font-bold tracking-widest uppercase text-orange mb-2">
             {t("This week")} · {weekLabel}
           </div>
           <h1
-            className="max-w-[560px] leading-[1.02] text-[clamp(30px,4vw,44px)]"
+            className="max-w-[560px] leading-none text-[clamp(30px,4vw,44px)]"
           >
             {greet}, {userName}.{" "}
             <span className="text-[var(--orange)]">
               {t("Here's your week of joy.")}
             </span>
           </h1>
-          <p className="text-ink-2 text-[16px] mt-[12px] max-w-[520px]">
+          <p className="text-ink-2 text-base mt-3 max-w-[520px]">
             {t(
               "Seven days, tuned to how you want to feel. Booked days are locked in — swap anything that doesn't fit.",
             )}
@@ -114,15 +114,15 @@ export function JoyMapScreen({
         <EmptyMarketplace />
       ) : map.length === 0 ? (
         <div
-          className="bg-surface border border-line rounded-lg p-[56px_24px] text-center"
+          className="bg-surface border border-line rounded-lg px-6 py-14 text-center"
         >
           <div
-            className="w-[60px] h-[60px] rounded-[99px] bg-coral-soft text-coral-deep grid mt-0 mb-[14px] mx-auto place-items-center"
+            className="w-16 h-16 rounded-pill bg-coral-soft text-coral-deep grid mt-0 mb-3.5 mx-auto place-items-center"
           >
             <Icons.sparkle size={26} />
           </div>
-          <h3 className="text-[20px]">{t("No Joy Map yet")}</h3>
-          <p className="text-ink-2 text-[14.5px] mt-[8px] mb-[18px] mx-auto max-w-[380px]">
+          <h3 className="text-xl">{t("No Joy Map yet")}</h3>
+          <p className="text-ink-2 text-sm mt-2 mb-5 mx-auto max-w-[380px]">
             {t("Let Joy compose a week of experiences around your moods.")}
           </p>
           <Button
@@ -139,9 +139,9 @@ export function JoyMapScreen({
       ) : (
         <>
           <MoodArc map={map} byId={byId} />
-          <div className="relative mt-[26px]">
+          <div className="relative mt-7">
             <div
-              className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden flex gap-[16px] overflow-x-auto pb-[10px] [scroll-snap-type:x_proximity]"
+              className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden flex gap-4 overflow-x-auto pb-2.5 [scroll-snap-type:x_proximity]"
             >
               {map.map((d, i) => (
                 <DayCard
@@ -157,18 +157,18 @@ export function JoyMapScreen({
           </div>
           {days.length > 0 && (
             <div
-              className="bg-[linear-gradient(160deg,#5e1014,var(--maroon))] border border-[color-mix(in_srgb,var(--coral)_55%,transparent)] text-[#f3ebe0] rounded-lg mt-[26px] p-[22px_24px] flex gap-[18px] items-start"
+              className="bg-[linear-gradient(160deg,#5e1014,var(--maroon))] border border-[color-mix(in_srgb,var(--coral)_55%,transparent)] text-[#f3ebe0] rounded-lg mt-7 p-6 flex gap-5 items-start"
             >
               <div
-                className="flex-none grid place-items-center bg-coral text-white w-[44px] h-[44px] rounded-[14px]"
+                className="flex-none grid place-items-center bg-coral text-white w-11 h-11 rounded-md"
               >
                 <Icons.sparkle size={22} />
               </div>
               <div>
-                <h3 className="text-[17px] mb-[6px] text-[#fff3e8]">
+                <h3 className="text-base mb-1.5 text-[#fff3e8]">
                   {t("Why Joy built this week")}
                 </h3>
-                <p className="text-[rgba(243,235,224,.85)] text-[14.5px] leading-[1.55] max-w-[760px]">
+                <p className="text-[rgba(243,235,224,.85)] text-sm leading-normal max-w-[760px]">
                   {t("You asked for more")}{" "}
                   <b className="text-[#FFF3E8]">
                     {(userMoods || [])
@@ -205,14 +205,14 @@ export function JoyMapScreen({
 export function EmptyMarketplace() {
   const t = useT();
   return (
-    <div className="bg-surface border border-line rounded-lg p-[60px_24px] text-center">
+    <div className="bg-surface border border-line rounded-lg px-6 py-16 text-center">
       <div
-        className="w-[64px] h-[64px] rounded-[99px] bg-surface-2 grid mt-0 mb-[16px] mx-auto text-ink-3 place-items-center"
+        className="w-16 h-16 rounded-pill bg-surface-2 grid mt-0 mb-4 mx-auto text-ink-3 place-items-center"
       >
         <Icons.compass size={30} />
       </div>
-      <h3 className="text-[20px] text-ink">{t("The marketplace is empty")}</h3>
-      <p className="text-ink-2 text-[14.5px] mt-[8px] mb-0 mx-auto max-w-[420px] leading-[1.55]">
+      <h3 className="text-xl text-ink">{t("The marketplace is empty")}</h3>
+      <p className="text-ink-2 text-sm mt-2 mb-0 mx-auto max-w-[420px] leading-normal">
         {t("No experiences have been published yet. Sign up as a")}{" "}
         <b>{t("provider")}</b>{" "}
         {t("to list one (an admin approves it), or run")}{" "}
@@ -232,9 +232,9 @@ function MoodArc({
   const t = useT();
   return (
     <div
-      className="bg-surface border border-line rounded-lg p-[14px_18px] flex items-center gap-[14px] overflow-x-auto"
+      className="bg-surface border border-line rounded-lg px-5 py-3.5 flex items-center gap-3.5 overflow-x-auto"
     >
-      <span className="text-[12.5px] font-bold text-ink-3 tracking-[.04em] uppercase flex-none">
+      <span className="text-xs font-bold text-ink-3 tracking-wider uppercase flex-none">
         {t("Your emotional arc")}
       </span>
       <div className="flex items-center gap-0 flex-1 min-w-[420px]">
@@ -244,7 +244,7 @@ function MoodArc({
           return (
             <div key={d.day} className="text-center flex-1">
               <div
-                className="h-[8px] rounded-[99px] mb-[6px] [background:var(--bar-bg)] [box-shadow:var(--bar-sh)]"
+                className="h-2 rounded-pill mb-1.5 [background:var(--bar-bg)] [box-shadow:var(--bar-sh)]"
                 style={
                   {
                     "--bar-bg": m ? m.color : "var(--line-2)",
@@ -252,7 +252,7 @@ function MoodArc({
                   } as React.CSSProperties
                 }
               />
-              <span className="text-[11.5px] font-bold text-ink-3">{d.wd}</span>
+              <span className="text-xs font-bold text-ink-3">{d.wd}</span>
             </div>
           );
         })}
@@ -280,29 +280,29 @@ function DayCard({
   if (d.rest || !e) {
     return (
       <div
-        className="border border-line rounded-lg animate-anim-pop-app flex-none w-[230px] [scroll-snap-align:start] p-[20px] flex flex-col bg-surface-2 [border-style:dashed] [animation-delay:var(--ad)]"
+        className="border border-line rounded-lg animate-anim-pop-app flex-none w-[230px] [scroll-snap-align:start] p-5 flex flex-col bg-surface-2 [border-style:dashed] [animation-delay:var(--ad)]"
         style={{ "--ad": `${i * 0.06}s` } as React.CSSProperties}
       >
         <div className="flex items-center justify-between">
-          <span className="font-display font-extrabold text-[15px]">
+          <span className="font-display font-extrabold text-base">
             {d.wd} · {d.date}
           </span>
           {today && (
-            <span className="bg-coral text-[#fff] pt-[3px] pb-[3px] pl-[9px] pr-[9px] rounded-[99px] text-[10.5px] font-extrabold">
+            <span className="bg-coral text-white pt-1 pb-1 pl-2 pr-2 rounded-pill text-xs font-extrabold">
               {t("TODAY")}
             </span>
           )}
         </div>
-        <div className="flex-1 flex flex-col justify-center items-center text-center gap-[10px] pt-[18px] pb-[18px] pl-0 pr-0">
+        <div className="flex-1 flex flex-col justify-center items-center text-center gap-2.5 pt-5 pb-5 pl-0 pr-0">
           <div
-            className="w-[48px] h-[48px] rounded-[99px] bg-[var(--m-calm-soft)] grid text-[var(--m-calm)] place-items-center"
+            className="w-12 h-12 rounded-pill bg-[var(--m-calm-soft)] grid text-[var(--m-calm)] place-items-center"
           >
             <Icons.heart size={24} />
           </div>
-          <div className="font-display font-bold text-[17px] whitespace-nowrap">
+          <div className="font-display font-bold text-base whitespace-nowrap">
             {t("Rest day")}
           </div>
-          <p className="text-[13px] text-ink-3 m-0">{d.note}</p>
+          <p className="text-sm text-ink-3 m-0">{d.note}</p>
         </div>
       </div>
     );
@@ -313,29 +313,29 @@ function DayCard({
   );
   return (
     <div
-      className="bg-surface border border-line rounded-lg animate-anim-pop-app flex-none w-[268px] [scroll-snap-align:start] overflow-hidden cursor-pointer [transition:.2s] [animation-delay:var(--ad)]"
+      className="bg-surface border border-line rounded-lg animate-anim-pop-app flex-none w-[268px] [scroll-snap-align:start] overflow-hidden cursor-pointer duration-200 [animation-delay:var(--ad)]"
       onClick={() => onOpen(e)}
       style={{ "--ad": `${i * 0.06}s` } as React.CSSProperties}
     >
       <PhotoFrame exp={e} ratio="16/11">
-        <div className="absolute top-[12px] left-[12px] right-[12px] flex justify-between items-start">
-          <span className="bg-[rgba(255,255,255,.92)] text-[#241C2E] pt-[5px] pb-[5px] pl-[11px] pr-[11px] rounded-[99px] text-[12px] font-extrabold">
+        <div className="absolute top-3 left-3 right-3 flex justify-between items-start">
+          <span className="bg-[rgba(255,255,255,.92)] text-[#241C2E] pt-1.5 pb-1.5 pl-3 pr-3 rounded-pill text-xs font-extrabold">
             {d.wd} · {d.date}
           </span>
           {today && (
-            <span className="bg-coral text-[#fff] pt-[5px] pb-[5px] pl-[10px] pr-[10px] rounded-[99px] text-[11px] font-extrabold">
+            <span className="bg-coral text-white pt-1.5 pb-1.5 pl-2.5 pr-2.5 rounded-pill text-xs font-extrabold">
               {t("TODAY")}
             </span>
           )}
         </div>
-        <div className="absolute left-[14px] right-[14px] bottom-[12px] text-[#fff] font-display font-bold text-[18px] tracking-[-0.01em] leading-[1.1] [text-shadow:0_1px_12px_rgba(0,0,0,0.35)]">
+        <div className="absolute left-3.5 right-3.5 bottom-3 text-white font-display font-bold text-lg tracking-normal leading-none [text-shadow:0_1px_12px_rgba(0,0,0,0.35)]">
           {e.title}
         </div>
       </PhotoFrame>
-      <div className="pt-[13px] pr-[15px] pb-[15px] pl-[15px] flex flex-col gap-[11px]">
+      <div className="pt-3.5 pr-4 pb-4 pl-4 flex flex-col gap-3">
         <div className="flex items-center justify-between">
           <span
-            className="inline-flex items-center gap-[8px] rounded-pill font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid border-transparent p-[5px_11px_5px_9px] text-[12px] [background:var(--chip-bg)] text-[var(--chip-c)]"
+            className="inline-flex items-center gap-2 rounded-pill font-bold cursor-pointer duration-[140ms] border-2 border-solid border-transparent py-1.5 pr-3 pl-2 text-xs [background:var(--chip-bg)] text-[var(--chip-c)]"
             style={
               { "--chip-bg": m.soft, "--chip-c": m.color } as React.CSSProperties
             }
@@ -343,15 +343,15 @@ function DayCard({
             <MoodDot mood={e.mood} size={7} />
             {t(m.label)}
           </span>
-          <span className="inline-flex items-center gap-[5px] text-[13px] font-bold text-ink-2">
+          <span className="inline-flex items-center gap-1.5 text-sm font-bold text-ink-2">
             <Icons.clock size={14} />
             {d.time}
           </span>
         </div>
-        <p className="m-0 text-[13px] text-ink-3 font-semibold">{d.note}</p>
+        <p className="m-0 text-sm text-ink-3 font-semibold">{d.note}</p>
         {booked ? (
           <div
-            className="inline-flex items-center justify-center font-bold rounded-pill whitespace-nowrap leading-none [transition:0.16s] active:[transform:translateY(1px)_scale(0.99)] gap-2 py-2 px-4 text-sm bg-[var(--m-calm-soft)] text-[var(--m-calm)] cursor-default"
+            className="inline-flex items-center justify-center font-bold rounded-pill whitespace-nowrap leading-none duration-[160ms] active:[transform:translateY(1px)_scale(0.99)] gap-2 py-2 px-4 text-sm bg-[var(--m-calm-soft)] text-[var(--m-calm)] cursor-default"
           >
             <Icons.check size={16} />
             {booked.status === "pending" ? t("Requested") : t("Booked")} ·{" "}

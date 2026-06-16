@@ -144,9 +144,9 @@ export function ProviderNav({
   const { title, sub } = TITLES[pathname] || { title: "Overview", sub: welcome };
   return (
     <header className="sticky top-0 z-40 bg-[color-mix(in_srgb,var(--bg)_82%,transparent)] [backdrop-filter:blur(16px)] [-webkit-backdrop-filter:blur(16px)] border-b border-line">
-      <div className="flex items-center gap-4 py-[13px] px-[var(--pad)]">
+      <div className="flex items-center gap-4 py-3.5 px-[var(--pad)]">
         <div
-          className="flex items-center gap-[9px] flex-none cursor-pointer"
+          className="flex items-center gap-2 flex-none cursor-pointer"
           role="button"
           tabIndex={0}
           onClick={() => router.push("/provider/overview")}
@@ -159,34 +159,34 @@ export function ProviderNav({
           title={t("Go to Overview")}
         >
           <Logo size={25} />
-          <span className="inline-flex items-center gap-[5px] whitespace-nowrap bg-[color-mix(in_srgb,var(--orange)_16%,transparent)] text-orange-deep py-[3px] px-[9px] rounded-[99px] text-[10px] font-extrabold font-display">
-            <span className="w-[6px] h-[6px] rounded-[99px] bg-orange" />
+          <span className="inline-flex items-center gap-1.5 whitespace-nowrap bg-[color-mix(in_srgb,var(--orange)_16%,transparent)] text-orange-deep py-1 px-2 rounded-pill text-[10px] font-extrabold font-display">
+            <span className="w-1.5 h-1.5 rounded-pill bg-orange" />
             {t("Partner")}
           </span>
         </div>
-        <div className="min-w-0 ms-[6px]">
-          <h1 className="text-[18px] leading-[1.1]">{t(title)}</h1>
+        <div className="min-w-0 ms-1.5">
+          <h1 className="text-lg leading-none">{t(title)}</h1>
           {sub && (
-            <div className="text-[12.5px] text-ink-3 font-semibold mt-[1px] whitespace-nowrap overflow-hidden text-ellipsis">
+            <div className="text-xs text-ink-3 font-semibold mt-px whitespace-nowrap overflow-hidden text-ellipsis">
               {t(sub)}
             </div>
           )}
         </div>
         <div className="flex-1" />
-        <button className="w-10 h-10 rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2">
+        <button className="w-10 h-10 rounded-pill grid place-items-center bg-surface border border-line text-ink-2 duration-150 relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2">
           <Icons.bell size={18} />
-          <span className="absolute top-[9px] right-[10px] w-2 h-2 rounded-full bg-coral border-2 border-surface" />
+          <span className="absolute top-2 right-2.5 w-2 h-2 rounded-full bg-coral border-2 border-surface" />
         </button>
         <LangSwitcher />
         <AccountMenu name={name} />
       </div>
-      <div className="flex items-center gap-[2px] px-[var(--pad)] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="flex items-center gap-0.5 px-[var(--pad)] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {P_NAV.map((n, i) => {
           if (isSection(n))
             return (
               <span key={`s${i}`} className="inline-flex items-center">
                 {i > 0 && <span className="w-px h-5 bg-line-2 mx-2 flex-none" />}
-                <span className="text-[10px] font-extrabold tracking-[0.08em] uppercase text-ink-3 pl-[10px] pr-2 whitespace-nowrap">
+                <span className="text-[10px] font-extrabold tracking-[0.08em] uppercase text-ink-3 pl-2.5 pr-2 whitespace-nowrap">
                   {t(n.sec)}
                 </span>
               </span>
@@ -221,12 +221,12 @@ function NavTab({
   const Icon = Icons[item.icon];
   return (
     <button
-      className={`inline-flex items-center gap-2 py-[13px] px-[15px] font-semibold text-[14px] whitespace-nowrap cursor-pointer relative [transition:0.14s] border-b-[2.5px] border-solid mb-[-1px] hover:text-ink ${active ? "text-coral border-coral [&_svg]:text-coral" : "text-ink-2 border-transparent"}`}
+      className={`inline-flex items-center gap-2 py-3.5 px-4 font-semibold text-sm whitespace-nowrap cursor-pointer relative duration-[140ms] border-b-2 border-solid -mb-px hover:text-ink ${active ? "text-coral border-coral [&_svg]:text-coral" : "text-ink-2 border-transparent"}`}
       onClick={onSelect}
     >
       <Icon size={17} />
       {t(item.label)}
-      {badge ? <span className="bg-coral text-white text-[10.5px] font-extrabold min-w-[17px] h-[17px] rounded-[99px] grid place-items-center px-1">{badge}</span> : null}
+      {badge ? <span className="bg-coral text-white text-[10.5px] font-extrabold min-w-[17px] h-[17px] rounded-pill grid place-items-center px-1">{badge}</span> : null}
     </button>
   );
 }
@@ -251,7 +251,7 @@ function AccountMenu({ name }: { name: string }) {
   };
   return (
     <div ref={ref} className="relative">
-      <div className="flex items-center gap-2 cursor-pointer p-[3px] rounded-[99px] [transition:0.14s] hover:bg-surface-2" onClick={() => setOpen((o) => !o)}>
+      <div className="flex items-center gap-2 cursor-pointer p-1 rounded-pill duration-[140ms] hover:bg-surface-2" onClick={() => setOpen((o) => !o)}>
         <Avatar name={name} size={38} grad={grad} />
         <Icons.chevR
           size={15}
@@ -259,21 +259,21 @@ function AccountMenu({ name }: { name: string }) {
         />
       </div>
       {open && (
-        <div className="absolute end-0 top-[54px] min-w-[248px] bg-surface border border-line rounded shadow-lg p-2 z-[60] animate-anim-pop-app">
-          <div className="flex items-center gap-[11px] pt-[8px] px-[10px] pb-[12px]">
+        <div className="absolute end-0 top-14 min-w-[248px] bg-surface border border-line rounded shadow-lg p-2 z-[60] animate-anim-pop-app">
+          <div className="flex items-center gap-3 pt-2 px-2.5 pb-3">
             <Avatar name={name} size={42} grad={grad} />
             <div className="min-w-0">
-              <div className="font-extrabold font-display text-[15px]">
+              <div className="font-extrabold font-display text-base">
                 {name}
               </div>
-              <div className="text-[12px] text-ink-3 font-semibold">
+              <div className="text-xs text-ink-3 font-semibold">
                 {t("Partner")}
               </div>
             </div>
           </div>
-          <div className="h-px bg-line my-[6px] mx-[4px]" />
+          <div className="h-px bg-line my-1.5 mx-1" />
           <button
-            className="flex items-center gap-[11px] w-full py-[10px] px-[11px] rounded-sm text-[14px] font-semibold text-ink-2 cursor-pointer [transition:0.12s] text-left hover:bg-surface-2 hover:text-ink !text-ink-3"
+            className="flex items-center gap-3 w-full py-2.5 px-3 rounded-sm text-sm font-semibold cursor-pointer duration-[120ms] text-left hover:bg-surface-2 hover:text-ink !text-ink-3"
             onClick={logout}
           >
             <Icons.logout size={18} />

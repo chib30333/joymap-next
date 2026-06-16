@@ -37,7 +37,7 @@ export function PBookings({ rows }: { rows: Booking[] }) {
   const list = f === "all" ? rows : rows.filter((b) => b.status === f);
   return (
     <div className="animate-anim-fade-dash">
-      <div className="flex items-end justify-between gap-4 mb-[18px]">
+      <div className="flex items-end justify-between gap-4 mb-5">
         <div />
         <Seg
           value={f}
@@ -46,7 +46,7 @@ export function PBookings({ rows }: { rows: Booking[] }) {
         />
       </div>
       {list.length === 0 ? (
-        <div className="bg-surface border border-line rounded-lg py-[56px] px-[20px] text-center text-ink-3 font-semibold">
+        <div className="bg-surface border border-line rounded-lg py-14 px-5 text-center text-ink-3 font-semibold">
           {t("No")} {f === "all" ? "" : t(f) + " "}
           {t("bookings yet.")}
         </div>
@@ -93,23 +93,23 @@ function BookingDetailModal({
   ];
   return (
     <Modal onClose={onClose} maxWidth={460}>
-      <div className="py-[24px] px-[26px]">
-        <div className="flex items-center gap-[12px] mb-[18px]">
+      <div className="py-6 px-7">
+        <div className="flex items-center gap-3 mb-5">
           <Avatar name={b.customer} size={46} />
           <div className="flex-1">
-            <h3 className="text-[19px]">{b.customer}</h3>
-            <div className="text-[13px] text-ink-3 font-semibold">
+            <h3 className="text-lg">{b.customer}</h3>
+            <div className="text-sm text-ink-3 font-semibold">
               {b.service}
             </div>
           </div>
           <Pill status={b.status} />
         </div>
-        <div className="bg-surface-2 border border-line rounded-lg p-[16px] mb-[18px]">
+        <div className="bg-surface-2 border border-line rounded-lg p-4 mb-5">
           {detailRows.map((row) => (
             <Row key={row.label} l={row.label} r={row.value} />
           ))}
         </div>
-        <div className="flex gap-[10px]">
+        <div className="flex gap-2.5">
           <Button ctx="dash" variant="ghost" size="md" block onClick={onClose}>
             {t("Close")}
           </Button>
@@ -154,7 +154,7 @@ function BookingDetailModal({
 
 function Row({ l, r }: { l: string; r: string }) {
   return (
-    <div className="flex justify-between py-[6px] px-0 text-[14px]">
+    <div className="flex justify-between py-1.5 px-0 text-sm">
       <span className="text-ink-2 font-semibold">{l}</span>
       <span className="font-bold">{r}</span>
     </div>

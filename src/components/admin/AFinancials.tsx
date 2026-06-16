@@ -94,8 +94,8 @@ export function AFinancials({ s, queue }: { s: FinancialStats; queue: PayoutRow[
         ))}
       </div>
       <TableCard>
-        <div className="flex items-center justify-between px-[20px] py-[18px]">
-          <h3 className="text-[17px]">{t("Payouts queue")}</h3>
+        <div className="flex items-center justify-between px-5 py-5">
+          <h3 className="text-lg">{t("Payouts queue")}</h3>
           <Button
             ctx="dash"
             variant="ghost"
@@ -107,7 +107,7 @@ export function AFinancials({ s, queue }: { s: FinancialStats; queue: PayoutRow[
           </Button>
         </div>
         {queue.length === 0 ? (
-          <div className="px-[20px] py-[34px] text-ink-3 font-semibold text-[13.5px] border-t border-line">
+          <div className="px-5 py-9 text-ink-3 font-semibold text-sm border-t border-line">
             {t(
               "No payout requests yet. When providers hit “Withdraw”, requests land here for release.",
             )}
@@ -127,10 +127,10 @@ export function AFinancials({ s, queue }: { s: FinancialStats; queue: PayoutRow[
             {queue.map((p) => (
               <tr
                 key={p.id}
-                className="[transition:0.12s] cursor-pointer hover:[&>td]:bg-surface-2"
+                className="duration-[120ms] cursor-pointer hover:[&>td]:bg-surface-2"
               >
                 <td>
-                  <div className="flex items-center gap-[10px]">
+                  <div className="flex items-center gap-2.5">
                     <Avatar name={p.providerName} size={30} />
                     <b className="font-bold">{p.providerName}</b>
                   </div>

@@ -53,15 +53,15 @@ export function TopNav({
 
   return (
     <header className="sticky top-0 z-40 bg-[color-mix(in_srgb,var(--bg)_82%,transparent)] [backdrop-filter:blur(16px)] [-webkit-backdrop-filter:blur(16px)] border-b border-line">
-      <div className="flex items-center gap-4 py-[13px] px-[30px] max-[720px]:flex-wrap">
-        <div className="flex items-center gap-[9px] flex-none">
+      <div className="flex items-center gap-4 py-3.5 px-8 max-[720px]:flex-wrap">
+        <div className="flex items-center gap-2.5 flex-none">
           <Logo size={26} />
-          <span className="inline-flex items-center gap-[5px] whitespace-nowrap bg-[color-mix(in_srgb,var(--orange)_16%,transparent)] text-orange-deep py-[3px] px-[9px] rounded-[99px] text-[10px] font-extrabold font-display">
-            <span className="w-[6px] h-[6px] rounded-[99px] bg-orange" />
+          <span className="inline-flex items-center gap-1.5 whitespace-nowrap bg-[color-mix(in_srgb,var(--orange)_16%,transparent)] text-orange-deep py-1 px-2 rounded-pill text-[10px] font-extrabold font-display">
+            <span className="w-1.5 h-1.5 rounded-pill bg-orange" />
             Live now!
           </span>
         </div>
-        <div className="flex-1 max-w-[460px] relative mx-[8px]">
+        <div className="flex-1 max-w-[460px] relative mx-2">
           <span className="absolute text-ink-3 start-[15px] top-1/2 [transform:translateY(-50%)]">
             <Icons.search size={18} />
           </span>
@@ -81,16 +81,16 @@ export function TopNav({
         <div className="flex-1" />
         <CityMenu city={city} />
         <button
-          className="w-[42px] h-[42px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
+          className="w-11 h-11 rounded-pill grid place-items-center bg-surface border border-line text-ink-2 duration-150 relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
           onClick={() => router.push("/notifications")}
         >
           <Icons.bell size={19} />
-          {unread > 0 && <span className="absolute top-[9px] right-[10px] w-2 h-2 rounded-full bg-coral border-2 border-surface" />}
+          {unread > 0 && <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-coral border-2 border-surface" />}
         </button>
         <LangSwitcher />
         <AccountMenu user={user} />
       </div>
-      <div className="flex items-center gap-[2px] px-[30px] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="flex items-center gap-0.5 px-8 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {NAV.map((n) => {
           const I = Icons[n.icon];
           const b = (badges as Record<string, number | null>)[n.key];
@@ -99,12 +99,12 @@ export function TopNav({
           return (
             <button
               key={n.key}
-              className={`inline-flex items-center gap-2 py-[13px] px-[15px] font-semibold text-[14px] whitespace-nowrap cursor-pointer relative [transition:0.14s] border-b-[2.5px] border-solid mb-[-1px] hover:text-ink ${on ? "text-coral border-coral [&_svg]:text-coral" : "text-ink-2 border-transparent"}`}
+              className={`inline-flex items-center gap-2 py-3.5 px-4 font-semibold text-sm whitespace-nowrap cursor-pointer relative duration-[140ms] border-b-[2.5px] border-solid mb-[-1px] hover:text-ink ${on ? "text-coral border-coral [&_svg]:text-coral" : "text-ink-2 border-transparent"}`}
               onClick={() => router.push(n.href)}
             >
               <I size={18} />
               {t(n.label)}
-              {b ? <span className="bg-coral text-white text-[10.5px] font-extrabold min-w-[17px] h-[17px] rounded-[99px] grid place-items-center px-1">{b}</span> : null}
+              {b ? <span className="bg-coral text-white text-[10.5px] font-extrabold min-w-[17px] h-[17px] rounded-pill grid place-items-center px-1">{b}</span> : null}
             </button>
           );
         })}
@@ -134,14 +134,14 @@ function CityMenu({ city }: { city: string }) {
   return (
     <div ref={ref} className="relative">
       <button
-        className="inline-flex items-center gap-[7px] rounded-pill text-[13px] font-semibold border border-line-2 bg-surface text-ink-2 cursor-pointer [transition:0.14s] whitespace-nowrap hover:border-ink-3 hover:text-ink p-[10px_14px]"
+        className="inline-flex items-center gap-2 rounded-pill text-sm font-semibold border border-line-2 bg-surface text-ink-2 cursor-pointer duration-[140ms] whitespace-nowrap hover:border-ink-3 hover:text-ink px-3.5 py-2.5"
         onClick={() => setOpen((o) => !o)}
       >
         <Icons.pin size={16} />
         {t(city)}
         <Icons.chevR
           size={14}
-          className="[transform:rotate(90deg)] opacity-[0.6]"
+          className="[transform:rotate(90deg)] opacity-60"
         />
       </button>
       {open && (
@@ -149,7 +149,7 @@ function CityMenu({ city }: { city: string }) {
           {CITIES.map((c) => (
             <button
               key={c}
-              className={`flex items-center gap-[11px] w-full py-[10px] px-[11px] rounded-sm text-[14px] font-semibold cursor-pointer [transition:0.12s] text-left ${c === city ? "bg-coral-soft text-coral-deep" : "text-ink-2 hover:bg-surface-2 hover:text-ink"}`}
+              className={`flex items-center gap-3 w-full py-2.5 px-3 rounded-sm text-sm font-semibold cursor-pointer duration-[120ms] text-left ${c === city ? "bg-coral-soft text-coral-deep" : "text-ink-2 hover:bg-surface-2 hover:text-ink"}`}
               onClick={() => pick(c)}
             >
               <Icons.pin size={16} />
@@ -186,7 +186,7 @@ function AccountMenu({ user }: { user: { name: string; plan: string } }) {
   };
   return (
     <div ref={ref} className="relative">
-      <div className="flex items-center gap-2 cursor-pointer p-[3px] rounded-[99px] [transition:0.14s] hover:bg-surface-2" onClick={() => setOpen((o) => !o)}>
+      <div className="flex items-center gap-2 cursor-pointer p-1 rounded-pill duration-[140ms] hover:bg-surface-2" onClick={() => setOpen((o) => !o)}>
         <Avatar name={user.name} size={38} />
         <Icons.chevR
           size={15}
@@ -195,20 +195,20 @@ function AccountMenu({ user }: { user: { name: string; plan: string } }) {
       </div>
       {open && (
         <div className="absolute end-0 top-[54px] min-w-[248px] bg-surface border border-line rounded shadow-lg p-2 z-[60] animate-anim-pop-app">
-          <div className="flex items-center gap-[11px] pt-[8px] px-[10px] pb-[12px]">
+          <div className="flex items-center gap-3 pt-2 px-2.5 pb-3">
             <Avatar name={user.name} size={42} />
             <div className="min-w-0">
               <div className="font-extrabold font-display text-[15px]">
                 {user.name}
               </div>
-              <div className="text-[12px] text-[var(--orange)] font-bold inline-flex items-center gap-[4px]">
+              <div className="text-xs text-[var(--orange)] font-bold inline-flex items-center gap-1">
                 <Icons.sparkle size={12} />
                 {user.plan}
               </div>
             </div>
           </div>
           <button
-            className="flex items-center gap-[11px] w-full py-[10px] px-[11px] rounded-sm text-[14px] font-semibold text-ink-2 cursor-pointer [transition:0.12s] text-left hover:bg-surface-2 hover:text-ink"
+            className="flex items-center gap-3 w-full py-2.5 px-3 rounded-sm text-sm font-semibold text-ink-2 cursor-pointer duration-[120ms] text-left hover:bg-surface-2 hover:text-ink"
             onClick={() => {
               router.push("/profile");
               setOpen(false);
@@ -218,7 +218,7 @@ function AccountMenu({ user }: { user: { name: string; plan: string } }) {
             {t("Your profile")}
           </button>
           <button
-            className="flex items-center gap-[11px] w-full py-[10px] px-[11px] rounded-sm text-[14px] font-semibold text-ink-2 cursor-pointer [transition:0.12s] text-left hover:bg-surface-2 hover:text-ink"
+            className="flex items-center gap-3 w-full py-2.5 px-3 rounded-sm text-sm font-semibold text-ink-2 cursor-pointer duration-[120ms] text-left hover:bg-surface-2 hover:text-ink"
             onClick={() => {
               router.push("/wallet");
               setOpen(false);
@@ -228,7 +228,7 @@ function AccountMenu({ user }: { user: { name: string; plan: string } }) {
             {t("Wallet")}
           </button>
           <button
-            className="flex items-center gap-[11px] w-full py-[10px] px-[11px] rounded-sm text-[14px] font-semibold text-ink-2 cursor-pointer [transition:0.12s] text-left hover:bg-surface-2 hover:text-ink"
+            className="flex items-center gap-3 w-full py-2.5 px-3 rounded-sm text-sm font-semibold text-ink-2 cursor-pointer duration-[120ms] text-left hover:bg-surface-2 hover:text-ink"
             onClick={() => {
               router.push("/profile");
               setOpen(false);
@@ -237,9 +237,9 @@ function AccountMenu({ user }: { user: { name: string; plan: string } }) {
             <Icons.settings size={18} />
             {t("Settings")}
           </button>
-          <div className="h-px bg-line my-[6px] mx-[4px]" />
+          <div className="h-px bg-line my-1.5 mx-1" />
           <button
-            className="flex items-center gap-[11px] w-full py-[10px] px-[11px] rounded-sm text-[14px] font-semibold cursor-pointer [transition:0.12s] text-left hover:bg-surface-2 hover:text-ink text-[var(--ink-3)]"
+            className="flex items-center gap-3 w-full py-2.5 px-3 rounded-sm text-sm font-semibold cursor-pointer duration-[120ms] text-left hover:bg-surface-2 hover:text-ink text-[var(--ink-3)]"
             onClick={logout}
           >
             <Icons.logout size={18} />

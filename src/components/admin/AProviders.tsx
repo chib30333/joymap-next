@@ -56,9 +56,9 @@ export function AProviders({ rows }: { rows: Provider[] }) {
     ]);
   return (
     <div className="animate-anim-fade-dash">
-      <div className="flex items-end justify-between gap-[16px] mb-[18px]">
+      <div className="flex items-end justify-between gap-4 mb-5">
         <div className="relative flex-1 max-w-[340px]">
-          <span className="absolute left-[14px] top-[50%] text-ink-3 [transform:translateY(-50%)]">
+          <span className="absolute left-3.5 top-1/2 text-ink-3 [transform:translateY(-50%)]">
             <Icons.search size={17} />
           </span>
           <Input
@@ -68,7 +68,7 @@ export function AProviders({ rows }: { rows: Provider[] }) {
             className="!pl-[42px] !rounded-[var(--r-pill)]"
           />
         </div>
-        <div className="flex gap-[10px]">
+        <div className="flex gap-2.5">
           <Seg
             value={st}
             options={[
@@ -114,11 +114,11 @@ export function AProviders({ rows }: { rows: Provider[] }) {
             {list.map((p) => (
               <tr
                 key={p.id}
-                className="[transition:0.12s] cursor-pointer hover:[&>td]:bg-surface-2"
+                className="duration-[120ms] cursor-pointer hover:[&>td]:bg-surface-2"
                 onClick={() => setSel(p)}
               >
                 <td>
-                  <div className="flex items-center gap-[10px]">
+                  <div className="flex items-center gap-2.5">
                     <Avatar name={p.name} size={32} />
                     <b className="font-bold">{p.name}</b>
                   </div>
@@ -129,7 +129,7 @@ export function AProviders({ rows }: { rows: Provider[] }) {
                 <td className="font-display font-bold">{money(p.gmv)}</td>
                 <td>
                   {p.rating ? (
-                    <span className="inline-flex gap-[4px] items-center font-bold">
+                    <span className="inline-flex gap-1 items-center font-bold">
                       <Icons.star size={14} className="text-[var(--m-joy)]" />
                       {p.rating}
                     </span>
@@ -174,59 +174,59 @@ function ProviderDrawer({ p, onClose }: { p: Provider; onClose: () => void }) {
       <div>
         <div className="h-[90px] bg-[linear-gradient(140deg,var(--red),var(--orange))] relative">
           <button
-            className="w-10 h-10 rounded-pill grid place-items-center text-ink-2 [transition:0.15s] cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2 absolute top-[12px] right-[12px] !bg-[rgba(255,255,255,.9)] !border-none"
+            className="w-10 h-10 rounded-pill grid place-items-center text-ink-2 duration-150 cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2 absolute top-3 right-3 !bg-white/90 !border-none"
             onClick={onClose}
           >
             <Icons.close size={18} />
           </button>
         </div>
-        <div className="pt-0 px-[24px] pb-[24px] mt-[-30px] relative z-[1]">
-          <div className="flex items-end gap-[14px] mb-[18px]">
+        <div className="pt-0 px-6 pb-6 mt-[-30px] relative z-[1]">
+          <div className="flex items-end gap-3.5 mb-5">
             <Avatar
               name={p.name}
               size={64}
               grad="linear-gradient(140deg,var(--m-calm),#2E8C80)"
             />
-            <div className="flex-1 pb-[4px]">
-              <h3 className="text-[21px]">{p.name}</h3>
-              <div className="text-[13px] text-ink-3 font-semibold">
+            <div className="flex-1 pb-1">
+              <h3 className="text-xl">{p.name}</h3>
+              <div className="text-sm text-ink-3 font-semibold">
                 {p.cat} · {p.city} · {t("joined")} {p.joined || "Jun 2026"}
               </div>
             </div>
             <StatusPill status={p.status} />
           </div>
-          <div className="text-[12px] font-extrabold tracking-[.06em] uppercase text-ink-3 mb-[10px]">
+          <div className="text-xs font-extrabold tracking-wider uppercase text-ink-3 mb-2.5">
             {t("Financials")}
           </div>
-          <div className="grid gap-[10px] mb-[20px] [grid-template-columns:1fr_1fr_1fr]">
+          <div className="grid gap-2.5 mb-5 [grid-template-columns:1fr_1fr_1fr]">
             {financials.map(({ label, value }) => (
               <div
                 key={label}
-                className="bg-[var(--surface-2)] border border-line rounded-lg p-[13px_14px]"
+                className="bg-[var(--surface-2)] border border-line rounded-lg px-3.5 py-3"
               >
-                <div className="text-[11.5px] text-ink-3 font-semibold mb-[4px]">
+                <div className="text-xs text-ink-3 font-semibold mb-1">
                   {label}
                 </div>
-                <div className="font-display font-extrabold text-[17px]">
+                <div className="font-display font-extrabold text-base">
                   {value}
                 </div>
               </div>
             ))}
           </div>
-          <div className="flex items-center gap-[8px] mb-[12px]">
-            <div className="text-[12px] font-extrabold tracking-[.06em] uppercase text-ink-3">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="text-xs font-extrabold tracking-wider uppercase text-ink-3">
               {t("Rating & complaints")}
             </div>
-            <span className="ml-auto inline-flex gap-[4px] items-center font-bold">
+            <span className="ml-auto inline-flex gap-1 items-center font-bold">
               <Icons.star size={14} className="text-[var(--m-joy)]" />
               {p.rating || "—"}
             </span>
           </div>
-          <div className="bg-[var(--surface-2)] border border-line rounded-lg p-[16px] flex items-center gap-[10px] text-[var(--ink-2)] font-semibold text-[13.5px]">
+          <div className="bg-[var(--surface-2)] border border-line rounded-lg p-4 flex items-center gap-2.5 text-[var(--ink-2)] font-semibold text-sm">
             <Icons.checkCirc size={18} className="text-[#1FA46E]" />
             {t("No open complaints — a clean record.")}
           </div>
-          <div className="flex gap-[10px] mt-[22px]">
+          <div className="flex gap-2.5 mt-6">
             <Button
               ctx="dash"
               variant="ghost"

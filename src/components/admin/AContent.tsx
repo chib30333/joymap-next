@@ -74,9 +74,9 @@ export function AContent({ items }: { items: FlagItem[] }) {
             return (
               <div
                 key={c.id}
-                className="bg-surface border border-line rounded-lg animate-anim-pop-dash p-[18px] flex flex-col gap-[12px]"
+                className="bg-surface border border-line rounded-lg animate-anim-pop-dash p-5 flex flex-col gap-3"
               >
-                <div className="flex items-center gap-[10px]">
+                <div className="flex items-center gap-2.5">
                   <Chip bg={`color-mix(in srgb,${tc} 14%,transparent)`} color={tc}>
                     {t(tl)}
                   </Chip>
@@ -84,13 +84,13 @@ export function AContent({ items }: { items: FlagItem[] }) {
                     <Icons.flame size={12} />
                     {c.reason}
                   </Chip>
-                  <span className="ml-auto text-[12px] text-ink-3 font-semibold">
+                  <span className="ml-auto text-xs text-ink-3 font-semibold">
                     {c.time}
                   </span>
                 </div>
                 {c.type === "photo" ? (
                   <div
-                    className="h-[140px] rounded-sm [background:var(--card-bg)]"
+                    className="h-36 rounded-sm [background:var(--card-bg)]"
                     style={
                       {
                         "--card-bg":
@@ -99,19 +99,19 @@ export function AContent({ items }: { items: FlagItem[] }) {
                     }
                   />
                 ) : (
-                  <p className="m-0 text-[14px] leading-[1.5] text-ink-2 bg-surface-2 px-[14px] py-[12px] rounded-sm italic">
+                  <p className="m-0 text-sm leading-normal text-ink-2 bg-surface-2 px-3.5 py-3 rounded-sm italic">
                     &quot;{c.text}&quot;
                   </p>
                 )}
-                <div className="flex items-center gap-[8px] text-[12.5px] text-ink-3 font-semibold">
+                <div className="flex items-center gap-2 text-xs text-ink-3 font-semibold">
                   <Avatar name={c.author} size={24} />
                   {c.author}
-                  <span className="opacity-[.5]">·</span>
+                  <span className="opacity-50">·</span>
                   {t("on")} {c.target}
                 </div>
-                <div className="flex gap-[8px] mt-[2px]">
+                <div className="flex gap-2 mt-0.5">
                   {acting === c.id ? (
-                    <Spinner className="mx-auto my-[8px]" />
+                    <Spinner className="mx-auto my-2" />
                   ) : (
                     <>
                       <Button

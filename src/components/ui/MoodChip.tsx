@@ -18,7 +18,7 @@ export function MoodChip({
   return (
     <button
       onClick={onClick}
-      className="inline-flex items-center gap-2 rounded-pill border px-3 py-1.5 text-[13px] font-bold transition bg-[var(--mc-bg)] text-[var(--mc-fg)] border-[var(--mc-bd)]"
+      className="inline-flex items-center gap-2 rounded-pill border px-3 py-1.5 text-sm font-bold transition bg-[var(--mc-bg)] text-[var(--mc-fg)] border-[var(--mc-bd)]"
       style={
         (active
           ? { "--mc-bg": m.hex, "--mc-fg": "#fff", "--mc-bd": m.hex }

@@ -5,8 +5,8 @@ import { type ReactNode, type TableHTMLAttributes } from "react";
 // rows tint on hover automatically.
 const TABLE_CLS =
   "w-full border-collapse " +
-  "[&_th]:text-left [&_th]:text-[11.5px] [&_th]:font-extrabold [&_th]:tracking-[0.06em] [&_th]:uppercase [&_th]:text-ink-3 [&_th]:px-4 [&_th]:pt-0 [&_th]:pb-3 " +
-  "[&_td]:px-4 [&_td]:py-[14px] [&_td]:border-t [&_td]:border-line [&_td]:text-[14px] [&_td]:align-middle " +
+  "[&_th]:text-left [&_th]:text-xs [&_th]:font-extrabold [&_th]:tracking-wider [&_th]:uppercase [&_th]:text-ink-3 [&_th]:px-4 [&_th]:pt-0 [&_th]:pb-3 " +
+  "[&_td]:px-4 [&_td]:py-3.5 [&_td]:border-t [&_td]:border-line [&_td]:text-sm [&_td]:align-middle " +
   "[&_tbody_tr:hover_td]:bg-surface-2";
 
 export function DataTable({

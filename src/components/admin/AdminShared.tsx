@@ -5,7 +5,7 @@ import { Icons } from "@/components/Icons";
 
 export function EmptyCard({ children }: { children: ReactNode }) {
   return (
-    <div className="bg-surface border border-line rounded-lg p-[56px_20px] text-center text-[var(--ink-3)] font-semibold">
+    <div className="bg-surface border border-line rounded-lg px-5 py-14 text-center text-[var(--ink-3)] font-semibold">
       {children}
     </div>
   );
@@ -40,7 +40,7 @@ export function Chip({
 }) {
   return (
     <span
-      className="inline-flex items-center gap-[5px] py-[4px] px-[10px] rounded-pill text-[12px] font-bold whitespace-nowrap [color:var(--chip-c)] [background:var(--chip-bg)] [border:var(--chip-bd)]"
+      className="inline-flex items-center gap-1 py-1 px-2.5 rounded-pill text-xs font-bold whitespace-nowrap [color:var(--chip-c)] [background:var(--chip-bg)] [border:var(--chip-bd)]"
       style={
         {
           "--chip-c": color,

@@ -9,6 +9,7 @@ import {
   CATS,
   fmt,
   bg,
+  cssVars,
   MoodChip,
   MoodDot,
   Rating,
@@ -126,7 +127,7 @@ export function CCalendar({
 
   return (
     <div className="animate-anim-fade-app">
-      <div className="flex items-center gap-[14px] flex-wrap mb-[18px]">
+      <div className="flex items-center gap-3.5 flex-wrap mb-5">
         <Seg
           accent
           value={view}
@@ -136,15 +137,15 @@ export function CCalendar({
             { v: "week", l: t("Week"), icon: <Icons.list size={15} /> },
           ]}
         />
-        <div className="flex items-center gap-[4px]">
+        <div className="flex items-center gap-1">
           <button
-            className="w-[38px] h-[38px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
+            className="w-9 h-9 rounded-pill grid place-items-center bg-surface border border-line text-ink-2 duration-150 relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
             onClick={() => setCursor((c) => Math.max(1, c - 7))}
             disabled={view === "month"}
           >
             <Icons.arrowL size={18} />
           </button>
-          <b className="font-display font-extrabold text-[20px] min-w-[148px] text-center">
+          <b className="font-display font-extrabold text-xl min-w-[148px] text-center">
             {view === "month" ? (
               <>
                 {t("June")} 2026
@@ -156,7 +157,7 @@ export function CCalendar({
             )}
           </b>
           <button
-            className="w-[38px] h-[38px] rounded-pill grid place-items-center bg-surface border border-line text-ink-2 [transition:0.15s] relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
+            className="w-9 h-9 rounded-pill grid place-items-center bg-surface border border-line text-ink-2 duration-150 relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
             onClick={() => setCursor((c) => Math.min(CAL_MONTH.days, c + 7))}
             disabled={view === "month"}
           >
@@ -177,10 +178,10 @@ export function CCalendar({
         </Button>
       </div>
 
-      <div className="flex flex-col gap-[12px] mb-5">
-        <div className="flex gap-[9px] overflow-x-auto pb-[3px]">
+      <div className="flex flex-col gap-3 mb-5">
+        <div className="flex gap-2.5 overflow-x-auto pb-1">
           <button
-            className={`inline-flex items-center gap-[7px] p-[9px_16px] rounded-pill text-[13px] font-semibold border cursor-pointer [transition:0.15s] ${!f.mood ? "bg-coral text-white border-coral" : "border-line-2 bg-surface hover:border-ink-3 hover:text-ink"}`}
+            className={`inline-flex items-center gap-2 px-4 py-2 rounded-pill text-sm font-semibold border cursor-pointer duration-150 ${!f.mood ? "bg-coral text-white border-coral" : "border-line-2 bg-surface hover:border-ink-3 hover:text-ink"}`}
             onClick={() => setFilter("mood", null)}
           >
             {t("All moods")}
@@ -231,7 +232,7 @@ export function CCalendar({
               {` (${activeFilters})`}
             </Button>
           )}
-          <span className="ml-auto text-ink-3 text-[13px] font-bold">
+          <span className="ml-auto text-ink-3 text-sm font-bold">
             {sessions.length} {t("sessions")}
           </span>
         </div>
@@ -289,16 +290,16 @@ function Seg({
   accent?: boolean;
 }) {
   return (
-    <div className="inline-flex bg-surface-2 border border-line rounded-pill p-[4px] gap-[2px]">
+    <div className="inline-flex bg-surface-2 border border-line rounded-pill p-1 gap-0.5">
       {options.map((o) => {
         const on = value === o.v;
         return (
           <button
             key={o.v}
-            className={`py-[8px] px-4 rounded-pill font-bold text-[13px] border-none cursor-pointer [transition:0.16s] whitespace-nowrap inline-flex items-center gap-[6px] ${
+            className={`py-2 px-4 rounded-pill font-bold text-sm border-none cursor-pointer duration-[160ms] whitespace-nowrap inline-flex items-center gap-1.5 ${
               on
                 ? accent
-                  ? "bg-coral text-[#fff]"
+                  ? "bg-coral text-white"
                   : "bg-surface text-ink"
                 : "bg-transparent text-ink-3"
             }`}
@@ -324,13 +325,13 @@ function Sel({
   return (
     <span className="relative">
       <select
-        className="appearance-none [-webkit-appearance:none] py-[9px] pr-[34px] pl-[14px] rounded-pill border border-line-2 bg-surface text-ink font-bold text-[13px] [font-family:inherit] cursor-pointer outline-none focus:border-coral"
+        className="appearance-none py-2 pr-9 pl-3.5 rounded-pill border border-line-2 bg-surface text-ink font-bold text-sm cursor-pointer outline-none focus:border-coral"
         value={value}
         onChange={(e) => onChange(e.target.value)}
       >
         {children}
       </select>
-      <span className="absolute right-[13px] top-1/2 -translate-y-1/2 pointer-events-none text-ink-3">
+      <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-ink-3">
         <Icons.chevR size={14} className="[transform:rotate(90deg)]" />
       </span>
     </span>
@@ -356,7 +357,7 @@ function MonthGrid({
     cells.push(
       <div
         key={`e${i}`}
-        className="bg-bg min-h-[118px] pt-[9px] px-[9px] pb-[10px] text-left flex flex-col gap-[6px] relative cursor-default"
+        className="bg-bg min-h-[118px] pt-2 px-2 pb-2.5 text-left flex flex-col gap-1.5 relative cursor-default"
       />,
     );
   for (let d = 1; d <= CAL_MONTH.days; d++) {
@@ -368,8 +369,8 @@ function MonthGrid({
     cells.push(
       <button
         key={d}
-        className={`bg-surface min-h-[118px] pt-[9px] px-[9px] pb-[10px] text-left border-none cursor-pointer flex flex-col gap-[6px] [transition:0.14s] relative hover:bg-surface-2 ${
-          past ? "opacity-[0.72]" : ""
+        className={`bg-surface min-h-[118px] pt-2 px-2 pb-2.5 text-left border-none cursor-pointer flex flex-col gap-1.5 duration-[140ms] relative hover:bg-surface-2 ${
+          past ? "opacity-70" : ""
         } ${
           sel === d
             ? "[box-shadow:inset_0_0_0_2px_var(--coral)] bg-coral-soft z-[2]"
@@ -378,12 +379,12 @@ function MonthGrid({
         onClick={() => setSel(d)}
       >
         <span
-          className={`flex items-center gap-[6px] font-extrabold text-[14px] font-display ${
+          className={`flex items-center gap-1.5 font-extrabold text-sm font-display ${
             past ? "text-ink-3" : ""
           }`}
         >
           {today ? (
-            <span className="bg-coral text-[#fff] w-[24px] h-[24px] rounded-[99px] grid place-items-center text-[13px]">
+            <span className="bg-coral text-white w-6 h-6 rounded-pill grid place-items-center text-sm">
               {d}
             </span>
           ) : (
@@ -398,8 +399,8 @@ function MonthGrid({
             return (
               <span
                 key={s.id}
-                className="flex items-center gap-[6px] py-[3px] px-[8px] rounded-[7px] text-[11px] font-bold leading-[1.3] overflow-hidden whitespace-nowrap text-ellipsis [background:var(--pill-bg)] text-[var(--pill-c)]"
-                style={{ "--pill-bg": m.soft, "--pill-c": m.color } as React.CSSProperties}
+                className="flex items-center gap-1.5 py-1 px-2 rounded-md text-xs font-bold leading-snug overflow-hidden whitespace-nowrap text-ellipsis [background:var(--pill-bg)] text-[var(--pill-c)]"
+                style={cssVars({ "--pill-bg": m.soft, "--pill-c": m.color })}
                 onClick={(ev) => {
                   ev.stopPropagation();
                   onOpen(e);
@@ -411,23 +412,23 @@ function MonthGrid({
             );
           })}
           {list.length > 3 && (
-            <span className="text-[11px] font-bold text-ink-3 py-[1px] px-[6px]">
+            <span className="text-xs font-bold text-ink-3 py-px px-1.5">
               +{list.length - 3} {t("more")}
             </span>
           )}
           {list.length === 0 && !past && (
-            <span className="w-[5px] h-[5px] rounded-[99px] bg-line-2" />
+            <span className="w-1 h-1 rounded-pill bg-line-2" />
           )}
         </div>
       </button>,
     );
   }
   return (
-    <div className="grid grid-cols-[repeat(7,1fr)] bg-line border border-line rounded-lg overflow-hidden gap-[1px]">
+    <div className="grid grid-cols-[repeat(7,1fr)] bg-line border border-line rounded-lg overflow-hidden gap-px">
       {CAL_WD.map((w) => (
         <div
           key={w}
-          className="bg-surface py-[11px] px-3 text-[11.5px] font-extrabold tracking-[0.06em] uppercase text-ink-3 text-left"
+          className="bg-surface py-3 px-3 text-xs font-extrabold tracking-wider uppercase text-ink-3 text-left"
         >
           {t(w)}
         </div>
@@ -451,36 +452,36 @@ function DayPanel({
   const t = useT();
   const wd = CAL_WD_FULL[calDow(day)];
   return (
-    <div className="mt-[18px] border border-line rounded-lg overflow-hidden bg-surface">
-      <div className="flex items-center gap-[12px] py-[18px] px-[22px] [background:linear-gradient(120deg,var(--coral-soft),var(--surface)_75%)] border-b border-line">
+    <div className="mt-5 border border-line rounded-lg overflow-hidden bg-surface">
+      <div className="flex items-center gap-3 py-5 px-6 [background:linear-gradient(120deg,var(--coral-soft),var(--surface)_75%)] border-b border-line">
         <div
-          className="w-[46px] h-[46px] rounded-[13px] bg-surface grid place-items-center flex-none [box-shadow:var(--sh-sm)]"
+          className="w-12 h-12 rounded-md bg-surface grid place-items-center flex-none [box-shadow:var(--sh-sm)]"
         >
-          <span className="font-display font-extrabold text-[20px] text-coral-deep">
+          <span className="font-display font-extrabold text-xl text-coral-deep">
             {day}
           </span>
         </div>
         <div className="flex-1">
-          <h3 className="text-[18px]">
+          <h3 className="text-lg">
             {t(wd)}, {day} {t("June")}
           </h3>
-          <div className="text-[13px] text-ink-2 font-semibold">
+          <div className="text-sm text-ink-2 font-semibold">
             {list.length} {list.length !== 1 ? t("sessions") : t("session")}{" "}
             {t("available")}
           </div>
         </div>
         {day === CAL_MONTH.today && (
           <span
-            className="inline-flex items-center px-[11px] py-[5px] rounded-pill text-[12px] font-semibold bg-[var(--coral)] text-[#fff] border-none"
+            className="inline-flex items-center px-3 py-1 rounded-pill text-xs font-semibold bg-[var(--coral)] text-white border-none"
           >
             {t("Today")}
           </span>
         )}
       </div>
       {list.length === 0 ? (
-        <div className="p-[34px] text-center text-ink-3">
+        <div className="p-9 text-center text-ink-3">
           <Icons.schedule size={30} />
-          <p className="mt-[8px] font-semibold">
+          <p className="mt-2 font-semibold">
             {t("No sessions match your filters on this day.")}
           </p>
         </div>
@@ -492,40 +493,38 @@ function DayPanel({
           return (
             <div
               key={s.id}
-              className="flex items-center gap-[16px] py-[14px] px-[22px] border-t border-line [transition:0.14s] cursor-pointer hover:bg-surface-2"
+              className="flex items-center gap-4 py-3.5 px-6 border-t border-line duration-[140ms] cursor-pointer hover:bg-surface-2"
               onClick={() => onOpen(e)}
             >
-              <span className="font-display font-extrabold text-[16px] w-[60px] flex-none">
+              <span className="font-display font-extrabold text-base w-14 flex-none">
                 {s.time}
               </span>
               <div
-                className="w-[54px] h-[54px] rounded-sm flex-none [background:var(--sw-bg)]"
-                style={{ "--sw-bg": bg(e) } as React.CSSProperties}
+                className="w-14 h-14 rounded-sm flex-none [background:var(--sw-bg)]"
+                style={cssVars({ "--sw-bg": bg(e) })}
               />
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-[8px] mb-[4px]">
+                <div className="flex items-center gap-2 mb-1">
                   <span
-                    className="inline-flex items-center gap-[8px] rounded-pill font-bold cursor-pointer [transition:0.14s] border-[1.5px] border-solid border-transparent p-[3px_9px_3px_8px] text-[11px] [background:var(--chip-bg)] text-[var(--chip-c)]"
-                    style={
-                      { "--chip-bg": m.soft, "--chip-c": m.color } as React.CSSProperties
-                    }
+                    className="inline-flex items-center gap-2 rounded-pill font-bold cursor-pointer duration-[140ms] border-2 border-solid border-transparent px-2 py-1 text-xs [background:var(--chip-bg)] text-[var(--chip-c)]"
+                    style={cssVars({ "--chip-bg": m.soft, "--chip-c": m.color })}
                   >
                     <MoodDot mood={e.mood} size={6} />
                     {t(m.label)}
                   </span>
                   {e.rating && <Rating value={e.rating} />}
                 </div>
-                <div className="font-bold text-[15.5px]">{e.title}</div>
-                <div className="text-[12.5px] text-ink-3 font-semibold flex gap-[12px] mt-[2px] flex-wrap">
-                  <span className="inline-flex gap-[4px] items-center">
+                <div className="font-bold text-base">{e.title}</div>
+                <div className="text-xs text-ink-3 font-semibold flex gap-2 mt-0.5 flex-wrap">
+                  <span className="inline-flex gap-1 items-center">
                     <Icons.pin size={13} />
                     {e.area}
                   </span>
-                  <span className="inline-flex gap-[4px] items-center">
+                  <span className="inline-flex gap-1 items-center">
                     <Icons.clock size={13} />
                     {e.dur}
                   </span>
-                  <span className="inline-flex gap-[4px] items-center">
+                  <span className="inline-flex gap-1 items-center">
                     <Icons.user size={13} />
                     {s.spots} {t("spots left")}
                   </span>
@@ -533,7 +532,7 @@ function DayPanel({
               </div>
               <div className="text-right flex-none">
                 <div
-                  className="font-display font-bold text-ink whitespace-nowrap [&_small]:font-semibold [&_small]:text-[12.5px] [&_small]:text-ink-3 text-[17px] mb-[7px]"
+                  className="font-display font-bold text-ink whitespace-nowrap [&_small]:font-semibold [&_small]:text-xs [&_small]:text-ink-3 text-base mb-2"
                 >
                   {fmt(e.price)}
                 </div>
@@ -570,7 +569,7 @@ function WeekView({
 }) {
   const t = useT();
   return (
-    <div className="grid grid-cols-[repeat(7,1fr)] gap-[10px] max-[900px]:[grid-auto-flow:column] max-[900px]:[grid-auto-columns:minmax(180px,1fr)] max-[900px]:grid-cols-none max-[900px]:overflow-x-auto">
+    <div className="grid grid-cols-[repeat(7,1fr)] gap-2 max-[900px]:grid-flow-col max-[900px]:[grid-auto-columns:minmax(180px,1fr)] max-[900px]:grid-cols-none max-[900px]:overflow-x-auto">
       {days.map((d) => {
         const list = (byDay[d] || [])
           .slice()
@@ -582,20 +581,20 @@ function WeekView({
             className="bg-surface border border-line rounded overflow-hidden flex flex-col min-h-[360px]"
           >
             <div
-              className={`py-[11px] px-3 text-center border-b border-line ${
-                today ? "bg-coral text-[#fff]" : ""
+              className={`py-3 px-3 text-center border-b border-line ${
+                today ? "bg-coral text-white" : ""
               }`}
             >
               <div
-                className={`text-[11px] font-extrabold tracking-[.05em] uppercase ${today ? "opacity-90" : "opacity-60"}`}
+                className={`text-xs font-extrabold tracking-wider uppercase ${today ? "opacity-90" : "opacity-60"}`}
               >
                 {t(CAL_WD[calDow(d)])}
               </div>
-              <div className="font-display font-extrabold text-[22px]">{d}</div>
+              <div className="font-display font-extrabold text-xl">{d}</div>
             </div>
-            <div className="p-[10px] flex flex-col gap-[9px] flex-1 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="p-2.5 flex flex-col gap-2 flex-1 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {list.length === 0 ? (
-                <div className="flex-1 grid place-items-center text-ink-3 text-[12px] font-semibold text-center p-[18px]">
+                <div className="flex-1 grid place-items-center text-ink-3 text-xs font-semibold text-center p-4">
                   {t("No sessions")}
                 </div>
               ) : (
@@ -606,23 +605,23 @@ function WeekView({
                   return (
                     <div
                       key={s.id}
-                      className="rounded-[12px] py-[10px] px-[11px] cursor-pointer text-[#fff] relative overflow-hidden [transition:0.16s] hover:-translate-y-[2px] hover:shadow [background:var(--card-bg)]"
-                      style={{ "--card-bg": bg(e) } as React.CSSProperties}
+                      className="rounded-md py-2.5 px-3 cursor-pointer text-white relative overflow-hidden duration-[160ms] hover:-translate-y-1 hover:shadow [background:var(--card-bg)]"
+                      style={cssVars({ "--card-bg": bg(e) })}
                       onClick={() => onOpen(e)}
                     >
                       <div className="absolute inset-0 bg-[rgba(0,0,0,.18)]" />
                       <div className="relative">
-                        <div className="font-extrabold text-[14px] font-display">
+                        <div className="font-extrabold text-sm font-display">
                           {s.time}
                         </div>
                         <div
-                          className="text-[12.5px] font-bold leading-[1.25] mt-[2px] [text-shadow:0_1px_6px_rgba(0,0,0,.3)]"
+                          className="text-xs font-bold leading-tight mt-0.5 [text-shadow:0_1px_6px_rgba(0,0,0,.3)]"
                         >
                           {e.title}
                         </div>
-                        <div className="flex items-center justify-between mt-[7px] text-[11.5px] font-bold">
+                        <div className="flex items-center justify-between mt-2 text-xs font-bold">
                           <span
-                            className="bg-[rgba(255,255,255,.25)] py-[2px] px-[7px] rounded-[99px] [backdrop-filter:blur(4px)]"
+                            className="bg-white/25 py-0.5 px-2 rounded-pill [backdrop-filter:blur(4px)]"
                           >
                             {t(m.label)}
                           </span>

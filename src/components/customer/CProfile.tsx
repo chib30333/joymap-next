@@ -95,39 +95,39 @@ export function CProfile({
 
   return (
     <div className="animate-anim-fade-app">
-      <div className="bg-surface border border-line rounded-lg p-[24px] flex gap-[18px] items-center mb-[18px] flex-wrap">
+      <div className="bg-surface border border-line rounded-lg p-6 flex gap-5 items-center mb-5 flex-wrap">
         <div className="relative">
           <Avatar name={form.name || "?"} size={72} />
           <button
-            className="rounded-pill grid place-items-center [transition:0.15s] cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2 absolute bottom-[-4px] right-[-4px] w-[30px] h-[30px] [background:var(--coral)] text-[#fff] [border:2px_solid_var(--surface)]"
+            className="rounded-pill grid place-items-center duration-150 cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2 absolute -bottom-1 -right-1 w-8 h-8 [background:var(--coral)] text-white [border:2px_solid_var(--surface)]"
           >
             <Icons.camera size={15} />
           </button>
         </div>
         <div className="flex-1 min-w-[180px]">
-          <h2 className="text-[24px]">{form.name}</h2>
-          <div className="text-ink-3 font-semibold mt-[4px] flex gap-[12px] flex-wrap">
-            <span className="inline-flex gap-[5px] items-center">
+          <h2 className="text-2xl">{form.name}</h2>
+          <div className="text-ink-3 font-semibold mt-1 flex gap-3 flex-wrap">
+            <span className="inline-flex gap-1.5 items-center">
               <Icons.pin size={14} />
               {form.city}
             </span>
-            <span className="inline-flex gap-[5px] items-center">
+            <span className="inline-flex gap-1.5 items-center">
               <Icons.sparkle size={14} />
               {user.plan || "Joy Map"} {t("member")}
             </span>
           </div>
         </div>
-        <div className="flex flex-col gap-[6px] text-right">
-          <span className="font-display font-extrabold text-[26px]">
+        <div className="flex flex-col gap-1.5 text-right">
+          <span className="font-display font-extrabold text-2xl">
             {total}
           </span>
-          <span className="text-[12.5px] text-ink-3 font-semibold">
+          <span className="text-xs text-ink-3 font-semibold">
             {t("experiences booked")}
           </span>
         </div>
       </div>
 
-      <div className="flex gap-[6px] mb-[20px] bg-surface-2 p-[5px] rounded-pill w-fit border border-line">
+      <div className="flex gap-1.5 mb-5 bg-surface-2 p-1.5 rounded-pill w-fit border border-line">
         {tabs.map(({ key, label }) => (
           <Button
             key={key}
@@ -146,9 +146,9 @@ export function CProfile({
       </div>
 
       {tab === "account" && (
-        <div className="bg-surface border border-line rounded-lg p-[24px]">
-          <div className="flex items-center justify-between mb-[18px]">
-            <h3 className="text-[17px]">{t("Personal data")}</h3>
+        <div className="bg-surface border border-line rounded-lg p-6">
+          <div className="flex items-center justify-between mb-5">
+            <h3 className="text-base">{t("Personal data")}</h3>
             <Button
               busy={busy}
               ctx="app"
@@ -160,7 +160,7 @@ export function CProfile({
               {edit ? t("Save") : t("Edit")}
             </Button>
           </div>
-          <div className="grid grid-cols-2 gap-[16px]">
+          <div className="grid grid-cols-2 gap-4">
             {fields.map(({ key, label, icon }) => {
               const I = Icons[icon];
               return (
@@ -170,7 +170,7 @@ export function CProfile({
                     key === "name" ? "[grid-column:1/-1]" : "[grid-column:auto]"
                   }
                 >
-                  <div className="text-[12.5px] font-bold text-ink-3 mb-[7px]">
+                  <div className="text-xs font-bold text-ink-3 mb-2">
                     {label}
                   </div>
                   {edit ? (
@@ -181,7 +181,7 @@ export function CProfile({
                       }
                     />
                   ) : (
-                    <div className="flex items-center gap-[9px] py-[12px] px-[14px] rounded-sm bg-surface-2 font-semibold text-[14.5px]">
+                    <div className="flex items-center gap-2 py-3 px-3.5 rounded-sm bg-surface-2 font-semibold text-sm">
                       <span className="text-ink-3">
                         <I size={17} />
                       </span>
@@ -192,14 +192,14 @@ export function CProfile({
               );
             })}
           </div>
-          <hr className="h-px bg-line border-0 m-[22px_0]" />
-          <div className="flex items-center gap-[12px]">
-            <span className="w-[38px] h-[38px] rounded-[11px] grid place-items-center [background:color-mix(in_srgb,#1FA46E_14%,transparent)] text-[#1FA46E] flex-none">
+          <hr className="h-px bg-line border-0 my-6 mx-0" />
+          <div className="flex items-center gap-3">
+            <span className="w-9 h-9 rounded-md grid place-items-center [background:color-mix(in_srgb,#1FA46E_14%,transparent)] text-[#1FA46E] flex-none">
               <Icons.shield size={19} />
             </span>
             <div className="flex-1">
-              <div className="font-bold text-[14px]">{t("Account secured")}</div>
-              <div className="text-[12.5px] text-ink-3 font-semibold">
+              <div className="font-bold text-sm">{t("Account secured")}</div>
+              <div className="text-xs text-ink-3 font-semibold">
                 {t("Signed in as")} {user.email}
               </div>
             </div>
@@ -217,13 +217,13 @@ export function CProfile({
 
       {tab === "history" && (
         <div>
-          <div className="flex items-center justify-between mb-[14px]">
-            <span className="font-bold text-[14px] text-ink-2">
+          <div className="flex items-center justify-between mb-3.5">
+            <span className="font-bold text-sm text-ink-2">
               {past.length} {t("past experiences")} · {fmt(spent)} {t("spent")}
             </span>
           </div>
           {past.length === 0 ? (
-            <div className="bg-surface border border-line rounded-lg p-[40px_20px] text-center text-ink-3 font-semibold text-[14px]">
+            <div className="bg-surface border border-line rounded-lg px-5 py-10 text-center text-ink-3 font-semibold text-sm">
               {t("Your completed experiences will appear here.")}
             </div>
           ) : (
@@ -234,30 +234,30 @@ export function CProfile({
                 return (
                   <div
                     key={h.id}
-                    className={`flex items-center gap-[14px] p-[15px_18px] ${i ? "border-t border-line" : ""}`}
+                    className={`flex items-center gap-3.5 px-5 py-4 ${i ? "border-t border-line" : ""}`}
                   >
                     <div
-                      className="w-[44px] h-[44px] rounded-[12px] [background:var(--bg)] bg-cover flex-none opacity-[0.95]"
+                      className="w-11 h-11 rounded-md [background:var(--bg)] bg-cover flex-none opacity-95"
                       style={{ ["--bg"]: e ? bg(e) : m.color } as React.CSSProperties}
                     />
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-[14.5px]">
+                      <div className="font-bold text-sm">
                         {e ? e.title : t("Experience")}
                       </div>
-                      <div className="text-[12.5px] text-ink-3 font-semibold">
+                      <div className="text-xs text-ink-3 font-semibold">
                         {e ? e.provider : ""} · {h.date}
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="font-display font-bold text-[14px]">
+                      <div className="font-display font-bold text-sm">
                         {fmt(h.total)}
                       </div>
                       {h.rated ? (
-                        <div className="text-[var(--m-joy)] text-[12px]">
+                        <div className="text-[var(--m-joy)] text-xs">
                           {"★".repeat(h.rated)}
                         </div>
                       ) : h.status === "completed" ? (
-                        <span className="text-[12px] text-ink-3 font-semibold">
+                        <span className="text-xs text-ink-3 font-semibold">
                           {t("Not rated")}
                         </span>
                       ) : null}
@@ -271,9 +271,9 @@ export function CProfile({
       )}
 
       {tab === "moods" && (
-        <div className="bg-surface border border-line rounded-lg p-[24px]">
-          <h3 className="text-[17px] mb-[8px]">{t("Your moods")}</h3>
-          <p className="text-ink-2 text-[14px] mb-[16px]">
+        <div className="bg-surface border border-line rounded-lg p-6">
+          <h3 className="text-base mb-2">{t("Your moods")}</h3>
+          <p className="text-ink-2 text-sm mb-4">
             {t(
               "Joy tunes your weekly map around these. Tap to toggle — your next Joy Map uses them.",
             )}
@@ -293,7 +293,7 @@ function MoodPicker({ initial }: { initial: string[] }) {
     rpc("updateUser", { moods: next });
   };
   return (
-    <div className="flex flex-wrap gap-[9px]">
+    <div className="flex flex-wrap gap-2">
       {MOOD_ORDER.map((k) => (
         <MoodChip
           key={k}

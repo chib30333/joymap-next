@@ -68,7 +68,7 @@ export function LangSwitcher() {
   return (
     <div className="relative">
       <button
-        className="inline-flex items-center gap-[6px] bg-surface border border-line rounded-pill py-[9px] px-[12px] text-[13px] font-bold text-ink-2 cursor-pointer [transition:0.15s] hover:border-line-2 hover:text-ink hover:bg-surface-2"
+        className="inline-flex items-center gap-1.5 bg-surface border border-line rounded-pill py-2 px-3 text-sm font-bold text-ink-2 cursor-pointer duration-150 hover:border-line-2 hover:text-ink hover:bg-surface-2"
         onClick={() => setOpen((o) => !o)}
       >
         <Icons.globe size={16} />
@@ -76,13 +76,13 @@ export function LangSwitcher() {
       </button>
       {open && (
         <div
-          className="absolute top-[46px] end-0 bg-surface border border-line rounded-sm shadow-lg p-[6px] flex flex-col min-w-[150px] z-[60]"
+          className="absolute top-12 end-0 bg-surface border border-line rounded-sm shadow-lg p-1.5 flex flex-col min-w-[150px] z-[60]"
           onMouseLeave={() => setOpen(false)}
         >
           {LANGS.map((l) => (
             <button
               key={l.code}
-              className={`flex items-center gap-[9px] py-[9px] px-[11px] rounded-[9px] text-[13.5px] font-semibold cursor-pointer text-left [transition:0.12s] hover:bg-surface-2 hover:text-ink ${
+              className={`flex items-center gap-2 py-2 px-3 rounded-md text-sm font-semibold cursor-pointer text-left duration-[120ms] hover:bg-surface-2 hover:text-ink ${
                 l.code === lang ? "text-coral-deep font-extrabold" : "text-ink-2"
               }`}
               onClick={() => {
@@ -90,7 +90,7 @@ export function LangSwitcher() {
                 setOpen(false);
               }}
             >
-              <span className="text-[16px]">{l.flag}</span>
+              <span className="text-base">{l.flag}</span>
               {l.native}
             </button>
           ))}
