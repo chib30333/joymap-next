@@ -72,17 +72,22 @@ export function LangSwitcher() {
   const [open, setOpen] = useState(false);
   const cur = LANGS.find((l) => l.code === lang) ?? LANGS[0];
   return (
-    <div className="relative">
+    <div className="relative flex-none">
+      {/* The globe mark stands in for "language" on phones; the flag + code pair
+          is the first thing to go when the header row runs out of width. */}
       <button
-        className="inline-flex items-center gap-1.5 bg-surface border border-line rounded-pill py-2 px-3 text-sm font-bold text-ink-2 cursor-pointer duration-150 hover:border-line-2 hover:text-ink hover:bg-surface-2"
+        aria-label={cur.name}
+        className="inline-flex items-center gap-1.5 bg-surface border border-line rounded-pill h-10 sm:h-11 px-2.5 sm:px-3 text-sm font-bold text-ink-2 cursor-pointer duration-150 hover:border-line-2 hover:text-ink hover:bg-surface-2"
         onClick={() => setOpen((o) => !o)}
       >
         <Icons.globe size={16} />
-        {cur.flag} {cur.code.toUpperCase()}
+        <span className="hidden xs:inline whitespace-nowrap">
+          {cur.flag} {cur.code.toUpperCase()}
+        </span>
       </button>
       {open && (
         <div
-          className="absolute top-12 end-0 bg-surface border border-line rounded-sm shadow-lg p-1.5 flex flex-col min-w-[150px] z-[60]"
+          className="absolute top-[calc(100%+8px)] end-0 bg-surface border border-line rounded-sm shadow-lg p-1.5 flex flex-col min-w-[150px] z-[60]"
           onMouseLeave={() => setOpen(false)}
         >
           {LANGS.map((l) => (

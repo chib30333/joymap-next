@@ -9,6 +9,11 @@ const TABLE_CLS =
   "[&_td]:px-4 [&_td]:py-3.5 [&_td]:border-t [&_td]:border-line [&_td]:text-sm [&_td]:align-middle " +
   "[&_tbody_tr:hover_td]:bg-surface-2";
 
+// A four-to-six column dashboard table cannot honestly fit a phone, so rather
+// than let it crush its cells (or push the whole page sideways) every table
+// carries its own scroll container and a floor width to scroll within.
+const MIN_W = "min-w-[620px]";
+
 export function DataTable({
   head,
   children,
@@ -21,14 +26,20 @@ export function DataTable({
   children: ReactNode;
 } & TableHTMLAttributes<HTMLTableElement>) {
   return (
-    <table
-      className={className ? `${TABLE_CLS} ${className}` : TABLE_CLS}
-      {...rest}
-    >
-      <thead>
-        <tr>{head}</tr>
-      </thead>
-      <tbody>{children}</tbody>
-    </table>
+    <div className="rail">
+      <table
+        className={
+          className
+            ? `${TABLE_CLS} ${MIN_W} ${className}`
+            : `${TABLE_CLS} ${MIN_W}`
+        }
+        {...rest}
+      >
+        <thead>
+          <tr>{head}</tr>
+        </thead>
+        <tbody>{children}</tbody>
+      </table>
+    </div>
   );
 }

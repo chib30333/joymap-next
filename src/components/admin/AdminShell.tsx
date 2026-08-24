@@ -218,7 +218,7 @@ export function AdminTopbar({
   const { setOpen } = useContext(DrawerCtx);
   const { title, sub } = PAGE_TITLES[pathname] ?? DEFAULT_PAGE_TITLE;
   return (
-    <div className="sticky top-0 bg-[color-mix(in_srgb,var(--bg)_80%,transparent)] [backdrop-filter:blur(12px)] [-webkit-backdrop-filter:blur(12px)] z-[15] flex items-center gap-3.5 py-4 px-[var(--pad)] border-b border-line">
+    <div className="sticky top-0 bg-[color-mix(in_srgb,var(--bg)_80%,transparent)] [backdrop-filter:blur(12px)] [-webkit-backdrop-filter:blur(12px)] z-[15] flex items-center gap-2 sm:gap-3.5 py-3 sm:py-4 px-[var(--pad)] border-b border-line">
       <button
         aria-label={t("Open menu")}
         className="w-10 h-10 flex-none rounded-pill grid min-[900px]:hidden place-items-center bg-surface border border-line text-ink-2 duration-150 cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
@@ -227,15 +227,18 @@ export function AdminTopbar({
         <Icons.menu size={18} />
       </button>
       <div className="flex-1 min-w-0">
-        <h1 className="text-xl leading-none">{t(title)}</h1>
+        <h1 className="text-lg sm:text-xl leading-none truncate">{t(title)}</h1>
         {sub && (
-          <div className="text-sm text-ink-3 font-semibold mt-0.5">
+          <div className="text-sm text-ink-3 font-semibold mt-0.5 truncate hidden sm:block">
             {t(sub)}
           </div>
         )}
       </div>
       <LangSwitcher />
-      <button className="w-10 h-10 rounded-pill grid place-items-center bg-surface border border-line text-ink-2 duration-150 relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2">
+      <button
+        aria-label={t("Notifications")}
+        className="w-10 h-10 flex-none rounded-pill grid place-items-center bg-surface border border-line text-ink-2 duration-150 relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
+      >
         <Icons.bell size={18} />
         {unread > 0 && <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-coral border-2 border-surface" />}
       </button>

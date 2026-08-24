@@ -86,7 +86,7 @@ export function Catalog({
         <div className="text-xs font-bold tracking-widest uppercase text-orange mb-3">
           {t("Browse by how you want to feel")}
         </div>
-        <div className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden flex gap-2.5 overflow-x-auto pb-1">
+        <div className="rail flex gap-2.5 pb-1 -mx-[var(--pad)] px-[var(--pad)] sm:mx-0 sm:px-0">
           <PillButton
             active={!mood}
             paddingClass="px-4 py-2"
@@ -151,7 +151,7 @@ export function Catalog({
           <Empty />
         )
       ) : (
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(270px,1fr))] gap-[var(--gap)]">
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,270px),1fr))] gap-[var(--gap)]">
           {list.map((e, i) => (
             <div
               key={e.id}

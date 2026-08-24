@@ -87,7 +87,7 @@ export function PAnalytics({
   const maxB = Math.max(...top.map((tp) => tp.booked), 1);
   return (
     <div className="animate-anim-fade-dash">
-      <div className="grid grid-cols-[1fr_1fr] gap-[var(--gap)] mb-[var(--gap)]">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-[var(--gap)] mb-[var(--gap)]">
         <ChartCard title={t("Revenue by day")} caption={t("June 2026 · live")}>
           {trend.length > 1 ? (
             <LineChart points={trend} />

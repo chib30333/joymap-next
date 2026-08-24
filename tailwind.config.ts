@@ -5,6 +5,19 @@ import type { Config } from "tailwindcss";
 const config: Config = {
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
+    // Small phones (iPhone SE / Android mini) sit below Tailwind's smallest
+    // default breakpoint, and that is exactly where the header rows and stat
+    // grids run out of width — `xs` gives them a hook. Declared here rather
+    // than under `extend` so it is emitted before `sm:` and a later breakpoint
+    // still wins the cascade.
+    screens: {
+      xs: "420px",
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+      "2xl": "1536px",
+    },
     extend: {
       colors: {
         bg: "var(--bg)",

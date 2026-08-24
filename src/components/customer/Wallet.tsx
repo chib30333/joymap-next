@@ -18,14 +18,14 @@ export function Wallet({ wallet, tx }: { wallet: number; tx: Tx[] }) {
   const [topup, setTopup] = useState(false);
   return (
     <div className="animate-anim-fade-app">
-      <div className="rounded-lg p-7 [background:linear-gradient(150deg,#5E1014,var(--maroon))] text-[#F3EBE0] [border:1px_solid_color-mix(in_srgb,var(--red)_55%,transparent)] relative overflow-hidden mb-6">
+      <div className="rounded-lg p-5 sm:p-7 [background:linear-gradient(150deg,#5E1014,var(--maroon))] text-[#F3EBE0] [border:1px_solid_color-mix(in_srgb,var(--red)_55%,transparent)] relative overflow-hidden mb-6">
         <div className="text-sm opacity-80 font-semibold mb-2">
           {t("Joymap balance")}
         </div>
-        <div className="font-display font-extrabold text-[40px] tracking-tight">
+        <div className="font-display font-extrabold text-[clamp(30px,9vw,40px)] tracking-tight">
           {fmt(wallet)}
         </div>
-        <div className="flex gap-2.5 mt-5">
+        <div className="flex gap-2.5 mt-5 flex-wrap relative z-[1]">
           <Button
             ctx="app"
             size="sm"
@@ -50,16 +50,16 @@ export function Wallet({ wallet, tx }: { wallet: number; tx: Tx[] }) {
           {tx.map((t, i) => (
             <div
               key={t.id}
-              className={`flex items-center justify-between pt-4 pb-4 pl-5 pr-5 ${i ? "border-t border-line" : ""}`}
+              className={`flex items-center justify-between gap-3 pt-4 pb-4 pl-4 pr-4 sm:pl-5 sm:pr-5 ${i ? "border-t border-line" : ""}`}
             >
-              <div>
+              <div className="min-w-0">
                 <div className="font-bold text-sm">{t.label}</div>
                 <div className="text-xs text-ink-3 font-semibold">
                   {t.date}
                 </div>
               </div>
               <span
-                className={`font-extrabold font-display ${t.amount > 0 ? "text-m-calm" : "text-ink"}`}
+                className={`font-extrabold font-display whitespace-nowrap flex-none ${t.amount > 0 ? "text-m-calm" : "text-ink"}`}
               >
                 {t.amount > 0 ? "+" : "−"}
                 {fmt(Math.abs(t.amount))}

@@ -34,7 +34,7 @@ export default async function CustomerLayout({
         unread={unread}
         city={city}
       />
-      <div className="pt-7 px-[var(--pad)] pb-16 max-w-7xl w-full mx-auto">
+      <div className="pt-5 sm:pt-7 px-[var(--pad)] pb-[calc(64px+env(safe-area-inset-bottom))] max-w-7xl w-full mx-auto">
         {children}
       </div>
     </div>

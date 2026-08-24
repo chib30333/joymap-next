@@ -57,13 +57,13 @@ export function PPayouts({
     t("Status"),
   ];
   return (
-    <div className="animate-anim-fade-dash grid grid-cols-[1fr_1.3fr] items-start gap-[var(--gap)]">
+    <div className="animate-anim-fade-dash grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] items-start gap-[var(--gap)]">
       <div className="flex flex-col gap-[var(--gap)]">
-        <div className="bg-[linear-gradient(160deg,#5e1014,var(--maroon))] border border-[color-mix(in_srgb,var(--red)_55%,transparent)] text-[#f3ebe0] rounded-lg p-7 relative overflow-hidden">
+        <div className="bg-[linear-gradient(160deg,#5e1014,var(--maroon))] border border-[color-mix(in_srgb,var(--red)_55%,transparent)] text-[#f3ebe0] rounded-lg p-5 sm:p-7 relative overflow-hidden">
           <div className="text-sm opacity-80 font-semibold mb-2">
             {t("Available balance")}
           </div>
-          <div className="font-display font-extrabold text-4xl tracking-tight">
+          <div className="font-display font-extrabold text-[clamp(28px,8vw,36px)] tracking-tight">
             {money(fin.available)}
           </div>
           <div className="text-sm opacity-80 font-semibold mt-1.5">

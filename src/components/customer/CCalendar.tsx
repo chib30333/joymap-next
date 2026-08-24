@@ -148,7 +148,7 @@ export function CCalendar({
           >
             <Icons.arrowL size={18} />
           </button>
-          <b className="font-display font-extrabold text-xl min-w-[148px] text-center">
+          <b className="font-display font-extrabold text-base sm:text-xl min-w-[110px] sm:min-w-[148px] text-center whitespace-nowrap">
             {view === "month" ? (
               <>
                 {t("June")} 2026
@@ -360,7 +360,7 @@ function MonthGrid({
     cells.push(
       <div
         key={`e${i}`}
-        className="bg-bg min-h-[118px] pt-2 px-2 pb-2.5 text-left flex flex-col gap-1.5 relative cursor-default"
+        className="bg-bg min-h-[62px] sm:min-h-[118px] pt-2 px-1 sm:px-2 pb-2.5 text-left flex flex-col gap-1.5 relative cursor-default"
       />,
     );
   for (let d = 1; d <= CAL_MONTH.days; d++) {
@@ -372,7 +372,7 @@ function MonthGrid({
     cells.push(
       <button
         key={d}
-        className={`bg-surface min-h-[118px] pt-2 px-2 pb-2.5 text-left border-none cursor-pointer flex flex-col gap-1.5 duration-[140ms] relative hover:bg-surface-2 ${
+        className={`bg-surface min-h-[62px] sm:min-h-[118px] pt-2 px-1 sm:px-2 pb-2.5 text-left border-none cursor-pointer flex flex-col gap-1.5 duration-[140ms] relative hover:bg-surface-2 ${
           past ? "opacity-70" : ""
         } ${
           sel === d
@@ -394,7 +394,16 @@ function MonthGrid({
             d
           )}
         </span>
-        <div className="flex flex-col gap-[4px]">
+        {/* A seventh of a phone screen is ~46px, far too narrow for a titled
+            pill, so small screens carry mood dots and the day panel below
+            spells the sessions out once a day is tapped. */}
+        <div className="flex sm:hidden items-center gap-1 flex-wrap">
+          {list.slice(0, 3).map((s) => {
+            const e = byId(s.expId);
+            return e ? <MoodDot key={s.id} mood={e.mood} size={6} /> : null;
+          })}
+        </div>
+        <div className="hidden sm:flex flex-col gap-[4px]">
           {list.slice(0, 3).map((s) => {
             const e = byId(s.expId);
             if (!e) return null;
@@ -431,7 +440,7 @@ function MonthGrid({
       {CAL_WD.map((w) => (
         <div
           key={w}
-          className="bg-surface py-3 px-3 text-xs font-extrabold tracking-wider uppercase text-ink-3 text-left"
+          className="bg-surface py-2 px-1.5 sm:py-3 sm:px-3 text-[10px] sm:text-xs font-extrabold tracking-wider uppercase text-ink-3 text-center sm:text-left"
         >
           {t(w)}
         </div>

@@ -121,10 +121,10 @@ export function Onboarding() {
 
   return (
     <div
-      className="min-h-[calc(100vh-130px)] grid place-items-center px-4 py-7 [background:radial-gradient(1000px_560px_at_82%_-12%,color-mix(in_srgb,var(--red)_24%,transparent),transparent_60%),radial-gradient(820px_480px_at_-8%_112%,color-mix(in_srgb,var(--orange)_16%,transparent),transparent_56%),var(--bg)]"
+      className="min-h-[calc(100dvh-130px)] grid place-items-center px-4 py-7 [background:radial-gradient(1000px_560px_at_82%_-12%,color-mix(in_srgb,var(--red)_24%,transparent),transparent_60%),radial-gradient(820px_480px_at_-8%_112%,color-mix(in_srgb,var(--orange)_16%,transparent),transparent_56%),var(--bg)]"
     >
       <div
-        className="bg-surface border border-line rounded-lg animate-anim-pop-app w-full max-w-[560px] [box-shadow:var(--sh-lg)] overflow-hidden flex flex-col h-[min(86vh,720px)]"
+        className="bg-surface border border-line rounded-lg animate-anim-pop-app w-full max-w-[560px] [box-shadow:var(--sh-lg)] overflow-hidden flex flex-col h-[min(86dvh,720px)]"
       >
         <div className="flex items-center gap-3 py-5 px-6 border-b border-line">
           <div className="relative">

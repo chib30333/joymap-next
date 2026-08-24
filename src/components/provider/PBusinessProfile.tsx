@@ -117,7 +117,7 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
           <div className="w-[84px] h-[84px] rounded bg-[linear-gradient(140deg,var(--m-calm),#2E8C80)] grid text-white font-extrabold text-4xl flex-none [border:4px_solid_var(--surface)] place-items-center [font-family:var(--display)]">
             {(f.name || "?")[0]}
           </div>
-          <div className="flex-1 min-w-[200px] pb-1">
+          <div className="flex-1 min-w-[min(100%,200px)] pb-1">
             <h2 className="text-2xl">{f.name}</h2>
             <div className="text-ink-3 font-semibold mt-1">
               {edit ? (
@@ -158,7 +158,7 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-[1.4fr_1fr] gap-[var(--gap)] items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-[var(--gap)] items-start">
         <div className="bg-surface border border-line rounded-lg p-6">
           <h3 className="text-base mb-3.5">{t("About the business")}</h3>
           {edit ? (
@@ -178,7 +178,7 @@ export function PBusinessProfile({ provider }: { provider: Provider }) {
             </p>
           )}
           <hr className="h-px bg-line border-0 my-5" />
-          <div className="grid grid-cols-[1fr_1fr] gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {CONTACT_FIELDS.map(({ key, label, icon }) => {
               const I = Icons[icon];
               return (

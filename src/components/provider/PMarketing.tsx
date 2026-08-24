@@ -73,7 +73,7 @@ export function PMarketing() {
           {t("Create code")}
         </Button>
       </div>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-[var(--gap)]">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,260px),1fr))] gap-[var(--gap)]">
         {promos.map((p) => (
           <div key={p.code} className="bg-surface border border-line rounded-lg animate-anim-pop-dash p-5">
             <div className="flex items-center justify-between mb-3">

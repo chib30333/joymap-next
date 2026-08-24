@@ -154,9 +154,9 @@ export function CCorporate({
 
   return (
     <div className="animate-anim-fade-app [--gold:#e6a23c]">
-      <div className="relative overflow-hidden rounded-xl text-[#f4e9d8] min-h-[430px] flex items-end [background-image:linear-gradient(95deg,rgba(24,5,7,0.98)_0%,rgba(40,8,11,0.95)_40%,rgba(40,8,11,0.72)_64%,rgba(40,8,11,0.5)_100%),url('/images/corporate-hero.jpg')] bg-cover [background-position:right_28%] py-10 px-11 before:content-[''] before:absolute before:inset-0 before:opacity-30 before:[mix-blend-mode:overlay] before:[background-image:radial-gradient(rgba(255,255,255,0.5)_0.6px,transparent_0.6px)] before:[background-size:10px_10px] before:pointer-events-none [&_h1]:[text-shadow:0_2px_18px_rgba(20,4,6,0.5)] [&_p]:[text-shadow:0_2px_18px_rgba(20,4,6,0.5)]">
+      <div className="relative overflow-hidden rounded-lg sm:rounded-xl text-[#f4e9d8] min-h-[360px] sm:min-h-[430px] flex items-end [background-image:linear-gradient(95deg,rgba(24,5,7,0.98)_0%,rgba(40,8,11,0.95)_40%,rgba(40,8,11,0.72)_64%,rgba(40,8,11,0.5)_100%),url('/images/corporate-hero.jpg')] bg-cover [background-position:right_28%] py-8 sm:py-10 px-5 sm:px-11 before:content-[''] before:absolute before:inset-0 before:opacity-30 before:[mix-blend-mode:overlay] before:[background-image:radial-gradient(rgba(255,255,255,0.5)_0.6px,transparent_0.6px)] before:[background-size:10px_10px] before:pointer-events-none [&_h1]:[text-shadow:0_2px_18px_rgba(20,4,6,0.5)] [&_p]:[text-shadow:0_2px_18px_rgba(20,4,6,0.5)]">
         <div className="relative flex gap-8 items-center flex-wrap">
-          <div className="flex-1 min-w-[280px] max-w-[560px]">
+          <div className="flex-1 min-w-[min(100%,280px)] max-w-[560px]">
             <div className="text-xs font-extrabold tracking-[0.18em] uppercase text-[var(--gold)] mb-4">
               {t("Corporate wellbeing")}
             </div>
@@ -224,7 +224,7 @@ export function CCorporate({
           title={t("Your perks")}
         />
       </div>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(238px,1fr))] gap-[var(--gap)]">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,238px),1fr))] gap-[var(--gap)]">
         {CORP_PERKS.map((p) => {
           const I = Icons[p.icon];
           return (
@@ -288,13 +288,13 @@ export function CCorporate({
           }
         />
       </div>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-[var(--gap)]">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,320px),1fr))] gap-[var(--gap)]">
         {TEAM_EVENTS.map((ev) => (
           <TeamEventCard key={ev.id} ev={ev} byId={byId} onOpen={setOpen} />
         ))}
       </div>
 
-      <div className="grid grid-cols-[1.3fr_1fr] gap-[var(--gap)] mt-10 mx-0 mb-0 items-stretch">
+      <div className="grid grid-cols-1 md:grid-cols-[1.3fr_1fr] gap-[var(--gap)] mt-10 mx-0 mb-0 items-stretch">
         <div
           className="relative overflow-hidden rounded-lg text-[#f4e9d8] cursor-pointer [background:linear-gradient(135deg,#5e1014,#2a0709)] border border-[color-mix(in_srgb,#e6a23c_40%,transparent)] p-5 duration-[180ms] hover:-translate-y-1 hover:shadow-lg"
           onClick={() => setModal("gift")}
@@ -379,7 +379,7 @@ export function CCorporate({
           title={t("Your company plan")}
         />
       </div>
-      <div className="grid grid-cols-[1fr_1.25fr] gap-[var(--gap)] items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.25fr] gap-[var(--gap)] items-start">
         <div className="bg-surface border border-line rounded-lg p-6 duration-[180ms]">
           <div className="flex items-center gap-3 mb-5">
             <span className="grid place-items-center font-display font-extrabold flex-none w-11 h-11 text-xl [background:linear-gradient(140deg,var(--red),var(--orange))] text-white rounded-md">
@@ -717,7 +717,7 @@ function GiftModal({ onClose }: { onClose: () => void }) {
             </div>
           </div>
           <Lbl>{t("Amount")}</Lbl>
-          <div className="grid grid-cols-[repeat(4,1fr)] gap-2 mb-4">
+          <div className="grid grid-cols-2 xs:grid-cols-4 gap-2 mb-4">
             {GIFT_DENOMS.map((d) => (
               <div
                 key={d}

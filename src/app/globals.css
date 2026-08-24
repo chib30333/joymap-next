@@ -92,6 +92,10 @@ body {
 }
 html {
   scroll-behavior: smooth;
+  /* Safety net so a single stray wide child can never shift the whole page
+     sideways on a phone. `clip` rather than `hidden` because `hidden` turns the
+     root into a scroll container and breaks every `position: sticky` header. */
+  overflow-x: clip;
 }
 body {
   font-family: var(--body);
@@ -144,13 +148,13 @@ img {
 .auth-wrap {
   display: grid;
   grid-template-columns: 1fr;
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 .app-top {
   --gap: 24px;
   --pad: 30px;
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   background:
@@ -209,8 +213,11 @@ img {
   width: 100%;
   max-width: 560px;
   border-radius: var(--r-xl) var(--r-xl) 0 0;
-  max-height: 92vh;
+  /* dvh tracks the collapsing mobile URL bar; vh does not, so a 92vh sheet can
+     stand taller than the visible viewport and hide its own footer. */
+  max-height: 92dvh;
   overflow: auto;
+  overscroll-behavior: contain;
 }
 .app-top.fx .scrim .sheet {
   animation: jm-slideUp 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -228,6 +235,14 @@ img {
   border-radius: var(--r-pill);
   padding: 4px;
   gap: 2px;
+  /* An inline-flex group of nowrap buttons cannot shrink, so a four-option
+     segment would run off a phone screen; let it scroll inside itself. */
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.app-top .seg::-webkit-scrollbar {
+  display: none;
 }
 .app-top .seg button {
   padding: 8px 16px;
@@ -256,7 +271,7 @@ img {
 .app {
   display: grid;
   grid-template-columns: 256px 1fr;
-  min-height: 100vh;
+  min-height: 100dvh;
   background:
     radial-gradient(
       1100px 480px at 100% -8%,
@@ -270,6 +285,13 @@ img {
     ),
     var(--bg);
 }
+/* Grid and flex children default to `min-width: auto`, which lets a wide table
+   or chart push the whole column past `1fr` instead of scrolling inside it.
+   Resetting it on the shell columns is what keeps the sidebar layouts honest. */
+.app > * {
+  min-width: 0;
+}
+
 .app.compact {
   --gap: 16px;
   --pad: 20px;
@@ -287,6 +309,15 @@ img {
   border: 1px solid var(--line);
   padding: 4px;
   border-radius: var(--r-pill);
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.jmdash .seg::-webkit-scrollbar {
+  display: none;
+}
+.jmdash .seg button {
+  white-space: nowrap;
 }
 .jmdash .seg button {
   padding: 7px 15px;
@@ -346,12 +377,54 @@ img {
   }
 }
 
-/* Phone gutters: 30px of padding either side eats a third of a 320px screen. */
+/* Gutters and grid gaps step down with the viewport: 30px either side eats a
+   fifth of a 320px screen, and a 24px gap between stacked cards reads as dead
+   space once the columns collapse. */
+@media (max-width: 900px) {
+  .app,
+  .app-top,
+  .jmdash {
+    --pad: 22px;
+    --gap: 18px;
+  }
+}
 @media (max-width: 600px) {
   .app,
   .app-top,
   .jmdash {
-    --pad: 18px;
-    --gap: 16px;
+    --pad: 16px;
+    --gap: 14px;
+  }
+}
+
+/* Horizontal card rails (Joy Map week, calendar strips, wide tables). Momentum
+   scrolling on iOS, and `contain` so swiping a rail to its end doesn't chain
+   into a browser back-navigation gesture. */
+.rail {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+@media (pointer: coarse) {
+  /* Double-tap-to-zoom adds a 300ms delay before every tap registers. */
+  button,
+  [role="button"],
+  a[href] {
+    touch-action: manipulation;
+  }
+  /* Safari zooms the page whenever a focused field is under 16px, and the
+     dashboard skin sets its inputs to 14px. Below the sidebar breakpoint the
+     zoom is worse than the density it buys. */
+  @media (max-width: 900px) {
+    input,
+    select,
+    textarea {
+      font-size: 16px;
+    }
   }
 }

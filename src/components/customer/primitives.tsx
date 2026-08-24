@@ -225,14 +225,14 @@ export function SectionHead({
   action?: ReactNode;
 }) {
   return (
-    <div className="flex items-end justify-between gap-4 mb-5">
-      <div>
+    <div className="flex items-end justify-between gap-3 sm:gap-4 mb-5 flex-wrap">
+      <div className="min-w-0">
         {eyebrow && (
           <div className="text-xs font-bold tracking-widest uppercase text-orange mb-2">
             {eyebrow}
           </div>
         )}
-        <h2 className="text-2xl">{title}</h2>
+        <h2 className="text-xl sm:text-2xl">{title}</h2>
       </div>
       {action}
     </div>
@@ -265,7 +265,7 @@ export function Modal({
       onClick={onClose}
     >
       <div
-        className="bg-bg w-full max-w-[var(--mw,560px)] rounded-t-xl max-h-[92vh] overflow-auto min-[760px]:rounded-xl animate-anim-slideup motion-reduce:animate-none"
+        className="bg-bg w-full max-w-[var(--mw,560px)] rounded-t-xl max-h-[92dvh] overflow-auto overscroll-contain pb-[env(safe-area-inset-bottom)] min-[760px]:rounded-xl min-[760px]:pb-0 animate-anim-slideup motion-reduce:animate-none"
         style={maxWidth ? cssVars({ "--mw": maxWidth + "px" }) : undefined}
         onClick={(e) => e.stopPropagation()}
       >

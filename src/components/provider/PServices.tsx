@@ -81,7 +81,7 @@ export function PServices({ svcs }: { svcs: Svc[] }) {
           </Button>
         </div>
       ) : (
-        <div className="grid [grid-template-columns:repeat(auto-fill,minmax(300px,1fr))] gap-[var(--gap)]">
+        <div className="grid [grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))] gap-[var(--gap)]">
           {svcs.map((s) => {
             const m = MOODS[s.mood];
             return (

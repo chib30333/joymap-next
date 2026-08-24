@@ -33,7 +33,7 @@ export default async function ProviderLayout({
         providerName={provider.name}
         badges={badges}
       />
-      <div className="pt-7 px-[var(--pad)] pb-16 max-w-[1280px] w-full mx-auto">
+      <div className="pt-5 sm:pt-7 px-[var(--pad)] pb-[calc(64px+env(safe-area-inset-bottom))] max-w-[1280px] w-full mx-auto">
         {provider.status !== "active" && (
           <ProviderBanner
             status={provider.status}

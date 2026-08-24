@@ -45,18 +45,18 @@ export default function AuthPage() {
 
   return (
     <div className="auth-wrap">
-      <div className="flex flex-col items-center justify-center gap-4 px-8 py-10 relative bg-bg">
+      <div className="flex flex-col items-center justify-center gap-4 px-5 sm:px-8 pt-16 pb-10 sm:py-10 relative bg-bg">
         <div className="flex items-center justify-between w-full max-w-[420px] mb-1">
           <Link href="/" className="inline-flex no-underline">
             <Logo size={26} />
           </Link>
         </div>
-        <div className="absolute top-5 [inset-inline-end:24px] z-10">
+        <div className="absolute top-5 [inset-inline-end:20px] sm:[inset-inline-end:24px] z-10">
           <LangSwitcher />
         </div>
 
         <div
-          className={`w-full max-w-[420px] bg-surface border border-line rounded-xl shadow-lg pt-6 px-6 pb-6 animate-anim-cardin motion-reduce:animate-none ${
+          className={`w-full max-w-[420px] bg-surface border border-line rounded-lg sm:rounded-xl shadow-lg p-5 sm:p-6 animate-anim-cardin motion-reduce:animate-none ${
             busy ? "pointer-events-none" : ""
           }`}
         >

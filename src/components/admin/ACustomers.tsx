@@ -40,7 +40,7 @@ export function ACustomers({ list }: { list: Customer[] }) {
           {t("Export LTV")}
         </Button>
       </div>
-      <div className="grid [grid-template-columns:repeat(auto-fit,minmax(200px,1fr))] gap-[var(--gap)] mb-[var(--gap)]">
+      <div className="grid [grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))] gap-[var(--gap)] mb-[var(--gap)]">
         <Stat
           label={t("Customers")}
           value={String(list.length)}
