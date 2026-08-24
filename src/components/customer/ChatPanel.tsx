@@ -58,7 +58,7 @@ export function ChatPanel({
 
   if (threads.length === 0) {
     return (
-      <div className="grid grid-cols-[1fr] h-[calc(100vh-150px)] min-h-[480px] bg-surface border border-line rounded-lg overflow-hidden animate-anim-fade-app">
+      <div className="grid grid-cols-[1fr] h-[calc(100dvh-240px)] sm:h-[calc(100dvh-150px)] min-h-[420px] sm:min-h-[480px] bg-surface border border-line rounded-lg overflow-hidden animate-anim-fade-app">
         <div className="min-w-0 bg-bg grid place-items-center text-[var(--ink-3)]">
           <div className="text-center max-w-[340px] p-5">
             <Icons.chat size={40} />
@@ -81,9 +81,9 @@ export function ChatPanel({
   }
 
   return (
-    <div className="grid grid-cols-[300px_1fr] max-[760px]:grid-cols-[1fr] h-[calc(100vh-150px)] min-h-[480px] bg-surface border border-line rounded-lg overflow-hidden animate-anim-fade-app">
+    <div className="grid grid-cols-[300px_1fr] max-[760px]:grid-cols-[1fr] h-[calc(100dvh-240px)] sm:h-[calc(100dvh-150px)] min-h-[420px] sm:min-h-[480px] bg-surface border border-line rounded-lg overflow-hidden animate-anim-fade-app">
       <div
-        className={`border-r border-line overflow-y-auto flex flex-col [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${cur ? "max-[760px]:hidden" : ""}`}
+        className={`border-r border-line overflow-y-auto flex flex-col [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${active ? "max-[760px]:hidden" : ""}`}
       >
         {threads.map((th) => (
           <div
@@ -127,21 +127,38 @@ export function ChatPanel({
         ))}
       </div>
 
+      {/* Master/detail: one pane at a time below 760px, both side by side above
+          it. Without the back arrow a phone would open the first thread and
+          have no way back to the list. */}
       {thread ? (
-        <div className="flex flex-col min-w-0 bg-bg">
-          <div className="flex items-center gap-3 py-3.5 px-5 border-b border-line bg-surface">
+        <div
+          className={`flex flex-col min-w-0 bg-bg ${active ? "" : "max-[760px]:hidden"}`}
+        >
+          <div className="flex items-center gap-3 py-3.5 px-4 sm:px-5 border-b border-line bg-surface">
+            <button
+              aria-label={t("Back")}
+              className="min-[761px]:hidden w-9 h-9 -ms-1 flex-none rounded-pill grid place-items-center text-ink-2 duration-150 cursor-pointer hover:bg-surface-2 hover:text-ink"
+              onClick={() => setActive(null)}
+            >
+              <Icons.arrowL size={18} />
+            </button>
             <Avatar name={thread.who} size={40} />
             <div className="flex-1 min-w-0">
-              <div className="font-extrabold text-base">{thread.who}</div>
-              <div className="text-xs text-ink-3 font-semibold">
+              <div className="font-extrabold text-base truncate">
+                {thread.who}
+              </div>
+              <div className="text-xs text-ink-3 font-semibold truncate">
                 {thread.service || t("Joymap chat")}
               </div>
             </div>
-            <button className="w-11 h-11 rounded-pill grid place-items-center bg-surface border border-line text-ink-2 duration-150 relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2">
+            <button
+              aria-label={t("Call")}
+              className="w-11 h-11 flex-none rounded-pill grid place-items-center bg-surface border border-line text-ink-2 duration-150 relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
+            >
               <Icons.phone size={17} />
             </button>
           </div>
-          <div className="flex-1 overflow-y-auto p-5 flex flex-col gap-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" ref={bodyRef}>
+          <div className="flex-1 overflow-y-auto p-4 sm:p-5 flex flex-col gap-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" ref={bodyRef}>
             {thread.msgs.length === 0 && (
               <div className="self-center text-ink-3 text-sm font-semibold py-8 px-0">
                 {t("Say hello — messages are delivered instantly.")}
@@ -150,7 +167,7 @@ export function ChatPanel({
             {thread.msgs.map((m, i) => (
               <div
                 key={i}
-                className={`max-w-[74%] py-3 px-4 rounded text-sm leading-normal ${
+                className={`max-w-[86%] sm:max-w-[74%] py-3 px-4 rounded text-sm leading-normal break-words ${
                   m.from === "me"
                     ? "self-end bg-coral text-white rounded-br-md"
                     : "self-start bg-surface border border-line rounded-bl-md text-ink"
@@ -186,7 +203,7 @@ export function ChatPanel({
           </div>
         </div>
       ) : (
-        <div className="min-w-0 bg-bg grid place-items-center text-[var(--ink-3)]">
+        <div className="min-w-0 bg-bg grid place-items-center text-[var(--ink-3)] max-[760px]:hidden">
           <div className="text-center">
             <Icons.chat size={40} />
             <p className="mt-2.5 font-semibold">{t("Select a conversation")}</p>

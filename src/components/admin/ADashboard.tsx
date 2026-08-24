@@ -116,7 +116,7 @@ export function ADashboard({
   ];
   return (
     <div className="animate-anim-fade-dash">
-      <div className="grid [grid-template-columns:repeat(auto-fit,minmax(210px,1fr))] gap-[var(--gap)] mb-[var(--gap)]">
+      <div className="grid [grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr))] gap-[var(--gap)] mb-[var(--gap)]">
         {statCards.map((c) => (
           <Stat
             key={c.label}

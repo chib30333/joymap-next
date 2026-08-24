@@ -95,7 +95,7 @@ export function CProfile({
 
   return (
     <div className="animate-anim-fade-app">
-      <div className="bg-surface border border-line rounded-lg p-6 flex gap-5 items-center mb-5 flex-wrap">
+      <div className="bg-surface border border-line rounded-lg p-5 sm:p-6 flex gap-4 sm:gap-5 items-center mb-5 flex-wrap">
         <div className="relative">
           <Avatar name={form.name || "?"} size={72} />
           <button
@@ -104,7 +104,7 @@ export function CProfile({
             <Icons.camera size={15} />
           </button>
         </div>
-        <div className="flex-1 min-w-[180px]">
+        <div className="flex-1 min-w-[min(100%,180px)]">
           <h2 className="text-2xl">{form.name}</h2>
           <div className="text-ink-3 font-semibold mt-1 flex gap-3 flex-wrap">
             <span className="inline-flex gap-1.5 items-center">

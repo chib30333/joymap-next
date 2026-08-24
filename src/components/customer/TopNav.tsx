@@ -53,15 +53,19 @@ export function TopNav({
 
   return (
     <header className="sticky top-0 z-40 bg-[color-mix(in_srgb,var(--bg)_82%,transparent)] [backdrop-filter:blur(16px)] [-webkit-backdrop-filter:blur(16px)] border-b border-line">
-      <div className="flex items-center gap-4 py-3.5 px-8 max-[720px]:flex-wrap">
+      {/* Wrapping row: on phones and tablets the search box drops to a
+          full-width line of its own (order-last) so the brand and the account
+          controls still fit across a 320px screen. Only from lg up — where the
+          row is wide enough for a usable field — does it sit inline. */}
+      <div className="flex flex-wrap items-center gap-2 sm:gap-3 lg:gap-4 py-3 px-[var(--pad)]">
         <div className="flex items-center gap-2.5 flex-none">
           <Logo size={26} />
-          <span className="inline-flex items-center gap-1.5 whitespace-nowrap bg-[color-mix(in_srgb,var(--orange)_16%,transparent)] text-orange-deep py-1 px-2 rounded-pill text-[10px] font-extrabold font-display">
+          <span className="hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap bg-[color-mix(in_srgb,var(--orange)_16%,transparent)] text-orange-deep py-1 px-2 rounded-pill text-[10px] font-extrabold font-display">
             <span className="w-1.5 h-1.5 rounded-pill bg-orange" />
             Live now!
           </span>
         </div>
-        <div className="flex-1 max-w-[460px] relative mx-2">
+        <div className="relative order-last w-full min-w-0 lg:order-none lg:w-auto lg:flex-1 lg:max-w-[460px] lg:mx-2">
           <span className="absolute text-ink-3 start-[15px] top-1/2 [transform:translateY(-50%)]">
             <Icons.search size={18} />
           </span>
@@ -81,16 +85,17 @@ export function TopNav({
         <div className="flex-1" />
         <CityMenu city={city} />
         <button
-          className="w-11 h-11 rounded-pill grid place-items-center bg-surface border border-line text-ink-2 duration-150 relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
+          aria-label={t("Notifications")}
+          className="w-10 h-10 sm:w-11 sm:h-11 flex-none rounded-pill grid place-items-center bg-surface border border-line text-ink-2 duration-150 relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
           onClick={() => router.push("/notifications")}
         >
           <Icons.bell size={19} />
-          {unread > 0 && <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-coral border-2 border-surface" />}
+          {unread > 0 && <span className="absolute top-2 right-2 sm:top-2.5 sm:right-2.5 w-2 h-2 rounded-full bg-coral border-2 border-surface" />}
         </button>
         <LangSwitcher />
         <AccountMenu user={user} />
       </div>
-      <div className="flex items-center gap-0.5 px-8 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="rail flex items-center gap-0.5 px-[var(--pad)]">
         {NAV.map((n) => {
           const I = Icons[n.icon];
           const b = (badges as Record<string, number | null>)[n.key];
@@ -99,7 +104,7 @@ export function TopNav({
           return (
             <button
               key={n.key}
-              className={`inline-flex items-center gap-2 py-3.5 px-4 font-semibold text-sm whitespace-nowrap cursor-pointer relative duration-[140ms] border-b-[2.5px] border-solid mb-[-1px] hover:text-ink ${on ? "text-coral border-coral [&_svg]:text-coral" : "text-ink-2 border-transparent"}`}
+              className={`inline-flex items-center gap-2 py-3 sm:py-3.5 px-3 sm:px-4 font-semibold text-sm whitespace-nowrap cursor-pointer relative duration-[140ms] border-b-[2.5px] border-solid mb-[-1px] hover:text-ink ${on ? "text-coral border-coral [&_svg]:text-coral" : "text-ink-2 border-transparent"}`}
               onClick={() => router.push(n.href)}
             >
               <I size={18} />
@@ -132,20 +137,23 @@ function CityMenu({ city }: { city: string }) {
     router.refresh();
   };
   return (
-    <div ref={ref} className="relative">
+    <div ref={ref} className="relative flex-none">
+      {/* Phones show the pin alone — the city name costs ~60px of a 320px row,
+          and the open menu marks the current city anyway. */}
       <button
-        className="inline-flex items-center gap-2 rounded-pill text-sm font-semibold border border-line-2 bg-surface text-ink-2 cursor-pointer duration-[140ms] whitespace-nowrap hover:border-ink-3 hover:text-ink px-3.5 py-2.5"
+        aria-label={t(city)}
+        className="inline-flex items-center gap-2 rounded-pill text-sm font-semibold border border-line-2 bg-surface text-ink-2 cursor-pointer duration-[140ms] whitespace-nowrap hover:border-ink-3 hover:text-ink h-10 sm:h-11 px-3 sm:px-3.5"
         onClick={() => setOpen((o) => !o)}
       >
         <Icons.pin size={16} />
-        {t(city)}
+        <span className="hidden sm:inline max-w-[10ch] truncate">{t(city)}</span>
         <Icons.chevR
           size={14}
           className="[transform:rotate(90deg)] opacity-60"
         />
       </button>
       {open && (
-        <div className="absolute end-0 top-[54px] bg-surface border border-line rounded shadow-lg p-2 z-[60] animate-anim-pop-app min-w-[180px]">
+        <div className="absolute end-0 top-[calc(100%+8px)] bg-surface border border-line rounded shadow-lg p-2 z-[60] animate-anim-pop-app min-w-[180px] max-w-[calc(100vw-2*var(--pad))]">
           {CITIES.map((c) => (
             <button
               key={c}
@@ -185,16 +193,16 @@ function AccountMenu({ user }: { user: { name: string; plan: string } }) {
     router.push("/auth");
   };
   return (
-    <div ref={ref} className="relative">
-      <div className="flex items-center gap-2 cursor-pointer p-1 rounded-pill duration-[140ms] hover:bg-surface-2" onClick={() => setOpen((o) => !o)}>
-        <Avatar name={user.name} size={38} />
+    <div ref={ref} className="relative flex-none">
+      <div className="flex items-center gap-1.5 cursor-pointer p-1 rounded-pill duration-[140ms] hover:bg-surface-2" onClick={() => setOpen((o) => !o)}>
+        <Avatar name={user.name} size={36} />
         <Icons.chevR
           size={15}
-          className="[transform:rotate(90deg)] text-[var(--ink-3)]"
+          className="[transform:rotate(90deg)] text-[var(--ink-3)] hidden sm:block"
         />
       </div>
       {open && (
-        <div className="absolute end-0 top-[54px] min-w-[248px] bg-surface border border-line rounded shadow-lg p-2 z-[60] animate-anim-pop-app">
+        <div className="absolute end-0 top-[calc(100%+8px)] w-[248px] max-w-[calc(100vw-2*var(--pad))] bg-surface border border-line rounded shadow-lg p-2 z-[60] animate-anim-pop-app">
           <div className="flex items-center gap-3 pt-2 px-2.5 pb-3">
             <Avatar name={user.name} size={42} />
             <div className="min-w-0">

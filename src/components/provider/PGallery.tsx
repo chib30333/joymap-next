@@ -25,7 +25,7 @@ export function PGalleryView() {
           {t("Upload")}
         </Button>
       </div>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-[var(--gap)]">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,220px),1fr))] gap-[var(--gap)]">
         <label className="rounded-lg flex flex-col items-center justify-center gap-2 text-ink-3 cursor-pointer bg-surface-2 [aspect-ratio:4/3] [border:2px_dashed_var(--line-2)]">
           <Icons.image size={28} />
           <span className="font-bold text-sm">{t("Add photo or video")}</span>

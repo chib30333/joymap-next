@@ -65,7 +65,7 @@ export function AContent({ items }: { items: FlagItem[] }) {
           {t("Reported reviews, photos and promos land here.")}
         </EmptyState>
       ) : (
-        <div className="grid [grid-template-columns:repeat(auto-fill,minmax(340px,1fr))] gap-[var(--gap)]">
+        <div className="grid [grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr))] gap-[var(--gap)]">
           {list.map((c) => {
             const { label: tl, color: tc } = TYPE[c.type] || {
               label: "Item",

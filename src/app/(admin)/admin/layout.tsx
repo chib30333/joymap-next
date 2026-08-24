@@ -38,7 +38,7 @@ export default async function AdminLayout({
       <AdminSidebar badges={badges} />
       <div className="min-w-0 flex flex-col">
         <AdminTopbar name={user.name || "Admin"} unread={unread} />
-        <div className="pt-6 px-[var(--pad)] pb-16 max-w-[1280px] w-full mx-auto">
+        <div className="pt-5 sm:pt-6 px-[var(--pad)] pb-[calc(64px+env(safe-area-inset-bottom))] max-w-[1280px] w-full mx-auto">
           {children}
         </div>
       </div>

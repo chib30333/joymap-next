@@ -80,7 +80,7 @@ export function Stat({
         )}
         {label}
       </div>
-      <div className="font-display font-extrabold text-3xl tracking-tight leading-none whitespace-nowrap">{value}</div>
+      <div className="font-display font-extrabold text-2xl sm:text-3xl tracking-tight leading-none whitespace-nowrap">{value}</div>
       <div className="flex items-center gap-2">
         {delta != null && (
           <span
@@ -106,14 +106,14 @@ export function SectionHead({
   action?: ReactNode;
 }) {
   return (
-    <div className="flex items-end justify-between gap-4 mb-5">
-      <div>
+    <div className="flex items-end justify-between gap-3 sm:gap-4 mb-5 flex-wrap">
+      <div className="min-w-0">
         {eyebrow && (
           <div className="text-xs font-extrabold tracking-widest uppercase text-orange mb-2">
             {eyebrow}
           </div>
         )}
-        <h2 className="text-2xl">{title}</h2>
+        <h2 className="text-xl sm:text-2xl">{title}</h2>
       </div>
       {action}
     </div>

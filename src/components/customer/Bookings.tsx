@@ -92,17 +92,20 @@ export function Bookings({ upcoming, past }: { upcoming: B[]; past: B[] }) {
             return (
               <div
                 key={b.id}
-                className="bg-surface border border-line rounded-lg animate-anim-pop-app flex gap-0 overflow-hidden [animation-delay:var(--ad)]"
+                className="bg-surface border border-line rounded-lg animate-anim-pop-app flex flex-col sm:flex-row gap-0 overflow-hidden [animation-delay:var(--ad)]"
                 style={{ "--ad": `${i * 0.05}s` } as React.CSSProperties}
               >
+                {/* The photo is a 144px rail beside the details on tablet and up,
+                    and a banner above them once that would leave the text
+                    column too narrow to read. */}
                 <div
-                  className="w-36 flex-none relative [background:var(--cell-bg)]"
+                  className="h-24 sm:h-auto sm:w-36 flex-none relative [background:var(--cell-bg)] bg-cover bg-center"
                   style={{ "--cell-bg": bg(e) } as React.CSSProperties}
                 >
                   <div className="absolute inset-0 mix-blend-overlay bg-[radial-gradient(rgba(255,255,255,0.9)_0.6px,transparent_0.6px)] bg-[length:7px_7px] opacity-[0.16]" />
                 </div>
-                <div className="flex-1 py-4 px-6 flex items-center gap-5 flex-wrap">
-                  <div className="flex-1 min-w-[180px]">
+                <div className="flex-1 min-w-0 py-4 px-4 sm:px-6 flex items-center gap-4 sm:gap-5 flex-wrap">
+                  <div className="flex-1 min-w-[min(100%,180px)]">
                     <span
                       className="inline-flex items-center gap-2 rounded-pill font-bold cursor-pointer duration-[140ms] border-2 border-solid border-transparent px-2 py-1 text-xs mb-2 [background:var(--chip-bg)] text-[var(--chip-c)]"
                       style={

@@ -138,7 +138,7 @@ function PromoBanner({
 
 function Hero() {
   return (
-    <section className="relative min-h-[88vh] flex items-center overflow-hidden text-white">
+    <section className="relative min-h-[88svh] flex items-center overflow-hidden text-white">
       <div className="absolute inset-0 bg-[url('/images/hero-bg.jpg')] bg-cover bg-[center_40%]" />
       <div className="absolute inset-0 [background:linear-gradient(95deg,rgba(20,8,10,0.86)_0%,rgba(28,10,12,0.66)_42%,rgba(28,10,12,0.28)_100%),linear-gradient(0deg,rgba(20,8,10,0.7)_0%,transparent_38%)]" />
       <Container className="relative py-14 max-[760px]:py-10 w-full">

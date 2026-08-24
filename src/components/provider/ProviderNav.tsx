@@ -144,7 +144,7 @@ export function ProviderNav({
   const { title, sub } = TITLES[pathname] || { title: "Overview", sub: welcome };
   return (
     <header className="sticky top-0 z-40 bg-[color-mix(in_srgb,var(--bg)_82%,transparent)] [backdrop-filter:blur(16px)] [-webkit-backdrop-filter:blur(16px)] border-b border-line">
-      <div className="flex items-center gap-4 py-3.5 px-[var(--pad)]">
+      <div className="flex items-center gap-2 sm:gap-3 lg:gap-4 py-3 px-[var(--pad)]">
         <div
           className="flex items-center gap-2 flex-none cursor-pointer"
           role="button"
@@ -159,28 +159,35 @@ export function ProviderNav({
           title={t("Go to Overview")}
         >
           <Logo size={25} />
-          <span className="inline-flex items-center gap-1.5 whitespace-nowrap bg-[color-mix(in_srgb,var(--orange)_16%,transparent)] text-orange-deep py-1 px-2 rounded-pill text-[10px] font-extrabold font-display">
+          <span className="hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap bg-[color-mix(in_srgb,var(--orange)_16%,transparent)] text-orange-deep py-1 px-2 rounded-pill text-[10px] font-extrabold font-display">
             <span className="w-1.5 h-1.5 rounded-pill bg-orange" />
             {t("Partner")}
           </span>
         </div>
-        <div className="min-w-0 ms-1.5">
-          <h1 className="text-lg leading-none">{t(title)}</h1>
+        {/* The page title shares the row with the account controls, so it has to
+            be the part that gives: it truncates rather than pushing them off. */}
+        <div className="min-w-0 flex-1 ms-1.5 hidden xs:block">
+          <h1 className="text-base sm:text-lg leading-none truncate">
+            {t(title)}
+          </h1>
           {sub && (
-            <div className="text-xs text-ink-3 font-semibold mt-px whitespace-nowrap overflow-hidden text-ellipsis">
+            <div className="text-xs text-ink-3 font-semibold mt-px truncate hidden md:block">
               {t(sub)}
             </div>
           )}
         </div>
-        <div className="flex-1" />
-        <button className="w-10 h-10 rounded-pill grid place-items-center bg-surface border border-line text-ink-2 duration-150 relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2">
+        <div className="flex-1 xs:hidden" />
+        <button
+          aria-label={t("Notifications")}
+          className="w-10 h-10 flex-none rounded-pill grid place-items-center bg-surface border border-line text-ink-2 duration-150 relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
+        >
           <Icons.bell size={18} />
           <span className="absolute top-2 right-2.5 w-2 h-2 rounded-full bg-coral border-2 border-surface" />
         </button>
         <LangSwitcher />
         <AccountMenu name={name} />
       </div>
-      <div className="flex items-center gap-0.5 px-[var(--pad)] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="rail flex items-center gap-0.5 px-[var(--pad)]">
         {P_NAV.map((n, i) => {
           if (isSection(n))
             return (
@@ -221,7 +228,7 @@ function NavTab({
   const Icon = Icons[item.icon];
   return (
     <button
-      className={`inline-flex items-center gap-2 py-3.5 px-4 font-semibold text-sm whitespace-nowrap cursor-pointer relative duration-[140ms] border-b-2 border-solid -mb-px hover:text-ink ${active ? "text-coral border-coral [&_svg]:text-coral" : "text-ink-2 border-transparent"}`}
+      className={`inline-flex items-center gap-2 py-3 sm:py-3.5 px-3 sm:px-4 font-semibold text-sm whitespace-nowrap cursor-pointer relative duration-[140ms] border-b-2 border-solid -mb-px hover:text-ink ${active ? "text-coral border-coral [&_svg]:text-coral" : "text-ink-2 border-transparent"}`}
       onClick={onSelect}
     >
       <Icon size={17} />
@@ -250,16 +257,16 @@ function AccountMenu({ name }: { name: string }) {
     router.push("/auth");
   };
   return (
-    <div ref={ref} className="relative">
-      <div className="flex items-center gap-2 cursor-pointer p-1 rounded-pill duration-[140ms] hover:bg-surface-2" onClick={() => setOpen((o) => !o)}>
-        <Avatar name={name} size={38} grad={grad} />
+    <div ref={ref} className="relative flex-none">
+      <div className="flex items-center gap-1.5 cursor-pointer p-1 rounded-pill duration-[140ms] hover:bg-surface-2" onClick={() => setOpen((o) => !o)}>
+        <Avatar name={name} size={36} grad={grad} />
         <Icons.chevR
           size={15}
-          className="[transform:rotate(90deg)] text-ink-3"
+          className="[transform:rotate(90deg)] text-ink-3 hidden sm:block"
         />
       </div>
       {open && (
-        <div className="absolute end-0 top-14 min-w-[248px] bg-surface border border-line rounded shadow-lg p-2 z-[60] animate-anim-pop-app">
+        <div className="absolute end-0 top-[calc(100%+8px)] w-[248px] max-w-[calc(100vw-2*var(--pad))] bg-surface border border-line rounded shadow-lg p-2 z-[60] animate-anim-pop-app">
           <div className="flex items-center gap-3 pt-2 px-2.5 pb-3">
             <Avatar name={name} size={42} grad={grad} />
             <div className="min-w-0">

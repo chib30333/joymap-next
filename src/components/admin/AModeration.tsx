@@ -76,7 +76,7 @@ export function AModeration({
           <h3 className="text-base mt-1 mx-0 mb-3.5">
             {t("Provider applications")}
           </h3>
-          <div className="grid [grid-template-columns:repeat(auto-fill,minmax(320px,1fr))] gap-[var(--gap)] mb-[var(--gap)]">
+          <div className="grid [grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr))] gap-[var(--gap)] mb-[var(--gap)]">
             {apps.map((m) => (
               <div key={m.id} className="bg-surface border border-line rounded-lg animate-anim-pop-dash p-5">
                 <div className="flex items-center gap-3 mb-3.5">
@@ -138,7 +138,7 @@ export function AModeration({
           <h3 className="text-base mt-1 mx-0 mb-3.5">
             {t("Service submissions")}
           </h3>
-          <div className="grid [grid-template-columns:repeat(auto-fill,minmax(320px,1fr))] gap-[var(--gap)]">
+          <div className="grid [grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr))] gap-[var(--gap)]">
             {svcs.map((s) => {
               const m = MOODS[s.mood] || MOODS.calm;
               return (

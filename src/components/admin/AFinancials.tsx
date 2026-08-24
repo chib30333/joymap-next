@@ -81,7 +81,7 @@ export function AFinancials({ s, queue }: { s: FinancialStats; queue: PayoutRow[
   ];
   return (
     <div className="animate-anim-fade-dash">
-      <div className="grid [grid-template-columns:repeat(auto-fit,minmax(200px,1fr))] gap-[var(--gap)] mb-[var(--gap)]">
+      <div className="grid [grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))] gap-[var(--gap)] mb-[var(--gap)]">
         {stats.map((stat) => (
           <Stat
             key={stat.label}
@@ -94,7 +94,7 @@ export function AFinancials({ s, queue }: { s: FinancialStats; queue: PayoutRow[
         ))}
       </div>
       <TableCard>
-        <div className="flex items-center justify-between px-5 py-5">
+        <div className="flex items-center justify-between gap-3 flex-wrap px-5 py-5">
           <h3 className="text-lg">{t("Payouts queue")}</h3>
           <Button
             ctx="dash"

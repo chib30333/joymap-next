@@ -85,7 +85,7 @@ export function JoyMapScreen({
             {t("This week")} · {weekLabel}
           </div>
           <h1
-            className="max-w-[560px] leading-none text-[clamp(30px,4vw,44px)]"
+            className="max-w-[560px] leading-none text-[clamp(26px,5.2vw,44px)]"
           >
             {greet}, {userName}.{" "}
             <span className="text-[var(--orange)]">
@@ -140,8 +140,10 @@ export function JoyMapScreen({
         <>
           <MoodArc map={map} byId={byId} />
           <div className="relative mt-7">
+            {/* The week rail bleeds into the page gutter on phones so a card can
+                sit flush with the screen edge while still scrolling past it. */}
             <div
-              className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden flex gap-4 overflow-x-auto pb-2.5 [scroll-snap-type:x_proximity]"
+              className="rail flex gap-4 pb-2.5 [scroll-snap-type:x_proximity] -mx-[var(--pad)] px-[var(--pad)] [scroll-padding-inline:var(--pad)] sm:mx-0 sm:px-0"
             >
               {map.map((d, i) => (
                 <DayCard
@@ -230,14 +232,16 @@ function MoodArc({
   byId: ByIdFn;
 }) {
   const t = useT();
+  // The caption sits above the bars on phones: side by side it left only ~27px
+  // per day, which is narrower than the weekday labels underneath them.
   return (
     <div
-      className="bg-surface border border-line rounded-lg px-5 py-3.5 flex items-center gap-3.5 overflow-x-auto"
+      className="bg-surface border border-line rounded-lg px-4 sm:px-5 py-3.5 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3.5"
     >
       <span className="text-xs font-bold text-ink-3 tracking-wider uppercase flex-none">
         {t("Your emotional arc")}
       </span>
-      <div className="flex items-center gap-0 flex-1 min-w-[420px]">
+      <div className="flex items-center gap-0 flex-1 min-w-0">
         {map.map((d) => {
           const e = d.rest ? null : byId(d.expId);
           const m = e ? MOODS[e.mood] : null;
@@ -280,7 +284,7 @@ function DayCard({
   if (d.rest || !e) {
     return (
       <div
-        className="border border-line rounded-lg animate-anim-pop-app flex-none w-[230px] [scroll-snap-align:start] p-5 flex flex-col bg-surface-2 [border-style:dashed] [animation-delay:var(--ad)]"
+        className="border border-line rounded-lg animate-anim-pop-app flex-none w-[min(66vw,230px)] [scroll-snap-align:start] p-5 flex flex-col bg-surface-2 [border-style:dashed] [animation-delay:var(--ad)]"
         style={{ "--ad": `${i * 0.06}s` } as React.CSSProperties}
       >
         <div className="flex items-center justify-between">
@@ -313,7 +317,7 @@ function DayCard({
   );
   return (
     <div
-      className="bg-surface border border-line rounded-lg animate-anim-pop-app flex-none w-[268px] [scroll-snap-align:start] overflow-hidden cursor-pointer duration-200 [animation-delay:var(--ad)]"
+      className="bg-surface border border-line rounded-lg animate-anim-pop-app flex-none w-[min(78vw,268px)] [scroll-snap-align:start] overflow-hidden cursor-pointer duration-200 [animation-delay:var(--ad)]"
       onClick={() => onOpen(e)}
       style={{ "--ad": `${i * 0.06}s` } as React.CSSProperties}
     >

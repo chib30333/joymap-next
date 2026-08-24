@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { LangProvider } from "@/components/Language";
@@ -53,6 +53,16 @@ export const metadata: Metadata = {
   title: "Joymap",
   description:
     "Mood-based experiences marketplace: customers, providers, and platform admin.",
+};
+
+// `viewport-fit: cover` lets the sticky headers and bottom padding read the
+// safe-area insets on notched phones; without it iOS reserves the inset itself
+// and the layout loses width. `maximumScale` is left alone so pinch-zoom keeps
+// working.
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({

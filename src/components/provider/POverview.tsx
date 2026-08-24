@@ -122,7 +122,7 @@ export function POverview({
   ];
   return (
     <div className="animate-anim-fade-dash">
-      <div className="grid [grid-template-columns:repeat(auto-fit,minmax(210px,1fr))] gap-[var(--gap)] mb-[var(--gap)]">
+      <div className="grid [grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr))] gap-[var(--gap)] mb-[var(--gap)]">
         {kpis.map((k, i) => {
           const I = Icons[k.icon];
           return (
@@ -137,7 +137,7 @@ export function POverview({
           );
         })}
       </div>
-      <div className="grid grid-cols-[1.5fr_1fr] gap-[var(--gap)] mb-[var(--gap)]">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-[var(--gap)] mb-[var(--gap)]">
         <div className="bg-surface border border-line rounded-lg p-6">
           <div className="flex items-end justify-between gap-4 mb-2">
             <div>

@@ -34,7 +34,7 @@ export function Favorites({
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(270px,1fr))] gap-[var(--gap)]">
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,270px),1fr))] gap-[var(--gap)]">
           {list.map((e) => (
             <ExperienceCard
               key={e.id}

@@ -123,21 +123,23 @@ export function PCalendar({ svcs, slots }: { svcs: Svc[]; slots: Slot[] }) {
 
   return (
     <div className="animate-anim-fade-dash">
-      <div className="flex items-end justify-between gap-4 mb-5">
-        <div>
+      <div className="flex items-end justify-between gap-3 sm:gap-4 mb-5 flex-wrap">
+        <div className="min-w-0">
           <div className="text-xs font-extrabold tracking-widest uppercase text-orange mb-1.5">
             {t("Week of")} {TODAY}–{Math.min(TODAY + 6, 30)} {t("Jun")} · {total}{" "}
             {t("sessions")}
           </div>
           <h2 className="text-xl">{t("Schedule")}</h2>
         </div>
-        <div className="flex items-center gap-2.5 text-ink-3 text-sm font-bold">
+        {/* Drag-and-drop has no touch equivalent here, so the hint only shows
+            where a mouse is actually available. */}
+        <div className="hidden lg:flex items-center gap-2.5 text-ink-3 text-sm font-bold">
           <Icons.briefcase size={16} />
           {t("Drag a service onto a day — saved instantly")}
         </div>
       </div>
       <div className="grid grid-cols-[240px_1fr] gap-[var(--gap)] items-start max-[920px]:grid-cols-[1fr]">
-        <aside className="sticky top-[94px] flex flex-col gap-2 bg-surface border border-line rounded-lg p-4">
+        <aside className="sticky top-[94px] max-[920px]:static flex flex-col gap-2 bg-surface border border-line rounded-lg p-4">
           <div className="text-xs font-extrabold tracking-wider uppercase text-ink-3">
             {t("Your services")}
           </div>

@@ -56,8 +56,8 @@ export function AProviders({ rows }: { rows: Provider[] }) {
     ]);
   return (
     <div className="animate-anim-fade-dash">
-      <div className="flex items-end justify-between gap-4 mb-5">
-        <div className="relative flex-1 max-w-[340px]">
+      <div className="flex items-end justify-between gap-3 sm:gap-4 mb-5 flex-wrap">
+        <div className="relative flex-1 min-w-[min(100%,220px)] max-w-[340px]">
           <span className="absolute left-3.5 top-1/2 text-ink-3 [transform:translateY(-50%)]">
             <Icons.search size={17} />
           </span>
@@ -68,7 +68,7 @@ export function AProviders({ rows }: { rows: Provider[] }) {
             className="!pl-[42px] !rounded-[var(--r-pill)]"
           />
         </div>
-        <div className="flex gap-2.5">
+        <div className="flex gap-2.5 flex-wrap">
           <Seg
             value={st}
             options={[
