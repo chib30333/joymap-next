@@ -40,8 +40,8 @@ function initials(name: string) {
 
 export function Testimonials() {
   return (
-    <section className="pb-24 pt-0" id="stories">
-      <div className="max-w-7xl mx-auto px-12">
+    <section className="pb-24 max-[760px]:pb-16 pt-0" id="stories">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         <Reveal className="max-w-[680px] mx-auto mb-12 text-center">
           <div className="text-xs font-extrabold tracking-widest uppercase text-orange">Loved in the city</div>
           <h2 className="text-[clamp(28px,3.6vw,46px)] mt-3.5">Real weeks, real joy.</h2>

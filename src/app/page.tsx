@@ -40,7 +40,11 @@ const FEATURES: Feature[] = [
 /* -------------------------------------------------------------------------- */
 
 function Container({ className = "", children }: { className?: string; children: ReactNode }) {
-  return <div className={`max-w-7xl mx-auto px-12 ${className}`.trimEnd()}>{children}</div>;
+  return (
+    <div className={`max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 ${className}`.trimEnd()}>
+      {children}
+    </div>
+  );
 }
 
 /** Small uppercase orange kicker used above every section heading. */
@@ -111,12 +115,12 @@ function PromoBanner({
   children: ReactNode;
 }) {
   return (
-    <section className="pb-24" id={id}>
+    <section className="pb-24 max-[760px]:pb-16" id={id}>
       <Container>
-        <Reveal className="relative overflow-hidden rounded-xl min-h-[420px] flex items-center text-white">
+        <Reveal className="relative overflow-hidden rounded-xl min-h-[420px] max-[760px]:min-h-[340px] flex items-center text-white">
           <div className={`absolute inset-0 bg-cover ${position} ${image}`} />
           <div className={`absolute inset-0 ${gradient}`} />
-          <div className={`relative p-14 max-w-2xl ${align}`.trimEnd()}>
+          <div className={`relative p-14 max-[760px]:p-7 max-w-2xl ${align}`.trimEnd()}>
             <Eyebrow className="text-xs">{eyebrow}</Eyebrow>
             <h2 className="text-[clamp(28px,3.4vw,44px)] text-white">{title}</h2>
             <p className="text-base text-white/85 leading-normal mt-4 mb-7">{body}</p>
@@ -137,14 +141,17 @@ function Hero() {
     <section className="relative min-h-[88vh] flex items-center overflow-hidden text-white">
       <div className="absolute inset-0 bg-[url('/images/hero-bg.jpg')] bg-cover bg-[center_40%]" />
       <div className="absolute inset-0 [background:linear-gradient(95deg,rgba(20,8,10,0.86)_0%,rgba(28,10,12,0.66)_42%,rgba(28,10,12,0.28)_100%),linear-gradient(0deg,rgba(20,8,10,0.7)_0%,transparent_38%)]" />
-      <Container className="relative py-14 w-full">
+      <Container className="relative py-14 max-[760px]:py-10 w-full">
         <Eyebrow className="text-sm mb-4">Moscow · marketplace of real-life experiences</Eyebrow>
         <h1 className="text-[clamp(38px,6vw,76px)] text-white">
-          Your week, <span className="text-orange">mapped <br /> to your mood.</span>
+          Your week,{" "}
+          <span className="text-orange">
+            mapped <br className="max-[760px]:hidden" /> to your mood.
+          </span>
         </h1>
-        <p className="text-[clamp(16px,1.7vw,20px)] text-white/85 w-1/2 mt-5">
+        <p className="text-[clamp(16px,1.7vw,20px)] text-white/85 w-1/2 max-[880px]:w-full max-[880px]:max-w-[46ch] mt-5">
           From sunrise rooftop yoga to neon karting, Joymap&apos;s AI reads how you want to
-          feel and books the experiences that get you there. <br />
+          feel and books the experiences that get you there. <br className="max-[760px]:hidden" />
           One subscription, infinite joy.
         </p>
         <div className="flex gap-3 flex-wrap mt-9">
@@ -155,7 +162,7 @@ function Hero() {
             See how it works
           </Button>
         </div>
-        <div className="flex gap-10 mt-12 flex-wrap">
+        <div className="flex gap-x-10 gap-y-6 mt-12 max-[760px]:mt-9 flex-wrap">
           {STATS.map((stat) => (
             <StatCard key={stat.label} {...stat} />
           ))}
@@ -167,7 +174,7 @@ function Hero() {
 
 function MoodPicker() {
   return (
-    <section className="py-24" id="experiences">
+    <section className="py-24 max-[760px]:py-16" id="experiences">
       <Container>
         <Reveal className="max-w-2xl mx-auto mb-12 text-center">
           <Eyebrow className="text-xs">Discover by feeling</Eyebrow>
@@ -189,7 +196,7 @@ function MoodPicker() {
 
 function Explorers() {
   return (
-    <section className="pb-24">
+    <section className="pb-24 max-[760px]:pb-16">
       <Container>
         <Reveal className="grid grid-cols-2 gap-14 items-center max-[880px]:grid-cols-1 max-[880px]:gap-8">
           <div className="rounded-xl overflow-hidden aspect-[4/3] shadow-lg relative">
@@ -225,7 +232,7 @@ function Explorers() {
 
 function FinalCta() {
   return (
-    <section className="text-center py-24">
+    <section className="text-center py-24 max-[760px]:py-16">
       <Container>
         <Reveal>
           <Eyebrow className="text-xs mb-3.5">Live now in Moscow</Eyebrow>

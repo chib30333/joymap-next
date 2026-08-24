@@ -337,3 +337,21 @@ img {
 .jmdash .sheet {
   animation: slideUp 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
+
+/* Below the sidebar breakpoint the admin nav turns into an off-canvas drawer
+   (see AdminShell), so the shell drops to a single full-width column. */
+@media (max-width: 899px) {
+  .app {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Phone gutters: 30px of padding either side eats a third of a 320px screen. */
+@media (max-width: 600px) {
+  .app,
+  .app-top,
+  .jmdash {
+    --pad: 18px;
+    --gap: 16px;
+  }
+}
