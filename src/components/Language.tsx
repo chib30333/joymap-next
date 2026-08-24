@@ -33,13 +33,19 @@ export function LangProvider({ children }: { children: ReactNode }) {
       if (saved) setLangState(saved);
     } catch {}
   }, []);
+  // Keep the document in sync with the active language. `lang` drives locale
+  // handling in screen readers and the browser's own font selection, so it has
+  // to follow the switcher rather than stay pinned to the server-rendered "en".
+  useEffect(() => {
+    document.documentElement.lang = lang;
+    document.documentElement.dir =
+      (LANGS.find((l) => l.code === lang)?.rtl ?? false) ? "rtl" : "ltr";
+  }, [lang]);
   const setLang = useCallback((c: string) => {
     setLangState(c);
     try {
       localStorage.setItem("jm_lang", c);
     } catch {}
-    const rtl = LANGS.find((l) => l.code === c)?.rtl ?? false;
-    document.documentElement.dir = rtl ? "rtl" : "ltr";
   }, []);
   return <Ctx.Provider value={{ lang, setLang }}>{children}</Ctx.Provider>;
 }

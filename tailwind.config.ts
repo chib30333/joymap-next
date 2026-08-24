@@ -30,8 +30,21 @@ const config: Config = {
         "m-connect": "#FF8A4C",
       },
       fontFamily: {
-        display: ["var(--font-display)", "system-ui", "sans-serif"],
-        body: ["var(--font-body)", "system-ui", "sans-serif"],
+        // The Cyrillic face sits directly behind its Latin counterpart: the
+        // browser falls back per character, so Russian text picks it up while
+        // Latin stays on the original face.
+        display: [
+          "var(--font-display)",
+          "var(--font-display-cyrillic)",
+          "system-ui",
+          "sans-serif",
+        ],
+        body: [
+          "var(--font-body)",
+          "var(--font-body-cyrillic)",
+          "system-ui",
+          "sans-serif",
+        ],
       },
       borderRadius: {
         xs: "8px",
