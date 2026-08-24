@@ -5,8 +5,8 @@
   "description": "Joymap — mood-based experiences marketplace (Customer / Provider / Admin portals)",
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/prisma-generate.mjs && prisma db push --skip-generate && next build",
-    "start": "next start",
+    "build": "node scripts/prisma-generate.mjs && next build",
+    "start": "node scripts/db-push.mjs && next start",
     "lint": "next lint",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
