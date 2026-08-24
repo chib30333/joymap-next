@@ -6,7 +6,11 @@ import {
   flags,
   unreadNotifications,
 } from "@/server/selectors";
-import { AdminSidebar, AdminTopbar } from "@/components/admin/AdminShell";
+import {
+  AdminShell,
+  AdminSidebar,
+  AdminTopbar,
+} from "@/components/admin/AdminShell";
 
 export default async function AdminLayout({
   children,
@@ -30,7 +34,7 @@ export default async function AdminLayout({
   };
 
   return (
-    <div className="app jmdash fx">
+    <AdminShell>
       <AdminSidebar badges={badges} />
       <div className="min-w-0 flex flex-col">
         <AdminTopbar name={user.name || "Admin"} unread={unread} />
@@ -38,6 +42,6 @@ export default async function AdminLayout({
           {children}
         </div>
       </div>
-    </div>
+    </AdminShell>
   );
 }

@@ -131,6 +131,11 @@ export const Icons: Record<string, (p?: IcProps) => JSX.Element> = {
       <path d="M6 6l12 12M18 6 6 18" />
     </Ic>
   ),
+  menu: (p) => (
+    <Ic {...p}>
+      <path d="M4 7h16M4 12h16M4 17h16" />
+    </Ic>
+  ),
   plus: (p) => (
     <Ic {...p}>
       <path d="M12 5v14M5 12h14" />

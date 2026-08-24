@@ -32,6 +32,8 @@ const ru: Dict = {
   Financials: "Финансы",
 
   "Log out": "Выйти",
+  "Open menu": "Открыть меню",
+  "Close menu": "Закрыть меню",
   "Your profile": "Ваш профиль",
   Settings: "Настройки",
   "Switch portal": "Сменить портал",
