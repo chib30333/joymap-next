@@ -35,8 +35,13 @@
   --line: #f4dde2;
   --line-2: #eccbd3;
 
-  --display: var(--font-display), "Baloo 2", system-ui, sans-serif;
-  --body: var(--font-body), "Hanken Grotesk", system-ui, sans-serif;
+  /* Baloo 2 and Hanken Grotesk carry no Cyrillic, so the Nunito/Manrope entries
+     behind them catch Russian text per character. They must precede system-ui,
+     which would otherwise claim those glyphs first. */
+  --display: var(--font-display), "Baloo 2", var(--font-display-cyrillic),
+    system-ui, sans-serif;
+  --body: var(--font-body), "Hanken Grotesk", var(--font-body-cyrillic),
+    system-ui, sans-serif;
 
   --r-xs: 8px;
   --r-sm: 12px;
