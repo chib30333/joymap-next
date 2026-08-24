@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Image from "next/image";
 import { Reveal } from "@/components/landing/Reveal";
 import { Button } from "@/components/ui";
 import { Header } from "@/components/landing/Header";
@@ -192,10 +193,12 @@ function Explorers() {
       <Container>
         <Reveal className="grid grid-cols-2 gap-14 items-center max-[880px]:grid-cols-1 max-[880px]:gap-8">
           <div className="rounded-xl overflow-hidden aspect-[4/3] shadow-lg relative">
-            <img
-              className="w-full h-full object-cover"
+            <Image
+              className="object-cover"
               src="/images/hero-bg.jpg"
               alt="Experiences across the city"
+              fill
+              sizes="(max-width: 880px) 100vw, 50vw"
             />
           </div>
           <div>

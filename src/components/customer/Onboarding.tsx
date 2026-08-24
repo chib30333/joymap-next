@@ -62,6 +62,8 @@ export function Onboarding() {
       );
       setStep(1);
     })();
+    // Intro sequence must run exactly once on mount; re-running would duplicate messages.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     scroll.current?.scrollTo({ top: 9e9, behavior: "smooth" });
@@ -299,7 +301,7 @@ function BuildingMap() {
       560,
     );
     return () => clearInterval(timer);
-  }, []);
+  }, [steps.length]);
   return (
     <div
       className="animate-anim-pop-app border border-line rounded-lg p-5 bg-surface-2 self-stretch"

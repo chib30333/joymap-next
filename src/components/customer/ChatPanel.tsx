@@ -35,10 +35,11 @@ export function ChatPanel({
   const bodyRef = useRef<HTMLDivElement>(null);
   const cur = active || (threads[0] ? threads[0].id : null);
   const thread = threads.find((th) => th.id === cur);
+  const msgCount = thread ? thread.msgs.length : 0;
 
   useEffect(() => {
     bodyRef.current?.scrollTo({ top: 9e9 });
-  }, [cur, thread ? thread.msgs.length : 0]);
+  }, [cur, msgCount]);
 
   const open = (id: string) => {
     setActive(id);
