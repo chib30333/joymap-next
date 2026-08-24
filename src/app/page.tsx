@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Reveal } from "@/components/landing/Reveal";
 import { Button } from "@/components/ui";
 import { Header } from "@/components/landing/Header";
+import { HeroSearch } from "@/components/landing/HeroSearch";
 import { Footer } from "@/components/landing/Footer";
 import { Testimonials } from "@/components/landing/Testimonials";
 
@@ -140,8 +141,11 @@ function Hero() {
   return (
     <section className="relative min-h-[88svh] flex items-center overflow-hidden text-white">
       <div className="absolute inset-0 bg-[url('/images/hero-bg.jpg')] bg-cover bg-[center_40%]" />
-      <div className="absolute inset-0 [background:linear-gradient(95deg,rgba(20,8,10,0.86)_0%,rgba(28,10,12,0.66)_42%,rgba(28,10,12,0.28)_100%),linear-gradient(0deg,rgba(20,8,10,0.7)_0%,transparent_38%)]" />
-      <Container className="relative py-14 max-[760px]:py-10 w-full">
+      {/* The scrim is centred on the copy rather than weighted to one side: a
+          left-heavy gradient would leave the middle of the headline sitting on
+          the bright part of the photo. */}
+      <div className="absolute inset-0 [background:radial-gradient(115%_85%_at_50%_50%,rgba(20,8,10,0.7)_0%,rgba(20,8,10,0.9)_100%),linear-gradient(0deg,rgba(20,8,10,0.7)_0%,transparent_38%)]" />
+      <Container className="relative py-14 max-[760px]:py-10 w-full text-center">
         <Eyebrow className="text-sm mb-4">Moscow · marketplace of real-life experiences</Eyebrow>
         <h1 className="text-[clamp(38px,6vw,76px)] text-white">
           Your week,{" "}
@@ -149,12 +153,13 @@ function Hero() {
             mapped <br className="max-[760px]:hidden" /> to your mood.
           </span>
         </h1>
-        <p className="text-[clamp(16px,1.7vw,20px)] text-white/85 w-1/2 max-[880px]:w-full max-[880px]:max-w-[46ch] mt-5">
+        <p className="text-[clamp(16px,1.7vw,20px)] text-white/85 max-w-[52ch] mx-auto mt-5">
           From sunrise rooftop yoga to neon karting, Joymap&apos;s AI reads how you want to
           feel and books the experiences that get you there. <br className="max-[760px]:hidden" />
           One subscription, infinite joy.
         </p>
-        <div className="flex gap-3 flex-wrap mt-9">
+        <HeroSearch />
+        <div className="flex gap-3 flex-wrap justify-center mt-8 max-[760px]:mt-7">
           <Button ctx="lp" variant="primary" href="/auth">
             Start exploring →
           </Button>
@@ -162,7 +167,7 @@ function Hero() {
             See how it works
           </Button>
         </div>
-        <div className="flex gap-x-10 gap-y-6 mt-12 max-[760px]:mt-9 flex-wrap">
+        <div className="flex gap-x-10 gap-y-6 mt-12 max-[760px]:mt-9 flex-wrap justify-center">
           {STATS.map((stat) => (
             <StatCard key={stat.label} {...stat} />
           ))}

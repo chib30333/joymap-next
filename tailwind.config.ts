@@ -83,6 +83,19 @@ const config: Config = {
         jmcardin: { from: { transform: "translateY(16px)" }, to: { transform: "none" } },
         jmfade: { from: { opacity: "0" }, to: { opacity: "1" } },
         jmslideup: { from: { opacity: "0", transform: "translateY(24px)" }, to: { opacity: "1", transform: "none" } },
+        // Suggestion rails under the hero search. The track holds the row twice,
+        // so shifting it by half its width lands exactly on the copy.
+        marquee: { from: { transform: "translateX(0)" }, to: { transform: "translateX(-50%)" } },
+        // Hero search: the halo sweeps its gradient angle (see @property
+        // --jm-halo in globals.css), the caret blinks, the sparkle does one
+        // turn when it drops an idea into the field.
+        halo: { to: { "--jm-halo": "360deg" } },
+        caret: { "0%,100%": { opacity: "1" }, "50%": { opacity: "0" } },
+        sparklepop: {
+          "0%": { transform: "none" },
+          "45%": { transform: "rotate(180deg) scale(1.22)" },
+          "100%": { transform: "rotate(360deg) scale(1)" },
+        },
       },
       animation: {
         sweep: "sweep 1.4s ease-in-out infinite",
@@ -100,6 +113,12 @@ const config: Config = {
         // modal scrim fade + sheet slide-up (.fx-gated entrances)
         "anim-fade": "jmfade .25s ease both",
         "anim-slideup": "jmslideup .35s cubic-bezier(.22,1,.36,1) both",
+        // hero suggestion rails — the two rows drift apart at different speeds
+        "anim-marquee": "marquee 42s linear infinite",
+        "anim-marquee-rev": "marquee 52s linear infinite reverse",
+        "anim-halo": "halo 7s linear infinite",
+        "anim-caret": "caret 1.05s steps(1,end) infinite",
+        "anim-sparkle": "sparklepop .7s cubic-bezier(.22,1,.36,1)",
       },
     },
   },
