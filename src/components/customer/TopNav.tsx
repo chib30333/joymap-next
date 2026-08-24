@@ -56,7 +56,9 @@ export function TopNav({
       {/* Wrapping row: on phones and tablets the search box drops to a
           full-width line of its own (order-last) so the brand and the account
           controls still fit across a 320px screen. Only from lg up — where the
-          row is wide enough for a usable field — does it sit inline. */}
+          row is wide enough for a usable field — does it sit inline. Below sm
+          the city picker rides along on that second line, which is what buys
+          the first row enough width to keep the account controls together. */}
       <div className="flex flex-wrap items-center gap-2 sm:gap-3 lg:gap-4 py-3 px-[var(--pad)]">
         <div className="flex items-center gap-2.5 flex-none">
           <Logo size={26} />
@@ -65,35 +67,43 @@ export function TopNav({
             Live now!
           </span>
         </div>
-        <div className="relative order-last w-full min-w-0 lg:order-none lg:w-auto lg:flex-1 lg:max-w-[460px] lg:mx-2">
-          <span className="absolute text-ink-3 start-[15px] top-1/2 [transform:translateY(-50%)]">
-            <Icons.search size={18} />
-          </span>
-          <Input
-            placeholder={t("Search activities, moods, places…")}
-            value={query}
-            onChange={(e) => search(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") submitSearch();
-            }}
-            onFocus={() => {
-              if (pathname !== "/discover") router.push("/discover");
-            }}
-            className="[padding-inline-start:44px] [border-radius:var(--r-pill)] [background:var(--surface)]"
-          />
+        <div className="order-last flex w-full min-w-0 items-center gap-2 lg:order-none lg:w-auto lg:flex-1 lg:max-w-[460px] lg:mx-2">
+          <CityMenu city={city} className="sm:hidden" />
+          <div className="relative flex-1 min-w-0">
+            <span className="absolute text-ink-3 start-[15px] top-1/2 [transform:translateY(-50%)]">
+              <Icons.search size={18} />
+            </span>
+            <Input
+              placeholder={t("Search activities, moods, places…")}
+              value={query}
+              onChange={(e) => search(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") submitSearch();
+              }}
+              onFocus={() => {
+                if (pathname !== "/discover") router.push("/discover");
+              }}
+              className="[padding-inline-start:44px] [border-radius:var(--r-pill)] [background:var(--surface)]"
+            />
+          </div>
         </div>
         <div className="flex-1" />
-        <CityMenu city={city} />
-        <button
-          aria-label={t("Notifications")}
-          className="w-10 h-10 sm:w-11 sm:h-11 flex-none rounded-pill grid place-items-center bg-surface border border-line text-ink-2 duration-150 relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
-          onClick={() => router.push("/notifications")}
-        >
-          <Icons.bell size={19} />
-          {unread > 0 && <span className="absolute top-2 right-2 sm:top-2.5 sm:right-2.5 w-2 h-2 rounded-full bg-coral border-2 border-surface" />}
-        </button>
-        <LangSwitcher />
-        <AccountMenu user={user} />
+        {/* The account controls travel as one unbreakable cluster: the avatar
+            has to stay next to the language switcher, never drop to its own
+            line, however narrow the screen gets. */}
+        <div className="flex flex-none items-center gap-2 sm:gap-3 lg:gap-4">
+          <CityMenu city={city} className="hidden sm:block" />
+          <button
+            aria-label={t("Notifications")}
+            className="w-10 h-10 sm:w-11 sm:h-11 flex-none rounded-pill grid place-items-center bg-surface border border-line text-ink-2 duration-150 relative cursor-pointer hover:text-ink hover:border-line-2 hover:bg-surface-2"
+            onClick={() => router.push("/notifications")}
+          >
+            <Icons.bell size={19} />
+            {unread > 0 && <span className="absolute top-2 right-2 sm:top-2.5 sm:right-2.5 w-2 h-2 rounded-full bg-coral border-2 border-surface" />}
+          </button>
+          <LangSwitcher />
+          <AccountMenu user={user} />
+        </div>
       </div>
       <div className="rail flex items-center gap-0.5 px-[var(--pad)]">
         {NAV.map((n) => {
@@ -118,7 +128,7 @@ export function TopNav({
   );
 }
 
-function CityMenu({ city }: { city: string }) {
+function CityMenu({ city, className = "" }: { city: string; className?: string }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -137,12 +147,13 @@ function CityMenu({ city }: { city: string }) {
     router.refresh();
   };
   return (
-    <div ref={ref} className="relative flex-none">
-      {/* Phones show the pin alone — the city name costs ~60px of a 320px row,
-          and the open menu marks the current city anyway. */}
+    <div ref={ref} className={`relative flex-none ${className}`.trimEnd()}>
+      {/* Phones show the pin alone — the city name costs ~60px that the search
+          field next to it needs, and the open menu marks the current city
+          anyway. */}
       <button
         aria-label={t(city)}
-        className="inline-flex items-center gap-2 rounded-pill text-sm font-semibold border border-line-2 bg-surface text-ink-2 cursor-pointer duration-[140ms] whitespace-nowrap hover:border-ink-3 hover:text-ink h-10 sm:h-11 px-3 sm:px-3.5"
+        className="inline-flex items-center gap-2 rounded-pill text-sm font-semibold border border-line-2 bg-surface text-ink-2 cursor-pointer duration-[140ms] whitespace-nowrap hover:border-ink-3 hover:text-ink h-11 px-3 sm:px-3.5"
         onClick={() => setOpen((o) => !o)}
       >
         <Icons.pin size={16} />
@@ -153,7 +164,7 @@ function CityMenu({ city }: { city: string }) {
         />
       </button>
       {open && (
-        <div className="absolute end-0 top-[calc(100%+8px)] bg-surface border border-line rounded shadow-lg p-2 z-[60] animate-anim-pop-app min-w-[180px] max-w-[calc(100vw-2*var(--pad))]">
+        <div className="absolute start-0 sm:start-auto sm:end-0 top-[calc(100%+8px)] bg-surface border border-line rounded shadow-lg p-2 z-[60] animate-anim-pop-app min-w-[180px] max-w-[calc(100vw-2*var(--pad))]">
           {CITIES.map((c) => (
             <button
               key={c}
