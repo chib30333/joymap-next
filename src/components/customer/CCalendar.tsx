@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Icons } from "@/components/Icons";
 import { useT } from "@/components/Language";
 import {
@@ -81,7 +81,10 @@ export function CCalendar({
   wallet: number;
 }) {
   const t = useT();
-  const byId = (id: string) => catalog.find((e) => e.id === id) || null;
+  const byId = useCallback(
+    (id: string) => catalog.find((e) => e.id === id) || null,
+    [catalog],
+  );
   const calAreas = useMemo(
     () => Array.from(new Set(catalog.map((e) => e.area))).sort(),
     [catalog],
@@ -111,7 +114,7 @@ export function CCalendar({
 
   const sessions = useMemo(
     () => allSessions.filter((s) => calPasses(s, f, byId)),
-    [allSessions, f],
+    [allSessions, f, byId],
   );
   const byDay = useMemo(() => {
     const m: Record<number, Session[]> = {};
