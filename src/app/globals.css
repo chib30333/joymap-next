@@ -428,3 +428,13 @@ img {
     }
   }
 }
+
+/* The hero search halo sweeps the angle of its own conic gradient. A custom
+   property is only interpolable once it is registered with a type, so the
+   sweep needs this; browsers without @property keep the halo at 0deg, which
+   still reads as a coral glow — it just doesn't rotate. */
+@property --jm-halo {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
