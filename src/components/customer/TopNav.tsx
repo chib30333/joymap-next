@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { Icons, Logo } from "@/components/Icons";
 import { LangSwitcher, useT } from "@/components/Language";
 import { Avatar, CITIES } from "@/components/customer/primitives";
@@ -42,14 +42,26 @@ export function TopNav({
 }) {
   const router = useRouter();
   const pathname = usePathname();
+  const params = useSearchParams();
   const t = useT();
-  const [query, setQuery] = useState("");
+  const urlQuery = params.get("q") || "";
+  const [query, setQuery] = useState(urlQuery);
 
-  const search = (v: string) => {
-    setQuery(v);
+  // The field mirrors the URL. Arriving on /discover?q=… from the landing hero,
+  // or stepping back through history, has to leave the box showing the term the
+  // results are actually filtered on.
+  useEffect(() => {
+    setQuery(urlQuery);
+  }, [urlQuery]);
+
+  const submitSearch = () => {
+    const q = query.trim();
+    router.push(`/discover${q ? `?q=${encodeURIComponent(q)}` : ""}`);
   };
-  const submitSearch = () =>
-    router.push(`/discover${query ? `?q=${encodeURIComponent(query)}` : ""}`);
+  const clearSearch = () => {
+    setQuery("");
+    router.push("/discover");
+  };
 
   return (
     <header className="sticky top-0 z-40 bg-[color-mix(in_srgb,var(--bg)_82%,transparent)] [backdrop-filter:blur(16px)] [-webkit-backdrop-filter:blur(16px)] border-b border-line">
@@ -74,17 +86,31 @@ export function TopNav({
               <Icons.search size={18} />
             </span>
             <Input
+              type="search"
+              enterKeyHint="search"
               placeholder={t("Search activities, moods, places…")}
               value={query}
-              onChange={(e) => search(e.target.value)}
+              onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter") submitSearch();
+                if (e.key === "Escape" && query) clearSearch();
               }}
               onFocus={() => {
                 if (pathname !== "/discover") router.push("/discover");
               }}
-              className="[padding-inline-start:44px] [border-radius:var(--r-pill)] [background:var(--surface)]"
+              className="[padding-inline-start:44px] [padding-inline-end:40px] [border-radius:var(--r-pill)] [background:var(--surface)] [&::-webkit-search-cancel-button]:hidden"
             />
+            {/* Our own clear control rather than the native one: the term has to
+                come out of the URL too, not just out of the box. */}
+            {query && (
+              <button
+                aria-label={t("Clear search")}
+                className="absolute end-[6px] top-1/2 [transform:translateY(-50%)] w-8 h-8 rounded-pill grid place-items-center text-ink-3 cursor-pointer duration-[140ms] hover:text-ink hover:bg-surface-2"
+                onClick={clearSearch}
+              >
+                <Icons.close size={16} />
+              </button>
+            )}
           </div>
         </div>
         <div className="flex-1" />
@@ -199,9 +225,12 @@ function AccountMenu({ user }: { user: { name: string; plan: string } }) {
     document.addEventListener("mousedown", h);
     return () => document.removeEventListener("mousedown", h);
   }, []);
+  // Full document load, not router.push: dropping the session invalidates every
+  // page this tab has cached, and a client-side push would happily re-render
+  // the signed-in shell from that stale cache.
   const logout = async () => {
     await rpc("logout");
-    router.push("/auth");
+    window.location.assign("/auth");
   };
   return (
     <div ref={ref} className="relative flex-none">

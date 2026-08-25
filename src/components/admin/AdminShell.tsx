@@ -103,9 +103,11 @@ export function AdminSidebar({
   const pathname = usePathname();
   const t = useT();
   const { open, setOpen } = useContext(DrawerCtx);
+  // Full document load — see the note in the customer TopNav: the router cache
+  // outlives the session and would re-render the signed-in shell.
   const logout = async () => {
     await rpc("logout");
-    router.push("/auth");
+    window.location.assign("/auth");
   };
   return (
     <>

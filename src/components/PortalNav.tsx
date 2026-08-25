@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { rpc } from "@/lib/client";
 import { Avatar } from "@/components/ui";
 import { clsx } from "@/lib/cx";
@@ -31,10 +31,11 @@ export function PortalNav({
   tabs: string[][];
 }) {
   const pathname = usePathname();
-  const router = useRouter();
+  // Full document load — see the note in the customer TopNav: the router cache
+  // outlives the session and would re-render the signed-in shell.
   async function logout() {
     await rpc("logout");
-    router.push("/auth");
+    window.location.assign("/auth");
   }
   return (
     <header className="sticky top-0 z-20 border-b border-line bg-bg/85 backdrop-blur">

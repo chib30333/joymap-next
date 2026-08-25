@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Icons } from "@/components/Icons";
 import {
   MOODS,
@@ -55,23 +56,49 @@ export function Catalog({
   initialQuery?: string;
 }) {
   const t = useT();
+  const router = useRouter();
   const [mood, setMood] = useState<string | null>(null);
   const [cat, setCat] = useState("All");
   const [sort, setSort] = useState("Recommended");
-  const [query] = useState(initialQuery || "");
+  const [query, setQuery] = useState(initialQuery || "");
   const [open, setOpen] = useState<Exp | null>(null);
   const onFav = useFav();
+
+  // Searching again from the header pushes a new `?q=` onto the same route, so
+  // React re-renders this component with a new prop instead of remounting it.
+  // Without this sync the initial state would freeze on the first query and
+  // every later search would look like it did nothing.
+  useEffect(() => {
+    setQuery(initialQuery || "");
+  }, [initialQuery]);
 
   const list = useMemo(() => {
     let l = source;
     if (mood) l = l.filter((e) => e.mood === mood);
     if (cat !== "All") l = l.filter((e) => e.cat === cat);
-    if (query.trim()) {
-      const q = query.toLowerCase();
-      l = l.filter((e) =>
-        (e.title + e.cat + e.area + MOODS[e.mood].label + e.tags.join())
-          .toLowerCase()
-          .includes(q),
+    const q = query.trim().toLowerCase();
+    if (q) {
+      // Word by word rather than one substring: the hero rail hands us phrases
+      // like "Neon karting", which as a single string matches nothing while
+      // "Neon Drift Karting" is sitting right there. Words of one or two
+      // letters are noise ("at", "a") unless they are the whole query.
+      const long = q.split(/\s+/).filter((w) => w.length > 2);
+      const words = long.length ? long : [q];
+      const hay = (e: Exp) =>
+        [e.title, e.cat, e.area, MOODS[e.mood].label, ...e.tags]
+          .join(" ")
+          .toLowerCase();
+      const scored = l
+        .map((e) => {
+          const h = hay(e);
+          return { e, hits: words.filter((w) => h.includes(w)).length };
+        })
+        .filter((r) => r.hits > 0);
+      // Prefer the rows that match every word; only if none do fall back to the
+      // partial matches, best first, so a long phrase never dead-ends on zero.
+      const every = scored.filter((r) => r.hits === words.length);
+      l = (every.length ? every : scored.sort((a, b) => b.hits - a.hits)).map(
+        (r) => r.e,
       );
     }
     if (sort === "Price") l = [...l].sort((a, b) => a.price - b.price);
@@ -134,7 +161,7 @@ export function Catalog({
         </div>
       </div>
 
-      <div className="flex items-baseline gap-2.5 mb-4">
+      <div className="flex items-center gap-2.5 flex-wrap mb-4">
         <span className="font-bold text-base">
           {list.length} {list.length !== 1 ? t("experiences") : t("experience")}
         </span>
@@ -142,6 +169,21 @@ export function Catalog({
           {t("in")} {city}
           {mood ? ` · ${t(MOODS[mood].label)}` : ""}
         </span>
+        {/* The search term lives in the URL and is applied silently, so without
+            this chip a filtered catalogue is indistinguishable from an empty
+            one — and there is nothing to click to get back to everything. */}
+        {query.trim() && (
+          <button
+            className="inline-flex items-center gap-1.5 max-w-full min-w-0 py-1 px-3 rounded-pill text-sm font-semibold bg-coral-soft text-coral-deep border border-transparent cursor-pointer duration-[140ms] hover:border-coral"
+            onClick={() => {
+              setQuery("");
+              router.replace("/discover");
+            }}
+          >
+            <span className="truncate">&ldquo;{query.trim()}&rdquo;</span>
+            <Icons.close size={14} />
+          </button>
+        )}
       </div>
 
       {list.length === 0 ? (
