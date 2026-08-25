@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Icons, Logo } from "@/components/Icons";
 import { LangSwitcher } from "@/components/Language";
@@ -12,7 +11,6 @@ import { SignupForm } from "../../components/auth/SignupForm";
 import { ResetFlow } from "../../components/auth/ResetFlow";
 
 export default function AuthPage() {
-  const router = useRouter();
   const [mode, setMode] = useState<"login" | "signup" | "reset">("login");
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
@@ -32,11 +30,20 @@ export default function AuthPage() {
         : "/joymap";
 
   // Shared submit driver: flip busy/err, navigate on success.
+  //
+  // A full document load rather than router.push. Signing in changes who the
+  // server thinks we are, which invalidates every RSC payload this tab has
+  // cached — including the redirect back here that the router stored when the
+  // visitor first hit a guarded page while signed out. Pushing into that cache
+  // replays the redirect and drops them back on this screen with the spinner
+  // still turning, which reads as "login is broken" even though the session was
+  // created. Leaving the SPA behind is the only way to guarantee the
+  // destination renders against the new cookie.
   const runAuth = (p: Promise<{ role: string }>) => {
     setBusy(true);
     setErr(null);
     p.then((u) => {
-      setTimeout(() => router.push(dest(u)), 250);
+      setTimeout(() => window.location.assign(dest(u)), 250);
     }).catch((er: Error) => {
       setBusy(false);
       setErr(er.message || "Something went wrong.");

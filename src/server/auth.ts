@@ -1,8 +1,18 @@
 import bcrypt from "bcryptjs";
+import type { User } from "@prisma/client";
 import { prisma } from "@/lib/db";
 import { ApiError, createSession, clearSession } from "@/lib/session";
 import { notifyAdmins } from "./notify";
 import { COMMISSION } from "@/constants";
+
+/**
+ * What the browser is allowed to see after signing in. The whole `User` row was
+ * being returned straight down the RPC, which put `pwHash` in the login
+ * response body; the caller only ever reads `role` to pick a landing page.
+ */
+function publicUser(u: User) {
+  return { id: u.id, name: u.name, role: u.role };
+}
 
 export async function signup(input: {
   name: string;
@@ -51,7 +61,7 @@ export async function signup(input: {
   });
 
   await createSession(user.id);
-  return user;
+  return publicUser(user);
 }
 
 export async function login(email: string, pw: string) {
@@ -60,7 +70,7 @@ export async function login(email: string, pw: string) {
   const ok = await bcrypt.compare(pw, user.pwHash);
   if (!ok) throw new ApiError(401, "Wrong password. Try again.");
   await createSession(user.id);
-  return user;
+  return publicUser(user);
 }
 
 export async function logout() {

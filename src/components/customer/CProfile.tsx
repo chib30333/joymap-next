@@ -207,7 +207,9 @@ export function CProfile({
               ctx="app"
               variant="ghost"
               size="sm"
-              onClick={() => rpc("logout").then(() => router.push("/auth"))}
+              onClick={() =>
+                rpc("logout").then(() => window.location.assign("/auth"))
+              }
             >
               {t("Log out")}
             </Button>

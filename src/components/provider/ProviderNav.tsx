@@ -252,9 +252,11 @@ function AccountMenu({ name }: { name: string }) {
     return () => document.removeEventListener("mousedown", h);
   }, []);
   const grad = "linear-gradient(140deg,var(--m-calm),#2E8C80)";
+  // Full document load — see the note in the customer TopNav: the router cache
+  // outlives the session and would re-render the signed-in shell.
   const logout = async () => {
     await rpc("logout");
-    router.push("/auth");
+    window.location.assign("/auth");
   };
   return (
     <div ref={ref} className="relative flex-none">
