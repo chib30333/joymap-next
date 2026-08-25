@@ -5,9 +5,16 @@ import { myBookings, myFavorites, slotsByService } from "@/server/selectors";
 import { JoyMapScreen } from "@/components/customer/JoyMapScreen";
 import { Onboarding } from "@/components/customer/Onboarding";
 
-export default async function JoyMapPage() {
+export default async function JoyMapPage({
+  searchParams,
+}: {
+  searchParams: { new?: string };
+}) {
   const user = await currentUser();
-  if (user && !user.onboarded) return <Onboarding />;
+  // First run, or the "New" button asking to build the week from a fresh
+  // conversation rather than reshuffling the moods already on file.
+  if (user && (!user.onboarded || searchParams.new !== undefined))
+    return <Onboarding />;
   const city = cookies().get("jm_city")?.value || user?.city || "Moscow";
   const [list, bookings, favs, slots] = await Promise.all([
     catalog(city),

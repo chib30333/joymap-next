@@ -98,16 +98,30 @@ export function JoyMapScreen({
             )}
           </p>
         </div>
-        <Button
-          busy={busy}
-          ctx="app"
-          variant="ghost"
-          size="md"
-          icon={<Icons.refresh size={18} />}
-          onClick={regen}
-        >
-          {t("Regenerate")}
-        </Button>
+        {/* Two different jobs: "New" reopens the chat and rebuilds the week from
+            a fresh conversation, "Regenerate" reshuffles it against the moods
+            already on file. */}
+        <div className="flex items-center gap-2.5 flex-wrap">
+          <Button
+            ctx="app"
+            variant="primary"
+            size="md"
+            icon={<Icons.sparkle size={18} />}
+            onClick={() => router.push("/joymap?new=1")}
+          >
+            {t("New")}
+          </Button>
+          <Button
+            busy={busy}
+            ctx="app"
+            variant="ghost"
+            size="md"
+            icon={<Icons.refresh size={18} />}
+            onClick={regen}
+          >
+            {t("Regenerate")}
+          </Button>
+        </div>
       </div>
 
       {catalog.length === 0 ? (
@@ -281,6 +295,10 @@ function DayCard({
   const t = useT();
   const today = d.day === TODAY;
   const e = d.rest ? null : byId(d.expId);
+  // A planned day whose experience has since left the catalogue — delisted, or
+  // in another city after a city switch. Say so rather than dressing it up as a
+  // rest day, which left the card contradicting its own caption.
+  const gone = !d.rest && !e;
   if (d.rest || !e) {
     return (
       <div
@@ -299,14 +317,16 @@ function DayCard({
         </div>
         <div className="flex-1 flex flex-col justify-center items-center text-center gap-2.5 pt-5 pb-5 pl-0 pr-0">
           <div
-            className="w-12 h-12 rounded-pill bg-[var(--m-calm-soft)] grid text-[var(--m-calm)] place-items-center"
+            className={`w-12 h-12 rounded-pill grid place-items-center ${gone ? "bg-surface text-ink-3" : "bg-[var(--m-calm-soft)] text-[var(--m-calm)]"}`}
           >
-            <Icons.heart size={24} />
+            {gone ? <Icons.compass size={24} /> : <Icons.heart size={24} />}
           </div>
           <div className="font-display font-bold text-base whitespace-nowrap">
-            {t("Rest day")}
+            {gone ? t("Nothing scheduled") : t("Rest day")}
           </div>
-          <p className="text-sm text-ink-3 m-0">{d.note}</p>
+          <p className="text-sm text-ink-3 m-0">
+            {gone ? t("That experience is no longer available.") : d.note}
+          </p>
         </div>
       </div>
     );
