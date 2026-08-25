@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { Icons, Logo } from "@/components/Icons";
 import { LangSwitcher, useT } from "@/components/Language";
 import { Avatar, CITIES } from "@/components/customer/primitives";
@@ -73,7 +74,15 @@ export function TopNav({
           the first row enough width to keep the account controls together. */}
       <div className="flex flex-wrap items-center gap-2 sm:gap-3 lg:gap-4 py-3 px-[var(--pad)]">
         <div className="flex items-center gap-2.5 flex-none">
-          <Logo size={26} />
+          {/* The wordmark is the way back out to the public site — the nav tabs
+              below only ever move around inside the signed-in app. */}
+          <Link
+            href="/"
+            aria-label={t("Joymap home")}
+            className="inline-flex rounded-sm duration-150 hover:opacity-80"
+          >
+            <Logo size={26} />
+          </Link>
           <span className="hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap bg-[color-mix(in_srgb,var(--orange)_16%,transparent)] text-orange-deep py-1 px-2 rounded-pill text-[10px] font-extrabold font-display">
             <span className="w-1.5 h-1.5 rounded-pill bg-orange" />
             Live now!

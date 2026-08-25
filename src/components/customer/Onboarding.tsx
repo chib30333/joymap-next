@@ -69,8 +69,13 @@ export function Onboarding() {
     scroll.current?.scrollTo({ top: 9e9, behavior: "smooth" });
   }, [msgs, typing]);
 
+  // Drop the `?new=` that opened this chat on the way out, otherwise finishing
+  // it would just land back here and start the conversation over.
   const complete = (moods: string[]) =>
-    rpc("generateJoyMap", { moods }).then(() => router.refresh());
+    rpc("generateJoyMap", { moods }).then(() => {
+      router.replace("/joymap");
+      router.refresh();
+    });
   const toggleMood = (k: string) =>
     setPicked((p) => (p.includes(k) ? p.filter((x) => x !== k) : [...p, k]));
 
@@ -148,7 +153,7 @@ export function Onboarding() {
             variant="ghost"
             size="sm"
             className="ms-auto"
-            onClick={() => complete(["calm", "joy", "focus"])}
+            onClick={() => complete([])}
           >
             {t("Skip")}
           </Button>

@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { prisma } from "@/lib/db";
 import { requireUser } from "@/lib/session";
 import { ledger, notify } from "./notify";
@@ -64,24 +65,50 @@ const JOY_NOTES = [
   "Try something brand new.",
 ];
 
+/**
+ * Fisher–Yates. Regenerate has to be able to come back with a different week:
+ * walking the catalogue in a fixed order rebuilt the identical seven days every
+ * time, so the button looked dead however often it was pressed.
+ */
+function shuffle<T>(xs: T[]): T[] {
+  const a = [...xs];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 export async function generateJoyMap(moods?: string[]) {
   const u = await requireUser();
   if (moods?.length) await prisma.user.update({ where: { id: u.id }, data: { moods } });
   const me = await prisma.user.findUnique({ where: { id: u.id } });
   const userMoods = me?.moods ?? [];
 
-  const pool = await catalog();
-  const prefer = pool.filter((e) => !userMoods.length || userMoods.includes(e.mood));
-  const rest = pool.filter((e) => !prefer.includes(e));
-  const ordered = [...prefer, ...rest];
+  // The same city the Joy Map screen resolves these ids against. Building from
+  // the unfiltered catalogue put out-of-city experiences into the week, and the
+  // screen — which only loads the current city — could not look them up, so
+  // they rendered as blank "Rest day" cards still carrying an activity note.
+  const city = cookies().get("jm_city")?.value || me?.city || "Moscow";
+  const pool = await catalog(city);
+  const onMood = (e: { mood: string }) =>
+    !userMoods.length || userMoods.includes(e.mood);
+  // Preferred moods first, but shuffled within each band so the week varies.
+  const ordered = [
+    ...shuffle(pool.filter(onMood)),
+    ...shuffle(pool.filter((e) => !onMood(e))),
+  ];
 
   const slots = await prisma.slot.findMany();
   const used = new Set<string>();
   let ni = 0;
   const days: any[] = [];
+  // One true rest day, but not always the same one — a fixed Thursday was
+  // another reason two regenerated weeks looked identical.
+  const restDay = 1 + Math.floor(Math.random() * 5);
   for (let i = 0; i < 7; i++) {
     const day = TODAY + i;
-    if (day > MONTH_DAYS || i === 1) {
+    if (day > MONTH_DAYS || i === restDay) {
       days.push({ day, wd: WD[dow(((day - 1) % MONTH_DAYS) + 1)], date: `${day} Jun`, rest: true, expId: null, note: "A rest day. Breathe." });
       continue;
     }
